@@ -1,9 +1,0 @@
-mail.smtp.from=jbpm.nmmc@gmail.com
-mail.smtp.host=smtp.gmail.com
-mail.smtp.auth=true
-mail.smtp.port=465
-mail.smtp.starttls.enable=true
-mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory
-mail.transport.protocol=smtps
-mail.debug=true
-mail.smtp.quitwait=true
