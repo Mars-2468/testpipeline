@@ -1,0 +1,217 @@
+<jsp:directive.include file="/pages/common/include.jsp" />
+<jsp:directive.page import="com.mars.common.utils.Constants" />
+<jsp:directive.page import="com.mars.common.utils.CommonUtils" />
+
+<%@ page import="java.util.Arrays" %>
+<%!
+    /* Format a numeric amount in INDIAN grouping (lakh/crore), ROUNDED to the whole rupee (HALF_UP), no paise.
+       e.g. 6432.50 -> 6,433 ; 25284894.70 -> 2,52,84,895 ; 1456789 -> 14,56,789 ; null/blank -> "".
+       Java's DecimalFormat can't do Indian grouping via a pattern, so we group manually. */
+    private static String fmtIndianAmount(Object raw) {
+        if (raw == null) return "";
+        String s = String.valueOf(raw).replace(",", "").trim();
+        if (s.isEmpty()) return "";
+        try {
+            java.math.BigDecimal bd = new java.math.BigDecimal(s)
+                    .setScale(0, java.math.RoundingMode.HALF_UP);  // round off to whole rupee, drop paise
+            boolean neg = bd.signum() < 0;
+            String intPart = bd.abs().toPlainString();             // e.g. "6433"
+            String grouped;
+            if (intPart.length() <= 3) {
+                grouped = intPart;
+            } else {
+                String last3 = intPart.substring(intPart.length() - 3);
+                String rest  = intPart.substring(0, intPart.length() - 3);
+                StringBuilder sb = new StringBuilder();
+                int count = 0;
+                for (int i = rest.length() - 1; i >= 0; i--) {
+                    sb.append(rest.charAt(i));
+                    if (++count % 2 == 0 && i != 0) sb.append(',');
+                }
+                grouped = sb.reverse().toString() + "," + last3;
+            }
+            return (neg ? "-" : "") + grouped;
+        } catch (NumberFormatException e) {
+            return String.valueOf(raw);
+        }
+    }
+%>
+
+
+<%
+pageContext.setAttribute("DATE_FORMAT", Constants.DATE_FORMAT);
+pageContext.setAttribute("SESSION_TOKEN_KEY", Constants.SESSION_TOKEN_KEY);
+pageContext.setAttribute("STATUS_NO_LABEL", Constants.STATUS_NO_LABEL);
+pageContext.setAttribute("STATUS_YES_LABEL", Constants.STATUS_YES_LABEL);
+pageContext.setAttribute("STATUS_NO", Constants.STATUS_NO);
+pageContext.setAttribute("STATUS_YES", Constants.STATUS_YES);
+%>
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+<script type="text/javascript">
+	function save() {
+		onPageSubmit('<c:out value="${contextRoot}"/>/ws/nmc/dashboard.do');
+	}
+</script>
+<style>
+label {
+	color: #87837e;
+	font-weight: 400;
+}
+
+.container {
+	margin-top: 200px;
+	padding: 5px;
+	border-radius: 0px;
+	background: #fff;
+	box-sizing: content-box;
+	border: 1px rgb(187, 134, 225);
+	box-shadow: 0.3em 0.3em 2em rgba(0, 0, 0, 0.3);
+	border-radius: 15px;
+}
+
+body {
+	background-image: linear-gradient(rgb(243, 248, 248), rgb(251, 252, 252));
+	font-family: Arial, sans-serif;
+	height: 73vh;
+}
+
+.btn-circle.btn-md {
+	width: 50px;
+	height: 50px;
+	padding: 7px 10px;
+	border-radius: 25px;
+	font-size: 10px;
+	text-align: center;
+}
+
+.btn-circle.btn-xl {
+	width: 50px;
+	height: 50px;
+	padding: 10px 16px;
+	border-radius: 35px;
+	font-size: 12px;
+	text-align: center;
+}
+</style>
+
+<body>
+	<div class="container" style="width: 558px; align-items: center;">
+		<form class="payment-form">
+      <table class="table table-bordered">
+          <tbody>
+              
+              <tr>
+          
+              
+           <td>Name</td>
+                  <td><input type="text" class="form-control" id="applicantName" name="applicantName" value="${rtiApplication.applicantName}" readonly></td>
+              </tr>
+              
+            <tr>
+                  <th>RTS Application No.</th>
+                  <td><input type="text" class="form-control" id="rtiApplnNumber" name="rtiApplnNumber" value="${rtiApplication.rtiApplnNumber}" readonly></td>
+              </tr>
+                <tr>
+                  <th>RTS Fee</th>
+                  <td>
+    <c:set var="rawAmt" value="${rtiApplication.firstPaymentFees}" />
+    <input type="text"
+           class="form-control"
+           id="FirstPaymentFees"
+           name="FirstPaymentFees"
+           value="<%= fmtIndianAmount(pageContext.getAttribute("rawAmt")) %>"
+           readonly />
+                             <!-- <input type="text" name="FirstPaymentFees" class="form-control" id="FirstPaymentFees" value="${rtiApplication.firstPaymentFees}" readonly>-->
+           
+</td>
+                
+                  
+              </tr>
+                  <tr>
+                      <th>Payment Mode</th>
+                      <td>
+                          <div class="form-check">
+                              <input class="form-check-input" type="radio" name="payment-mode" id="payment-mode" value="maha-rti" checked>
+                              <label class="form-check-label" for="payment-mode">MAHA RTS ONLINE PAYMENT</label>
+                          </div>
+                      </td>
+                  </tr>
+             
+                       
+    
+
+                
+          </tbody>
+      </table>
+     
+                   
+<input type="hidden" class="form-control"   name="rtiApplicationNumber"
+      value="${rtiApplication.rtiApplnNumber}"
+      id="rtiApplicationNumber" />
+      <input type="hidden" class="form-control"   name="fireId"
+      value="${rtiApplication.rtiApplicationRefId}"
+      id="fireId" />
+
+      <div class="d-flex justify-content-center mt-0">
+       <input type="hidden" id="url" name="url" value="">
+  <input class="btn btn-primary" style="font-size: 10pt"
+    type="button" value="Pay Online" onclick="mobilePay()" />
+
+
+    &nbsp;&nbsp;
+<button class="btn btn-secondary btn-lg" type="submit"
+    id="submitBtn" value="Save" onclick="javascript:save(this.form);">
+   Back
+  </button>
+  </form>
+	</div>
+  <script type="text/javascript">
+    function search() {
+      var applicationNumber = $('#applicationNumber').val().trim();
+      var name = $('#name').val().trim();
+      var mobileNumber = $('#mobileNumber').val().trim();
+      if (applicationNumber !== '' || name !== '' || mobileNumber !== '') {
+        onPageSubmit('<c:out value="${contextRoot}"/>/ws/rtsapplication/search.do');
+      }
+    }
+  
+    function pay() {
+      var applicationNumber = $('input[name=rtiApplicationNumber]:checked')
+          .val().trim();
+      if (confirm(" Do you really want to pay for application "
+          + applicationNumber + " ? ")) {
+        $('#url').val(window.location.href.split('pay.do')[0]);
+        console.log($('#url').val());
+        onPageSubmit('<c:out value="${contextRoot}"/>/ws/rtsapplication/payment.do');
+      }
+    }
+    function mobilePay() {
+      
+      var applicationNumber = $('input[name=rtiApplicationNumber]')
+          .val().trim();
+      if (confirm(" Do you really want to pay for application "
+          + applicationNumber + " ? ")) {
+        $('#url').val(window.location.href.split('search.do')[0]);
+        console.log($('#url').val());
+        onPageSubmit('<c:out value="${contextRoot}"/>/ws/rtsapplication/pay.do');
+      }
+    }
+    function save() {
+	onPageSubmit('<c:out value="${contextRoot}"/>/ws/nmc/user/home.do');
+}
+    </script>
+</body>

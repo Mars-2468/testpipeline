@@ -1,0 +1,420 @@
+package com.mars.workflow.controller;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+
+import com.mars.common.model.Tenancy;
+import com.mars.common.model.User;
+import com.mars.common.search.UserSearch;
+import com.mars.common.service.TenancyService;
+import com.mars.common.service.UserService;
+import com.mars.common.utils.CommonRequestUtils;
+import com.mars.common.utils.CommonTokenUtils;
+import com.mars.common.utils.CommonUtils;
+import com.mars.common.utils.Constants;
+import com.mars.common.utils.SessionUser;
+import com.mars.workflow.model.WorkflowTemplate;
+import com.mars.workflow.model.WorkflowTemplateTask;
+import com.mars.workflow.service.WorkflowTemplateService;
+import com.mars.workflow.service.WorkflowTemplateTaskService;
+
+/**
+ * <p>
+ * Title: WorkflowTemplateController.java
+ * </p>
+ * 
+ * <p>
+ * Description: This is a WorkflowTemplate controller class for controlling
+ * WorkflowTemplate related actions
+ * </p>
+ * 
+ * @see com.mars.workflow.model.WorkflowTemplate Copyright (c) 2014 for Mars
+ *      Telecom India Pvt Ltd
+ * 
+ * @version: 1.0
+ * 
+ * @author : eGovernance development team <Mars Telecom Systems Pvt Ltd>
+ * 
+ */
+@Controller
+public class WorkflowTemplateController extends MultiActionController implements
+		InitializingBean {
+
+	private static String const_OrderBy = "OrderBy";
+
+	private static String const_SortBy = "SortBy";
+
+	private static Log log = LogFactory
+			.getLog(WorkflowTemplateController.class);
+
+	@Autowired
+	private WorkflowTemplateService workflowTemplateService;
+	
+	@Autowired
+	private WorkflowTemplateTaskService workflowTemplateTaskService;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private TenancyService tenancyService;
+
+	/**
+	 * @param workflowTemplateService
+	 *            sets the WorkflowTemplateService object.
+	 */
+	public void setWorkflowTemplateService(
+			WorkflowTemplateService workflowTemplateService) {
+		this.workflowTemplateService = workflowTemplateService;
+	}
+
+	public void setWorkflowTemplateTaskService(
+			WorkflowTemplateTaskService workflowTemplateTaskService) {
+		this.workflowTemplateTaskService = workflowTemplateTaskService;
+	}
+	
+	/**
+	 * @return the userService
+	 */
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setTenancyService(TenancyService tenancyService) {
+		this.tenancyService = tenancyService;
+	}
+
+	/**
+	 * @param userService the userService to set
+	 */
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+
+	public void afterPropertiesSet() throws Exception {
+
+	}
+
+	/**
+	 * This method is to bind the date objects in the specifed format.
+	 * 
+	 */
+	@InitBinder
+	protected void initBinder(HttpServletRequest request,
+			ServletRequestDataBinder binder) throws Exception {
+		SimpleDateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT);
+		df.setLenient(true);
+		binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(
+				df, true));
+	}
+
+	/**
+	 * 
+	 * @param request
+	 *            current HTTP request
+	 * @param response
+	 *            current HTTP response
+	 * @return a ModelAndView to render the response. This method is for saving
+	 *         WorkflowTemplate entries to the database.
+	 */
+	@RequestMapping("/workflowtemplate/saveWorkflowTemplate.do")
+	public ModelAndView saveWorkflowTemplate(HttpServletRequest request,HttpServletResponse response, WorkflowTemplate workflowTemplate)
+			throws Exception {
+		HttpSession session = request.getSession();
+		SessionUser sessionUser = (SessionUser) session.getAttribute("SessionUser");
+		String workflowTemplateId = request.getParameter("workflowTemplateId");
+		long tenancyId=sessionUser.getTenancyId();
+		User user=userService.get(sessionUser.getUserId());
+		//WorkflowTemplate workflowTemplateObj = null;
+		//String workflowTemplateName = "";
+		
+		if (log.isDebugEnabled()) {
+			log.debug("Invoking saveWorkflowTemplate");
+		}
+		if (workflowTemplate != null) {
+
+			workflowTemplate.setWorkflowTemplateTaskSet(getWorkflowTemplateTaskSet(request, workflowTemplate));
+			
+			WorkflowTemplate workflowTemplateObj = null;
+
+			// Check for Duplicate WorkflowTemplate
+			 workflowTemplateObj = workflowTemplateService.checkForDuplicates(workflowTemplate);
+			if (CommonTokenUtils.allowFormSubmit(request)) {
+				if (workflowTemplateObj != null) {
+					session	.setAttribute("errMessage","Workflow Template with the same name already exists.");
+				} else {
+					try {
+						workflowTemplate = workflowTemplateService.merge(workflowTemplate);
+					} catch (DataIntegrityViolationException e) {
+						session.setAttribute("errMessage",	"Cannot delete the marked child as it is used in User Mappings.");
+						return editWorkflowTemplate(request, response);
+					}
+					
+					session.setAttribute("message",	"Workflow Template details saved successfully");
+				}
+			}
+		}
+
+		request.setAttribute("rowsize", workflowTemplate.getWorkflowTemplateTaskSet().size());
+		//TODO, Oct 20
+		//request.setAttribute("employeeList", employeeService.getAll());
+		UserSearch searchOptions = new UserSearch();
+		searchOptions.setCurrentPage(Constants.DEFAULT_PAGINATION_ALL_ROWS);
+		searchOptions.setOrderBy("user.firstName");
+		searchOptions.setApplicationId(Constants.APPLICATION_ID);
+		request.setAttribute("userList", userService.getUserByType(searchOptions));
+		
+		ModelAndView modelandView = new ModelAndView("manageWorkflowTemplate");
+		modelandView.addObject("workflowTemplate", workflowTemplate);
+		return modelandView;
+	}
+	private Set<WorkflowTemplateTask> getWorkflowTemplateTaskSet(HttpServletRequest request, WorkflowTemplate workflowTemplate)throws Exception {
+
+		Set<WorkflowTemplateTask> workflowTemplateTaskSet = null;
+		String strDeleteIds[] = null;
+		
+			String deleteWorkflowTemplateTaskIds = request.getParameter("deleteWorkflowTemplateTaskIds");
+			if (deleteWorkflowTemplateTaskIds != null && deleteWorkflowTemplateTaskIds.length() > 0) {
+				strDeleteIds = deleteWorkflowTemplateTaskIds.split(",");
+			}
+
+			long[] workflowTemplateTaskId = CommonRequestUtils.getLongParameters(request, "workflowTemplateTaskId");
+			//TODO, Oct 20
+			//long[] employeeId = CommonRequestUtils.getLongParameters(request, "employeeId");
+			//long[] userId = CommonRequestUtils.getLongParameters(request, "userId");
+			String[] userName = CommonRequestUtils.getStringParameters(request, "userName");
+			long[] durationInDays = CommonRequestUtils.getLongParameters(request, "durationInDays");
+			int[] tenancy = CommonRequestUtils.getIntParameters(request, "tenancyId");
+			int[] level = CommonRequestUtils.getIntParameters(request, "level");
+			String[] assigneePlaceHolder = CommonRequestUtils.getStringParameters(request, "assigneePlaceHolder");
+
+			if (assigneePlaceHolder != null && assigneePlaceHolder.length > 0) {
+				int arrayLength = assigneePlaceHolder.length;
+				workflowTemplateTaskSet = new LinkedHashSet<WorkflowTemplateTask>();
+				for (int i = 0; i < arrayLength; i++) {
+					boolean blndeletedId = false;
+					if (strDeleteIds != null && strDeleteIds.length > 0) {
+						for (String deleteId : strDeleteIds) {
+							if (Long.parseLong(deleteId) == workflowTemplateTaskId[i])
+								blndeletedId = true;
+						}
+					}
+					if (!blndeletedId) {
+						WorkflowTemplateTask workflowTemplateTask = new WorkflowTemplateTask();
+						workflowTemplateTask.setAssigneePlaceHolder(assigneePlaceHolder[i]);
+						workflowTemplateTask.setWorkflowTemplateTaskId(workflowTemplateTaskId[i]);
+						workflowTemplateTask.setDefaultUserName(userName[i]);
+						workflowTemplateTask.setDurationInDays(durationInDays[i]);
+						workflowTemplateTask.setLevel(level[i]);
+					//	workflowTemplateTask.setTenancy(Integer.parseInt(tenancy[i]));
+						//workflowTemplateTask.setTenancy(tenancyService.get((int)tenancyId));
+						if (workflowTemplateTaskId[i] > 0)
+							workflowTemplateTask.setLevel(level[i]);
+						else
+							workflowTemplateTask.setLevel(i + 1);
+						
+					/*	if (tenancyIds[i] > 0)
+							workflowTemplateTask.setTenancy(tenancyService.get(tenancyIds[i]));*/
+						Tenancy a = new Tenancy();
+						a.setTenancyId(1);
+						workflowTemplateTask.setTenancy(a);
+						workflowTemplateTask.setWorkflowTemplate(workflowTemplate);
+						workflowTemplateTaskSet.add(workflowTemplateTask);
+					}
+				}
+			}
+	
+		return workflowTemplateTaskSet;
+	}
+	
+	
+	
+	/**
+	 * 
+	 * @param request
+	 *            current HTTP request
+	 * @param response
+	 *            current HTTP response
+	 * @return a ModelAndView to render the response. This method is for
+	 *         editing/creating WorkflowTemplate entries
+	 */
+	@RequestMapping("/workflowtemplate/editWorkflowTemplate.do")
+	public ModelAndView editWorkflowTemplate(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException,Exception{
+		if (log.isDebugEnabled()) {
+			log.debug("Invoking editWorkflowTemplate");
+		}
+		HttpSession session = request.getSession();
+    	SessionUser sessionUser = (SessionUser) session.getAttribute("SessionUser");
+		long tenancyId=sessionUser.getTenancyId();
+		
+		WorkflowTemplate workflowTemplate = null;
+		String workflowTemplateId = request.getParameter("workflowTemplateId");
+		if (StringUtils.isNotEmpty(workflowTemplateId)) {
+			workflowTemplate = workflowTemplateService.get(Long.parseLong(workflowTemplateId));
+			String workflowName = workflowTemplate.getWorkflowTemplateName();
+			if(workflowTemplate != null && workflowTemplate.getWorkflowTemplateTaskSet().size() == 0){
+				String strHqlQuery = "Select workflowTemplateTask from WorkflowTemplateTask workflowTemplateTask " +
+						"where workflowTemplateTask.workflowTemplate.workflowTemplateId = "
+						+ workflowTemplate.getWorkflowTemplateId() + " and workflowTemplateTask.tenancy IS NULL order by workflowTemplateTask.level asc";
+				List<WorkflowTemplateTask> workflowTemplateTaskList = workflowTemplateTaskService.getListByHqlQuery(strHqlQuery);
+				Set<WorkflowTemplateTask> newWorkflowTemplateTaskList = new LinkedHashSet<WorkflowTemplateTask>();
+				
+				for (WorkflowTemplateTask workflowTemplateTask : workflowTemplateTaskList) {
+					WorkflowTemplateTask wfTempTask = new WorkflowTemplateTask();
+					wfTempTask.setAssigneePlaceHolder(workflowTemplateTask.getAssigneePlaceHolder());
+					wfTempTask.setDurationInDays(workflowTemplateTask.getDurationInDays());
+					wfTempTask.setLevel(workflowTemplateTask.getLevel());
+					wfTempTask.setWorkflowTemplate(workflowTemplate);					
+					wfTempTask.setTenancy(tenancyService.get((int)tenancyId));
+					//wfTempTask.setDefaultUserName(null);
+					newWorkflowTemplateTaskList.add(wfTempTask);
+				}	
+				workflowTemplate.setWorkflowTemplateTaskSet(newWorkflowTemplateTaskList);
+			}
+			else{
+				Set<WorkflowTemplateTask> workflowTemplateTaskSet=workflowTemplate.getWorkflowTemplateTaskSet();
+				for(WorkflowTemplateTask workflowTemplateTask : workflowTemplateTaskSet){
+					UserSearch searchOptions = new UserSearch();
+					searchOptions.setTenancyId(tenancyId);
+					/*if(workflowTemplateTask.getDepartment()!=null)
+						searchOptions.setDepartmentId(workflowTemplateTask.getDepartment().getDepartmentId());
+						searchOptions.setCurrentPage(Constants.DEFAULT_PAGINATION_ALL_ROWS);
+						searchOptions.setOrderBy("upper(user.firstName)"); 
+						searchOptions.setEmployessOnly(true);
+						//searchOptions.setApplicationId(Constants.APPLICATION_ID);
+						workflowTemplateTask.setUserList(userService.getUserListForWorkFlow(searchOptions));
+				}*/
+			}}
+			}
+			
+		 else {
+			workflowTemplate = new WorkflowTemplate();
+		}		
+
+		request.setAttribute("rowsize", workflowTemplate.getWorkflowTemplateTaskSet().size());
+		//TODO, Oct 20
+		//request.setAttribute("employeeList", employeeService.getAll());
+		UserSearch searchOptions = new UserSearch();
+		searchOptions.setTenancyId(tenancyId);
+		searchOptions.setCurrentPage(Constants.DEFAULT_PAGINATION_ALL_ROWS);
+		searchOptions.setOrderBy("user.firstName"); 
+		String applicationName = request.getContextPath();
+		searchOptions.setApplicationId(Constants.APPLICATION_ID);
+		request.setAttribute("userList", userService.getUserByType(searchOptions));
+		
+		CommonTokenUtils.setNewToken(request);
+		return new ModelAndView("manageWorkflowTemplate", "workflowTemplate",
+				workflowTemplate);
+	}
+
+	/**
+	 * 
+	 * @param request
+	 *            current HTTP request
+	 * @param response
+	 *            current HTTP response
+	 * @return a ModelAndView to render the response This method will display
+	 *         list of WorkflowTemplate
+	 */
+	@RequestMapping("/workflowtemplate/listWorkflowTemplate.do")
+	public ModelAndView listWorkflowTemplate(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException,Exception {
+
+		if (log.isDebugEnabled()) {
+			log.debug("Invoking listWorkflowTemplate");
+		}
+		long longCurrentPage = CommonUtils.checkPaginationAttributes(request);
+		String orderBy = request.getParameter(const_OrderBy);
+		String sortBy = request.getParameter(const_SortBy);
+
+		// setting default order by on workflowTemplateId
+		if (orderBy == null || orderBy.length() < 1) {
+			orderBy = "workflowTemplateId";
+			sortBy = "desc";
+		}
+		List<WorkflowTemplate> WorkflowTemplateList = workflowTemplateService
+				.getWorkflowTemplateList(longCurrentPage, orderBy, sortBy);
+		
+			long totalCount = workflowTemplateService
+					.getWorkflowTemplateCount();
+			request.setAttribute("maximumPages", new Long(CommonUtils
+					.getMaxPage(totalCount)));
+			request.setAttribute("totalCount", totalCount);
+		
+
+		// Check if the WorkflowTemplateList is null
+		if (WorkflowTemplateList == null)
+			WorkflowTemplateList = new ArrayList<WorkflowTemplate>();
+
+		request.setAttribute("currentPage", new Long(longCurrentPage));
+		request.setAttribute(const_OrderBy, orderBy);
+		request.setAttribute(const_SortBy, sortBy);
+		return new ModelAndView("listWorkflowTemplate", "WorkflowTemplateList",
+				WorkflowTemplateList);
+	}
+
+	/**
+	 * 
+	 * @param request
+	 *            current HTTP request
+	 * @param response
+	 *            current HTTP response
+	 * @return a ModelAndView to render the response This method deletes a
+	 *         WorkflowTemplate entry from database
+	 */
+	@RequestMapping("/workflowtemplate/deleteWorkflowTemplate.do")
+	public ModelAndView deleteWorkflowTemplate(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, Exception {
+		HttpSession session = request.getSession();
+		if (log.isDebugEnabled()) {
+			log.debug("Invoking deleteWorkflowTemplate");
+		}
+		String workflowTemplateId = request.getParameter("workflowTemplateId");
+		if (StringUtils.isNotEmpty(workflowTemplateId)) {
+			WorkflowTemplate workflowTemplate = workflowTemplateService
+					.get(Long.parseLong(workflowTemplateId));
+			if (workflowTemplate != null) {
+				try {
+					workflowTemplateService.delete(Long
+							.parseLong(workflowTemplateId));
+					session.setAttribute("message",
+							"Workflow Template details deleted successfully");
+				} catch (Exception exception) {
+					session
+							.setAttribute("message",
+									"Cannot delete this record as it is used in other page");
+					return editWorkflowTemplate(request, response);
+				}
+			} else {
+				session
+						.setAttribute("message",
+								"The Workflow Template details you are trying to delete is already deleted.");
+			}
+		}
+		return listWorkflowTemplate(request, response);
+	}
+}

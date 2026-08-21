@@ -1,0 +1,435 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="com.mars.common.utils.CommonUtils"%>
+<%@page import="com.mars.rti.utils.CoreConstants"%>
+<%@include file="/pages/common/include.jsp"%>
+<%@page import="com.mars.common.utils.Constants"%>
+<%@page import="com.mars.workflow.utils.WorkflowConstants"%>
+
+<%@ page import="java.util.Arrays" %>
+<%!
+    /* Format a numeric amount in INDIAN grouping (lakh/crore), ROUNDED to the whole rupee (HALF_UP), no paise.
+       e.g. 6432.50 -> 6,433 ; 25284894.70 -> 2,52,84,895 ; 1456789 -> 14,56,789 ; null/blank -> "".
+       Java's DecimalFormat can't do Indian grouping via a pattern, so we group manually. */
+    private static String fmtIndianAmount(Object raw) {
+        if (raw == null) return "";
+        String s = String.valueOf(raw).replace(",", "").trim();
+        if (s.isEmpty()) return "";
+        try {
+            java.math.BigDecimal bd = new java.math.BigDecimal(s)
+                    .setScale(0, java.math.RoundingMode.HALF_UP);  // round off to whole rupee, drop paise
+            boolean neg = bd.signum() < 0;
+            String intPart = bd.abs().toPlainString();             // e.g. "6433"
+            String grouped;
+            if (intPart.length() <= 3) {
+                grouped = intPart;
+            } else {
+                String last3 = intPart.substring(intPart.length() - 3);
+                String rest  = intPart.substring(0, intPart.length() - 3);
+                StringBuilder sb = new StringBuilder();
+                int count = 0;
+                for (int i = rest.length() - 1; i >= 0; i--) {
+                    sb.append(rest.charAt(i));
+                    if (++count % 2 == 0 && i != 0) sb.append(',');
+                }
+                grouped = sb.reverse().toString() + "," + last3;
+            }
+            return (neg ? "-" : "") + grouped;
+        } catch (NumberFormatException e) {
+            return String.valueOf(raw);
+        }
+    }
+%>
+
+<jsp:directive.include file="/pages/common/include.jsp" />
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%
+String name = (String) session.getAttribute("name");
+
+String contextPath = request.getContextPath();
+String url = contextPath + "/pages/core-pages/nmc_user/";
+pageContext.setAttribute("CURRENCY_FORMAT", Constants.CURRENCY_FORMAT);
+%>
+<head>
+<title>Nagpur Municipal Corporation</title>
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="csrf-token"
+	content="L1tBXJBCG7Qg3zc8hd8zkv3US8Yq8R7ihDGuzHIc" />
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+	integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+	crossorigin="anonymous"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	crossorigin="anonymous"></script>
+<!-- CSS only -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+	crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="jquery-3.6.1.min.js"></script>
+<!-- JavaScript Bundle with Popper -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	crossorigin="anonymous"></script>
+<script src="Vjdog.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script type="text/javascript"
+	src="<c:out value=" ${contextRoot}" />/scripts/jquery/jquery.ajaxfileupload.js"></script>
+<link rel="stylesheet"
+	href="/RTSservices/pages/core-pages/nmc_user/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="/RTSservices/pages/core-pages/nmc_user/css/style2.css" />
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+
+<style type="text/css">
+.ui-autocomplete-loading {
+	background: white
+		url('/Proper/styles/jquery/images/ui-anim_basic_16x16.gif') right
+		center no-repeat;
+}
+
+.solid {
+	border-style: none;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-right: 0px;
+	margin-left: 0px;
+	background: #3b90b7;
+}
+
+.ClsLabel {
+	font-size: 15px;
+}
+
+header img {
+	width: 75px;
+	height: 75px;
+	flex-shrink: 0;
+	margin: 4px 3px 4px 2px;
+}
+
+header h1 {
+	margin: 0px;
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	word-spacing: 1px;
+	font-size: 3vw;
+	color: floralwhite;
+	font-family: sans-serif;
+}
+
+.inputtype {
+	height: 40px;
+	width: 348px;
+	margin-right: 0;
+}
+
+header {
+	align-items: center;
+}
+
+img {
+	vertical-align: middle;
+}
+
+img {
+	border: 0;
+}
+
+.ClsButton {
+	display: inline-block;
+	padding-left: 20px;
+	padding-right: 20px;
+	text-align: center;
+	font-size: 18px;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	outline: none;
+	color: #fff;
+	border-radius: 100px;
+	background-color: #437ADE;
+	border: none;
+	border: 2px solid black
+}
+
+input[type=text] {
+	width: 290px;
+	padding: 10px 30px;
+	margin: 15px 0;
+	box-sizing: border-box;
+	border: 0px solid black;
+	box-shadow: 0 0 3px;
+	border-radius: 5px;
+}
+
+.form-control1 {
+	width: 290px;
+	padding: 10px 30px;
+	margin: 18px 0;
+	box-sizing: border-box;
+	border: 1px solid black;
+	box-shadow: 0 0 5px;
+	border-radius: 30px;
+	font-size: 18px;
+}
+
+.container {
+	box-sizing: border-box;
+	border: 1px blue;
+	box-shadow: 0 0 2px;
+	height: 180px;
+}
+
+.tab {
+	box-sizing: border-box;
+	box-shadow: 0 0 5px;
+	border-color: #437ADE;
+	border-radius: 30px;
+}
+
+.value {
+	font-size: 15px;
+}
+
+
+    #xyz {
+        background-image: url("<%= url %>img/dashbackground.jpg");
+        background-size: cover; 
+        background-repeat: no-repeat; 
+        background-position: center; 
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+	crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript">
+	function search() {
+		var applicationNumber = $('#applicationNumber').val().trim();
+		var name = $('#name').val().trim();
+		var mobileNumber = $('#mobileNumber').val().trim();
+		if (applicationNumber !== '' || name !== '' || mobileNumber !== '') {
+			onPageSubmit('<c:out value="${contextRoot}"/>/ws/rtsapplication/search.do');
+		}
+	}
+
+	function pay() {
+		var applicationNumber = $('input[name=rtiApplicationNumber]:checked')
+				.val().trim();
+		if (confirm(" Do you really want to pay for application "
+				+ applicationNumber + " ? ")) {
+			$('#url').val(window.location.href.split('pay.do')[0]);
+			console.log($('#url').val());
+			onPageSubmit('<c:out value="${contextRoot}"/>/ws/rtsapplication/payment.do');
+		}
+	}
+
+	function mobilePay() {
+		var applicationNumber = $('input[name=rtiApplicationNumber]')
+				.val().trim();
+		if (confirm(" Do you really want to pay for application "
+				+ applicationNumber + " ? ")) {
+			$('#url').val(window.location.href.split('pay.do')[0]);
+			console.log($('#url').val());
+			onPageSubmit('<c:out value="${contextRoot}"/>/ws/rtsapplication/payment.do');
+		}
+	}
+	
+	window.onload = function() {
+
+	    var errMessage = "${requestScope.errMessage}";
+
+	    if (errMessage.length > 0) {
+	    	 var alertBox = document.createElement("div");
+		      alertBox.style.color = "red";
+		      alertBox.style.background = "rgba(239, 158, 158, 0.214)";
+		      alertBox.style.border = "1px solid red";
+		      alertBox.textContent = errMessage;
+		      alertBox.style.fontSize = "14px";
+
+		      var bodyElement = document.getElementsByTagName("body")[0];
+		      bodyElement.insertBefore(alertBox, bodyElement.firstChild);
+		      alert(errMessage);	    
+		      }
+	    	}
+</script>
+<header class="solid">
+
+	<div class="container-fluid">
+    <div class="row p-2 border bg-blue d-flex align-items-center" id="xyz">
+        <div class="col-md-1">
+            <img src="<%=url%>img/nagpur.png" class="img-fluid">
+        </div>
+
+
+   <div class="col-md-10"> <!-- Modified column width to 10 -->
+            <h3 class="m-0" style="color:white;align-content: end;font-size:22;">नागपूर महानगरपालिका, नागपूर</h3>
+            <h3 class="m-0" style="color:white;font-size:22;">Right to Services</h3>
+        </div>
+            	    	<div class="col-md-1"><img src="<%= url%>img/g21.png" class="img-fluid"></div>
+    </div>
+    </div>
+    
+		<%-- 	<div class="col-md-10 ">
+				<p class="h2 text-center text-white">
+					<strong>Nagpur Municipal Corporation</strong>
+				</p>
+			</div>
+			<div class="col-md-1">
+				<img src="<%=url%>img/g21.png" class="img-fluid">
+			</div>
+
+			<div class="col-md-1"></div>
+		</div>
+	</div> --%>
+
+</header>
+
+<div class="mainHdr">
+	<br>
+</div>
+<c:choose>
+	<c:when test="${not empty requestScope.rtsMobileApplicationList}">
+		<div class="form-group" align="center" style="margin-top: 80px;">
+			<div class="container mt-5" style="box-shadow: 0 0 0; height: 0px;">
+
+				<h3 style="font-weight: bold">Application Details</h3>
+				<br>
+				<table class="table" align="center" width="70%" height="100%"
+					style="font-size: 13px; padding: 4rem;">
+					<tr style="background-color: #9d9d9f; e4; color: white">
+						<th class="ClsLabel">Application Number</th>
+						<th class="ClsLabel">Name</th>
+						<th class="ClsLabel">Application Name</th>
+						<c:choose>
+						<c:when test="${requestScope.flag == true}">
+						<th class="ClsLabel">Advanced Amount (Rupees)</th>
+						<th class="ClsLabel">Pending Amount (Rupees)</th>
+						</c:when>
+						<c:otherwise>
+												<th class="ClsLabel">Fee/Amount (Rupees)</th>
+						</c:otherwise>
+						</c:choose>
+						
+					</tr>
+					<c:forEach var="rtsMobileApplicationList"
+						items="${rtsMobileApplicationList}" varStatus="rowNumber">
+						<tr>
+							<input type="hidden" class="form-check-input"
+								name="rtiApplicationNumber"
+								style="margin-top: 5px; margin-left: 10px"
+								value="${rtsMobileApplicationList.rtiApplnNumber}"
+								id=rtiApplicationNumber />
+							<td class="value">${rtsMobileApplicationList.rtiApplnNumber}</td>
+							<td class="value">${rtsMobileApplicationList.applicantName}</td>
+							<td class="value">${rtsMobileApplicationList.subject}</td>
+                      <c:set var="workflowStatus" value="${rtsMobileApplicationList.workFlowStatus}" scope="request" />
+                      <c:set var="applicationCost" value="${rtsMobileApplicationList.applicationCost}" scope="request" />
+                                            <c:set var="plantationletter" value="${rtsMobileApplicationList.plantationletter}" scope="request" />
+                      
+							<c:choose>
+								<c:when test="${rtsMobileApplicationList.workFlowStatus==2}">
+								<c:choose>
+								<c:when test="${requestScope.flag == true}">
+								<td class="value">
+								    	    <c:set var="rawAmt" value="${rtsMobileApplicationList.applicationCost}"/><%= fmtIndianAmount(pageContext.getAttribute("rawAmt")) %>
+								
+								<!-- ${rtsMobileApplicationList.applicationCost}-->
+								</td>
+								<td class="value">0.00</td>
+								</c:when>
+								<c:otherwise>
+								<td class="value">0.00</td>
+								</c:otherwise>
+									</c:choose>
+								</c:when>
+
+								<c:otherwise>
+								<c:choose>
+								<c:when test="${requestScope.flag == true}">
+						            <td class="value">
+						            								    	    <c:set var="rawAmt" value="${requestScope.advancedAmount}"/><%= fmtIndianAmount(pageContext.getAttribute("rawAmt")) %>
+						            
+						           <!-- > ${requestScope.advancedAmount}-->
+						            </td>
+						           <td class="value">
+						           								    	    <c:set var="rawAmt" value="${requestScope.advancedAmount}"/><%= fmtIndianAmount(pageContext.getAttribute("rawAmt")) %>
+						         <!--   ${requestScope.pendingAmount}-->
+						           </td>
+								</c:when>
+								<c:otherwise>
+							      <td class="value">
+							       <c:set var="rawAmt" value="${rtsMobileApplicationList.applicationCost}"/><%= fmtIndianAmount(pageContext.getAttribute("rawAmt")) %>
+							     <!--  ${rtsMobileApplicationList.applicationCost}-->
+							      </td>
+								
+								</c:otherwise>
+									</c:choose>
+								</c:otherwise>
+							</c:choose>
+							<br>
+
+
+							
+							
+						</tr>
+					</c:forEach>
+				</table>
+				<br>
+								<input type="hidden" id="url" name="url" value="">
+				<c:choose>
+								<c:when test="${workflowStatus!=2 && applicationCost!=0.0 && workflowStatus!=5 && workflowStatus!=1 && workflowStatus!=0}">
+						<input class="btn btn-primary" style="font-size: 10pt"
+							type="button" value="Pay Online" onclick="mobilePay()" />
+					</c:when>
+              
+					<c:otherwise>
+					<c:if test="${workflowStatus==2}">
+					<input class="form-control" style="font-size: 12pt;width:500px;color:rgb(48, 145, 37);background-color:rgba(31, 132, 20, 0.127);font-weight: bold;"
+							type="button" value="Payment Sucessfully Completed" readonly/></c:if>
+												<c:if test="${workflowStatus==5}">
+							
+							<input class="form-control" style="font-size: 12pt;width:500px;color:red;background-color:rgb(132 20 20 / 13%);font-weight: bold;"
+							type="button" value="Apllication has been Rejected" readonly/>
+							</c:if>
+							<c:if test="${workflowStatus==1}">
+					<input class="form-control" style="font-size: 12pt;width:500px;color:rgb(48, 145, 37);background-color:rgba(31, 132, 20, 0.127);font-weight: bold;"
+							type="button" value="Application is Closed" readonly/></c:if>
+					</c:otherwise>
+				</c:choose>
+	</c:when>
+	<c:otherwise>
+	</c:otherwise>
+</c:choose>
+</div>
+</div>
+
+
+<script>
+function docDownload(filesPath) {
+	    var encodedFilePath = encodeURIComponent(filesPath);
+
+	    var encodedFilesPath = btoa(encodedFilePath); 
+
+	    window.open('<c:out value="${contextRoot}"/>/rtsApplication/getPdf.do?fp=' + encodedFilesPath, '_blank');
+	}
+
+</script>

@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2024-03-09T00:21:26 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ZoneCertificate" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" isIgnorePagination="true" uuid="604a6bc3-ae55-4fb3-995f-76c562a21e2b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="net.sf.jasperreports.print.create.bookmarks" value="false"/>
+	<parameter name="rtiapplrefid" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from egovrti.tradelicense_cancellation not1 , egovrti.rti_application ra where not1.rti_ref_id = ra.rti_application_id and not1.rti_ref_id=$P{rtiapplrefid};]]>
+	</queryString>
+	<field name="tradelicense_cancellationid" class="java.lang.Long"/>
+	<field name="title" class="java.lang.String"/>
+	<field name="first_name" class="java.lang.String"/>
+	<field name="middle_name" class="java.lang.String"/>
+	<field name="last_name" class="java.lang.String"/>
+	<field name="full_name" class="java.lang.String"/>
+	<field name="pincode" class="java.lang.String"/>
+	<field name="aadhaar_no" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="mobile_number" class="java.lang.String"/>
+	<field name="address_for_correspondence" class="java.lang.String"/>
+	<field name="zone_no" class="java.lang.String"/>
+	<field name="ward_no" class="java.lang.String"/>
+	<field name="area_name" class="java.lang.String"/>
+	<field name="trade_licenseno" class="java.lang.String"/>
+	<field name="updated_trade_name" class="java.lang.String"/>
+	<field name="updated_trade_type" class="java.lang.String"/>
+	<field name="updated_owner_name" class="java.lang.String"/>
+	<field name="updated_partner_count" class="java.lang.String"/>
+	<field name="noc_for_related_dept" class="java.lang.String"/>
+	<field name="copy_of_former_license" class="java.lang.String"/>
+	<field name="property_tax_no_due" class="java.lang.String"/>
+	<field name="building_auth_document" class="java.lang.String"/>
+	<field name="rti_appl_refno" class="java.lang.String"/>
+	<field name="rti_ref_id" class="java.lang.Long"/>
+	<field name="fees_applicable" class="java.lang.String"/>
+	<field name="rti_application_id" class="java.lang.Long"/>
+	<field name="rti_application_number" class="java.lang.String"/>
+	<field name="inward_number" class="java.lang.String"/>
+	<field name="registration_date" class="java.lang.String"/>
+	<field name="received_date" class="java.lang.String"/>
+	<field name="closed_date" class="java.lang.String"/>
+	<field name="subject" class="java.lang.String"/>
+	<field name="information_required" class="java.lang.String"/>
+	<field name="number_of_copies" class="java.lang.Integer"/>
+	<field name="amount_per_copy" class="java.lang.Double"/>
+	<field name="application_cost" class="java.lang.Double"/>
+	<field name="workflow_status" class="java.lang.Integer"/>
+	<field name="final_status" class="java.lang.String"/>
+	<field name="final_status_when_parked" class="java.lang.String"/>
+	<field name="is_application_parked" class="java.lang.Integer"/>
+	<field name="created_date" class="java.lang.String"/>
+	<field name="is_feepaid" class="java.lang.Integer"/>
+	<field name="applicant_name" class="java.lang.String"/>
+	<field name="gender" class="java.lang.Integer"/>
+	<field name="state" class="java.lang.String"/>
+	<field name="phone_number" class="java.lang.String"/>
+	<field name="bpl" class="java.lang.Integer"/>
+	<field name="bpl_card_number" class="java.lang.String"/>
+	<field name="address_line1" class="java.lang.String"/>
+	<field name="address_line2" class="java.lang.String"/>
+	<field name="district" class="java.lang.String"/>
+	<field name="postal_charges" class="java.lang.Double"/>
+	<field name="rti_application_ref_number" class="java.lang.String"/>
+	<field name="rti_application_ref_id" class="java.lang.Long"/>
+	<field name="is_rti_appeal_application" class="java.lang.Integer"/>
+	<field name="has_assigned_user" class="java.lang.Integer"/>
+	<field name="rti_service_id" class="java.lang.Integer"/>
+	<field name="received_mode_id" class="java.lang.Long"/>
+	<field name="fee_master_id" class="java.lang.Long"/>
+	<field name="created_user_id" class="java.lang.Long"/>
+	<field name="assigned_section_id" class="java.lang.Long"/>
+	<field name="assigned_department_id" class="java.lang.Long"/>
+	<field name="application_department_id" class="java.lang.Long"/>
+	<field name="assignee_user_id" class="java.lang.Long"/>
+	<field name="tenancyid" class="java.lang.Long"/>
+	<field name="pdf_files_saved_path" class="java.lang.String"/>
+	<field name="pdf_upload_from_portal" class="java.lang.String"/>
+	<field name="remarks" class="java.lang.String"/>
+	<field name="ward_name" class="java.lang.String"/>
+	<field name="zone" class="java.lang.String"/>
+	<field name="department" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="800">
+			<staticText>
+				<reportElement x="352" y="730" width="186" height="70" uuid="1880726a-c9c1-4a8f-8749-cf39bb9bd7c3"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[परवाना देणाऱ्या/नुतनीकरण करणाऱ्या सक्षम प्राधिकाऱ्यांची सही, पदनाम व शिक्का]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="446" width="526" height="80" uuid="3bf93d87-f8d2-479d-bae4-b30282d41f72"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[तुम्हाला काही प्रश्न असल्यास किंवा आणखी सहाय्य हवे असल्यास कृपया आम्हाला कळवा,   आम्ही तुम्हाला आठवण करून देऊ इच्छितो की तुमचा व्यापार परवाना रद्द केल्याने त्याच्याशी संबंधित सर्व व्यवसायांवर परिणाम होईल. तुम्हाला काही प्रश्न असल्यास किंवा आणखी सहाय्य हवे असल्यास कृपया आम्हाला कळवा]]></text>
+			</staticText>
+			<image>
+				<reportElement x="256" y="8" width="50" height="50" uuid="4d16424a-6488-4b5c-abca-713b5f057b41"/>
+				<imageExpression><![CDATA["../../images/amclogodash.jpeg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="2" y="109" width="550" height="23" uuid="a1f7731c-66d3-4120-a7b1-84a677323f15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="16"/>
+				</textElement>
+				<text><![CDATA[व्यापार परवाना रद्द झाल्याची पोचपावती]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="156" width="550" height="20" uuid="9dc9b2a4-470c-4e9d-973f-e788d0a9a30c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(नवीन व्यापार/विद्यमान व्यापार परवान्याच्या नूतनीकरणासाठी)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="179" width="550" height="20" uuid="bccbf806-4657-4c6c-93ea-2a290a77709b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(नागपूर महानगरपालिका अधिनियम १९४९ मधील कलम ३७६ प्रमाणे विनिर्दिष्ट प्रयोजनासाठी )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="202" width="528" height="20" uuid="486c26d0-0cc7-4fb3-a12f-acb4773ff425"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[महाराष्ट्र महानगरपालिका अधिनियम, १९४९ चे कलम ३७६ पोट कलम (१) कंडिका (ज) व कलम ३८६ (१) तरतुदीनुसार.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="132" width="550" height="23" uuid="cc6b14d4-c962-472e-913a-2d32437409ab"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[ ACKNOWLEDGEMENT OF TRADE LICENSE CANCELLATION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="61" width="550" height="25" uuid="19b04748-3314-4a83-8f63-9ff61054e013">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="18"/>
+				</textElement>
+				<text><![CDATA[नागपूर महानगरपालिका ,नागपूर]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="86" width="550" height="23" uuid="2deac6f4-fc0d-4713-b23c-c9cfe66aba62">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Nagpur Municipal Corporation]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="24" y="228" width="306" height="20" uuid="f174d284-ce71-406a-b15d-230d3465c578"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["व्यवसाय नोंदणी क्र. :- "+$F{rti_application_number}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="415" y="228" width="50" height="20" uuid="dc8b9df1-5a17-4655-9e46-dbe2503ada5c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[दिनांक : ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="465" y="228" width="85" height="20" uuid="44e99719-7cf0-423c-b587-a004e7f0bba4"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="24" y="261" width="526" height="20" uuid="057908a7-bc1d-424a-85ad-445cb3e1d518"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["जारी केल्याच्या तारखेपासून. हे प्रमाणपत्र ३१-मार्च  "+(new SimpleDateFormat("yyyy")).format(new Date())+" पर्यंतच्या कालावधीसाठी वैध आहे."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="281" width="400" height="20" uuid="3f2aee10-5df5-43cd-abf9-9d9d4b5fd509"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{full_name}+"  यांना व्यापार परवाना जारी केला जातो."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="421" width="400" height="20" uuid="19020a1b-c007-4603-bddc-975ee97cfbfe"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fees_applicable} +" व्यापार परवान्याच्या नूतनीकरणासाठी"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="301" width="400" height="20" uuid="29de690d-762a-4c2d-9b40-c48ec498815f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tradelicense_cancellationid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="381" width="400" height="20" uuid="b403ecc7-9a5f-4376-9363-9204961c46ac"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ward_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="130" y="281" width="20" height="20" uuid="8d3ee3d9-32ee-4254-9e95-6240269b7546"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[:-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="301" width="20" height="20" uuid="d7dd7b8c-072f-435c-888b-ea0daafb831a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[:-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="381" width="20" height="20" uuid="f3d9c8ed-44ff-4135-835f-fd1c85ab8a82"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[:-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="421" width="20" height="20" uuid="b10e245b-5acc-4a18-86de-6b2ae0a85f1b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[:-]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="150" y="401" width="400" height="20" uuid="3cb3451a-9415-416b-89b3-23635315a201"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("MM").format(new java.util.Date()).compareTo("03") < 0
+            ? (Integer.parseInt(new SimpleDateFormat("yyyy").format(new java.util.Date())) - 1) + " to " + new SimpleDateFormat("yyyy").format(new java.util.Date())
+            : new SimpleDateFormat("yyyy").format(new java.util.Date()) + " to " + (Integer.parseInt(new SimpleDateFormat("yyyy").format(new java.util.Date())) + 1)]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="130" y="401" width="20" height="20" uuid="ed15e96e-b479-44f8-9d1b-86b798fb3252"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[:-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="281" width="106" height="20" uuid="0d999e7b-b288-422a-8d05-03547b30ba00">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[श्री/श्रीमती]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="301" width="106" height="20" uuid="056b0ffb-3887-430f-bf9a-7323c6bfdb06">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[परवानगी क्रमांक]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="401" width="106" height="20" uuid="f5f4521b-8491-4986-977f-ec5e8c0e33e2">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[वर्षासाठी]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="381" width="106" height="20" uuid="fdada1c0-8702-4658-a28a-f539b5bb1f1c">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[प्रभाग]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="421" width="106" height="20" uuid="f7af2125-1e28-4dcb-b272-e350e6bd3196">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[परवाना शुल्क रु]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="150" y="361" width="400" height="20" uuid="6b52c3d9-e8f5-450d-b0e3-f99da381f8f2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{updated_trade_type}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="321" width="400" height="20" uuid="5240799c-75ea-423f-876c-0bdc7f0cadae"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address_for_correspondence}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="130" y="321" width="20" height="20" uuid="0f01770f-a3b8-436b-ab3b-2709307aada5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[:-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="361" width="20" height="20" uuid="a2c717a9-1bdb-4c83-974f-f6863d15b0d7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[:-]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="150" y="341" width="400" height="20" uuid="83414a87-9af5-44ea-ad0d-9cd98783ffc7"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{updated_trade_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="130" y="341" width="20" height="20" uuid="dcb92fe1-a6c8-4dd4-aab4-4358e45d1b92"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[:-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="341" width="106" height="20" uuid="a02f819e-34e2-4d7a-ac0b-ee3082595fb7">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[अद्यतनित व्यापार नाव]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="321" width="106" height="20" uuid="28b81358-d3c9-485f-bc5f-4ae3805826a9">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[पूर्वीच्या व्यवसायाचे नाव]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="361" width="106" height="20" uuid="70956c3c-b2c8-4bce-999e-2b40bdb6368a">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[अद्यतनित व्यापार प्रकार]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

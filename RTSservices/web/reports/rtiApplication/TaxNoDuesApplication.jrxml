@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2026-03-24T15:25:06 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MarriageApplication" pageWidth="1000" pageHeight="800" columnWidth="960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="47fea150-c831-4f21-980d-c72cc003dddc">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Egov_Nmc"/>
+	<parameter name="rtiapplrefid" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{rtiapplrefid}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ctx" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{ctx}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="serverHost" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{serverHost}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select 
+	mp.*, 
+    ra.*, 
+    SPLIT_PART(ra.pdf_upload_from_portal, ',', 1) AS first_url,
+    SPLIT_PART(ra.pdf_upload_from_portal, ',', 2) AS second_url
+   FROM 
+    egovrti.property_tax_no_dues mp
+JOIN 
+    egovrti.rti_application ra 
+    ON mp.rti_ref_id = ra.rti_application_id 
+WHERE 
+    mp.rti_ref_id = $P{rtiapplrefid};]]>
+	</queryString>
+	<field name="property_tax_no_dues_id" class="java.lang.Long"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="email_id" class="java.lang.String"/>
+	<field name="mobile_no" class="java.lang.String"/>
+	<field name="property_holder_name" class="java.lang.String"/>
+	<field name="zone_no" class="java.lang.String"/>
+	<field name="ward_no" class="java.lang.String"/>
+	<field name="upin_no" class="java.lang.String"/>
+	<field name="index_no" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="ward_number" class="java.lang.String"/>
+	<field name="ward_name" class="java.lang.String"/>
+	<field name="owner_name" class="java.lang.String"/>
+	<field name="areas_pending" class="java.lang.Double"/>
+	<field name="areas_pending_status" class="java.lang.String"/>
+	<field name="rti_application_ref_id" class="java.lang.String"/>
+	<field name="rti_ref_id" class="java.lang.Long"/>
+	<field name="total_demand" class="java.lang.String"/>
+	<field name="tax_mobile_no" class="java.lang.String"/>
+	<field name="tax_pincode" class="java.lang.String"/>
+	<field name="fees" class="java.lang.Double"/>
+	<field name="house_no" class="java.lang.String"/>
+	<field name="dues_amt" class="java.lang.Double"/>
+	<field name="rti_application_id" class="java.lang.Long"/>
+	<field name="rti_application_number" class="java.lang.String"/>
+	<field name="inward_number" class="java.lang.String"/>
+	<field name="registration_date" class="java.lang.String"/>
+	<field name="received_date" class="java.lang.String"/>
+	<field name="closed_date" class="java.lang.String"/>
+	<field name="subject" class="java.lang.String"/>
+	<field name="information_required" class="java.lang.String"/>
+	<field name="number_of_copies" class="java.lang.Integer"/>
+	<field name="amount_per_copy" class="java.lang.Double"/>
+	<field name="application_cost" class="java.lang.Double"/>
+	<field name="workflow_status" class="java.lang.Integer"/>
+	<field name="final_status" class="java.lang.String"/>
+	<field name="final_status_when_parked" class="java.lang.String"/>
+	<field name="is_application_parked" class="java.lang.Integer"/>
+	<field name="created_date" class="java.lang.String"/>
+	<field name="is_feepaid" class="java.lang.Integer"/>
+	<field name="applicant_name" class="java.lang.String"/>
+	<field name="gender" class="java.lang.Integer"/>
+	<field name="state" class="java.lang.String"/>
+	<field name="phone_number" class="java.lang.String"/>
+	<field name="mobile_number" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="pincode" class="java.lang.Integer"/>
+	<field name="bpl" class="java.lang.Integer"/>
+	<field name="bpl_card_number" class="java.lang.String"/>
+	<field name="address_line1" class="java.lang.String"/>
+	<field name="address_line2" class="java.lang.String"/>
+	<field name="district" class="java.lang.String"/>
+	<field name="postal_charges" class="java.lang.Double"/>
+	<field name="rti_application_ref_number" class="java.lang.String"/>
+	<field name="COLUMN_55" class="java.lang.Long"/>
+	<field name="is_rti_appeal_application" class="java.lang.Integer"/>
+	<field name="has_assigned_user" class="java.lang.Integer"/>
+	<field name="rti_service_id" class="java.lang.Integer"/>
+	<field name="received_mode_id" class="java.lang.Long"/>
+	<field name="fee_master_id" class="java.lang.Long"/>
+	<field name="created_user_id" class="java.lang.Long"/>
+	<field name="assigned_section_id" class="java.lang.Long"/>
+	<field name="assigned_department_id" class="java.lang.Long"/>
+	<field name="application_department_id" class="java.lang.Long"/>
+	<field name="assignee_user_id" class="java.lang.Long"/>
+	<field name="tenancyid" class="java.lang.Long"/>
+	<field name="pdf_files_saved_path" class="java.lang.String"/>
+	<field name="pdf_upload_from_portal" class="java.lang.String"/>
+	<field name="remarks" class="java.lang.String"/>
+	<field name="COLUMN_70" class="java.lang.String"/>
+	<field name="zone" class="java.lang.String"/>
+	<field name="department" class="java.lang.String"/>
+	<field name="template_name" class="java.lang.String"/>
+	<field name="user_mobile_no" class="java.lang.String"/>
+	<field name="mobile_app_user_number" class="java.lang.String"/>
+	<field name="police_noc" class="java.lang.String"/>
+	<field name="fire_noc" class="java.lang.String"/>
+	<field name="traffic_noc" class="java.lang.String"/>
+	<field name="workflow_level_time" class="java.lang.String"/>
+	<field name="workflow_level" class="java.lang.String"/>
+	<field name="zone_map" class="java.lang.String"/>
+	<field name="property_payment_receipt" class="java.lang.String"/>
+	<field name="workflow_comments" class="java.lang.String"/>
+	<field name="rejectionletter" class="java.lang.String"/>
+	<field name="demandletter" class="java.lang.String"/>
+	<field name="noc" class="java.lang.String"/>
+	<field name="citizennoc" class="java.lang.String"/>
+	<field name="first_payment_fees" class="java.lang.String"/>
+	<field name="plantationletter" class="java.lang.String"/>
+	<field name="property_tax_certificate" class="java.lang.String"/>
+	<field name="tax_other_citizen_document_upload" class="java.lang.String"/>
+	<field name="aaplesarkar_user_mobile_no" class="java.lang.String"/>
+	<field name="aaple_user_track_id" class="java.lang.String"/>
+	<field name="aaple_user_id" class="java.lang.String"/>
+	<field name="aaple_service_id" class="java.lang.String"/>
+	<field name="aaple_application_id" class="java.lang.String"/>
+	<field name="service_id" class="java.lang.Integer"/>
+	<field name="application_status" class="java.lang.String"/>
+	<field name="isaplesarkarapp" class="java.lang.Integer"/>
+	<field name="first_url" class="java.lang.String"/>
+	<field name="second_url" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="137" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="-1" width="960" height="30" uuid="e9f952f4-2856-4b42-8f7a-aebfdfcfe365">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="0">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["नागपूर महानगरपालिका, नागपूर"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="29" width="960" height="30" uuid="cc21d5f0-33c7-4e41-ba57-8a392273c115"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Right to Services"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="60" width="960" height="25" uuid="3b50a7ed-ee04-4732-b131-6ff0b73a5cf1">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Property Tax No Due Certificate (मालमत्ता कर थकबाकी नसल्याचा दाखला देणे)
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="220" y="112" width="741" height="25" uuid="9d37b191-db98-44f7-93c2-885fa112a6af">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["क्रमांक : "+$F{rti_application_number} +"    " +"दिनांक :"+$F{created_date}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement stretchType="RelativeToBandHeight" x="20" y="1" width="90" height="90" uuid="61236437-7634-4cb2-8916-b4432189864a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA["../../images/AMC_Logo.jpeg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="841" y="-1" width="90" height="90" uuid="43f45e09-a232-4e92-aa0f-a8409013742e">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA["../../images/g21.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="560" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<line>
+				<reportElement x="-8" y="-35" width="978" height="1" uuid="3222d0d2-7fad-4c5b-ac27-611ad135e454">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement x="0" y="20" width="470" height="25" uuid="c2e9ca0a-7bb8-4b4f-8bfb-d69fd2c83908">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["UPIN No. (UPIN क्र.) : " + ($F{upin_no} == null || $F{upin_no}.isEmpty() ? "-" : $F{upin_no})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="490" y="101" width="470" height="25" uuid="7fd8a069-cd60-47d0-8450-9028760f4be7">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pin Code (पिन कोड) : " + ($F{tax_pincode} == null || $F{tax_pincode}.isEmpty() ? "-" : $F{tax_pincode})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="74" width="960" height="25" uuid="02219026-38e5-42f4-b94d-0073e99b12d1">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Applicant's Mail ID (अर्जदाराचा मेल आयडी) : " +($F{email_id} == null || $F{email_id}.isEmpty() ? "-" : $F{email_id})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="47" width="960" height="25" uuid="869f9b71-d62f-4ce3-a89b-22e3d702503a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Applicant's Name (अर्जदाराचे नाव) : "+($F{name} == null || $F{name}.isEmpty() ? "-" : $F{name})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="490" y="314" width="470" height="25" uuid="6e0b3834-9c7d-4509-b624-ed0b2c583764">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Arrears in Rs.(थकबाकी रु.) : "+$F{areas_pending}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="101" width="470" height="25" uuid="409c8238-3c13-48a9-968d-648af8b317e0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Applicant's Mobile No.(अर्जदाराचा मोबाईल क्र) : "+($F{mobile_no} == null || $F{mobile_no}.isEmpty() ? "-" : $F{mobile_no})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="490" y="341" width="470" height="25" uuid="649b683a-e477-4710-848b-56f190a081d5">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pending Dues (प्रलंबित थकबाकी) :"+$F{dues_amt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="341" width="470" height="25" uuid="43935d29-7886-4e0c-9f3b-679bc4ea5368">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Arrears Status (थकबाकी स्थिती) : "+($F{areas_pending_status} == null || $F{areas_pending_status}.isEmpty() ? "-" : $F{areas_pending_status})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="128" width="960" height="52" uuid="77c000ae-3552-4ef8-8e90-993274b923de">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Name of Property Holders/Occupants (मालमत्ताधारक/ भोगवटादारांचे नाव) :" +($F{property_holder_name} == null || $F{property_holder_name}.isEmpty() ? "-" : $F{property_holder_name} )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="181" width="470" height="25" uuid="f28092c9-afec-4606-92f5-5892ac582233">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["House No.(घर क्र) : "+($F{house_no} == null || $F{house_no}.isEmpty() ? "-" : $F{house_no})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="208" width="470" height="25" uuid="250d0450-df5e-4e16-8e24-a020a08af059">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ward No. (प्रभाग क्र.) : "+($F{ward_number} == null || $F{ward_number}.isEmpty() ? "-" : $F{ward_number})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="490" y="181" width="470" height="25" uuid="9e0f1a0e-1fec-460c-8818-0e7a017e3b8d">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Zone No. (झोन क्र.) : " + ($F{zone_no} == null || $F{zone_no}.isEmpty() ? "-" : $F{zone_no})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="235" width="960" height="50" uuid="0aaab01b-d6f6-4c8c-ac24-fbbd73f07d26">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Address(पत्ता) : " +($F{address} == null || $F{address}.isEmpty() ? "-" : $F{address} )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="490" y="208" width="470" height="25" uuid="a466f426-9e90-4580-8519-f2fddc1a2364">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ward Name (प्रभाग नाव) : " + ($F{ward_name} == null || $F{ward_name}.isEmpty() ? "-" : $F{ward_name})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="490" y="20" width="470" height="25" uuid="a2568447-c49c-4455-8d99-60196b416c73">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Index No. (निर्देशांक क्र.) : " + ($F{index_no} == null || $F{index_no}.isEmpty() ? "-" : $F{index_no})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="287" width="960" height="25" uuid="a18c8b05-86de-4863-8551-6a88550e110f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Owner Name (मालकाचे नाव) : "+($F{owner_name} == null || $F{owner_name}.isEmpty() ? "-" : $F{owner_name})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="314" width="470" height="25" uuid="e9679266-481a-4ab2-9bef-b5d1a9b903f7">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Registered Mobile Number (नोंदणीकृत मोबाईल क्रमांक) : "+($F{tax_mobile_no} == null || $F{tax_mobile_no}.isEmpty() ? "-" : $F{tax_mobile_no})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="391" width="960" height="30" uuid="c18f2f24-7a20-481c-847c-bd426db74482">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Note (नोंद): Upload below file only .pdf(Max upto 5 MB) (खाली फक्त .pdf फाइल अपलोड करा (कमाल ५ MB पर्यंत))"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="428" width="960" height="25" uuid="ad7dad6c-f266-4203-a2c5-df18f1145c8f">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["1. Self Attested Applicant's Id Proof (स्वत: प्रमाणित अर्जदाराचा आयडी पुरावा) :"]]></textFieldExpression>
+			</textField>
+			<textField hyperlinkType="Reference">
+				<reportElement stretchType="RelativeToTallestObject" x="846" y="428" width="114" height="25" forecolor="#2126B5" uuid="7491fa8c-5253-40a6-82e8-c1acd8cbecc0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{first_url} == null ? "No file" : "Download PDF"]]></textFieldExpression>
+				<hyperlinkReferenceExpression><![CDATA[$F{first_url} == null ? null : $P{serverHost} + "/" + $P{ctx} + "/rtsApplication/getPdf.do?fp=" +    URLEncoder.encode(java.util.Base64.getEncoder().encodeToString($F{first_url}.getBytes("UTF-8")), "UTF-8")]]></hyperlinkReferenceExpression>
+			</textField>
+			<textField hyperlinkType="Reference">
+				<reportElement stretchType="RelativeToTallestObject" x="846" y="454" width="114" height="25" forecolor="#3042AB" uuid="08605902-79d7-442b-a831-16d5ee77f345">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{second_url} == null ? "No file" : "Download PDF"]]></textFieldExpression>
+				<hyperlinkReferenceExpression><![CDATA[$F{second_url} == null ? null : $P{serverHost} + "/" + $P{ctx} + "/rtsApplication/getPdf.do?fp=" +    URLEncoder.encode(java.util.Base64.getEncoder().encodeToString($F{second_url}.getBytes("UTF-8")), "UTF-8")]]></hyperlinkReferenceExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="455" width="960" height="25" uuid="3f4e25c5-392c-4cd3-9522-ef5274a4e28d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["2. Any Other Supporting Document (इतर कोणतेही सहाय्यक दस्तावेज) : "]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band>
+			<textField>
+				<reportElement x="0" y="-76" width="960" height="69" uuid="35e08aab-4b17-4dd1-a75a-dac1447cdd82">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Declaration (घोषणा) :- The above mentioned information is true to the best of my knowledge and belief (वर नमूद केलेली माहिती माझ्या माहितीनुसार आणि विश्वासानुसार खरी आहे)."]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

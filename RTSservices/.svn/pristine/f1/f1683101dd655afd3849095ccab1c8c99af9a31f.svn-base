@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2024-07-23T11:30:34 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MTP" pageWidth="935" pageHeight="1000" columnWidth="845" leftMargin="45" rightMargin="45" topMargin="45" bottomMargin="0" uuid="b6b795d4-a222-402b-835e-49680999b8ba">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="mtpId" class="java.lang.String"/>
+	<parameter name="REPORT_NMC_LOGO_PATH" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT mtp.rti_appl_ref_no  ,mtp.place_full_adrresss  , mtp.name_place , mtp.ownername ,mtp.pregnancy_termination  
+FROM egovrti.mtp_registration_certificate  mtp
+WHERE mtp.mtpid  =  $P{mtpId};]]>
+	</queryString>
+	<field name="rti_appl_ref_no" class="java.lang.String"/>
+	<field name="place_full_adrresss" class="java.lang.String"/>
+	<field name="name_place" class="java.lang.String"/>
+	<field name="ownername" class="java.lang.String"/>
+	<field name="pregnancy_termination" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="258" splitType="Stretch">
+			<staticText>
+				<reportElement x="332" y="58" width="210" height="37" uuid="5434ebe9-9ea8-45b5-9c38-e3c3ba9d62b7"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[महाराष्ट्र शासन ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="287" y="95" width="300" height="40" uuid="4a17e671-d98d-4f5c-ae12-9402347acfcf"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[सार्वजनिक आरोग्य विभाग]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="255" y="136" width="420" height="32" uuid="39629c6f-096a-47e9-bc4e-187193af49cd"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="22" isBold="false"/>
+				</textElement>
+				<text><![CDATA[नागपूर महानगरपालिका आरोग्य विभाग, नागपूर]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="168" width="695" height="32" uuid="bcdbaa8c-2966-4700-9236-5dd0924b92d1"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[(वैद्यकिय गर्भावस्था समाप्त करण्यासंबंधी नियम २००३ च्या नियम ५ मधील उपनियम ६ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="326" y="200" width="320" height="38" uuid="d964ba8d-2508-4668-9783-0a83f4aa0d6a"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[अन्वये वितरीत केलेले)
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-35" y="-19" width="910" height="1" uuid="8b6f6ffa-9978-40d9-b6b8-939dbc9648aa"/>
+			</line>
+			<line>
+				<reportElement x="-36" y="-19" width="2" height="277" uuid="3e07a8db-ee77-4724-bb9c-02dfa1b830b5"/>
+			</line>
+			<image>
+				<reportElement x="40" y="40" width="85" height="110" uuid="4fe7db27-8471-404b-9856-b0133a62a5e2"/>
+				<imageExpression><![CDATA[$P{REPORT_NMC_LOGO_PATH}]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="877" y="-19" width="1" height="229" uuid="cd28bd25-30f8-40a6-94ad-4cd0791d4a4e"/>
+			</line>
+			<line>
+				<reportElement x="1250" y="742" width="100" height="-484" uuid="b1b33648-7dc9-46bc-a607-1645e135e1f5"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="176" splitType="Stretch">
+			<staticText>
+				<reportElement x="322" y="-10" width="230" height="37" uuid="97247c9c-a025-49c5-b548-5d88907cd1ec"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[मान्यतेचे प्रमाणपत्र]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="27" width="690" height="30" uuid="0abc0d17-018b-4703-ad92-c0f2cd801c79"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[खालील अनुसुचित वर्णन करण्यात आलेल्या जागेस वैद्यकिय रित्या गर्भावस्थेची समाप्ती]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="108" y="59" width="710" height="30" uuid="c771504b-4735-45d6-8a28-b85fb608f636"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[करण्यासंबंधीत अधिनियम १९७१ (सन १९७१ च्या अधिनियम ३४) याच्या प्रयोजनार्थ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="108" y="90" width="54" height="30" uuid="abe61ee3-2325-40fa-bc0b-7222d6cfb2c6"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[याद्वारे  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="120" width="110" height="40" uuid="5d730d9a-a873-44dc-90ae-9bed6eb4ec9e"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[अनुसूची]]></text>
+			</staticText>
+			<line>
+				<reportElement x="336" y="20" width="197" height="1" uuid="452cc639-0670-4c91-a8f1-2f5b8212fc9a"/>
+			</line>
+			<line>
+				<reportElement x="-34" y="0" width="1" height="175" uuid="32004834-ca02-41e1-9d07-4eb192546f8b"/>
+			</line>
+			<line>
+				<reportElement x="877" y="-47" width="1" height="206" uuid="f28ffaa9-3a5e-4b29-b3e1-363a7a918095"/>
+			</line>
+			<staticText>
+				<reportElement x="202" y="90" width="600" height="30" uuid="3cc8177c-0c58-46fb-8773-5207e7abc371"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[आठवड्यांपर्यंत वैद्यकिय गर्भपात करण्यासाठी मान्यता देण्यात येत आहे.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="164" y="90" width="39" height="31" uuid="87e34297-e217-40fd-ba95-aa28798e67b7"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pregnancy_termination}== "upTo12Weeks"? "12":12 +"and" + $F{pregnancy_termination}== "upTo24Weeks"? "20":20]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="34" splitType="Stretch">
+			<line>
+				<reportElement x="-34" y="0" width="1" height="34" uuid="c93fca90-0868-486a-b509-9d4b4ba828e7"/>
+			</line>
+			<textField>
+				<reportElement x="296" y="1" width="528" height="30" uuid="0d90f134-7781-4557-8a5b-5d93532ccd0e"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="18" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name_place}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="327" splitType="Stretch">
+			<line>
+				<reportElement x="876" y="-50" width="1" height="150" uuid="f3f23123-a26a-41bd-9b34-493bc69a1102"/>
+			</line>
+			<line>
+				<reportElement x="-34" y="0" width="1" height="100" uuid="a4c08771-d71f-4e37-b665-434c5b089d74"/>
+			</line>
+			<line>
+				<reportElement x="-34" y="97" width="1" height="140" uuid="872737b0-d789-42ec-a95e-994d987c1970"/>
+			</line>
+			<line>
+				<reportElement x="876" y="100" width="1" height="201" uuid="0d240405-04e2-416f-a67c-b75c4f52486c"/>
+			</line>
+			<staticText>
+				<reportElement x="61" y="263" width="100" height="30" uuid="970965f8-8760-445c-8e37-9a993a37944c"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[नागपूर.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="100" width="211" height="30" uuid="d7415e7b-8a60-46f1-8756-c7734a9b0d47"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[स्त्रीरोग व प्रसुती शास्त्रज्ञ :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="108" y="-36" width="176" height="34" uuid="60aca2f6-04e6-4fa3-af92-6c52145a3655"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[जागेचे नांव ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="-3" width="175" height="31" uuid="f2a7cd9b-2a62-4ebc-b7d7-ba47ab88ec3a"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[पत्ता आणि इतर वर्णने ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="27" width="176" height="32" uuid="5a5def23-feb2-4402-b993-d409ac3d016f"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[मालकाचे नांव ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="496" y="260" width="199" height="36" uuid="7c454be4-ebcc-4668-b566-0f824f840bb3"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[वैद्यकीय आरोग्य अधिकारी ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="482" y="294" width="268" height="33" uuid="ca1c55e7-423a-4654-b297-e248fb9a6d30"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[नागपूर महानगरपालिका, नागपूर]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="295" y="-2" width="526" height="30" uuid="2efaa9a2-bcf0-4c39-a5b1-1cc3d0ad0af1"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="18" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{place_full_adrresss}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="295" y="29" width="526" height="30" uuid="e8949e11-c30c-4a23-8d72-72734a625a7f"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="18" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ownername}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement isPrintRepeatedValues="false" x="463" y="101" width="330" height="31" uuid="3019e500-cc38-4a56-a28c-bac119ccd3c3">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="mtpId">
+					<subreportParameterExpression><![CDATA[$P{mtpId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["MTPSubrReport.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="510" y="-468" width="334" height="38" uuid="33f7d70c-cfdb-43b7-b72b-48274d1669e5"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Arial Unicode MS" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["क्रमांक : "+$F{rti_appl_ref_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="293" width="300" height="33" uuid="2b7b466f-74cc-4d66-b3d0-a1c6406a7234"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA["दिनांक: "+new SimpleDateFormat("dd-MM-yyyy").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="285" y="-36" width="10" height="33" uuid="2d079e50-9b3d-44aa-a186-6a1d8711e7d3"/>
+				<textElement>
+					<font fontName="SansSerif" size="20"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="28" width="10" height="33" uuid="5e51ff1e-3032-414f-8127-20693c2c4db4"/>
+				<textElement>
+					<font fontName="SansSerif" size="20"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="-4" width="10" height="33" uuid="9166c0ee-b74a-4f46-8c22-06afcae2dc6a"/>
+				<textElement>
+					<font fontName="SansSerif" size="20"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="67" splitType="Stretch">
+			<line>
+				<reportElement x="-34" y="-220" width="1" height="248" uuid="d0142e94-2c01-42b1-8535-147a29d93dff"/>
+			</line>
+			<line>
+				<reportElement x="876" y="-128" width="1" height="155" uuid="0f655148-3e67-40ff-9ce5-384160221f7f"/>
+			</line>
+			<line>
+				<reportElement x="-32" y="28" width="911" height="1" uuid="f2f947cb-99f9-4699-936a-42a85b175d5c"/>
+			</line>
+			<staticText>
+				<reportElement x="195" y="30" width="450" height="30" uuid="fdec7652-1d2d-4cde-9921-e988da11751f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[हे प्रमाणपत्र दर्शनिय भागात ठळक पणे प्रदर्शीत करावे.]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</summary>
+</jasperReport>

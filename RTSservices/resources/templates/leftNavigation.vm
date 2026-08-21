@@ -1,0 +1,611 @@
+<div class="sidebar-user-details">
+  <div class="user-profile">
+	<div class="sidebar-content">
+	  <div class="sidebar-menu">		
+				<ul>
+				    #*
+					#if($rolesPermissions.containsKey("/stage/")||
+						$rolesPermissions.containsKey("/documentmaster/"))
+					<li id="Common-Masters">
+						<a  href="#">$messageSource.getMessage("Menu.common.masters.heading")</a>
+						<ul>
+							#if ($rolesPermissions.containsKey("/stage/"))
+							<li id="stage"><a href="$contextRoot/stage/listStage.do">$messageSource.getMessage("Menu.common.masters.Stage")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/documentmaster/"))
+							<li id="documentmaster"><a href="$contextRoot/documentmaster/listDocumentMaster.do">$messageSource.getMessage("Menu.common.masters.DocumentMaster")</a></li>
+							#end								
+						</ul>
+					</li>
+					#end
+					*#
+					
+				#* #if ($rolesPermissions.containsKey("/state/") || 
+						$rolesPermissions.containsKey("/district/") ||  
+						$rolesPermissions.containsKey("/taluka/") || 
+						$rolesPermissions.containsKey("/city/") ||  
+						$rolesPermissions.containsKey("/ward/") || 						
+						$rolesPermissions.containsKey("/nodemaster/") || 
+						$rolesPermissions.containsKey("/sector/") ||
+						$rolesPermissions.containsKey("/plot/")) 	
+						<li id="Location-Masters">
+						<a  href="#">$messageSource.getMessage("Menu.location.masters.heading")</a>
+						<ul>
+							#if ($rolesPermissions.containsKey("/state/"))
+							<li id="state"><a href="$contextRoot/state/listState.do">$messageSource.getMessage("Menu.GIS.masters.State")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/district/"))	
+							<li id="district"><a href="$contextRoot/district/listDistrict.do">$messageSource.getMessage("Menu.GIS.masters.District")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/taluka/"))
+							<li id="taluka"><a href="$contextRoot/taluka/listTaluka.do">$messageSource.getMessage("Menu.GIS.masters.Taluka")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/city/"))
+							<li id="city"><a href="$contextRoot/city/listCity.do">$messageSource.getMessage("Menu.GIS.masters.City")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/ward/"))
+							<li id="ward"><a href="$contextRoot/ward/listWard.do">$messageSource.getMessage("Menu.GIS.masters.Ward")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/nodemaster/"))
+							<li id="nodemaster"><a href="$contextRoot/nodemaster/listNodeMaster.do">$messageSource.getMessage("Menu.GIS.masters.Node")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/sector/"))
+							<li id="sector"><a href="$contextRoot/sector/listSector.do">$messageSource.getMessage("Menu.GIS.masters.Sector")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/plottype/"))
+							<li id="plottype"><a href="$contextRoot/plottype/listPlotType.do">$messageSource.getMessage("Menu.GIS.masters.PlotType")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/plot/"))
+							<li id="plot"><a href="$contextRoot/plot/listPlot.do">$messageSource.getMessage("Menu.GIS.masters.Plot")</a></li>
+							#end
+						</ul>
+					</li>
+					#end  *#
+					
+					
+			
+					
+					
+					 <div class="sidebar-menu">
+                   <ul>
+					 <li class="   ">
+					   <a href="$contextRoot/dashBoard/openDashBoard.do">
+					     <i class="icon-home"></i>
+					     <span class="menu-text">Dashboard(Reports)</span>
+						
+					   </a>	
+					   					 
+					 </li>
+					 
+				
+					#if ($rolesPermissions.containsKey("/workflowtemplate/") || 
+						$rolesPermissions.containsKey("/workflowtemplateusermapping/") )
+					<li class="sidebar-dropdown">
+					   <a href="#">
+						 <i class="icon-settings"></i>
+						 <span class="menu-text">$messageSource.getMessage("Menu.Workflow.Masters.heading")</span>
+					   </a>
+                      <div class="sidebar-submenu">
+					    <ul>												
+							#if ($rolesPermissions.containsKey("/workflowtemplate/"))
+							<li id="workflowtemplate"><a href="$contextRoot/workflowtemplate/listWorkflowTemplate.do">$messageSource.getMessage("Menu.Workflow.template")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/workflowtemplateusermapping/"))
+							<li id="workflowtemplateusermapping"><a href="$contextRoot/workflowtemplateusermapping/listWorkflowTemplateUserMapping.do">$messageSource.getMessage("Menu.Workflow.tempalte.mappings")</a></li>
+							#end
+						</ul>
+					  </div>	
+					</li>
+					#end	
+									
+				#*	#if ($rolesPermissions.containsKey("/feemaster/"))
+					<li class="sidebar-dropdown">
+					   <a href="#">
+						 <i class="icon-settings"></i>
+						 <span class="menu-text">$messageSource.getMessage("Menu.rti.heading")</span>
+					   </a>
+                      <div class="sidebar-submenu">
+					    <ul>					
+							#if ($rolesPermissions.containsKey("/feeType/"))
+							<li id="feetype"><a href="$contextRoot/feeType/listFeeType.do">$messageSource.getMessage("Menu.rti.feeType")</a></li>
+							#end								
+							#if ($rolesPermissions.containsKey("/feemaster/"))
+							<li id="feemaster"><a href="$contextRoot/feemaster/listFeeMaster.do">$messageSource.getMessage("Menu.rti.feemaster")</a></li>
+							<li id="receivedMode"><a href="$contextRoot/receivedMode/listReceivedMode.do">Application Received Mode</a></li>
+							 <li id="receivedMode"><a href="$contextRoot/deliveryMode/listDeliveryMode.do">Application Delivery Mode</a></li> 
+							#end
+						</ul>
+					  </div>	
+					</li>
+					#end  *#
+					
+						#if ($rolesPermissions.containsKey("/workflowtemplate/") || 
+						$rolesPermissions.containsKey("/workflowtemplateusermapping/") )
+					<li class="sidebar-dropdown">
+					   <a href="#">
+						 <i class="icon-settings"></i>
+						 <span class="menu-text">$messageSource.getMessage("Menu.User.masters.heading")</span>
+					   </a>
+                      <div class="sidebar-submenu"> 
+					    <ul>
+						#if ($rolesPermissions.containsKey("/user/"))
+							<li id="user"><a href="$contextRoot/user/listUser.do">$messageSource.getMessage("Menu.User.user")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/role/"))
+							<li id="role"><a href="$contextRoot/role/listRole.do">$messageSource.getMessage("Menu.User.Role")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/permission/"))	
+							<li id="permission"><a href="$contextRoot/permission/listPermission.do">$messageSource.getMessage("Menu.User.Permission")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/permissiongroup/"))
+							<li id="permissiongroup"><a href="$contextRoot/permissiongroup/listPermissionGroup.do">$messageSource.getMessage("Menu.User.PermissionGroup")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/department/"))
+							<li id="department"><a href="$contextRoot/department/listDepartment.do">$messageSource.getMessage("Menu.User.Department")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/designation/"))
+							<li id="designation"><a href="$contextRoot/designation/listDesignation.do">$messageSource.getMessage("Menu.User.Designation")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/salutation/"))
+							<li id="salutation"><a href="$contextRoot/salutation/listSalutation.do">$messageSource.getMessage("Menu.User.Salutation")</a></li>
+							#end 
+						
+						</ul>
+					  </div>	
+					</li>
+					#end
+					
+					
+					
+					 #*
+					#if ($rolesPermissions.containsKey("/rtiapplication/"))
+						<li id="RTI Transactons">
+							<a href="#">$messageSource.getMessage("Menu.rti.transactions.heading")</a>
+						<ul>	
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSBirthApplication.do">$messageSource.getMessage("Menu.rti.Birth")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSDeathApplication.do">$messageSource.getMessage("Menu.rti.Death")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSMarriageApplication.do">$messageSource.getMessage("Menu.rti.Marriage")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSDogApplication.do">$messageSource.getMessage("Menu.rti.Dog")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTreeApplication.do">$messageSource.getMessage("Menu.rti.Tree")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSZoneApplication.do">$messageSource.getMessage("Menu.rti.Zone")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSMandapApplication.do">$messageSource.getMessage("Menu.rti.Mandap")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSMobileTowerApplication.do">$messageSource.getMessage("Menu.rti.Mobile")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSOccupancyApplication.do">$messageSource.getMessage("Menu.rti.Occupancy")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSPartMapApplication.do">$messageSource.getMessage("Menu.rti.PartMap")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicenseNameChange.do">$messageSource.getMessage("Menu.rti.Trade")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicenseTypeChange.do">$messageSource.getMessage("Menu.rti.TradeType")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicenseCancellation.do">$messageSource.getMessage("Menu.rti.TradeCancel")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicenseDuplicateCopy.do">$messageSource.getMessage("Menu.rti.TradeDuplicate")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicenseOutdatedRenewal.do">$messageSource.getMessage("Menu.rti.TradeOutdatedRenewal")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicenceNew.do">$messageSource.getMessage("Menu.rti.TradeNew")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicenceRenewal.do">$messageSource.getMessage("Menu.rti.TradeRenewal")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicencePartnerChange.do">$messageSource.getMessage("Menu.rti.TradeLicencePartner")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicensePartnerCountUpdate.do">$messageSource.getMessage("Menu.rti.TradeLicencePartnerCountUpdate")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSWaterDisconnection.do">$messageSource.getMessage("Menu.rti.WaterDisconnection")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSChangeInOwnershipType.do">$messageSource.getMessage("Menu.rti.ChangeInWater")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicenseTransfer.do">$messageSource.getMessage("Menu.rti.TradeLicenseTransfer")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSNOCOfTradeApplication.do">$messageSource.getMessage("Menu.rti.NOCOfTrade")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSWaterNoDueApplication.do">$messageSource.getMessage("Menu.rti.Water")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSPartitionOfPropertyApplication.do">$messageSource.getMessage("Menu.rti.PartitionOfProperty")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSNewlyConstructedPropertyApplication.do">$messageSource.getMessage("Menu.rti.NewlyConstructedProperty")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSNewWaterConnectionApplication.do">$messageSource.getMessage("Menu.rti.NewWaterConnection")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSWaterQualityComplaint.do">$messageSource.getMessage("Menu.rti.WaterQualityComplaint")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSNewWaterConnectionUsageApplication.do">$messageSource.getMessage("Menu.rti.WaterConnectionUsage")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSBuildingApplication.do">$messageSource.getMessage("Menu.rti.Build")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/rtiapplication/"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSLayoutOfBuildingApplication.do">$messageSource.getMessage("Menu.rti.Layout")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/inbox/"))
+							<li id="user"><a href="$contextRoot/workflow/listTasks.do">$messageSource.getMessage("Menu.rti.inbox")</a></li>
+							#end 
+							
+							
+						</ul>
+					</li>
+					#end *#
+					
+					<li class="sidebar-dropdown">
+					   <a href="#">
+						 <i class="icon-settings"></i>
+						 <span class="menu-text">$messageSource.getMessage("Zone Change")</span>
+					   </a>
+                      <div class="sidebar-submenu">
+					    <ul>
+							
+							<li id="user"><a href="$contextRoot/rtsapplication/listApplicationTransfer.do">$messageSource.getMessage("Zone Change")</a></li>
+												    					  #if ($rolesPermissions.containsKey("/listRTSFireNOCApplication"))
+							<li> <a href="$contextRoot/rtsapplication/listRTSFireServiceBifurgation.do">$messageSource.getMessage("Fire Applications DashBoard")</a></li>
+													 #end
+							
+						</ul>
+							
+					  </div>	
+					</li>
+					
+					
+					<li class="sidebar-dropdown">
+					   <a href="#">
+						 <i class="icon-settings"></i>
+						 <span class="menu-text">$messageSource.getMessage("Menu.rti.transactions.heading")</span>
+					   </a>
+                      <div class="sidebar-submenu"> 
+					    <ul>
+							
+							
+							#if ($rolesPermissions.containsKey("/listRTSBirthApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSBirthApplication.do">$messageSource.getMessage("Menu.rti.Birth")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSDeathApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSDeathApplication.do">$messageSource.getMessage("Menu.rti.Death")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSMarriageApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSMarriageApplication.do">$messageSource.getMessage("Menu.rti.Marriage")</a></li>
+							#end
+							
+							
+						#if ($rolesPermissions.containsKey("/listRTSNursingHome"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSNursingHome.do">$messageSource.getMessage("Menu.rti.NursingHome")</a></li>
+							#end
+							
+						 #if ($rolesPermissions.containsKey("/listRTSRenewalNursingHome"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSRenewalNursingHome.do">$messageSource.getMessage("Menu.rti.NursingHomeRenewal")</a></li>
+							#end 
+							
+							#if ($rolesPermissions.containsKey("/listNursingHomeChangesApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listNursingHomeChangesApplication.do">$messageSource.getMessage("Menu.rti.HomeChnages")</a></li>
+							#end
+							
+							#if ($rolesPermissions.containsKey("/listRTSMTPApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSMTPApplication.do">$messageSource.getMessage("Menu.rti.mtpRegistrationCertificate")</a></li>
+							#end
+							
+		                   #if ($rolesPermissions.containsKey("/listRTSBiologicalWasteDisposal"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSBiologicalWasteDisposal.do">$messageSource.getMessage("Menu.rti.Bio")</a></li>
+							#end
+							
+							#if ($rolesPermissions.containsKey("/listRTSDogApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSDogApplication.do">$messageSource.getMessage("Menu.rti.Dog")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSDogRenewalApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSDogRenewalApplication.do">$messageSource.getMessage("Menu.rti.DogRenewal")</a></li>
+							#end
+							<!--#if ($rolesPermissions.containsKey("/listRTSTreeApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTreeApplication.do">$messageSource.getMessage("Menu.rti.Tree")</a></li>
+							#end-->
+							#if ($rolesPermissions.containsKey("/listRTSZoneApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSZoneApplication.do">$messageSource.getMessage("Menu.rti.Zone")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSPartMapApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSPartMapApplication.do">$messageSource.getMessage("Menu.rti.PartMap")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSMandapApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSMandapApplication.do">$messageSource.getMessage("Menu.rti.Mandap")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSTradeLicenseNameChange"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicenseNameChange.do">$messageSource.getMessage("Menu.rti.Trade")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSTradeLicenseTypeChange"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicenseTypeChange.do">$messageSource.getMessage("Menu.rti.TradeType")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSTradeLicenseCancellation"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicenseCancellation.do">$messageSource.getMessage("Menu.rti.TradeCancel")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSTradeLicenseDuplicateCopy"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicenseDuplicateCopy.do">$messageSource.getMessage("Menu.rti.TradeDuplicate")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSTradeLicenseOutdatedRenewal"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicenseOutdatedRenewal.do">$messageSource.getMessage("Menu.rti.TradeOutdatedRenewal")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSTradeLicenceNew"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicenceNew.do">$messageSource.getMessage("Menu.rti.TradeNew")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSTradeLicenceRenewal"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicenceRenewal.do">$messageSource.getMessage("Menu.rti.TradeRenewal")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSTradeLicencePartnerChange"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicencePartnerChange.do">$messageSource.getMessage("Menu.rti.TradeLicencePartner")</a></li>
+							#end
+							
+							#if ($rolesPermissions.containsKey("/listRTSTradeLicensePartnerCountUpdate"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicensePartnerCountUpdate.do">$messageSource.getMessage("Menu.rti.TradeLicencePartnerCountUpdate")</a></li>
+							#end
+							
+							#if ($rolesPermissions.containsKey("/listRTSTradeLicenseTransfer"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTradeLicenseTransfer.do">$messageSource.getMessage("Menu.rti.TradeLicenseTransfer")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSNOCOfTradeApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSNOCOfTradeApplication.do">$messageSource.getMessage("Menu.rti.NOCOfTrade")</a></li>
+							#end
+							
+							<!--#if ($rolesPermissions.containsKey("/listRTSOccupancyApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSOccupancyApplication.do">$messageSource.getMessage("Menu.rti.Occupancy")</a></li>
+							#end-->
+							
+							
+							 #if ($rolesPermissions.containsKey("/listRTSNewWaterConnectionApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSNewWaterConnectionApplication.do">$messageSource.getMessage("Menu.rti.NewWaterConnection")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSWaterDisconnection"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSWaterDisconnection.do">$messageSource.getMessage("Menu.rti.WaterDisconnection")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSChangeInOwnershipType"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSChangeInOwnershipType.do">$messageSource.getMessage("Menu.rti.ChangeInWater")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSNewWaterConnectionUsageApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSNewWaterConnectionUsageApplication.do">$messageSource.getMessage("Menu.rti.WaterConnectionUsage")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSWaterConnectionTypeChange"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSWaterConnectionTypeChange.do">$messageSource.getMessage("Menu.rti.WaterConnectionTypeChange")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSWaterReconnection"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSWaterReconnection.do">$messageSource.getMessage("Menu.rti.WaterReconnection")</a></li>
+							#end
+						<!-- #if ($rolesPermissions.containsKey("/listRTSWaterMeterComplaint"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSWaterMeterComplaint.do">$messageSource.getMessage("Menu.rti.WaterMeterComplaint")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSIllegalWaterConnection"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSIllegalWaterConnection.do">$messageSource.getMessage("Menu.rti.IllegalWaterConn")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSWaterQualityComplaint"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSWaterQualityComplaint.do">$messageSource.getMessage("Menu.rti.WaterQualityComplaint")</a></li>
+							#end
+		                   #if ($rolesPermissions.containsKey("/listRTSWaterPressure"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSWaterPressure.do">$messageSource.getMessage("Menu.rti.WaterPressure")</a></li>
+							#end -->
+							#if ($rolesPermissions.containsKey("/listRTSWaterNoDueApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSWaterNoDueApplication.do">$messageSource.getMessage("Menu.rti.WaterNoDueCertificate")</a></li>
+							#end
+							
+					
+							<!--#if ($rolesPermissions.containsKey("/listRTSPartitionOfPropertyApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSPartitionOfPropertyApplication.do">$messageSource.getMessage("Menu.rti.PartitionOfProperty")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSNewlyConstructedPropertyApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSNewlyConstructedPropertyApplication.do">$messageSource.getMessage("Menu.rti.NewlyConstructedProperty")</a></li>
+							#end-->
+						<!-- #if ($rolesPermissions.containsKey("/listRTSProvideTaxUtara"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSProvideTaxUtara.do">$messageSource.getMessage("Menu.rti.ProvidetaxUtara")</a></li>
+							#end -->
+							#if ($rolesPermissions.containsKey("/listRTSPropertyNoDuesCertificate"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSPropertyNoDuesCertificate.do">$messageSource.getMessage("Menu.rti.PropertyNoDuesCertificate")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSPropertyTransferRegistration"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSPropertyTaxTRansferRegistration.do">$messageSource.getMessage("Menu.rti.PropertyTansferRegistration")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSNewTaxRecovery"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSNewTaxRecovery.do">$messageSource.getMessage("Menu.rti.NewTaxRecovery")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSPropertyAssessmentTranscript"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSPropertyAssessmentTranscriptApplication.do">$messageSource.getMessage("Menu.rti.PropertyAssessmentTranscript")</a></li>
+							#end
+							<!-- #if ($rolesPermissions.containsKey("/listRTSPropertySelfAssessment"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSPropertySelfAssessment.do">$messageSource.getMessage("Menu.rti.PropertySelfAssesssment")</a></li>
+							#end 
+							#if ($rolesPermissions.containsKey("/listRTSNonResidentialProperty"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSNonResidentialProperty.do">$messageSource.getMessage("Menu.rti.NonResidentialProperty")</a></li>
+							#end -->
+							#if ($rolesPermissions.containsKey("/listRTSPropertyTaxExemption"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSPropertyTaxExemption.do">$messageSource.getMessage("Menu.rti.PropertytaxExemption")</a></li>
+							#end
+							<!-- #if ($rolesPermissions.containsKey("/listRTSPropertyComplaint"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSPropertyComplaint.do">$messageSource.getMessage("Menu.rti.PropertyComplaint")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSPropertyTaxDemand"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSPropertyTaxDemand.do">$messageSource.getMessage("Menu.rti.PropertyTaxDemand")</a></li>
+							#end -->
+							
+							
+							
+							<!--#if ($rolesPermissions.containsKey("/listRTSBuildingApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSBuildingApplication.do">$messageSource.getMessage("Menu.rti.Build")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSLayoutOfBuildingApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSLayoutOfBuildingApplication.do">$messageSource.getMessage("Menu.rti.Layout")</a></li>
+							#end-->
+							 #if ($rolesPermissions.containsKey("/listRTSFireNOCApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSfireApplication.do">$messageSource.getMessage("Menu.rti.FireRecommendationLatter")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSFireComplianceCertificate"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSFireComplianceCertificate.do">$messageSource.getMessage("Menu.rti.FireComplianceCertificate")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/inbox/"))
+							<li id="user"><a href="$contextRoot/workflow/listTasks.do">$messageSource.getMessage("Menu.rti.inbox")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSTreeCuting"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTreeCuttingApplication.do">$messageSource.getMessage("Menu.rti.Tree")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSTreeTrimming"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSTreeTrimming.do">$messageSource.getMessage("Menu.rti.TreeTrimming")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSGaneshMandapApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSGaneshMandapApplication.do">$messageSource.getMessage("Menu.rti.GaneshMandapPermission")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSGaneshMandapApplication"))
+							<li id="user"><a href="$contextRoot/rtsapplication/listRTSDurgaUtsavMandapApplication.do">$messageSource.getMessage("Menu.rti.DurgaUtsavMandapPermission")</a></li>
+							#end
+						#if ($rolesPermissions.containsKey("/listRTSGaneshMandapApplication"))
+						   <li id="user"><a href="$contextRoot/rtsapplication/listRTSDikshaBhumiMandapApplication.do">$messageSource.getMessage("Menu.rti.DikshaBhumiMandapPermission")</a></li>
+							#end
+							#if ($rolesPermissions.containsKey("/listRTSFireCrackersShopLicense"))
+						   <li id="user"><a href="$contextRoot/rtsapplication/listRTSFireCrackersShopLicense.do">$messageSource.getMessage("
+Temporary Fireworks License NOC")</a></li>
+							#end
+														 <li id="user"><a href="$contextRoot/rtsapplication/miscForm.do">$messageSource.getMessage("Miscellaneous Form")</a></li>
+
+						</ul>
+					  </div>	
+					</li>
+					
+					#if ($rolesPermissions.containsKey("/workflowtemplate/") || 
+						$rolesPermissions.containsKey("/workflowtemplateusermapping/") )
+					<li class="sidebar-dropdown">
+					   <a href="#">
+						 <i class="icon-settings"></i>
+						 <span class="menu-text">$messageSource.getMessage("Online Transactions")</span>
+					   </a>
+                      <div class="sidebar-submenu"> 
+					    <ul>
+							
+							
+							<li id="user"><a href="$contextRoot/rtsapplication/failedCollectionEdit.do">$messageSource.getMessage("Menu.rti.failedtransactions")</a></li>
+								
+						</ul>
+					  </div>	
+					</li>
+					#end
+							
+				#*	<li class="sidebar-dropdown">
+					   <a href="#">
+						 <i class="icon-settings"></i>
+						 <span class="menu-text">$messageSource.getMessage("Menu.RTIServices.heading")</span>
+					   </a>
+                      <div class="sidebar-submenu">
+					    <ul>
+							#if ($rolesPermissions.containsKey("/services/"))
+							
+							<li id="services">
+								<a href="${contextRoot}/services/birthRegistrationCertificate.do">$messageSource.getMessage("Menu.rti.transactions.Services")</a>
+							</li>
+							#end						
+						</ul>
+					  </div>	
+					</li>*#
+					
+							
+					#*					
+					#if ($rolesPermissions.containsKey("/corereports/") ||
+						$rolesPermissions.containsKey("/reports/"))
+					<li class="sidebar-dropdown">
+					   <a href="#">
+						 <i class="icon-settings"></i>
+						 <span class="menu-text">$messageSource.getMessage("Menu.Reports.heading")</span>
+					   </a>
+                      <div class="sidebar-submenu">
+					    <ul>
+						
+							
+							#if ($rolesPermissions.containsKey("/reports/"))
+							<li id="reports">
+								<a href="${contextRoot}/reports/listAuditReports.do">$messageSource.getMessage("Menu.Reports.AuditReports")</a>
+							</li>
+							#end
+							#if ($rolesPermissions.containsKey("/corereports/"))
+							<li id="corereports">
+								<a href="${contextRoot}/corereports/listCoreReports.do">$messageSource.getMessage("Menu.Reports.RTIReports")</a>
+							</li>
+							#end 
+							#if ($rolesPermissions.containsKey("/reports/"))
+							<li id="recentreports">
+								<a href="${contextRoot}/reports/recentlyGeneratedReports.do">$messageSource.getMessage("Menu.Reports.RecentlyGeneratedReports")</a>
+							</li>
+							#end
+							
+							<li id="corereports"><a href="${contextRoot}/rtiApplicationReport/listRTIApplicationReports.do">RTI Reports</a></li>
+						</ul>
+					  </div>	
+					</li>
+					#end
+					*#	
+					
+					
+					
+					<li class="sidebar-dropdown">
+					   <a href="#">
+						 <i class="icon-settings"></i>
+						 <span class="menu-text">$messageSource.getMessage("Menu.Reports.heading")</span>
+					   </a>
+                      <div class="sidebar-submenu">
+					    <ul>
+							
+							<li id="user"><a href="$contextRoot/rtsapplication/ganeshReport.do">$messageSource.getMessage("Ganesh Report")</a></li>
+														<li id="user"><a href="$contextRoot/rtsapplication/durgaUtsavReport.do">$messageSource.getMessage("Durga Utsav Report")</a></li>
+														
+							<li id="report4"><a href="$contextRoot/rtiapplication/listStatueCleaning.do">$messageSource.getMessage("Statue Cleaning Report")</a></li>
+						
+					  </div>	
+													<li id="user"><a href="$contextRoot/rtsapplication/listAuditReports.do">Reports</a></li>
+
+						</ul>
+					  </div>	
+					</li>
+					
+					<li class="sidebar-dropdown">
+					   <a href="#">
+						 <i class="icon-settings"></i>
+						 <span class="menu-text">$messageSource.getMessage("Offline Collection")</span>
+					   </a>
+                      <div class="sidebar-submenu">
+					    <ul>
+							
+							<li id="user"><a href="$contextRoot/rtsapplication/searchApplicaationId.do">$messageSource.getMessage("Collection")</a></li>	
+							
+						</ul>
+					  </div>	
+					</li>
+							
+				</ul>
+				
+      		</div>
+   		</div>
+   </div>
+</div>

@@ -1,0 +1,1154 @@
+package com.mars.rti.controller;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.jbpm.api.TaskService;
+import org.jbpm.api.task.Task;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mars.common.controller.AapleSarkarPortalIntegrationNagpur;
+import com.mars.common.model.User;
+import com.mars.common.model.UserRegistrationDetails;
+import com.mars.common.service.UserRegistrationService;
+import com.mars.common.service.UserService;
+import com.mars.common.utils.CommonUtils;
+import com.mars.common.utils.SendEmail;
+import com.mars.common.utils.SendSMS;
+import com.mars.common.utils.SessionUser;
+import com.mars.rti.model.RTIApplication;
+import com.mars.rti.model.RTIApplicationDetails;
+import com.mars.rti.model.WaterConnectionNoDue;
+import com.mars.rti.model.WaterDisconnection;
+import com.mars.rti.model.WaterDisconnectionPOJO;
+import com.mars.rti.service.RTIApplicationService;
+import com.mars.rti.service.WaterConnectionNoDueService;
+import com.mars.rti.utils.CoreConstants;
+import com.mars.rti.ws.model.WaterConnectionNoDueRestDTO;
+import com.mars.workflow.model.PersonalTask;
+import com.mars.workflow.model.WorkflowProcessDetails;
+import com.mars.workflow.service.WorkflowProcessDetailsService;
+import com.mars.workflow.service.WorkflowService;
+import com.mars.workflow.utils.WorkflowConstants;
+
+@Controller
+public class WaterConnectionNoDueController {
+
+	private static Log log = LogFactory.getLog(WaterConnectionNoDueController.class);
+
+	String clientCode = "NMCDeptN";
+	String checkSumkey = "GNGMCA8v3G7M";
+	String Department = "NGMCN";
+	String clientEncryptKey = "@pn@NGM@m@h@0nl!ne@30308";
+	String clientEncryptIV  = "NGM@01@6";
+	
+	@Autowired
+	private WaterConnectionNoDueService waterConnectionNoDueService;
+
+	@Autowired
+	private RTIApplicationService rtiApplicationService;
+
+	@Autowired
+	private WorkflowProcessDetailsService workflowProcessDetailsService;
+
+	@Autowired
+	private UserRegistrationService userRegistrationService;
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private WorkflowService workflowService;
+
+	@Autowired
+	private TaskService taskService;
+
+	private static String const_OrderBy = "OrderBy";
+
+	private static String const_SortBy = "SortBy";
+	
+	@Autowired
+	private AapleSarkarPortalIntegrationNagpur aapleSarkarPortalIntegrationNagpur;
+
+
+
+	@RequestMapping("/rtsapplication/saveWaterCertificates.do")
+	public ModelAndView saveWaterCertificate(HttpServletRequest request, HttpServletResponse response,
+			WaterConnectionNoDue waterConnectionnodue) throws ServletException, Exception {
+
+		HttpSession session = request.getSession();
+		SessionUser sessionUser = (SessionUser) session.getAttribute("SessionUser");
+		String zone = null;
+		if (log.isDebugEnabled()) {
+			log.debug("Invoking Water");
+		}
+		String mobileNumber = "";
+		RTIApplication retunRti=null;
+		String user_name=null;
+		Object user_login = request.getSession().getAttribute("name");
+		if (user_login != null) {
+			user_name = (String) user_login;
+		}
+		Object obileNumber= session.getAttribute("mobileNo");
+		if(obileNumber!=null) {
+		mobileNumber=String.valueOf(obileNumber);
+		}else {
+		mobileNumber = (String) session.getAttribute("mobileNo");
+		}
+		if (mobileNumber != null) {
+			UserRegistrationDetails user = userRegistrationService.getUserByMobileNo(mobileNumber);
+			Object as_status=session.getAttribute("as_status");
+
+			if (waterConnectionnodue != null) {
+
+				RTIApplication rtiApplication = new RTIApplication();
+				WaterConnectionNoDueRestDTO waterConnectionNoDueRestDTO = new WaterConnectionNoDueRestDTO();
+				rtiApplication.setCreatedDate(CommonUtils.getCurrentStringDateAndTime());
+				rtiApplication.setRegistrationDate(CommonUtils.getCurrentStringDateAndTime());
+				rtiApplication.setSubject("WATER-NO-DUES-CERTIFICATE");
+				rtiApplication.setDepartment("WATER-DEPARTMENT");
+				rtiApplication.setTemplateName("water");
+				rtiApplication.setWorkFlowStatus(0);
+				rtiApplication.setFinalStatus("0");
+				rtiApplication.setRtiserviceid(68);
+				// rtiApplication.setPdf_upload_from_portal(birthRegistrationRestDTO.getPdfsavedpath());
+//				rtiApplication.setApplicantName(waterConnectionnodue.getFirstName() + " "
+//						+ waterConnectionnodue.getMiddleName() + " " + waterConnectionnodue.getLastName());
+//				rtiApplication.setApplicantName(waterConnectionnodue.getCinNo();
+				if(as_status!=null && user_name==null) {
+					rtiApplication.setAapleSarkarUserMobileNo(mobileNumber);
+					
+				}
+				rtiApplication.setPhoneNumber(waterConnectionnodue.getMobileNo());
+				rtiApplication.setMobileNumber(waterConnectionnodue.getMobileNo());
+				
+				
+//				if (waterConnectionnodue.getAlterMobileNo() != null && !waterConnectionnodue.getAlterMobileNo().isEmpty()) {
+//					rtiApplication.setMobileNumber(waterConnectionnodue.getAlterMobileNo());
+//				}else {
+					rtiApplication.setMobileNumber(waterConnectionnodue.getMobileNo());
+				
+				
+				rtiApplication.setEmail(waterConnectionnodue.getEmailId());
+				rtiApplication.setPdfUploadFromPortal(waterConnectionnodue.getFilesPath());
+				rtiApplication.setUserRegistrationDetails(user);
+				rtiApplication.setIsApleSarkarApp(0);
+
+				if(waterConnectionnodue.getZoneNo() != null) {			   
+					rtiApplication.setZone(
+							waterConnectionnodue.getZoneNo().equals("Zone No.1 - Laxmi Nagar")|| waterConnectionnodue.getZoneNo().equals("Zone No.01 - Laxmi Nagar") ? "1" :
+							waterConnectionnodue.getZoneNo().equals("Zone No.2 - Dharampeth") || waterConnectionnodue.getZoneNo().equals("Zone No.02 - Dharampeth") ? "2" :
+							waterConnectionnodue.getZoneNo().equals("Zone No.3 - Hanuman Nagar")|| waterConnectionnodue.getZoneNo().equals("Zone No.03 - Hanuman Nagar") ? "3" :
+							waterConnectionnodue.getZoneNo().equals("Zone No.4 - Dhantoli")|| waterConnectionnodue.getZoneNo().equals("Zone No.04 - Dhantoli") ? "4" :
+							waterConnectionnodue.getZoneNo().equals("Zone No.5 - Nehru Nagar")|| waterConnectionnodue.getZoneNo().equals("Zone No.05 - Nehru Nagar") ? "5" :
+							waterConnectionnodue.getZoneNo().equals("Zone No.6 - Gandhibagh")|| waterConnectionnodue.getZoneNo().equals("Zone No.06 - Gandhibagh") ? "6" :
+							waterConnectionnodue.getZoneNo().equals("Zone No.7 - Satranjipura")|| waterConnectionnodue.getZoneNo().equals("Zone No.07 - Satranjipura") ? "7" :
+							waterConnectionnodue.getZoneNo().equals("Zone No.8 - Lakadganj")|| waterConnectionnodue.getZoneNo().equals("Zone No.08 - Lakadganj") ? "8" :
+						    waterConnectionnodue.getZoneNo().equals("Zone No.9 - Ashi Nagar")|| waterConnectionnodue.getZoneNo().equals("Zone No.09 - Ashi Nagar") ? "9" :
+						    waterConnectionnodue.getZoneNo().equals("Zone No.10 - Mangalwari")|| waterConnectionnodue.getZoneNo().equals("Zone No.010 - Mangalwari") ? "10" :
+						    "");
+					}
+
+				//rtiApplication.setApplicationCost(15);
+
+			rtiApplication.setApplicantName(waterConnectionnodue.getCinNo());
+				// List<RTIApplicationDetails> rtiApplicationDetailsList = new
+				// ArrayList<RTIApplicationDetails>();
+				List<RTIApplicationDetails> rtiApplicationDetailsList = new ArrayList<RTIApplicationDetails>();
+				RTIApplicationDetails rtiApplicationDetails = new RTIApplicationDetails();
+
+				rtiApplicationDetails.setRtiApplication(rtiApplication);
+				rtiApplicationDetails.setStatus(0);
+				rtiApplicationDetails.setAssignToStatus(1);
+				rtiApplicationDetails.setAssignedStartDate(rtiApplication.getCreatedDate());
+				rtiApplicationDetails.setAssignedEndDate(CommonUtils.getCurrentStringDateAndTime());
+
+				rtiApplicationDetails.setComments("Form Submitted");// ();
+				rtiApplicationDetails.setWorkflowLevel(0);
+				rtiApplicationDetailsList.add(rtiApplicationDetails);
+				rtiApplication.setRtiApplicationDetails(rtiApplicationDetailsList);
+				RTIApplication savedRti = rtiApplicationService.merge(rtiApplication);
+
+				if (savedRti.getRtiApplicationId() > 0) {
+					RTIApplication rti = rtiApplicationService.get(savedRti.getRtiApplicationId());
+					rti.setRtiApplnNumber("RTS/WD" +"/" + savedRti.getRtiApplicationId()  + "/" + Year.now());
+					waterConnectionnodue.setRtiapplrefno(rti.getRtiApplnNumber());
+					waterConnectionnodue.setRti_ref_id(savedRti.getRtiApplicationId());
+					long birth_regis_id = waterConnectionNoDueService.fetchWaterCertificate(waterConnectionnodue);
+					rti.setRtiApplicationRefId(birth_regis_id);
+					if(as_status!=null && user_name==null) {
+						String serviceId = request.getParameter("serviceId");
+						 log.debug("aple sarkar serviceId ="+serviceId);
+						
+						     String distric = request.getParameter("distric");
+							log.debug("aple sarkar distric ="+distric);
+						
+						    String trackid = request.getParameter("trackid");
+							log.debug("aple sarkar trackid ="+trackid);
+						    
+							String userid = request.getParameter("user");
+							log.debug("aple sarkar userid ="+userid);
+							
+						    String mobile = request.getParameter("mobile");
+							log.debug("aple sarkar mobile ="+mobile);
+							
+						    String name = request.getParameter("name");
+							log.debug("aple sarkar name ="+name);
+							
+							
+							//String appId=retunRti.getRtiApplnNumber();
+							//log.debug("aple sarkar appId ="+appId);
+							
+							rti.setAaple_service_id(serviceId);
+							//retunRti.setAaple_application_id(appId);
+							rti.setAaple_user_id(userid);
+							rti.setAaple_user_track_id(trackid);
+							rti.setAapleSarkarUserMobileNo(mobile);
+							rti.setIsApleSarkarApp(1);
+
+							
+					}
+					 retunRti = rtiApplicationService.merge(rti);
+
+					if ((retunRti != null) && (waterConnectionnodue.getRti_ref_id() > 0)) {
+
+						LocalDate currentDate = LocalDate.now();
+						DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+						String date = format.format(currentDate);
+						String contractAccountNo = waterConnectionnodue.getCinNo();
+						String contactNo = waterConnectionnodue.getMobileNo();
+						String emailId = waterConnectionnodue.getEmailId();
+						//String purpose = waterConnectionnodue.getPurposeOfNoDue();
+
+						MultiValueMap<Object, Object> formData = new LinkedMultiValueMap<>();
+						formData.add("requestNo", waterConnectionnodue.getRtiapplrefno());
+						formData.add("date", date);
+						formData.add("contractAccountNo", contractAccountNo);
+						formData.add("contactNo", contactNo);
+						formData.add("emailId", emailId);
+						formData.add("type", "noDueCertificate");
+						//formData.add("purpose", purpose);
+
+						HttpHeaders headers = new HttpHeaders();
+						headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+						HttpEntity<MultiValueMap<Object, Object>> requestEntity = new HttpEntity<>(formData, headers);
+						
+						String url=CoreConstants.NO_DUES_WATER_TEST_POST;
+						//String url = "https://sampark.ocwindia.com/aaplesarkar/customer/request/?key=6aa083ae54aae4a7fad7659c6fbfd0bc";
+						RestTemplate restTemplate = new RestTemplate();
+						ResponseEntity<String> serverResponse = restTemplate.exchange(url, HttpMethod.POST,
+								requestEntity, String.class);
+						if (log.isDebugEnabled()) {
+
+							log.debug("POST Successfull:-" + serverResponse + "\n" + requestEntity);
+						}
+					}
+					String name = waterConnectionnodue.getCinNo();
+					String applnNo = rti.getRtiApplnNumber();
+					String mobileNo = rti.getMobileNumber();
+					String email=waterConnectionnodue.getEmailId();
+					SendSMSEmailController.sendApplicationSubmitted(name, mobileNo, applnNo, email);
+				}
+//				ModelAndView modelAndView = new ModelAndView("newRTIWaterNoDueApplicationSucess", "waterConnection",
+//						waterConnectionnodue);
+//				modelAndView.addObject("result", "data successfully saved");
+//				return modelAndView;
+				if(as_status!=null && user_name==null) {
+					String str = request.getParameter("str");
+					log.debug("aple sarkar str ="+str);
+					 String serviceId = request.getParameter("serviceId");
+					log.debug("aple sarkar serviceId ="+serviceId);
+					
+					     String distric = request.getParameter("distric");
+						log.debug("aple sarkar distric ="+distric);
+					
+					    String trackid = request.getParameter("trackid");
+						log.debug("aple sarkar trackid ="+trackid);
+					    
+						String userid = request.getParameter("user");
+						log.debug("aple sarkar userid ="+userid);
+						
+					    String mobile = request.getParameter("mobile");
+						log.debug("aple sarkar mobile ="+mobile);
+						
+					    String name = request.getParameter("name");
+						log.debug("aple sarkar name ="+name);
+						
+						
+						String appId=retunRti.getRtiApplnNumber();
+						appId = appId.replace("/", "");
+						log.debug("aple sarkar appId ="+appId);
+						
+						String paymentStatus="N";
+						log.debug("aple sarkar paymentStatus ="+paymentStatus);
+						
+						String paymentDate="NA";
+						String digitalSignStatus="N";
+						String digitalSignDate="NA";
+						int estServiceDays=3;
+						String estServiceDate="NA";
+						double amount=0.0;
+
+						int reqFlag=0;
+						int appStatus=1;
+						String remark="NA";
+						String UD1=request.getParameter("ULBId");
+						String UD2= request.getParameter("ULBDistrict");
+						
+						int ud = 0;
+						int ud1 = 0;
+						
+						if (UD1 != null && !UD1.trim().isEmpty()) {
+						    try {
+						    	ud = Integer.parseInt(UD1.trim());
+						    } catch (NumberFormatException e) {
+						        // Handle the invalid number case
+						        System.err.println("Invalid ULBId: " + UD1);
+						        // Optional: throw custom exception or return error response
+						    }
+						}
+						    
+						    if (UD2 != null && !UD2.trim().isEmpty()) {
+							    try {
+							    	ud1 = Integer.parseInt(UD2.trim());
+							    } catch (NumberFormatException e) {
+							        // Handle the invalid number case
+							        System.err.println("Invalid ULBId : " + UD2);
+							        // Optional: throw custom exception or return error response
+							    }
+						    }
+						 String UD3="NA";
+						String UD4="NA";
+						String UD5="NA";
+						String CheckSum="NA";
+						String mobileApla = waterConnectionnodue.getMobileNo();
+						
+						
+						/*
+						 * String[] fields = request.getParameterValues("fields"); for (int i = 0; i <
+						 * fields.length; i++) { log.debug("Index controller XXX--> " + i + ": " +
+						 * fields[i]); }
+						 */
+
+						 String retrurnurl="https://nmcnagpur.gov.in/RTSservices/ws/rtsapplication/newRtSWaterConnectionNoDuesSuccess.do?rtsAppNo="+appId+ "&isApleSarkar="+ retunRti.getIsApleSarkarApp();
+						//String retrurnurl="https://nagpur.egovmars.in/RTSservices/as/rtsapplication/newRTSSuccess.do?rtsAppNo="+retunRti.getRtiApplnNumber();
+						
+						String pushBackrespose = aapleSarkarPortalIntegrationNagpur.redirectPushApi(distric,trackid,userid,mobile,name, str,serviceId,  appId,  retrurnurl, paymentStatus, paymentDate,
+								 digitalSignStatus,digitalSignDate,estServiceDays, 
+								 estServiceDate,amount,reqFlag,appStatus,remark,distric,mobileApla); 
+						
+					log.debug("Final  PushBAck status XXX-->>>"+pushBackrespose);
+					
+					return new ModelAndView("redirect:/ws/rtsapplication/newRtSWaterConnectionNoDuesSuccess.do?rtsAppNo="+retunRti.getRtiApplnNumber()
+					 + "&isApleSarkar="+ retunRti.getIsApleSarkarApp() 
+							);
+
+				}else {
+				return new ModelAndView("redirect:/ws/rtsapplication/newRtSWaterConnectionNoDuesSuccess.do?rtsAppNo="+retunRti.getRtiApplnNumber()
+				 + "&isApleSarkar="+ retunRti.getIsApleSarkarApp() 
+						);
+				}
+
+			}
+		}
+
+		
+		return new ModelAndView("redirect:/ws/user/login.do");
+
+	}
+	
+	
+	@RequestMapping("ws/rtsapplication/newRtSWaterConnectionNoDuesSuccess.do")
+	public ModelAndView newRtSWaterConnectionNoDuesSuccess(HttpServletRequest request,HttpServletResponse response) {
+		
+		String appNo = request.getParameter("rtsAppNo");
+		String isApleSarkar=request.getParameter("isApleSarkar");
+
+		ModelAndView model = new ModelAndView("newRTIWaterNoDueApplicationSucess");
+		
+		model.addObject("waterConnection",appNo);
+		model.addObject("isApleSarkar", isApleSarkar);
+
+		return model;
+				
+		
+	}
+	
+	@RequestMapping("/rtsapplication/getWaterNoDue.do")
+	public void getWaterNoDue(HttpServletRequest request, HttpServletResponse response) throws ServletException, Exception {
+	
+		log.debug(" came inside get water reconnection");
+		JSONObject json = new JSONObject();
+		String msgNode = null;
+		PrintWriter out = response.getWriter();
+		String status = null;
+		try {
+			// String canNumber = waterDisconnection.getCINNo();
+			String canNumber = request.getParameter("cinNo");
+			StringBuilder response1 = new StringBuilder();
+			log.debug("sadfghjklhgfdsg");
+//			String restUrl = "https://sampark.ocwindia.com/aaplesarkar/customer/getCan?key=6aa083ae54aae4a7fad7659c6fbfd0bc&contractAccountNo="
+//					+ canNumber + "&type=reconnection";
+//			
+			String restUrl = "https://sampark.ocwindia.com/aaplesarkar/customer/getCan?key=6aa083ae54aae4a7fad7659c6fbfd0bc&contractAccountNo="
+					+ canNumber + "&type=changeOfUsage";
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			String res = response1.toString();
+			log.debug(res);
+			ObjectMapper objectMapper = new ObjectMapper();
+			RestTemplate restTemplate = new RestTemplate();
+			URI uri = URI.create(restUrl);
+
+			ResponseEntity<String> responseEntity = restTemplate.exchange(uri, HttpMethod.GET, null, String.class);
+
+			JsonNode rootNode = objectMapper.readTree(responseEntity.getBody().toString());
+			msgNode = rootNode.get("msg").asText();
+			status = rootNode.get("status").asText();
+			System.out.println();
+				
+
+				JsonNode responseData = rootNode.get("data");
+				if (responseData.isArray() && status.equals("1")) {
+					
+					for (JsonNode item : responseData) {
+						String zone = item.path("zone").asText();
+						String zoneName = "Zone No.";
+						if (zone.equals("01") || zone.equals("1")) {
+
+							zoneName = zoneName + zone + " " + "-" + " " + "Laxmi Nagar";
+
+						} else if (zone.equals("2") || zone.equals("02")) {
+							zoneName = zoneName + zone + " " + "-" + " " + "Dharampeth";
+
+						} else if (zone.equals("3") || zone.equals("03")) {
+							zoneName = zoneName + zone + " " + "-" + " " + "Hanuman Nagar";
+
+						} else if (zone.equals("4") || zone.equals("04")) {
+							zoneName = zoneName + zone + " " + "-" + " " + "Dhantoli";
+
+						} else if (zone.equals("5") || zone.equals("05")) {
+							zoneName = zoneName + zone + " " + "-" + " " + "Nehru Nagar";
+
+						} else if (zone.equals("6") || zone.equals("06")) {
+							zoneName = zoneName + zone + " " + "-" + " " + "Gandhibagh";
+
+						} else if (zone.equals("7") || zone.equals("07")) {
+							zoneName = zoneName + zone + " " + "-" + " " + "Satranjipura";
+
+						} else if (zone.equals("8") || zone.equals("08")) {
+							zoneName = zoneName + zone + " " + "-" + " " + "Lakadganj";
+
+						} else if (zone.equals("9") || zone.equals("09")) {
+							zoneName = zoneName + zone + " " + "-" + " " + "Ashi Nagar";
+
+						} else if (zone.equals("10") || zone.equals("010")) {
+							zoneName = zoneName + zone + " " + "-" + " " + "Mangalwari";
+
+						}
+						String esr = item.path("command_area").asText();
+						String consumerName = item.path("consumerName").asText();
+						String address = item.path("address").asText();
+						String meterNo = item.path("meterNo").asText();
+						String tapSize = item.path("tap_size").asText();
+						String category = item.path("category").asText();
+						String balanceArrears = item.path("balance_arrears").asText();
+						String cutOffDate = item.path("cut_off_date").asText();
+						String contact_no = item.path("contact_no").asText();
+						String email_id = item.path("email_id").asText();
+
+						esr = esr != null ? esr : "";
+						consumerName = consumerName != null ? consumerName : "";
+						address = address != null ? address : "";
+						meterNo = meterNo != null ? meterNo : "";
+						tapSize = tapSize != null ? tapSize : "";
+						category = category != null ? category : "";
+						balanceArrears = balanceArrears != null ? balanceArrears : "";
+						// Set contact_no to "0" if it's null or empty
+						contact_no = contact_no != null && contact_no != "" ? contact_no : "0";
+
+						// Set email_id to "0" if it's null or empty
+						email_id = email_id != null && email_id != "" ? email_id : "0" ;
+
+
+						json.put("zone", zoneName);
+						json.put("esr", esr);
+						json.put("consumername", consumerName);
+						json.put("address", address);
+						json.put("meterno", meterNo);
+						json.put("meterTapSize", tapSize);
+						json.put("category", category);
+						json.put("balance_arrears", balanceArrears);
+						json.put("cut_off_date", cutOffDate);
+						json.put("contact_no", contact_no);
+						json.put("email_id", email_id);
+
+						out.print(json.toString());
+						out.flush();
+					}
+				}
+
+			
+
+			else if (status.equals("0")) {
+				json.put("errormsg", msgNode);
+				out.print(json.toString());
+				out.flush();
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+	}
+//old
+
+//	@RequestMapping("/rtsapplication/getWaterNoDue.do")
+//	public void getWaterNoDue(HttpServletRequest request, HttpServletResponse response) throws ServletException, Exception {
+//		JSONObject json = new JSONObject();
+//
+//		log.debug(" came inside get water disconnection");
+//	
+//			try {
+//				// String canNumber = waterDisconnection.getCINNo();
+//				String canNumber = request.getParameter("cinNo");
+//				StringBuilder response1 = new StringBuilder();
+//				log.debug("sadfghjklhgfdsg");
+//
+//				String restUrl = "https://sampark.ocwindia.com/aaplesarkar/customer/getCan?key=6aa083ae54aae4a7fad7659c6fbfd0bc&contractAccountNo="
+//						+ canNumber + "&type=changeOfUsage";
+//
+//				log.debug("sadfghjklhgfdsg");
+//
+//				URL url = new URL(restUrl);
+//				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//				conn.setRequestMethod("GET");
+//				conn.connect();
+//
+//				log.debug("sadfghjklhgfdsg");
+//
+//				int responseCode = conn.getResponseCode();
+//				if (responseCode == HttpURLConnection.HTTP_OK) {
+//					BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//					String inputLine;
+//					while ((inputLine = in.readLine()) != null) {
+//						response1.append(inputLine);
+//					}
+//					in.close();
+//
+//					log.debug("sadfghjklhgfdsg");
+//
+//				}
+//				String res = response1.toString();
+//				log.debug(res);
+//				ObjectMapper objectMapper = new ObjectMapper();
+//				objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//				WaterDisconnectionPOJO responseData = new WaterDisconnectionPOJO();
+//				responseData = objectMapper.readValue(res, WaterDisconnectionPOJO.class);
+//				System.out.println();
+//				ArrayList<String> list = new ArrayList<String>();
+//
+//				log.debug("ggggggg" + responseData.getData().get(0).getConsumerName());
+//				String zone = responseData.getData().get(0).getZone();
+//				String zoneName = "Zone No.";
+//				if (zone.equals("01") || zone.equals("1")) {
+//
+//					zoneName = zoneName + zone + " " + "-" + " " + "Laxmi Nagar";
+//
+//				} else if (zone.equals("2") || zone.equals("02")) {
+//					zoneName = zoneName + zone + " " + "-" + " " + "Dharampeth";
+//
+//				} else if (zone.equals("3") || zone.equals("03")) {
+//					zoneName = zoneName + zone + " " + "-" + " " + "Hanuman Nagar";
+//
+//				} else if (zone.equals("4") || zone.equals("04")) {
+//					zoneName = zoneName + zone + " " + "-" + " " + "Dhantoli";
+//
+//				} else if (zone.equals("5") || zone.equals("05")) {
+//					zoneName = zoneName + zone + " " + "-" + " " + "Nehru Nagar";
+//
+//				} else if (zone.equals("6") || zone.equals("06")) {
+//					zoneName = zoneName + zone + " " + "-" + " " + "Gandhibagh";
+//
+//				} else if (zone.equals("7") || zone.equals("07")) {
+//					zoneName = zoneName + zone + " " + "-" + " " + "Satranjipura";
+//
+//				} else if (zone.equals("8") || zone.equals("08")) {
+//					zoneName = zoneName + zone + " " + "-" + " " + "Lakadganj";
+//
+//				} else if (zone.equals("9") || zone.equals("09")) {
+//					zoneName = zoneName + zone + " " + "-" + " " + "Ashi Nagar";
+//
+//				} else if (zone.equals("10") || zone.equals("010")) {
+//					zoneName = zoneName + zone + " " + "-" + " " + "Mangalwari";
+//
+//				}
+//
+//				json.put("zone", zoneName);
+//				json.put("esr", responseData.getData().get(0).getCommand_area());
+//				json.put("consumername", responseData.getData().get(0).getConsumerName());
+//				json.put("address", responseData.getData().get(0).getAddress());
+//				json.put("meterno", responseData.getData().get(0).getMeterNo());
+//				json.put("meterTapSize", responseData.getData().get(0).getTap_size());
+//				json.put("category", responseData.getData().get(0).getCategory());
+//				json.put("balance_arrears", responseData.getData().get(0).getBalance_arrears());
+//				json.put("cut_off_date", responseData.getData().get(0).getCut_off_date());
+//
+//				PrintWriter out = response.getWriter();
+//	              out.print(json.toString());
+//	              out.flush();
+//
+//			} catch (Exception e) {
+//				String error = "Record Not Found! Please Enter Valid CAN No.";
+//				request.setAttribute("message", error);
+//			}
+//
+//	}
+
+	@SuppressWarnings("unused")
+	@RequestMapping("/rtiapplication/editWaterDueCertificate.do")
+	public ModelAndView editWaterConnection(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+		HttpSession session = request.getSession();
+		WaterConnectionNoDue waterConnection = null;
+		long rtiApplicationRefId = 0;
+		long rtiApplicationId = 0;
+		RTIApplication rtiapplication = null;
+		SessionUser sessionUser = (SessionUser) session.getAttribute("SessionUser");
+		request.getSession().setAttribute("refid",request.getParameter("rtiApplicationRefId"));
+		String a1 = request.getParameter("rtiApplicationRefId");
+		
+		if (sessionUser != null) {
+			long userId = sessionUser.getUserId();
+		if (request.getParameter("rtiApplicationRefId") != null
+				&& request.getParameter("rtiApplicationRefId").length() > 0 || session.getAttribute("rtirefId") != null) {
+			if (request.getParameter("rtiApplicationRefId") != null && request.getParameter("rtiApplicationRefId").length() > 0) {
+
+			rtiApplicationRefId = Long.parseLong(request.getParameter("rtiApplicationRefId"));
+			waterConnection = waterConnectionNoDueService.get(rtiApplicationRefId);
+			}else if (session.getAttribute("rtirefId") != null) {
+				Object a = session.getAttribute("rtirefId");
+				rtiApplicationRefId = (long) a;
+				waterConnection = waterConnectionNoDueService.get(rtiApplicationRefId);
+			}
+			 String feees = request.getParameter("fees");
+			 String paymentStatus = request.getParameter("paymentStatus");
+
+			if (waterConnection.getRti_ref_id() > 0) {
+				rtiApplicationId = waterConnection.getRti_ref_id();
+				rtiapplication = rtiApplicationService.get(rtiApplicationId);
+				if (rtiapplication.getApplicationCost() == 0.0 || rtiapplication.getApplicationCost() == 0) {
+					if (feees != null && feees != "" && !feees.isEmpty()) {
+						rtiapplication.setApplicationCost(Double.parseDouble(feees));
+						rtiapplication = rtiApplicationService.merge(rtiapplication);
+					}
+				}
+				if (rtiapplication.getWorkFlowStatus() == 3) {
+					if (paymentStatus != null && !paymentStatus.isEmpty() && paymentStatus.equals("Paid")) {
+						rtiapplication.setWorkFlowStatus(2);
+						rtiapplication = rtiApplicationService.merge(rtiapplication);
+					}
+				}
+			} else {
+				List<RTIApplication> listRTI = rtiApplicationService.findByProperty("rtiApplicationRefId",
+						rtiApplicationRefId);
+				if (listRTI != null && !listRTI.isEmpty()) {
+					rtiApplicationId = listRTI.get(0).getRtiApplicationId();
+					rtiapplication = listRTI.get(0);
+				}
+			}
+
+		}
+		request.setAttribute(WorkflowConstants.WORKFLOW_REQUIRED, "true");
+		request.setAttribute(WorkflowConstants.WORKFLOW_NAME,CoreConstants.RTI_WATER_WORKFLOW_ENTITY);
+		request.setAttribute(WorkflowConstants.WORKFLOW_ENTITYNAME,CoreConstants.RTI_WATER_WORKFLOW_ENTITY);
+		request.setAttribute(WorkflowConstants.WORKFLOW_ENTITYID,rtiApplicationId);
+		request.setAttribute("rtiApplication", rtiapplication);
+
+		WorkflowProcessDetails workflowProcessDetails = null;
+		WorkflowProcessDetails processDetails = null;
+		workflowProcessDetails = workflowProcessDetailsService.getWorkflowProcessDetailsByEntityDetails(rtiApplicationId,CoreConstants.RTI_WATER_WORKFLOW_ENTITY);
+
+		if (workflowProcessDetails != null) {
+			String processId = workflowProcessDetails.getProcessId();
+			if (processId != null) {
+				processDetails = workflowProcessDetailsService
+						.getWorkflowProcessDetailsByProcessId(processId);
+			}
+			if (!workflowService.isProcessEnded(processId)) {
+				String taskId = workflowService.getCurrentTaskId(processId);
+				Task task = null;
+				if (taskId != null)
+					task = taskService.getTask(taskId);
+				if (processDetails != null) {
+					PersonalTask personalTask = new PersonalTask();
+					personalTask.setTask(task);
+					personalTask.setEntityId(processDetails.getEntityId());
+					personalTask.setEntityName(processDetails.getEntityName());
+					personalTask.setWorkflowInitator(processDetails.getUserName());
+					personalTask.setEntityDetails(processDetails.getEntityDetails());
+					request.setAttribute("personalTask", personalTask);
+				}
+				if (task != null && sessionUser.getUserName()
+						.equals(task.getAssignee()))
+					request.setAttribute("userAccess", 1);
+
+				request.setAttribute("workFlowTask", task);
+			} else {
+
+				request.setAttribute("workFlowCompleted", "1");
+			}
+		}
+
+		request.setAttribute("totalfees",rtiapplication.getApplicationCost());
+	
+		request.setAttribute("workFlowStatus",rtiapplication.getWorkFlowStatus());
+
+		User user = userService.get(userId);
+		String userLoginId = user.getUserLevel();
+        if(userLoginId!=null && !userLoginId.isEmpty()) {
+
+		if(userLoginId.equals("L2")) {
+			request.setAttribute("forLogin", "L2");
+		}else if (userLoginId.equals("L3")) {
+			request.setAttribute("forLogin", "L3");
+		}
+		else
+		{
+			request.setAttribute("forLogin", "nothing");
+		}
+		
+        }
+		
+		ModelAndView modelAndView = new ModelAndView("manageWaterNoDueCertificate", "waterConnection", waterConnection);
+
+		return modelAndView;
+		
+		}else {
+			return new ModelAndView("redirect:/login.do");
+		}
+	}
+	
+		
+	// @RequestMapping("/rtiapplication/createWaterNoDueWork.do")
+	// public ModelAndView createWaterConnectionWork(HttpServletRequest request,
+	// HttpServletResponse response)
+	// throws ServletException, Exception {
+	// String rtiApplicationIdString =
+	// request.getParameter(WorkflowConstants.WORKFLOW_ENTITYID);
+	// long rtiApplicationId = Long.parseLong(rtiApplicationIdString);
+	// RTIApplication rtiApplication = rtiApplicationService.get(rtiApplicationId);
+
+	// HttpSession session = request.getSession();
+	// SessionUser sessionUser = (SessionUser) session.getAttribute("SessionUser");
+
+	// WorkflowProcessDetails workflowProcessDetails = null;
+	// WorkflowProcessDetails processDetails = null;
+	// workflowProcessDetails = workflowProcessDetailsService
+	// .getWorkflowProcessDetailsByEntityDetails(rtiApplicationId,
+	// CoreConstants.RTI_BIRTH_WORKFLOW_ENTITY);
+
+	// String id = request.getParameter("id");
+	// long applicationId = Long.parseLong(id);
+	// WaterConnectionNoDue waterConnection =
+	// waterConnectionNoDueService.get(applicationId);
+	// String email = waterConnection.getEmailId();
+	// String mobileNo = waterConnection.getMobileNo();
+	// String rtiApplnNumber = rtiApplication.getRtiApplnNumber();
+	// String applicantName = rtiApplication.getApplicantName();
+	// if (waterConnection != null) {
+	// if (workflowProcessDetails != null) {
+	// String processId = workflowProcessDetails.getProcessId();
+	// if (processId != null) {
+	// processDetails =
+	// workflowProcessDetailsService.getWorkflowProcessDetailsByProcessId(processId);
+	// }
+	// if (!workflowService.isProcessEnded(processId)) {
+	// String taskId = workflowService.getCurrentTaskId(processId);
+	// Task task = null;
+	// if (taskId != null)
+	// task = taskService.getTask(taskId);
+	// if (processDetails != null) {
+	// PersonalTask personalTask = new PersonalTask();
+	// personalTask.setTask(task);
+	// personalTask.setEntityId(processDetails.getEntityId());
+	// personalTask.setEntityName(processDetails.getEntityName());
+	// personalTask.setWorkflowInitator(processDetails.getUserName());
+	// personalTask.setEntityDetails(processDetails.getEntityDetails());
+	// request.setAttribute("personalTask", personalTask);
+	// }
+
+	// rtiApplication.setWorkFlowStatus(3);
+	// rtiApplicationService.save(rtiApplication);
+	// String link = "https://tinyurl.com/4hhhy9w9";
+	// String msg = "Dear "+applicantName+" your document verification has been
+	// successfully completed. Kindly use this link https://tinyurl.com/2yxwb9fd to
+	// make a payment in order for your application "+rtiApplnNumber+" to be
+	// processed further.Regards, NMCGOV";
+
+	// msg.replace("var3", "");
+	// SendEmail.sendEmail(email, "Payment link for your Appl. No." + mobileNo,
+	// msg);
+	// SendSMS.sendSingleSMS("1507167421309610108", "NMCGov", mobileNo, msg);
+
+	// if (request.getParameter("WORKFLOW_TRANSISTION").isEmpty()
+	// || request.getParameter("WORKFLOW_TRANSISTION") == null) {
+
+	// }
+	// if (task != null && sessionUser.getUserName().equals(task.getAssignee())) {
+	// request.setAttribute("userAccess", 1);
+	// request.setAttribute("workFlowTask", task);
+	// }
+	// } else if
+	// (request.getParameter("WORKFLOW_TRANSISTION").equals("Close-Application")) {
+
+	// rtiApplication.setWorkFlowStatus(1);
+	// rtiApplicationService.save(rtiApplication);
+	// String msg = "Dear "+applicantName+" please click on this link
+	// https://tinyurl.com/359w8usz to download the Certificate for your application
+	// "+rtiApplnNumber+" Regards, NMCGOV";
+
+	// msg.replace("var3", "");
+	// SendEmail.sendEmail(email, "Completion of your Appl. No." + rtiApplnNumber,
+	// msg);
+	// SendSMS.sendSingleSMS("1507167421320245636", "NMCGov", mobileNo, msg);
+	// request.setAttribute("workFlowCompleted", "1");
+	// } else if (request.getParameter("WORKFLOW_TRANSISTION").equals("Reject")) {
+	// rtiApplication.setWorkFlowStatus(5);
+	// rtiApplicationService.save(rtiApplication);
+	// String msg = "Dear "+applicantName+" your "+rtiApplnNumber+" has been
+	// rejected due to shortfall of documents. Please use this link
+	// https://tinyurl.com/359w8usz to know the pending mandatory documents and
+	// track the status of your application.Regards, NMCGOV";
+	// msg.replace("var3", "");
+	// SendEmail.sendEmail(email, "Rejection of your Appl. No." + rtiApplnNumber,
+	// msg);
+	// SendSMS.sendSingleSMS("1507167421296109813", "NMCGov", mobileNo, msg);
+	// request.setAttribute("workFlowCompleted", "1");
+	// }
+	// }
+
+	// }
+
+	// request.setAttribute(WorkflowConstants.WORKFLOW_REQUIRED, "true");
+	// request.setAttribute(WorkflowConstants.WORKFLOW_NAME,
+	// CoreConstants.RTI_BIRTH_WORKFLOW_ENTITY);
+	// request.setAttribute(WorkflowConstants.WORKFLOW_ENTITYNAME,
+	// CoreConstants.RTI_BIRTH_WORKFLOW_ENTITY);
+	// request.setAttribute(WorkflowConstants.WORKFLOW_ENTITYID, rtiApplicationId);
+	// request.setAttribute("rtiApplication", rtiApplication);
+	// request.setAttribute("rtiApplicationRefId", rtiApplicationId);
+	// ModelAndView modelAndView = new ModelAndView("manageWaterNoDueCertificate",
+	// "waterConnection",waterConnection);
+	// return modelAndView;
+
+	// }
+
+	@RequestMapping("/rtiapplication/createWaterConnectionNoDuesWork.do")
+	public ModelAndView createWaterConnectionNoDuesWork(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+		String rtiApplicationIdString = request.getParameter(WorkflowConstants.WORKFLOW_ENTITYID);
+		long rtiApplicationId = Long.parseLong(rtiApplicationIdString);
+		RTIApplication rtiApplication = rtiApplicationService.get(rtiApplicationId);
+
+		HttpSession session = request.getSession();
+		SessionUser sessionUser = (SessionUser) session.getAttribute("SessionUser");
+
+		WorkflowProcessDetails workflowProcessDetails = null;
+		WorkflowProcessDetails processDetails = null;
+		workflowProcessDetails = workflowProcessDetailsService.getWorkflowProcessDetailsByEntityDetails(rtiApplicationId, CoreConstants.RTI_WATER_WORKFLOW_ENTITY);
+
+		String id = request.getParameter("id");
+		long applicationId = Long.parseLong(id);
+
+		WaterConnectionNoDue waterConnection  = waterConnectionNoDueService.get(applicationId);
+		String email = waterConnection.getEmailId();
+		String mobileNo = rtiApplication.getMobileNumber();
+		String canNo = waterConnection.getCinNo();
+
+		String rtiApplnNumber = rtiApplication.getRtiApplnNumber();
+		String applicantName = rtiApplication.getApplicantName();
+		long rtirefId = rtiApplication.getRtiApplicationRefId();
+		long isApleSarkarApp=rtiApplication.getIsApleSarkarApp();
+
+		if (waterConnection != null) {
+			if (workflowProcessDetails != null) {
+				String processId = workflowProcessDetails.getProcessId();
+				if (processId != null) {
+					processDetails = workflowProcessDetailsService.getWorkflowProcessDetailsByProcessId(processId);
+				}
+				if (!workflowService.isProcessEnded(processId)) {
+					String taskId = workflowService.getCurrentTaskId(processId);
+					Task task = null;
+					if (taskId != null)
+						task = taskService.getTask(taskId);
+					if (processDetails != null) {
+						PersonalTask personalTask = new PersonalTask();
+						personalTask.setTask(task);
+						personalTask.setEntityId(processDetails.getEntityId());
+						personalTask.setEntityName(processDetails.getEntityName());
+						personalTask.setWorkflowInitator(processDetails.getUserName());
+						personalTask.setEntityDetails(processDetails.getEntityDetails());
+						request.setAttribute("personalTask", personalTask);
+					}
+
+					rtiApplication.setWorkFlowStatus(2);
+					rtiApplicationService.save(rtiApplication);
+//					String link = "https://tinyurl.com/4hhhy9w9";
+//					String paymentLink="https://nmcnagpur.gov.in/RTS/ws/pay.do";
+//					String paymentLink2="rtsNo="+rtiApplnNumber;
+//					
+//				    String msg = "Dear "+applicantName+" Your document verification has been successfully completed. Kindly make a payment to proceed with the processing of your application "+rtiApplnNumber+", Regards,NMCGOV";
+//
+//
+//					msg.replace("var3", "");
+//					SendEmail.sendEmail(email, "Payment link for your Appl. No." + mobileNo, msg);
+//					SendSMS.sendSingleSMS("1707170479457617341", "NMCGov", mobileNo, msg);
+//					if(isApleSarkarApp==1) {
+//						String distric="NA";
+//						String trackid=rtiApplication.getAaple_user_track_id();
+//						String userid=rtiApplication.getAaple_user_id();
+//						String mobile=rtiApplication.getAapleSarkarUserMobileNo();
+//						String name=rtiApplication.getApplicantName();
+//						double amount = rtiApplication.getApplicationCost();
+//						String str="NA";
+//						
+//						String retrurnurl="";
+//						String appId=rtiApplication.getRtiApplnNumber();				
+//						appId = appId.replace("/", "");
+//						String paymentStatus="Y";						
+//						String paymentDate="NA";
+//						String digitalSignStatus="N";
+//						String digitalSignDate="NA";
+//						int estServiceDays=3;
+//						String estServiceDate="NA";
+//
+//						int reqFlag=0;
+//						int appStatus=2;
+//						String remark="NA";						
+//						String serviceId= rtiApplication.getAaple_service_id();
+//						String mobileApla=rtiApplication.getMobileNumber();
+//						//retunRti.setAaple_application_id(appId);
+//					String pushBackrespose = aapleSarkarPortalIntegrationNagpur.redirectPushApi(distric,trackid,userid,mobile,name, str,serviceId,  appId,  retrurnurl, paymentStatus, paymentDate,
+//								 digitalSignStatus,digitalSignDate,estServiceDays, 
+//								 estServiceDate,amount,reqFlag,appStatus,remark,distric,mobileApla); 
+//					}
+					if (request.getParameter("WORKFLOW_TRANSISTION").isEmpty()
+							|| request.getParameter("WORKFLOW_TRANSISTION") == null) {
+
+					}
+					if (task != null && sessionUser.getUserName().equals(task.getAssignee())) {
+						request.setAttribute("userAccess", 1);
+						request.setAttribute("workFlowTask", task);
+					}
+				} else if (request.getParameter("WORKFLOW_TRANSISTION").equals("Close-Application")) {
+
+					rtiApplication.setWorkFlowStatus(1);
+					rtiApplicationService.save(rtiApplication);
+					if(isApleSarkarApp==1) {
+						String distric="NA";
+						String trackid=rtiApplication.getAaple_user_track_id();
+						String userid=rtiApplication.getAaple_user_id();
+						String mobile=rtiApplication.getAapleSarkarUserMobileNo();
+						String name=rtiApplication.getApplicantName();
+						double amount = rtiApplication.getApplicationCost();
+						String str="NA";
+						
+						String retrurnurl="";
+						String appId=rtiApplication.getRtiApplnNumber();				
+						appId = appId.replace("/", "");
+						String paymentStatus="N";						
+						String paymentDate="NA";
+						String digitalSignStatus="N";
+						String digitalSignDate="NA";
+						int estServiceDays=3;
+						String estServiceDate="NA";
+
+						int reqFlag=0;
+						int appStatus=4;
+						String remark="NA";						
+						String serviceId= rtiApplication.getAaple_service_id();
+						String mobileApla=rtiApplication.getMobileNumber();
+						//retunRti.setAaple_application_id(appId);
+					String pushBackrespose = aapleSarkarPortalIntegrationNagpur.redirectPushApi(distric,trackid,userid,mobile,name, str,serviceId,  appId,  retrurnurl, paymentStatus, paymentDate,
+								 digitalSignStatus,digitalSignDate,estServiceDays, 
+								 estServiceDate,amount,reqFlag,appStatus,remark,distric,mobileApla); 
+					}
+					SendSMSEmailController.sendApplicationCompleted(applicantName, mobileNo, rtiApplnNumber, email);
+;
+					request.setAttribute("workFlowCompleted", "1");
+				} else if (request.getParameter("WORKFLOW_TRANSISTION").equals("Reject")) {
+					rtiApplication.setWorkFlowStatus(5);
+					String workflow_comments = request.getParameter(WorkflowConstants.WORKFLOW_COMMENTS);
+					rtiApplication.setWorkflowComments(workflow_comments);
+					
+					rtiApplicationService.save(rtiApplication);
+					if(isApleSarkarApp==1) {
+						String distric="NA";
+						String trackid=rtiApplication.getAaple_user_track_id();
+						String userid=rtiApplication.getAaple_user_id();
+						String mobile=rtiApplication.getAapleSarkarUserMobileNo();
+						String name=rtiApplication.getApplicantName();
+						double amount = rtiApplication.getApplicationCost();
+						String str="NA";
+						
+						String retrurnurl="";
+						String appId=rtiApplication.getRtiApplnNumber();				
+						appId = appId.replace("/", "");
+						String paymentStatus="N";						
+						String paymentDate="NA";
+						String digitalSignStatus="N";
+						String digitalSignDate="NA";
+						int estServiceDays=3;
+						String estServiceDate="NA";
+
+						int reqFlag=0;
+						int appStatus=5;
+						String remark="NA";						
+						String serviceId= rtiApplication.getAaple_service_id();
+						String mobileApla=rtiApplication.getMobileNumber();
+						//retunRti.setAaple_application_id(appId);
+					String pushBackrespose = aapleSarkarPortalIntegrationNagpur.redirectPushApi(distric,trackid,userid,mobile,name, str,serviceId,  appId,  retrurnurl, paymentStatus, paymentDate,
+								 digitalSignStatus,digitalSignDate,estServiceDays, 
+								 estServiceDate,amount,reqFlag,appStatus,remark,distric,mobileApla); 
+						}
+					SendSMSEmailController.sendApplicationRejected(applicantName, mobileNo, rtiApplnNumber, email);
+;
+					request.setAttribute("workFlowCompleted", "1");
+				}
+			}else {
+				session.setAttribute("rejected", 5);
+				rtiApplication.setWorkFlowStatus(5);
+				String workflow_comments = request.getParameter(WorkflowConstants.WORKFLOW_COMMENTS);
+				rtiApplication.setWorkflowComments(workflow_comments);
+				
+				rtiApplicationService.save(rtiApplication);
+				if(isApleSarkarApp==1) {
+
+					String distric="NA";
+					String trackid=rtiApplication.getAaple_user_track_id();
+					String userid=rtiApplication.getAaple_user_id();
+					String mobile=rtiApplication.getAapleSarkarUserMobileNo();
+					String name=rtiApplication.getApplicantName();
+					double amount = rtiApplication.getApplicationCost();
+					String str="NA";
+					
+					String retrurnurl="";
+					String appId=rtiApplication.getRtiApplnNumber();				
+					appId = appId.replace("/", "");
+					String paymentStatus="N";						
+					String paymentDate="NA";
+					String digitalSignStatus="N";
+					String digitalSignDate="NA";
+					int estServiceDays=3;
+					String estServiceDate="NA";
+
+					int reqFlag=0;
+					int appStatus=5;
+					String remark="NA";						
+					String serviceId= rtiApplication.getAaple_service_id();
+					String mobileApla=rtiApplication.getMobileNumber();
+					//retunRti.setAaple_application_id(appId);
+					String pushBackrespose = aapleSarkarPortalIntegrationNagpur.redirectPushApi(distric,trackid,userid,mobile,name, str,serviceId,  appId,  retrurnurl, paymentStatus, paymentDate,
+							 digitalSignStatus,digitalSignDate,estServiceDays, 
+							 estServiceDate,amount,reqFlag,appStatus,remark,distric,mobileApla); 
+					}
+				SendSMSEmailController.sendApplicationRejected(applicantName, mobileNo, rtiApplnNumber, email);
+
+				request.setAttribute("workFlowCompleted", "1");
+
+			}
+
+		}
+
+		
+
+		request.setAttribute(WorkflowConstants.WORKFLOW_REQUIRED, "true");
+		request.setAttribute(WorkflowConstants.WORKFLOW_NAME, CoreConstants.RTI_WATER_WORKFLOW_ENTITY);
+		request.setAttribute(WorkflowConstants.WORKFLOW_ENTITYNAME, CoreConstants.RTI_WATER_WORKFLOW_ENTITY);
+		request.setAttribute(WorkflowConstants.WORKFLOW_ENTITYID, rtiApplicationId);
+		request.setAttribute("rtiApplication", rtiApplication);
+		request.setAttribute("rtiApplicationRefId", rtiApplicationId);
+		session.setAttribute("rtirefId", rtirefId);
+
+		ModelAndView modelAndView = new ModelAndView("manageWaterNoDueCertificate", "waterConnection",
+				waterConnection);
+		return modelAndView;
+	}
+	
+	//Save Manage Disconnection
+		
+			@RequestMapping("/rtsapplication/saveConnectionNoDuesWater.do")
+			public ModelAndView saveConnectionNoDuesWater(HttpServletRequest request,HttpServletResponse response,WaterConnectionNoDue waterConnection)
+					throws ServletException, Exception {
+			    String fees = request.getParameter("demandfees");
+	            String refid =request.getParameter("waterConnectionId");
+				long apprefid = 0;
+				apprefid = Long.parseLong(refid);
+
+				waterConnection = waterConnectionNoDueService.get(apprefid);
+//				waterDisconnection.setSendDemandStatus(1);
+
+				if (waterConnection.getDemandfees() == null && fees!=null) {
+					waterConnection.setDemandfees(fees);
+					waterConnection = waterConnectionNoDueService.merge(waterConnection);
+
+				}
+				return new ModelAndView("redirect:/rtiapplication/editWaterDueCertificate.do?rtiApplicationRefId=" + apprefid + "&fees=" + fees);	
+				}
+
+	
+			@RequestMapping("/rtsapplication/saveConnectionNoDuesWaterPayment.do")
+			public ModelAndView saveConnectionNoDuesWaterPayment(HttpServletRequest request,HttpServletResponse response,WaterConnectionNoDue waterConnection)
+					throws ServletException, Exception {
+			    String paymentStatus = request.getParameter("paymentStatus");
+	            String refid =request.getParameter("waterConnectionId");
+				long apprefid = 0;
+				apprefid = Long.parseLong(refid);
+
+				waterConnection = waterConnectionNoDueService.get(apprefid);
+//				waterDisconnection.setSendDemandStatus(1);
+				String status=waterConnection.getPaymentStatus();
+				if (waterConnection.getPaymentStatus() == null && paymentStatus!=null) {
+					waterConnection.setPaymentStatus(paymentStatus);
+					waterConnection = waterConnectionNoDueService.merge(waterConnection);
+
+				}
+				return new ModelAndView("redirect:/rtiapplication/editWaterDueCertificate.do?rtiApplicationRefId=" + apprefid + "&paymentStatus=" + paymentStatus);	
+				}
+
+	
+
+}
+

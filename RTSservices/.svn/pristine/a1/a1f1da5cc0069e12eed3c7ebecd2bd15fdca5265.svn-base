@@ -1,0 +1,463 @@
+
+package com.mars.rti.utils;
+
+import com.mars.common.utils.Constants;
+
+
+public class CoreConstants
+{
+	//Reports Categories
+
+    public static final String REPORT_CATEGORY_RBD="RBD";
+	public static final String REPORT_CATEGORY_RBD_OLD="RBD_OLD";
+
+	public static final String CURRENCY_LAKHS_FORMAT = "0.00000";
+	public static final String CURRENCY_CRORES_FORMAT = "0.0000000";
+
+	public static final String DATE_FORMAT = "dd-MM-yyyy";
+	public static final String UI_DATE_FORMAT = "dd/MM/yyyy";
+    public static final String DATE_FORMAT_TIME = "dd-MM-yyyy HH:mm:ss";
+    public static final String UIDATE_FORMAT_TIME = "dd/MM/yyyy HH:mm:ss";
+
+    public static final Integer DEFAULT_ROWS_PER_PAGE = Constants.DEFAULT_ROWS_PER_PAGE;
+    public static final Integer DEFAULT_PAGINATION_ALL_ROWS = Constants.DEFAULT_PAGINATION_ALL_ROWS;
+
+    public static final Integer STATUS_YES = 1;
+    public static final Integer STATUS_NO = 2;
+    public static final Integer STATUS_NOT_STATED = 99;
+    
+    public static final String BOOLEAN_TRUE_LABEL = "True";
+    public static final String BOOLEAN_FALSE_LABEL = "False";
+ 
+    public static final String STATUS_YES_LABEL = "Yes";
+    public static final String STATUS_NO_LABEL = "No";
+
+    public static final String STATUS_NOT_STATED_LABEL = "Not-Stated";
+    
+    public static final String LABEL_RADIO_MALE = "Male";
+    public static final String LABEL_RADIO_FEMALE = "Female";
+    
+    public static final Integer RADIO_MALE = 1;
+    public static final Integer RADIO_FEMALE = 0;
+    
+    public static final String LABEL_RADIO_LITERATE = "Literate";
+    public static final String LABEL_RADIO_ILLITERATE = "Illiterate";
+    
+    public static final Integer RADIO_LITERATE = 1;
+    public static final Integer RADIO_ILLITERATE = 0;
+    
+   
+    
+    public static final Integer FEE_TYPE_RTI_APPLICATION = 1;    
+    public static final String FEE_TYPE_RTI_APPLICATION_LABEL = "RTI_APPLICATION";
+    
+   
+    public static final Integer RTI_STATUS_PENDING = 0;
+    public static final Integer RTI_STATUS_ACTIVE = 1;    
+    public static final Integer RTI_STATUS_FORWARD = 2;    
+    public static final Integer RTI_STATUS_REJECT = 3;    
+    public static final Integer RTI_STATUS_VERIFIED = 4;    
+    public static final Integer RTI_STATUS_ACCEPTED = 5;    
+    public static final Integer RTI_STATUS_APPROVED = 6;    
+    public static final Integer RTI_STATUS_RE_VERIFY = 7;    
+    public static final Integer RTI_STATUS_CLOSED = 8;
+    
+    
+    public static final String RTI_APPLICATION_CREATE_SCREEN = "FILE_CREATE_SCREEN";
+    public static final String ACK_GENERATION_SCREEN = "ACK_GENERATION_SCREEN";
+    public static final String DRAFT_GENERATION_SCREEN = "DRAFT_GENERATION_SCREEN"; 
+    public static final String FINAL_RESPONSE_GENERATION_SCREEN = "FINAL_RESPONSE_GENERATION_SCREEN"; 
+    
+ //for birth hospital name
+    
+    public static final Integer HOSPITAL_NAME_YASH = 1;
+
+    public static final Integer HOSPITAL_NAME_MEDI = 2;
+    
+    public static final String LABEL_HOSPITAL_NAME_YASH = "YASHODHA HOSPITAL";
+
+    public static final String LABEL_HOSPITAL_NAME_MEDI = "MEDICOVER HOSPITAL";
+    
+    
+    
+    
+    
+    public static final Integer CHILD_GENDER_MALE = 1;
+
+    public static final Integer CHILD_GENDER_FEMALE = 2;
+    
+    public static final Integer CHILD_GENDER_TRANSGENDER = 3;
+    
+    public static final String LABEL_CHILD_GENDER_MALE = "MALE";
+
+    public static final String LABEL_CHILD_GENDER_FEMALE = "FEMALE";
+    
+    public static final String LABEL_CHILD_GENDER_TRANSGENDER = "TRANSGENDER";
+    
+    
+    public static final Integer ZONE_NUMBER_HARS = 1;
+
+    public static final Integer ZONE_NUMBER_EKTA = 2;
+    
+    public static final String LABEL_ZONE_NUMBER_HARS = "HARSOOL";
+
+    public static final String LABEL_ZONE_NUMBER_EKTA = "EKTA NAGAR";
+    
+    
+    public static final Integer HOSPITAL_NAME_KAMAL = 3;
+
+    public static final Integer HOSPITAL_NAME_AIMS = 4;
+    
+    public static final Integer HOSPITAL_NAME_SETH = 5;
+
+    public static final Integer HOSPITAL_NAME_APEX = 6;
+    
+    public static final String LABEL_HOSPITAL_NAME_KAMAL = "KAMALNAYAN BAJAJ HOSPITAL";
+
+    public static final String LABEL_HOSPITAL_NAME_AIMS = "AIMS HOSPITAL & TRAUMA CENTER";
+    
+    public static final String LABEL_HOSPITAL_NAME_SETH = "SETH NANDALAL DHOOT HOSPITAL";
+    
+    public static final String LABEL_HOSPITAL_NAME_APEX = "APEX SUPER SPECIALITY HOSPITAL";
+    
+    public static final Integer ZONE_NUMBER_ONE = 1;
+    
+    public static final Integer ZONE_NUMBER_TWO = 2;
+    public static final Integer ZONE_NUMBER_THREE = 3;
+    public static final Integer ZONE_NUMBER_FOUR = 4;
+    public static final Integer ZONE_NUMBER_FIVE = 5;
+    public static final Integer ZONE_NUMBER_SIX = 6;
+    public static final Integer ZONE_NUMBER_SEVEN = 7;
+    public static final Integer ZONE_NUMBER_EIGHT = 8;
+    public static final Integer ZONE_NUMBER_NINE = 9;
+    public static final Integer ZONE_NUMBER_TEN = 10;
+    public static final Integer ZONE_NUMBER_ELEV = 11;
+    public static final Integer ZONE_NUMBER_TWEL = 12;
+    
+    public static final String LABEL_ZONE_NUMBER_ONE = "1";
+    public static final String LABEL_ZONE_NUMBER_TWO = "2";
+    public static final String LABEL_ZONE_NUMBER_THREE = "3";
+    public static final String LABEL_ZONE_NUMBER_FOUR = "4";
+    public static final String LABEL_ZONE_NUMBER_FIVE = "5";
+    public static final String LABEL_ZONE_NUMBER_SIX = "6";
+    public static final String LABEL_ZONE_NUMBER_SEVEN = "7";
+    public static final String LABEL_ZONE_NUMBER_EIGHT = "8";
+    public static final String LABEL_ZONE_NUMBER_NINE = "9";
+    public static final String LABEL_ZONE_NUMBER_TEN = "10";
+    public static final String LABEL_ZONE_NUMBER_ELEV = "11";
+    public static final String LABEL_ZONE_NUMBER_TWEL = "12";
+   
+    public static final Integer PLACE_OF_DEATH_HOME = 1;
+    public static final Integer PLACE_OF_DEATH_HOSPITAL = 2;
+    
+    public static final String LABEL_PLACE_OF_DEATH_HOME = "HOME";
+    public static final String LABEL_PLACE_OF_DEATH_HOSPITAL = "HOSPITAL";
+    
+    public static final Integer REASON_DEATH_FEVER = 1;
+    public static final Integer REASON_DEATH_CANCER = 2;
+    public static final Integer REASON_DEATH_HEART= 3;
+    public static final Integer REASON_DEATH_STROKE = 4;
+    public static final Integer REASON_DEATH_LOWER= 5;
+    public static final Integer REASON_DEATH_TUBE = 6;
+    public static final Integer REASON_DEATH_ROAD= 7;
+    public static final Integer REASON_DEATH_OTHER = 8;
+    
+    public static final String LABEL_REASON_DEATH_FEVER = "FEVER";
+    public static final String LABEL_REASON_DEATH_CANCER = "CANCER";
+    public static final String LABEL_REASON_DEATH_HEART = "HEART DISEASE";
+    public static final String LABEL_REASON_DEATH_STROKE = "STROKE";
+    public static final String LABEL_REASON_DEATH_LOWER = "LOWER RESPIRATORY INFECTIONS";
+    public static final String LABEL_REASON_DEATH_TUBE = "TUBERCULOSIS";
+    public static final String LABEL_REASON_DEATH_ROAD = "ROAD INJURIES";
+    public static final String LABEL_REASON_DEATH_OTHER = "OTHERS";
+    
+    
+ public static final Integer NAME_OF_CREMATORIUM = 1;
+    
+    public static final String LABEL_NAME_OF_CREMATORIUM = "ITEMS";
+    
+    //dog license
+    public static final Integer DOG_GENDER_MALE = 1;
+    public static final Integer DOG_GENDER_FEMALE = 0;
+  
+    public static final String LABEL_DOG_GENDER_MALE = "MALE";
+
+    public static final String LABEL_DOG_GENDER_FEMALE = "FEMALE";
+    
+    public static final String LABEL_FIRST_DOSE = "FIRST DOSE";
+    public static final String LABEL_SECOND_DOSE = "SECOND DOSE";
+    public static final String LABEL_BOOSTER_DOSE = "BOOSTER DOSE";
+    
+    public static final Integer FIRST_DOSE = 1;
+    public static final Integer SECOND_DOSE  = 2;
+    public static final Integer BOOSTER_DOSE  = 3;
+    
+    
+    
+ 	    
+    /*public static final String RTI_APPLICATION_NEW = "RTI_APPLICATION_DOCS";    
+    public static final String RTI_APPLICATION_NEW_PATH = "/RTI_APPLICATION"; */
+    public static final String RTI_APPLICATION_NEW = "FTS_FILE_CREATION_NEW";    
+    public static final String RTI_APPLICATION_NEW_PATH = "/NEW_CREATION"; 
+    
+    public static final String  RTI_APPLICATION_WORKFLOW_ENTITY ="rtiApplication";
+    public static final String  RTI_BIRTH_WORKFLOW_ENTITY = "birthApplication";
+    public static final String  RTI_WATER_WORKFLOW_ENTITY = "water";
+    public static final String  RTI_MARRIAGE_WORKFLOW_ENTITY = "marriageApplication";
+    public static final String  RTI_MANDAP_WORKFLOW_ENTITY = "mandapPermission";
+    public static final String  RTI_MARKET_WORKFLOW_ENTITY = "marketDepartment";
+    public static final String  RTI_TAX_WORKFLOW_ENTITY = "propertytax";
+    public static final String  RTI_DEATH_WORKFLOW_ENTITY="deathApplication";
+    public static final String  RTI_FIRE_WORKFLOW_ENTITY = "fire";
+    public static final String  RTI_DOG_LICENSE_WORKFLOW_ENTITY = "dogLicense";
+    public static final String  RTI_TOWN_PLANNING_WORKFLOW_ENTITY = "townPlanning";
+    public static final String  RTI_GARDEN_WORKFLOW_ENTITY = "garden";
+    public static final String  ganeshMandapPermission = "ganeshMandapPermission";
+    public static final String  RTI_NURSING_REGISTRATION = "nursingregistration";
+    public static final String  RTI_MTP_REGISTRATION = "mtpRegistrationCertificate";
+    public static final String  RTI_BIOMEDICAL_WORKFLOW_ENTITY = "bioMedicalApplication";
+    public static final String RTI_FIRE_CRACKER_LICENSE="fireCrackerLicense";
+
+
+
+
+    
+     public static final String APPL_STATUS_DISCARDED = "Discarded";
+	 public static final String APPL_STATUS_CREATE = "Create";
+	 public static final String APPL_STATUS_PENDING = "Pending";
+	 public static final String APPL_STATUS_NEW = "New";
+	 public static final String APPL_STATUS_VERIFICATION = "Verification";	 
+	 public static final String APPL_STATUS_APPROVED = "Approved";	
+	 public static final String APPL_STATUS_CLOSED = "Closed";
+	 public static final String APPL_STATUS_PARKED = "Parked";
+	 public static final String APPL_STATUS_UN_PARKED = "Un-Parked"; 	
+	 public static final String APPL_STATUS_REJECTED = "Rejected";
+	 
+	 public static final String APPL_ACCEPT_LEVEL =  "Accept";
+	 public static final String APPL_VERIFICATION_LEVEL = "Verification";
+	 public static final String APPL_APPROVAL_LEVEL = "Approval";
+	 public static final String APPL_CLOSE_LEVEL = "Application Closing";
+	 	 
+	 public static final String APPL_ACCEPT_TRANSITION = "Accept";
+	 public static final String APPL_VERIFICATION_TRANSITION = "Send-For-Verification";	 
+	 public static final String APPL_APPROVAL_TRANSITION = "Send-For-Approval";
+	 public static final String APPL_REVERIFY_TRANSITION = "Re-Verify";	
+	 public static final String APPL_APPROVE_TRANSITION = "Approve";
+	 public static final String APPL_CLOSE_APPLICATION_TRANSITION = "Close-Application";
+	 public static final String APPL_DISCARD_APPLICATION = "KILL_JOB";
+	 
+	 public static final String RTI_FINALSTATUS_CLOSED="Closed";
+	 public static final String RTI_FINALSTATUS_APPROVED="Approved";
+	 public static final String RTI_FINALSTATUS_NEW="New";
+	 public static final String RTI_FINALSTATUS_REJECTED="Rejected";
+	 public static final long RTI_FINALSTATUS_TOTALFEES= 8;
+
+	 public static final String LABEL_RADIO_FEE_CATEGORY_BPL = "BPL";
+     public static final String LABEL_RADIO_FEE_CATEGORY_NON_BPL = "NON-BPL";    
+     public static final Integer FEE_CATEGORY_BPL= 1;
+     public static final Integer FEE_CATEGORY_NON_BPL = 0;
+     
+	 public static final String CASH_LABEL = "Cash";
+	 public static final String CHEQUE_LABEL = "Cheque";
+	 public static final String DEMAND_DRAFT_LABEL = "DD";	
+	 public static final String RTGS_LABEL = "RTGS";
+	 public static final String CHALLAN_LABEL = "Challan";
+	 
+	//WebService constants
+		public static final Integer WEBSERVICE_RESPONSECODE_FAILURE = 0;
+		public static final Integer WEBSERVICE_RESPONSECODE_SUCCESS = 1;
+		
+	// for birth blood Group
+		    public static final Integer  BLOOD_GROUP_ONE = 1;
+		    public static final Integer BLOOD_GROUP_TWO = 2;
+		    public static final Integer BLOOD_GROUP_THREE=3;
+		    public static final Integer BLOOD_GROUP_FOUR = 4;
+		    public static final Integer BLOOD_GROUP_FIVE = 5;
+		    public static final Integer BLOOD_GROUP_SIX = 6;
+		    public static final Integer BLOOD_GROUP_SEVEN = 7;
+		    public static final Integer BLOOD_GROUP_EIGHT = 8;
+		    
+		    public static final String LABEL_BLOOD_GROUP_ONE = "A+ve";
+		    public static final String LABEL_BLOOD_GROUP_TWO  = "A-ve";
+		    public static final String LABEL_BLOOD_GROUP_THREE = "B+ve";
+		    public static final String LABEL_BLOOD_GROUP_FOUR = "B-ve";
+		    public static final String LABEL_BLOOD_GROUP_FIVE = "AB+ve";
+		    public static final String LABEL_BLOOD_GROUP_SIX = "AB-ve";
+		    public static final String LABEL_BLOOD_GROUP_SEVEN= "O+ve";
+		    public static final String LABEL_BLOOD_GROUP_EIGHT = "O-ve";
+		    
+	//for birth blood Relation
+		    
+		    public static final Integer  BLOOD_RELATION_ONE = 1;
+		    public static final Integer BLOOD_RELATION_TWO = 2;
+		    
+		    public static final String LABEL_BLOOD_RELATION_ONE = "Parents";
+		    public static final String LABEL_BLOOD_RELATION_TWO = "Gaurdian";
+		    
+	// for birth place of birth
+		    
+		    public static final String LABEL_RADIO_HOME = "Home";
+		    public static final String LABEL_RADIO_HOSPITAL = "Hospital";
+		    
+		    public static final Integer RADIO_HOME = 1;
+		    public static final Integer RADIO_HOSPITAL = 2;
+		    
+	// for birth certificate expected in Days
+		    public static final String LABEL_RADIO_SAME_DAY = "Same Day";
+		    public static final String LABEL_RADIO_TILL_THIRD_DAY = "Till Third Day";
+		    
+		    public static final Integer RADIO_SAME_DAY = 1;
+		    public static final Integer RADIO_TILL_THIRD_DAY = 2;
+		    
+		    
+    //for Mandap Permission purpose
+		    public static final String LABEL_RADIO_COMMERICAL = "Commercial/Industrial";
+		    public static final String LABEL_RADIO_CHARITABLE = "Charitable Institutions";
+		    public static final String LABEL_RADIO_GOVERNMENT = "Government/ Semi-Government Institutions & Corporations";
+		    
+		    public static final Integer RADIO_COMMERICAL = 1;
+		    public static final Integer RADIO_CHARITABLE = 2;
+		    public static final Integer RADIO_GOVERNMENT = 3;
+		    
+		//Mobile Tower
+		    public static final String LABEL_RADIO_OCCUPANCY = "Building With Occupancy certificate";
+		    public static final String LABEL_RADIO_BUILDING = "Building Plan approved  but  Occupancy Certificate Not Available";
+		    public static final String LABEL_RADIO_SANCTION = "Building  With no sanction plan with occupancy certificate";
+		    
+		    public static final Integer RADIO_OCCUPANCY = 1;
+		    public static final Integer RADIO_BUILDING = 2;
+		    public static final Integer RADIO_SANCTION = 3;
+		    
+		 //NOC of Trade
+		    public static final String LABEL_RADIO_NEWTRADELICENCE = "New Trade License";
+		    public static final String LABEL_RADIO_RENEWALTRADELICENCE = "Renewal Trade License";
+		    
+		    public static final Integer RADIO_NEWTRADELICENCE = 3;
+		    public static final Integer RADIO_RENEWALTRADELICENCE = 4;
+		    
+		  //Water Disconnection
+		    public static final String LABEL_RADIO_PERMANENT = "Permanent";
+		    public static final String LABEL_RADIO_TEMPORARY = "Temporary";
+		    
+		    public static final Integer RADIO_PERMANENT = 3;
+		    public static final Integer RADIO_TEMPORARY = 4;
+		    
+		  //Water Meter Complaint
+		    public static final String LABEL_RADIO_ANONYMOUS = "Anonymous";
+		    public static final String LABEL_RADIO_EXISTING = "Existing";
+		    
+		    public static final String RADIO_ANONYMOUS = "true";
+		    public static final String RADIO_EXISTING = "false";
+		    
+			
+            //Marriage Visit Date
+		    public static final int SCHEDULE_DATE_WORKFLOW_STATUS = 11;
+		    public static final int RESCHEDULE_DATE_WORKFLOW_STATUS = 12;
+            public static final int IN_ACTIVE = -1;
+            
+            //Tax Payment Link
+		    public static final String TAX_PAYMENT_LINK = "http://tinyurl.com/ysvdjecd";
+		    
+		    //SMS Templates
+		    public static final String SMS_LOGIN = "1707170780475551415";//1507166546678524968
+		    public static final String SMS_REQUESTED_SUBMITTED = "1707170780393939538";
+		    public static final String SMS_PAYMENT_LINK = "1707170780411449071";
+		    public static final String SMS_PAYMENT_COMPLTED = "1707170780469399255";
+		    public static final String SMS_CERTIFICATE_UPLOADED = "1707170780433162520";
+		    public static final String SMS_WATER_PAYMENT_LINK = "1707170780487900202";
+		    public static final String SMS_APP_REJECTED = "1707170780459248425";
+		    public static final String MARRIAGE_SCHDULE_SMS="1707171463135629098";
+		    public static final String MARRIAGE_APYMENT_SMS="1707171463128481731";
+
+		    
+		   
+		    public static final String UPLOAD_PATH ="/usr/local/mars/RTSReports/";
+		    
+			 //Property Tax Test URL's		    
+		    public static final String TAX_UPLOAD_AUTHENTICATION_KEY ="TWFyc0AqcnRzJVRheF81NDgjUFJPUEVSVFk"; 
+		    
+		    public static final String RTS_TAX_CITIZEN_UPLOAD="TAX_CITIZEN_UPLOAD";
+		    
+		    public static final String TAX_STAGING_SAVE="https://nmctax.cybertech.com/GeocivicServices/CitizentaxService/CitizentaxService/AgentCollectionService.svc/SaveRTSRequest";
+		    		    
+		   public static final String TAX_TOKEN ="https://nmctax.cybertech.com/GeocivicServices/CommonService/AuthenticationService/Authentication.svc/GenerateToken";
+		   
+		   public static final String TAX_COLLECTION_DETAIL="https://nmctax.cybertech.com/GeoCivicServices/Collection/DepartmentCollection/CollectionService.svc/GetRTSPropertyCollectionDetail";
+		   
+		   public static final String TAX_FINAL_STATUS="https://nmctax.cybertech.com/GeocivicServices/CitizentaxService/CitizentaxService/AgentCollectionService.svc/GetRTSFinalRequestStatus";
+		   
+		   public static final String TAX_REPORT_API="https://nmctax.cybertech.com/GeoCivic/AssessmentReport/AssessmentReport/GenerateReport";
+		   		   
+		   public static final String TAX_PAYMENT_STATUS ="https://nmctax.cybertech.com/GeocivicServices/CitizentaxService/CitizentaxService/AgentCollectionService.svc/GetRTSPaymentStatus";
+		   
+		   public static final String TAX_REQUEST_STATUS="https://nmctax.cybertech.com/GeocivicServices/CitizentaxService/CitizentaxService/AgentCollectionService.svc/GetRTSRequestStatus";
+		   
+		   public static final String TAX_RTS_PROPERTY_LIST="https://nmctax.cybertech.com/GeocivicServices/CitizentaxService/CitizentaxService/AgentCollectionService.svc/GetRTSPropertyList";
+		   
+		   public static final String TAX_SELF_ASSESSMENT_CAL="https://nmctax.cybertech.com/GeocivicServices/CitizenTax/SelfAssessmentExcel/SelfAssessment_Calculator.xlsx";
+		   
+		   public static final String TAX_VALID_PTN_FOR_ASSESSMENT="http://localhost/GeoCivic.PT.AgentCollection.Service/AgentCollectionService.svc/ValidatePtnForAssessment";
+		   
+		   public static final String TAX_VALID_PTN_FOR_COLLECTION="https://nmctax.cybertech.com/GeoCivic/CitizenTaxService/CitizenTaxService/AgentCollectionService.svc/ValidatePtnForCollection";
+		   
+		   
+//		    //Property Tax Productions URL's
+//		    public static final String TAX_UPLOAD_AUTHENTICATION_KEY ="TWFyc0AqcnRzJVRheF81NDgjUFJPUEVSVFk"; 
+//		    
+//		    public static final String RTS_TAX_CITIZEN_UPLOAD="TAX_CITIZEN_UPLOAD";
+//		    
+//		    public static final String TAX_STAGING_SAVE="https://geocivicnmcapp.nmcptax.com/GeoCivicMicroServices/CitizenTaxService/CitizenTaxService/AgentCollectionService.svc/SaveRTSRequest";
+//		    		    
+//		   public static final String TAX_TOKEN ="http://geocivicnmcapp.nmcptax.com/GeoCivicMicroServices/CommonService/AuthenticationService/Authentication.svc/GenerateToken";
+//		   
+//		   public static final String TAX_COLLECTION_DETAIL="http://geocivicnmcapp.nmcptax.com/GeoCivicMicroServices/Collection/DepartmentCollection/CollectionService.svc/GetRTSPropertyCollectionDetail";
+//		   
+//		   public static final String TAX_FINAL_STATUS="https://geocivicnmcapp.nmcptax.com/GeoCivicMicroServices/CitizenTaxService/CitizenTaxService/AgentCollectionService.svc/GetRTSFinalRequestStatus";
+//		   
+//		   public static final String TAX_REPORT_API="http://geocivicnmcapp.nmcptax.com/GeoCivic/AssessmentReport/AssessmentReport/GenerateReport";
+//		   		   
+//		   public static final String TAX_PAYMENT_STATUS ="https://geocivicnmcapp.nmcptax.com/GeoCivicMicroServices/CitizentaxService/CitizentaxService/AgentCollectionService.svc/GetRTSPaymentStatus";
+//		   
+//		   public static final String TAX_REQUEST_STATUS="https://geocivicnmcapp.nmcptax.com/GeoCivicMicroServices/CitizenTaxService/CitizenTaxService/AgentCollectionService.svc/GetRTSRequestStatus";
+//		   
+//		   public static final String TAX_RTS_PROPERTY_LIST="https://geocivicnmcapp.nmcptax.com/GeoCivicMicroServices/CitizenTaxService/CitizenTaxService/AgentCollectionService.svc/GetRTSPropertyList";
+//		   
+//		   public static final String TAX_SELF_ASSESSMENT_CAL="https://geocivicnmcapp.nmcptax.com/CitizenServices/CitizenTax/SelfAssessmentExcel/SelfAssessment_Calculator.xlsx";
+//		   
+//		   public static final String TAX_VALID_PTN_FOR_ASSESSMENT="https://geocivicnmcapp.nmcptax.com/GeoCivicMicroServices/CitizenTaxService/CitizenTaxService/AgentCollectionService.svc/ValidatePtnForAssessment";
+//		   
+//		   public static final String TAX_VALID_PTN_FOR_COLLECTION="https://geocivicnmcapp.nmcptax.com/GeoCivicMicroServices/CitizenTaxService/CitizenTaxService/AgentCollectionService.svc/ValidatePtnForCollection";
+//		   
+
+		   
+		 //water test URL's
+		   public static final String NEW_CONNECTION_WATER_TEST_POST="https://samparkdev.ocwindia.com/aaplesarkar/customer/newConnection/?key=6aa083ae54aae4a7fad7659c6fbfd0bc";				   
+		    public static final String OWNERSHIP_CHANGE_WATER_TEST_POST="https://samparkdev.ocwindia.com/aaplesarkar/customer/request/?key=6aa083ae54aae4a7fad7659c6fbfd0bc";
+		    public static final String CONNECTION_TYPE_CHANGE_WATER_TEST_POST="https://samparkdev.ocwindia.com/aaplesarkar/customer/request/?key=6aa083ae54aae4a7fad7659c6fbfd0bc";
+
+		    public static final String DISCONNECTION_WATER_TEST_POST="https://samparkdev.ocwindia.com/aaplesarkar/customer/request/?key=6aa083ae54aae4a7fad7659c6fbfd0bc";
+
+		    public static final String RECONNECTION_WATER_TEST_POST="https://samparkdev.ocwindia.com/aaplesarkar/customer/request/?key=6aa083ae54aae4a7fad7659c6fbfd0bc";
+		    public static final String CHANGE_USAGE_WATER_TEST_POST="https://samparkdev.ocwindia.com/aaplesarkar/customer/request/?key=6aa083ae54aae4a7fad7659c6fbfd0bc";
+
+		    		
+		   public static final String NO_DUES_WATER_TEST_POST="https://samparkdev.ocwindia.com/aaplesarkar/customer/request/?key=6aa083ae54aae4a7fad7659c6fbfd0bc";
+
+//		  
+//		  // water PRODUCTION URL's
+//		   public static final String NEW_CONNECTION_WATER_TEST_POST="https://sampark.ocwindia.com/aaplesarkar/customer/newConnection/?key=6aa083ae54aae4a7fad7659c6fbfd0bc";				   
+//		    public static final String OWNERSHIP_CHANGE_WATER_TEST_POST="https://sampark.ocwindia.com/aaplesarkar/customer/request/?key=6aa083ae54aae4a7fad7659c6fbfd0bc";
+//		    public static final String CONNECTION_TYPE_CHANGE_WATER_TEST_POST="https://sampark.ocwindia.com/aaplesarkar/customer/request/?key=6aa083ae54aae4a7fad7659c6fbfd0bc";
+//
+//		    public static final String DISCONNECTION_WATER_TEST_POST="https://sampark.ocwindia.com/aaplesarkar/customer/request/?key=6aa083ae54aae4a7fad7659c6fbfd0bc";
+//
+//		    public static final String RECONNECTION_WATER_TEST_POST="https://sampark.ocwindia.com/aaplesarkar/customer/request/?key=6aa083ae54aae4a7fad7659c6fbfd0bc";
+//		    public static final String CHANGE_USAGE_WATER_TEST_POST="https://sampark.ocwindia.com/aaplesarkar/customer/request/?key=6aa083ae54aae4a7fad7659c6fbfd0bc";
+//
+//		    		
+//		   public static final String NO_DUES_WATER_TEST_POST="https://sampark.ocwindia.com/aaplesarkar/customer/request/?key=6aa083ae54aae4a7fad7659c6fbfd0bc";
+
+
+
+
+}

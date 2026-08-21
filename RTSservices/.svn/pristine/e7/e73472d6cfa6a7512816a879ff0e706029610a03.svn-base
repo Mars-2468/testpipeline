@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2024-03-18T11:24:05 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="demand" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e2bd4546-67da-4eac-9a31-5aae044403f7">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="EGOV_NMC_UAT"/>
+	<parameter name="rtiapplrefid" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select tc.*,TO_CHAR(ra.created_date ::timestamp, 'DD/MM/YYYY')  from egovrti.tree_cuting tc 
+join egovrti.rti_application ra on ra.rti_application_id =tc.rti_ref_id 
+where ra.rti_application_id  =$P{rtiapplrefid};]]>
+	</queryString>
+	<field name="tree_cuting_id" class="java.lang.Long"/>
+	<field name="title" class="java.lang.String"/>
+	<field name="first_name" class="java.lang.String"/>
+	<field name="middle_name" class="java.lang.String"/>
+	<field name="last_name" class="java.lang.String"/>
+	<field name="full_name" class="java.lang.String"/>
+	<field name="area_name" class="java.lang.String"/>
+	<field name="landmark" class="java.lang.String"/>
+	<field name="pincode" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="treetype" class="java.lang.String"/>
+	<field name="resone_tree_cuting" class="java.lang.String"/>
+	<field name="number_of_tree_cuting" class="java.lang.String"/>
+	<field name="tax_paid_receipt" class="java.lang.String"/>
+	<field name="aadhaar_card" class="java.lang.String"/>
+	<field name="sanctioned_plan_construction" class="java.lang.String"/>
+	<field name="photograph_of_tree" class="java.lang.String"/>
+	<field name="approval_of_tree_authority_committee" class="java.lang.String"/>
+	<field name="getfilespath" class="java.lang.String"/>
+	<field name="rti_appl_ref_no" class="java.lang.String"/>
+	<field name="rti_ref_id" class="java.lang.String"/>
+	<field name="mobile_no" class="java.lang.String"/>
+	<field name="zone_no" class="java.lang.String"/>
+	<field name="aadhar_no" class="java.lang.String"/>
+	<field name="totalfeesuptocha" class="java.lang.String"/>
+	<field name="nooftreeuptopercentage" class="java.lang.String"/>
+	<field name="totalfeeswithgst" class="java.lang.String"/>
+	<field name="plotno" class="java.lang.String"/>
+	<field name="building_name" class="java.lang.String"/>
+	<field name="street_name" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="wardno" class="java.lang.String"/>
+	<field name="applicantcity" class="java.lang.String"/>
+	<field name="locationoftree" class="java.lang.String"/>
+	<field name="ownership" class="java.lang.String"/>
+	<field name="totalnonheritage" class="java.lang.String"/>
+	<field name="totalheritage" class="java.lang.String"/>
+	<field name="demandletter" class="java.lang.String"/>
+	<field name="noc" class="java.lang.String"/>
+	<field name="rejectionletter" class="java.lang.String"/>
+	<field name="rejectionremark" class="java.lang.String"/>
+	<field name="plantationletter" class="java.lang.String"/>
+	<field name="plantation" class="java.lang.String"/>
+	<field name="to_char" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="124" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="150" y="2" width="230" height="19" uuid="9bc80440-d099-456d-a688-9307794999ea"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[कार्यालय नागपूर महानगरपालिका, नागपूर]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="191" y="24" width="158" height="19" uuid="ceccb991-6565-4a37-9c85-5ec8abb3637e"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[उद्यान व वृक्ष प्राधिकरण विभाग]]></text>
+			</staticText>
+			<line>
+				<reportElement x="10" y="95" width="530" height="1" uuid="a13002e8-12d2-4f42-b53b-84509e9a2a95"/>
+			</line>
+			<staticText>
+				<reportElement x="150" y="50" width="239" height="21" uuid="b3108a17-1751-47cf-8811-eef4ec5b116b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[मागणी पत्र]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="433" y="95" width="100" height="20" uuid="188ed955-fee1-4b4a-95a4-1c0fd5c66274"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["दिनांक: "+new SimpleDateFormat("dd-MM-yyyy").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="21" y="100" width="178" height="20" uuid="331446c3-de36-47f2-bc31-ddadbe9820fd"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA["क्रमांक:"+$F{rti_appl_ref_no}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="17" y="7" width="67" height="69" uuid="7bb0f521-7cda-4a14-804b-1f5205c11198"/>
+				<imageExpression><![CDATA["../../images/AMC_Logo.jpeg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="532" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="200" width="519" height="140" uuid="26741959-76de-486d-9964-56a897695086"/>
+				<textElement>
+					<font fontName="Arial Unicode MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA["               मा. उपायुक्त (उद्यान) तथा वृक्ष अधिकारी, मनपा, नागपूर यांच्या दिनांक "+$F{to_char}+" च्या मंजुरी अन्वये, येथील  एकूण "+$F{number_of_tree_cuting}+" वृक्ष तोडण्याकरीता अर्जदाराकडून प्रशासकिय शुल्क रु. "+$F{totalfeeswithgst}+"/- " +" रक्कम स्विकारण्याच्या अटीवर मंजुरी प्राप्त झाली आहे. " +"\n"+"  तेव्हा सदर रक्कम या कार्यालयात सात दिवसाचे आत जमा करावे. त्यानंतरच आपल्याला झाड /झाडे /फांद्या तोडण्याची परवानगी देण्यात येईल. अन्यथा झाड किंवा झाडाची फांदी पडल्यास होणाऱ्या जीव व वित्तहानीची सर्वस्व जवाबदारी आपली राहील."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="21" y="86" width="144" height="20" uuid="f59a18b8-0d04-41e7-8d31-ee16d9c02482"/>
+				<textElement>
+					<font fontName="Arial Unicode MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="21" y="64" width="144" height="20" uuid="ecc2f92c-2654-4223-bcbf-476a2aefe3cb"/>
+				<textElement>
+					<font fontName="Arial Unicode MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{full_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="21" y="35" width="81" height="21" uuid="777bf7c4-6285-41b9-95cf-7e7a98bed536"/>
+				<textElement>
+					<font fontName="Arial Unicode MS"/>
+				</textElement>
+				<text><![CDATA[प्रति,  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="489" width="150" height="20" uuid="e80b738f-bab6-469a-ac8e-5e0da56b013d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[उद्यान अधिक्षक]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="511" width="190" height="21" uuid="ddaf5ca0-3141-493d-96cb-0b2850cff25b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[नागपूर महानगरपालिका, नागपूर]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="21" y="142" width="518" height="36" uuid="8432b187-07e1-4b9d-9a9e-eb53eeb9613b"/>
+				<textElement>
+					<font fontName="Arial Unicode MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA["विषय :-  झाडे तोडण्याबाबत "]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

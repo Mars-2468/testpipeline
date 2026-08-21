@@ -1,0 +1,186 @@
+package com.mars.common.utils;
+
+public class Constants
+{
+	
+	public static final String APPLICATION_NAME = "RTI"; 
+	
+	public static final int APPLICATION_ID = 23; 
+	
+	public static final String WORKSPACE_NAME="RTI";
+
+    public static final Integer STATUS_YES = new Integer(1);
+
+    public static final Integer STATUS_NO = new Integer(0);
+
+    public static final String STATUS_YES_LABEL = "Yes";
+
+    public static final String STATUS_NO_LABEL = "No";
+
+    public static final String BOOLEAN_TRUE_LABEL = "True";
+
+    public static final String BOOLEAN_FALSE_LABEL = "False";
+
+    public static final Integer DEFAULT_ROWS_PER_PAGE = new Integer(20);
+
+    public static final Integer DEFAULT_PAGINATION_ALL_ROWS = new Integer(-1);
+
+    public static final String DATE_FORMAT = "dd-MM-yyyy";
+
+    public static final String DATE_UI_FORMAT = "dd/MM/yyyy";
+
+    public static final String DATE_DB_FORMAT = "dd/MM/yyyy";
+
+    public static final String SESSION_TOKEN_KEY = "_synchronizerToken";
+    public static final String SESSION_UPLOAD_TOKEN_KEY = "_synchronizerUploadToken";
+    public static final String CURRENCY_FORMAT = "0.00";
+
+    public static final String DISTANCE_FORMAT = "0.000";
+
+    public static final Integer ACTIVE = 1;
+
+    public static final Integer INACTIVE = 0;
+
+    public static final String ACTIVE_LABEL = "Active";
+
+    public static final String INACTIVE_LABEL = "InActive";
+
+    public static final String SEX_MALE = "M";
+
+    public static final String SEX_FEMALE = "F";
+
+    public static final String SEX_BOTH = "B";
+
+    public static final String SEX_TRANSGENDER = "T";
+
+    public static final String SEX_MALE_LABEL = "Male";
+
+    public static final String SEX_FEMALE_LABEL = "Female";
+
+    public static final String SEX_BOTH_LABEL = "Both";
+
+    public static final String SEX_TRANSGENDER_LABEL = "TransGender";  
+
+    public static final Integer CASH_PAYMENT = 0;
+
+    public static final Integer CHEQUE_PAYMENT = 1;
+
+    public static final Integer DD_PAYMENT = 2;
+    
+    public static final Integer ONLINE_PAYMENT = 3;
+
+    public static final String CASH_PAYMENT_LABEL = "Cash";
+
+    public static final String CHEQUE_PAYMENT_LABEL = "Cheque";
+
+    public static final String DD_PAYMENT_LABEL = "Demand Draft";
+    
+    public static final String ONLINE_PAYMENT_LABEL = "Online Payment";
+
+    public static final Integer TAX_TYPE_MUNICIPALITY = 1;
+
+    public static final Integer TAX_TYPE_GOVERNMENT = 2;
+
+    public static final String TAX_TYPE_MUNICIPALITY_LABEL = "Municipality";
+
+    public static final String TAX_TYPE_GOVERNMENT_LABEL = "Government";
+
+    public static final Integer CALCULATION_TYPE_PERCENTAGE = 1;
+
+    public static final Integer CALCULATION_TYPE_SLAB = 2;
+
+    public static final String CALCULATION_TYPE_PERCENTAGE_LABEL = "Percentage Base";
+
+    public static final String CALCULATION_TYPE_SLAB_LABEL = "Slab Base";
+
+    public static final String CONTENT_TYPE_TEXT_HTML = "text/html";
+
+    public static final String CONTENT_TYPE_PDF = "application/pdf";
+
+    public static final String CONTENT_TYPE_WORD = "application/msword";
+
+    public static final String CONTENT_TYPE_EXCEL = "application/vnd.ms-excel";
+
+    public static final String REPORT_TITLE2 = "Government of Rajasthan";
+
+	public static final String REPORT_TITLE1 = "Accounts Rental Department";
+
+	public static final Integer CHALLAN_OPEN = 0;
+
+    public static final Integer CHALLAN_CLOSED = 1;
+    
+    public static final Integer INSTALLMENT_NOT_PAID = 0;
+
+    public static final Integer INSTALLMENT_PAID = 1;    
+    
+    public static final Integer CASH = 0;
+    public static final Integer CHEQUE = 1;
+    public static final Integer DD = 2;
+    public static final Integer ONLINE = 3;
+    
+    public static final String CASH_LABEL = "Cash";
+    public static final String CHEQUE_LABEL = "Cheque";
+    public static final String DD_LABEL = "Demand Draft";
+    public static final String ONLINE_LABEL = "Online Payment";
+
+	// Document Type
+	public static final Integer DOCUMENT_TYPE_GENERAL = 0;
+	public static final Integer DOCUMENT_TYPE_FIELD_VERIFICATION = 1;
+
+	public static final String DOCUMENT_TYPE_GENERAL_LABEL = "General";
+	public static final String DOCUMENT_TYPE_FIELD_VERIFICATION_LABEL = "Field Verification";
+	 public static final Integer Default_Mandatory = 0;
+	
+	//TO generate Random String
+	public static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	public static final int RANDOM_STRING_LENGTH=10;
+
+
+	//Input Types for Document Master
+	public static final Integer INPUT_TYPE_DATE = new Integer(0);
+	public static final Integer INPUT_TYPE_TEXTBOX = new Integer(1);
+	public static final Integer INPUT_TYPE_TEXTAREA = new Integer(2);
+	public static final Integer INPUT_TYPE_YESORNO = new Integer(3);	
+
+	public static final String INPUT_TYPE_DATE_LABEL = "Date";
+	public static final String INPUT_TYPE_TEXTBOX_LABEL = "Textbox";
+	public static final String INPUT_TYPE_TEXTAREA_LABEL = "Textarea";
+	public static final String INPUT_TYPE_YESORNO_LABEL = "YesOrNo";
+	
+	public static final String REGION_NORTH_LABEL = "NORTHERN REGION";
+	public static final Integer REGION_NORTH_VALUE = new Integer(1);
+	public static final String REGION_WESTERN_LABEL = "WESTERN REGION";
+	public static final Integer REGION_WESTERN_VALUE = new Integer(2);
+	public static final String REGION_EASTERN_LABEL = "EASTERN REGION";
+	public static final Integer REGION_EASTERN_VALUE = new Integer(3);
+	public static final String REGION_CENTRAL_LABEL = "CENTRAL REGION";
+	public static final Integer REGION_CENTRAL_VALUE = new Integer(4);
+	public static final String REGION_SOUTHERN_LABEL = "SOUTHERN REGION";
+	public static final Integer REGION_SOUTHERN_VALUE = new Integer(5);
+
+	public static final int FAS_CREDIT_VAL = 1;
+	public static final String FAS_CREDIT_LABEL = "Credit";
+	public static final int FAS_DEBIT_VAL = 2;
+	public static final String  FAS_DEBIT_LABEL = "Debit";
+	
+	public static final int WORKFLOW_CREATED = 1;
+	public static final int WORKFLOW_VERIFIED = 2;
+	public static final int WORKFLOW_APPROVED = 3;
+	public static final int WORKFLOW_REJECTED = 4;
+	
+	public static String INTEGER_REGEX="[0-9]+";
+	
+	public static final String DATE_TIME_DB_FORMAT = "dd/MM/yyyy HH:mm:ss";
+	public static final String SUCCESSMSG="success";
+	public static final String IN_PROCESS_PENDING_MSG="In process/Pending";
+	public static final String FAILUREMSG="failure";
+	
+	public static final String DELIVERY_MODE_FIELD_TEXT="text";
+	public static final String DELIVERY_MODE_FIELD_TEXT_AREA="textArea";
+	
+	public static final String DELIVERY_MODE_DATA_TYPE_STRING="string";
+	public static final String DELIVERY_MODE_DATA_TYPE_NUMBER="number";
+ 
+	
+	
+}

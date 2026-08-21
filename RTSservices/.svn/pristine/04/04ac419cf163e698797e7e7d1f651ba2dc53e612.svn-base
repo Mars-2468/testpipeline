@@ -1,0 +1,759 @@
+package com.mars.rti.controller;
+
+import java.text.DecimalFormat;
+
+import java.time.Year;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.jbpm.api.TaskService;
+import org.jbpm.api.task.Task;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.mars.common.controller.AapleSarkarPortalIntegrationNagpur;
+import com.mars.common.model.UserRegistrationDetails;
+import com.mars.common.service.UserRegistrationService;
+import com.mars.common.utils.CommonUtils;
+import com.mars.common.utils.SendEmail;
+import com.mars.common.utils.SendSMS;
+import com.mars.common.utils.SessionUser;
+import com.mars.rti.model.FireBuildingHeight;
+import com.mars.rti.model.FireDepartmentWiseLogin;
+import com.mars.rti.model.FireDetails;
+import com.mars.rti.model.FireFeesMasterUpdated;
+import com.mars.rti.model.FireFloorName;
+import com.mars.rti.model.FireFloorTypes;
+import com.mars.rti.model.FireRecommendation;
+import com.mars.rti.model.FireRecommendationTypeOfBuilding;
+import com.mars.rti.model.FireSubDepartmentWiseLogin;
+import com.mars.rti.model.FireTypeOfConstruction;
+import com.mars.rti.model.RTIApplication;
+import com.mars.rti.model.RTIApplicationDetails;
+import com.mars.rti.model.SubTypeOfbuilding;
+import com.mars.rti.service.FireBuildingHeightService;
+import com.mars.rti.service.FireDepartmentWiseLoginService;
+import com.mars.rti.service.FireDetailsService;
+import com.mars.rti.service.FireFeesMasterUpdatedService;
+import com.mars.rti.service.FireFloorNameService;
+import com.mars.rti.service.FireFloorTypesService;
+import com.mars.rti.service.FireRecommendationService;
+import com.mars.rti.service.FireRecommendationTypeOfBuildingService;
+import com.mars.rti.service.FireSubDepartmentWiseLoginService;
+import com.mars.rti.service.FireTypeOfConstructionService;
+import com.mars.rti.service.RTIApplicationService;
+import com.mars.rti.service.SubTypeOfbuildingService;
+import com.mars.rti.utils.CoreConstants;
+import com.mars.workflow.model.PersonalTask;
+import com.mars.workflow.model.WorkflowProcessDetails;
+import com.mars.workflow.service.WorkflowProcessDetailsService;
+import com.mars.workflow.service.WorkflowService;
+import com.mars.workflow.utils.WorkflowConstants;
+
+@Controller
+public class FireRecommendationController {
+//	extends MultiActionController implements InitializingBean
+	private static Log log = LogFactory.getLog(FireRecommendationController.class);
+	@Autowired
+	private FireRecommendationService fireRecommendationService;
+	@Autowired
+	private RTIApplicationService rtiApplicationService;
+
+	@Autowired
+	private FireRecommendationTypeOfBuildingService fireRecommendationTypeOfBuildingService;
+	
+	@Autowired
+	private FireTypeOfConstructionService fireTypeOfConstructionService;
+	
+	@Autowired
+	private FireBuildingHeightService fireBuildingHeightService;
+	
+	@Autowired
+	private FireFloorNameService fireFloorNameService;
+	
+	@Autowired
+	private SubTypeOfbuildingService subTypeOfbuildingService;
+	
+	@Autowired
+	private FireFloorTypesService fireFloorTypesService;
+	
+//	private static String const_OrderBy = "OrderBy";
+
+//	private static String const_SortBy = "SortBy";
+
+	@Autowired
+	private WorkflowProcessDetailsService workflowProcessDetailsService;
+
+	@Autowired
+	AapleSarkarPortalIntegrationNagpur aapleSarkarPortalIntegrationNagpur;
+	
+	@Autowired
+	private UserRegistrationService userService;
+
+	@Autowired
+	private WorkflowService workflowService;
+
+	@Autowired
+	private TaskService taskService;
+	
+	@Autowired
+	private FireDetailsService fireDetailsService;
+	
+	@Autowired
+	private FireFeesMasterUpdatedService fireFeesMasterUpdatedService;
+	
+	@Autowired
+	private FireDepartmentWiseLoginService fireDepartmentWiseLoginService;
+
+	@Autowired
+	private FireSubDepartmentWiseLoginService fireSubDepartmentWiseLoginService;
+	
+
+// 	@RequestMapping("ws/rtiapplication/newRTIMandapApplication.do")
+// 	public ModelAndView newRTIMandapApplication(HttpServletRequest request, HttpServletResponse response)
+// 			throws ServletException {
+// 		String baseDir = getServletContext().getRealPath("");
+//		String folder = "mandapPermission";
+//		File file = new File(baseDir, folder);
+//		if (!file.exists()) {
+//			file.mkdirs();
+//		}
+// 		ModelAndView modelAndView = new ModelAndView("newRTIMandapApplication");
+//		modelAndView.addObject("folderName", folder);
+// 		return modelAndView;l
+// 	}
+
+	@RequestMapping("/rtsapplication/saveFireRecommendationLatter.do")
+	public ModelAndView saveFireRecommendation(HttpServletRequest request, HttpServletResponse response,
+			FireRecommendation fireRecommendation) throws ServletException, Exception {
+
+		HttpSession session = request.getSession(true);
+		SessionUser sessionUser = (SessionUser) session.getAttribute("SessionUser");
+
+		if (log.isDebugEnabled()) {
+			log.debug("Invoking Fire");
+		}
+		if (log.isDebugEnabled()) {
+			log.debug("Invoking FireRecommendation");
+		}
+		
+		String str = "1C273EB8FF9134E63E400953BFFD82CA6714E31B3507E1BBAA13BB2497725EC1532DC8022CA708266A12A05C2F358F1AD6411CCE7546EFC3D74618F7DBE16E1E471CB6D015EC0A28DCDCA45FCFECE51ED24D289525FB7C4D24CC5278032D8183DFFBB526BA38D8549A2A7B7B0F4BA3338AFF9B8C6E95DF378D19EB37E92990EC";
+		String serviceId = "NMCDeptN";
+			String Respponse =	aapleSarkarPortalIntegrationNagpur.authentication(str, serviceId);
+			
+//			String xmlResponse = apleSarkarController.getXMLResponse(str, serviceId);
+		String mobileNumber = "";
+		String user_name=null;
+		Object user_login= request.getSession().getAttribute("name");
+		if(user_login!=null) {
+			 user_name = (String)user_login;
+		}
+		Object obileNumber= session.getAttribute("mobileNo");
+		if(obileNumber!=null) {
+		mobileNumber=String.valueOf(obileNumber);
+		}else {
+		mobileNumber = (String) session.getAttribute("mobileNo");
+		}
+		if (mobileNumber != null) {
+			UserRegistrationDetails user = userService.getUserByMobileNo(mobileNumber);
+			Object as_status=session.getAttribute("as_status");
+
+			if (fireRecommendation != null) {
+				
+				
+
+				RTIApplication rtiApplication = new RTIApplication();
+				//MandapPermi mandapPermissionRestDTO = new MandapPermissionRestDTO();
+				rtiApplication.setCreatedDate(CommonUtils.getCurrentStringDateAndTime());
+				rtiApplication.setRegistrationDate(CommonUtils.getCurrentStringDateAndTime());
+				rtiApplication.setSubject("FIRE-Recommendation");
+				rtiApplication.setDepartment("FIRE-DEPARTMENT");
+				rtiApplication.setTemplateName("fire");	
+				rtiApplication.setWorkFlowStatus(0);
+				rtiApplication.setFinalStatus("0");
+				rtiApplication.setRtiserviceid(69);
+				
+				rtiApplication.setFirstPaymentFees(fireRecommendation.getScrutinyFeesOnAboveTotal());
+				rtiApplication.setApplicantName(fireRecommendation.getFirstName() + " " + fireRecommendation.getMiddleName()
+						+ " " + fireRecommendation.getLastName());
+				if(as_status!=null && user_name==null) {
+					rtiApplication.setAapleSarkarUserMobileNo(mobileNumber);
+					
+				}
+				rtiApplication.setPhoneNumber(fireRecommendation.getMobileNo());
+				rtiApplication.setMobileNumber(fireRecommendation.getMobileNo());
+				
+				if(fireRecommendation.getFireSubDepartmentWiseLogin().equals("2")||fireRecommendation.getFireSubDepartmentWiseLogin().equals("3"))
+				{
+					rtiApplication.setZone("10");
+				}
+				else
+				{
+					rtiApplication.setZone(fireRecommendation.getFireDepartmentWiseLogin());
+				}
+				rtiApplication.setEmail(fireRecommendation.getAppEmail());
+//				rtiApplication.setZone(fireRecommendation.getZoneNO());
+				rtiApplication.setUserRegistrationDetails(user);
+
+//				rtiApplication.setAppliscationCost((fireRecommendation.getTotalFees()));
+
+				rtiApplication.setApplicantName(fireRecommendation.getFullName());
+				rtiApplication.setPdfUploadFromPortal(fireRecommendation.getFilesPath());
+				List<RTIApplicationDetails> rtiApplicationDetailsList = new ArrayList<RTIApplicationDetails>();
+				RTIApplicationDetails rtiApplicationDetails = new RTIApplicationDetails();
+				
+				rtiApplicationDetails.setRtiApplication(rtiApplication);
+				rtiApplicationDetails.setStatus(0);
+				rtiApplicationDetails.setAssignToStatus(1);
+				rtiApplicationDetails.setAssignedStartDate(rtiApplication.getCreatedDate());
+				rtiApplicationDetails.setAssignedEndDate(CommonUtils.getCurrentStringDateAndTime());
+
+				rtiApplicationDetails.setComments("Form Submitted");// ();
+				rtiApplicationDetails.setWorkflowLevel(0);
+				rtiApplicationDetailsList.add(rtiApplicationDetails);
+				rtiApplication.setRtiApplicationDetails(rtiApplicationDetailsList);
+				RTIApplication savedRti = rtiApplicationService.merge(rtiApplication);
+
+				if (savedRti.getRtiApplicationId() > 0) {
+
+					RTIApplication rti = rtiApplicationService.get(savedRti.getRtiApplicationId());
+					rti.setRtiApplnNumber("RTS/FD" + "/" + Year.now() + "/" + savedRti.getRtiApplicationId());
+					fireRecommendation.setRtiapplrefno(rti.getRtiApplnNumber());
+					fireRecommendation.setRti_ref_id(savedRti.getRtiApplicationId());
+					long fire_regis_id = fireRecommendationService.fireRecommendation(fireRecommendation);
+					fireRecommendation.setFireRecommendationId(fire_regis_id);
+					rti.setRtiApplicationRefId(fire_regis_id);
+					// rti.setRtiApplicationRefId(birthRegistrationService.);
+					
+
+//					 long typeOfBuilding = Long.parseLong(request.getParameter("typeOfBuilding"));
+			          long typeOfConstruction = Long.parseLong(request.getParameter("typeOfConstruction"));
+			          long typeOfHeight = Long.parseLong(request.getParameter("typeOfHeight"));
+			          long catagory = 1;
+
+//					String totalTable[] = request.getParameterValues("totalTable");
+					String commericaial[] = request.getParameterValues("commArea");
+					String floorName[] = request.getParameterValues("floorName");
+					String residArea[] = request.getParameterValues("residArea");
+					String primumAr[] = request.getParameterValues("primumAr");
+					String otherUse[] = request.getParameterValues("otherUse");
+					String rowWiseTotal[] = new String [floorName.length];
+
+					FireFeesMasterUpdated fireFeesMasterUpdated = null;
+					
+					double getFeesFromBackend = 0.0;
+			         double addAreaFromFrontEnd = 0.0;
+			         double rowWisefees = 0.0;
+			         double grandTotal=0.0;
+			         DecimalFormat df = new DecimalFormat("#.####");
+			         double [] rowWiseTotalFeesToBeShown = new double[floorName.length];
+			         
+			         double totalResidAreaaD = 0.0;
+			      	  double totalCommAreaaD = 0.0;
+			      	  double totalPrimumArrD = 0.0;
+			      	  double totalOtherUseeD = 0.0;
+			         
+			         for (int  i = 0;i<floorName.length;i++) {
+			            	  
+			            	  FireDetails f = new FireDetails();
+								if(commericaial !=null) {
+									f.setCommArea(commericaial[i]);
+								}
+								if(floorName !=null) {
+									f.setFloorName(floorName[i]);
+								}
+								if(residArea !=null) {
+									f.setResidArea(residArea[i]);
+								}
+								if(otherUse !=null) {
+									f.setOtherUse(otherUse[i]);
+								}
+								
+								
+								if(primumAr !=null) {
+									f.setPrimumAr((primumAr[i]));
+								}
+								
+								f.setFireRecommendation(fireRecommendation);
+								
+			            	  long fN = Long.parseLong(floorName[i]);
+			            	  double commAreaaD = 0.0;
+			            	  double residAreaaD = 0.0;
+			            	  double primumArrD = 0.0;
+			            	  double otherUseeD = 0.0;
+//			            	  fireFeesMasterUpdated = fireFeesMasterUpdatedService.getList(typeOfBuilding,typeOfConstruction,typeOfHeight,catagory,Long.parseLong(floorName[i]));
+//			            	  getFeesFromBackend = Double.parseDouble(fireFeesMasterUpdated.getMasterFees());
+			            	  if(commericaial[i].equals("") || commericaial[i] == null)
+			            	  {
+			            		   commAreaaD = 0.0;
+			            	  }
+			            	  else 
+			            	  {
+			            		  commAreaaD = Double.parseDouble(commericaial[i]);
+			            		  fireFeesMasterUpdated = fireFeesMasterUpdatedService.getList(3,typeOfConstruction,typeOfHeight,catagory,Long.parseLong(floorName[i]));
+			                	  getFeesFromBackend = Double.parseDouble(fireFeesMasterUpdated.getMasterFees());
+			            		  totalCommAreaaD += (commAreaaD*getFeesFromBackend);
+			            		  
+			            	  }
+			            	  if(residArea[i].equals(""))
+			            	  {
+			            		  residAreaaD = 0.0;
+			            	  }
+			            	  else 
+			            	  {
+			            		  residAreaaD = Double.parseDouble(residArea[i]);
+			            		  fireFeesMasterUpdated = fireFeesMasterUpdatedService.getList(1,typeOfConstruction,typeOfHeight,catagory,Long.parseLong(floorName[i]));
+			                	  getFeesFromBackend = Double.parseDouble(fireFeesMasterUpdated.getMasterFees());
+			            		  totalResidAreaaD += (residAreaaD * getFeesFromBackend); 
+
+			            	  }
+			            	  if(primumAr[i].equals(""))
+			            	  {
+			            		  primumArrD = 0.0;
+			            	  }
+			            	  else 
+			            	  {
+			            		  primumArrD = Double.parseDouble(primumAr[i]);
+			            		  fireFeesMasterUpdated = fireFeesMasterUpdatedService.getList(2,typeOfConstruction,typeOfHeight,catagory,Long.parseLong(floorName[i]));
+			            		  getFeesFromBackend = Double.parseDouble(fireFeesMasterUpdated.getMasterFees());
+			            		  totalPrimumArrD += (primumArrD*getFeesFromBackend);
+			            	  }
+			            	  if(otherUse[i].equals(""))
+			            	  {
+			            		  otherUseeD = 0.0;
+			            	  }
+			            	  else 
+			            	  {
+			            		  otherUseeD = Double.parseDouble(otherUse[i]);
+			               		  fireFeesMasterUpdated = fireFeesMasterUpdatedService.getList(4,typeOfConstruction,typeOfHeight,catagory,Long.parseLong(floorName[i]));
+			                	  getFeesFromBackend = Double.parseDouble(fireFeesMasterUpdated.getMasterFees());
+			            		  totalOtherUseeD += (otherUseeD*getFeesFromBackend);
+			            	  }
+			            	  
+			            	  
+			            	  addAreaFromFrontEnd = totalResidAreaaD + totalCommAreaaD + totalPrimumArrD + totalOtherUseeD;
+			            	  rowWisefees =  addAreaFromFrontEnd;
+			            	  f.setRowWiseTotal(rowWisefees+"");
+			            	  rowWisefees = Double.parseDouble(df.format(rowWisefees));
+			            	  rowWiseTotalFeesToBeShown [i] = rowWisefees;
+			            	  grandTotal += rowWisefees;
+			            	  
+								 fireDetailsService.saveFireDetails(f);
+
+			              }
+			              fireRecommendation.setTotalFeess(df.format(grandTotal)+"");
+			              double scrutinyFees = 0.0;
+			              
+			             
+					
+					
+					String name = fireRecommendation.getFullName();
+					String link = "https://tinyurl.com/4hhhy9w9";
+					String applnNo = rti.getRtiApplnNumber();
+					
+					
+						scrutinyFees = Double.parseDouble(df.format((grandTotal*2)/100));
+			              rti.setFirstPaymentFees(scrutinyFees+"");
+			              fireRecommendation.setFirstPaymentFees(scrutinyFees+"");
+			              fireRecommendation.setScrutinyFeesOnAboveTotal(scrutinyFees+"");
+			              rti.setApplicationCost(Double.parseDouble(df.format(grandTotal)));
+			              RTIApplication retunRti = rtiApplicationService.merge(rti);
+			              fireRecommendationService.saveFireForm(fireRecommendation);
+
+						rtiApplicationService.save(savedRti);
+					
+						return new ModelAndView("redirect:/ws/search.do?rtsAppNo="+retunRti.getRtiApplnNumber());
+				
+					
+//
+//					String msg = "Dear " + name + " your application with Application No. " + applnNo
+//							+ " submitted successfully. Kindly Save for RTS Tracking record. Regards, NMCGOV";
+//
+//					msg.replace("var3", "");
+//
+//					SendSMS.sendSingleSMS("1507167462244373944", "NMCGov", fireRecommendation.getMobileNo(), msg);
+//					SendEmail.sendEmail(fireRecommendation.getAppEmail(), "Application Submitted Successfully" + applnNo,
+//							msg);
+				}
+				
+
+			}
+			
+		}
+		
+		
+//		ModelAndView modelAndView = new ModelAndView("newRTIMandapPermissionSucess");
+//		modelAndView.addObject("result", "Save successfully done");
+		return new ModelAndView("redirect:/ws/user/login.do");
+		
+//		 return new ModelAndView( "redirect:/newRTIMandapPermissionSucess.jsp");
+
+		/*
+		 * ModelAndView modelAndView = new ModelAndView("redirect:/abc.htm");
+		 * modelAndView.addObject("newRTIMandapPermissionSucess" , new
+		 * ModelAttribute()); return modelAndView;
+		 */
+	}
+	
+	@RequestMapping("/rtsapplication/newRtsFirerecomendationEditable.do")
+	public ModelAndView newRtsFirerecomendationEditable(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException {
+//		request.getSession().removeAttribute("as_status");
+
+		FireRecommendation fireRecommendation = null;
+		request.getParameter("fireRecommendationRtsId");
+		String formId = request.getParameter("fireRecommendationRtsId");
+
+		fireRecommendationService.get(0);
+		List<FireRecommendationTypeOfBuilding> fireRecommendationTypeOfBuilding = fireRecommendationTypeOfBuildingService
+				.getTypeOfFireTypeOfBuilding();
+		request.setAttribute("fireRecommendationTypeOfBuilding", fireRecommendationTypeOfBuilding);
+
+		List<FireTypeOfConstruction> fireTypeOfConstruction = fireTypeOfConstructionService.getTypeOfConstruction();
+		request.setAttribute("fireTypeOfConstruction", fireTypeOfConstruction);
+
+		List<FireBuildingHeight> fireBuildingHeight = fireBuildingHeightService.getTypeOfBuildinhHeight();
+		request.setAttribute("fireBuildingHeight", fireBuildingHeight);
+
+		List<FireFloorName> fireFloorName = fireFloorNameService.getFireFloorName();
+		request.setAttribute("fireFloorName", fireFloorName);
+
+		List<SubTypeOfbuilding> subTypeOfbuilding = subTypeOfbuildingService.getSubTypeOfbuilding();
+		request.setAttribute("subTypeOfbuilding", subTypeOfbuilding);
+
+		List<FireDepartmentWiseLogin> fireDepartmentWiseLogin = fireDepartmentWiseLoginService
+				.getFireDepartmentWiseLogin();
+		request.setAttribute("fireDepartmentWiseLogin", fireDepartmentWiseLogin);
+
+		List<FireSubDepartmentWiseLogin> fireSubDepartmentWiseLogin = fireSubDepartmentWiseLoginService
+				.getFireSubDepartmentWiseLogin();
+		request.setAttribute("fireSubDepartmentWiseLogin", fireSubDepartmentWiseLogin);
+
+		List<FireFloorTypes> fireFloorTypes = fireFloorTypesService.getFireFloorTypes();
+		request.setAttribute("fireFloorTypes", fireFloorTypes);
+
+		fireRecommendation = fireRecommendationService.getApplicationId(formId);
+		
+		request.setAttribute("fireApplicationId", fireRecommendation);
+		ModelAndView modelAndView = new ModelAndView("newRtsFirerecomendationEditable");
+
+		return modelAndView;
+	}
+
+	@RequestMapping("/rtsapplication/editFireRecommendation.do")
+	public ModelAndView editFireRecommendation(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+		FireRecommendation fireRecommendation = null;
+		List<FireDetails> fireDetails = null;
+		HttpSession session = request.getSession();
+		System.out.println("editFireRecommendation");
+		long rtiApplicationRefId = 0;
+		long rtiApplicationId = 0;
+		RTIApplication rtiapplication = null; 
+		SessionUser sessionUser = (SessionUser) session.getAttribute("SessionUser");
+		if (request.getParameter("rtiApplicationRefId") != null
+				&& request.getParameter("rtiApplicationRefId").length() > 0
+				|| session.getAttribute("rtirefId") != null) {
+			if (request.getParameter("rtiApplicationRefId") != null
+					&& request.getParameter("rtiApplicationRefId").length() > 0) {
+				rtiApplicationRefId = Long.parseLong(request.getParameter("rtiApplicationRefId"));
+				fireRecommendation = fireRecommendationService.get(rtiApplicationRefId);
+				fireDetails = fireDetailsService.getFireDetails(rtiApplicationRefId);
+			} else if (session.getAttribute("rtirefId") != null) {
+				Object a = session.getAttribute("rtirefId");
+				rtiApplicationRefId = (long) a;
+				fireRecommendation = fireRecommendationService.get(rtiApplicationRefId);
+				fireDetails = fireDetailsService.getFireDetails(rtiApplicationRefId);
+			}
+			if (fireRecommendation.getRti_ref_id() > 0) {
+				rtiApplicationId = fireRecommendation.getRti_ref_id();
+				rtiapplication = rtiApplicationService.get(rtiApplicationId);
+			} else {
+				List<RTIApplication> listRTI = rtiApplicationService.findByProperty("rtiApplicationRefId",
+						rtiApplicationRefId);
+				if (listRTI != null && !listRTI.isEmpty()) {
+					rtiApplicationId = listRTI.get(0).getRtiApplicationId();
+					rtiapplication = listRTI.get(0);
+				}
+			}
+		}
+		
+
+		request.setAttribute(WorkflowConstants.WORKFLOW_REQUIRED, "true");
+		request.setAttribute(WorkflowConstants.WORKFLOW_NAME, CoreConstants.RTI_FIRE_WORKFLOW_ENTITY);
+		request.setAttribute(WorkflowConstants.WORKFLOW_ENTITYNAME, CoreConstants.RTI_FIRE_WORKFLOW_ENTITY);
+		request.setAttribute(WorkflowConstants.WORKFLOW_ENTITYID, rtiApplicationId);
+		request.setAttribute("rtiApplication", rtiapplication);
+		long rtiRefId = rtiapplication.getRtiApplicationRefId();
+		request.setAttribute("workflowStatus", rtiapplication.getWorkFlowStatus());
+		request.setAttribute("rtiRefId", rtiapplication.getRtiApplicationRefId());
+
+	
+	
+		WorkflowProcessDetails workflowProcessDetails = null;
+		WorkflowProcessDetails processDetails = null;
+		workflowProcessDetails = workflowProcessDetailsService
+				.getWorkflowProcessDetailsByEntityDetails(rtiApplicationId, CoreConstants.RTI_FIRE_WORKFLOW_ENTITY);
+
+		if (workflowProcessDetails != null) {
+			String processId = workflowProcessDetails.getProcessId();
+			if (processId != null) {
+				processDetails = workflowProcessDetailsService.getWorkflowProcessDetailsByProcessId(processId);
+			}
+			if (!workflowService.isProcessEnded(processId)) {
+				String taskId = workflowService.getCurrentTaskId(processId);
+				Task task = null;
+				if (taskId != null)
+					task = taskService.getTask(taskId);
+				if (processDetails != null) {
+					PersonalTask personalTask = new PersonalTask();
+					personalTask.setTask(task);
+					personalTask.setEntityId(processDetails.getEntityId());
+					personalTask.setEntityName(processDetails.getEntityName());
+					personalTask.setWorkflowInitator(processDetails.getUserName());
+					personalTask.setEntityDetails(processDetails.getEntityDetails());
+					request.setAttribute("personalTask", personalTask);
+				}
+				if (task != null && sessionUser.getUserName().equals(task.getAssignee()))
+					request.setAttribute("userAccess", 1);
+
+				request.setAttribute("workFlowTask", task);
+			} else {
+
+				request.setAttribute("workFlowCompleted", "1");
+			}
+		}
+		
+		List<FireDepartmentWiseLogin> fireDepartmentWiseLogin = fireDepartmentWiseLoginService.getFireDepartmentWiseLogin();
+		request.setAttribute("fireDepartmentWiseLogin", fireDepartmentWiseLogin);
+		
+		List<FireSubDepartmentWiseLogin> fireSubDepartmentWiseLogin = fireSubDepartmentWiseLoginService.getFireSubDepartmentWiseLogin();
+		request.setAttribute("fireSubDepartmentWiseLogin", fireSubDepartmentWiseLogin);
+		
+		
+		ModelAndView modelAndView = new ModelAndView("manageFireRecommendation");
+		modelAndView.addObject("fireRecommendation", fireRecommendation); // Set the entity class
+		
+//		String type = "PWD License";
+//		String applnNo = rtiapplication.getRtiApplnNumber();
+//		String link = "http://tinyurl.com/yc3b9dp8";
+//		String msg = "Dear Applicant, your application "
+//				+ applnNo
+//				+ " for "
+//				+ type
+//				+ " Is submitted successfully. Kindly pay registration fees using link "
+//				+ link + " Regards,NMCGOV";
+//
+//		msg.replace("var3", "");
+//
+//		SendSMS.sendSingleSMS("1707170505869519444", "NMCGov",
+//				rtiapplication.getMobileNumber(), msg);
+
+		// Add other attributes or data to the model
+		modelAndView.addObject("fireDetails", fireDetails);
+
+		return modelAndView;
+
+	}
+	
+	@RequestMapping("/rtsapplication/updateDepartment.do")
+	public ModelAndView updateDepartment(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+		
+		FireRecommendation fireRecommendation = null;
+		RTIApplication rtiapplication = null; 
+		long rtiApplicationRefId = Long.parseLong(request.getParameter("rtiApplicationRefId"));
+		fireRecommendation = fireRecommendationService.get(rtiApplicationRefId);
+		
+		long rtiapplicationId = fireRecommendation.getRti_ref_id();
+		
+		rtiapplication = rtiApplicationService.get(rtiapplicationId);
+		String firstD = request.getParameter("fireDepartmentWiseLogin");
+		String SecondD = request.getParameter("fireSubDepartmentWiseLogin");
+		
+	if(firstD != null && SecondD != null) {
+		rtiapplication.setZone(request.getParameter("fireDepartmentWiseLogin"));
+		fireRecommendation.setFireDepartmentWiseLogin(request.getParameter("fireDepartmentWiseLogin"));
+		fireRecommendation.setFireSubDepartmentWiseLogin(request.getParameter("fireSubDepartmentWiseLogin"));
+		fireRecommendation.setZoneNO(request.getParameter("fireDepartmentWiseLogin"));
+		fireRecommendationService.merge(fireRecommendation);
+		rtiApplicationService.merge(rtiapplication);
+
+	}
+    return new ModelAndView("redirect:/rtsapplication/listRTSFireNOCApplication.do");
+	}
+	
+
+	
+	
+	@RequestMapping("/rtiapplication/createFireRecommendationWork.do")
+	public ModelAndView createFireRecommendationWork(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+		String rtiApplicationIdString = request.getParameter(WorkflowConstants.WORKFLOW_ENTITYID);
+		long rtiApplicationId = Long.parseLong(rtiApplicationIdString);
+		RTIApplication rtiApplication = rtiApplicationService.get(rtiApplicationId);
+
+		HttpSession session = request.getSession();
+		SessionUser sessionUser = (SessionUser) session.getAttribute("SessionUser");
+
+		WorkflowProcessDetails workflowProcessDetails = null;
+		WorkflowProcessDetails processDetails = null;
+		workflowProcessDetails = workflowProcessDetailsService
+				.getWorkflowProcessDetailsByEntityDetails(rtiApplicationId, CoreConstants.RTI_FIRE_WORKFLOW_ENTITY);
+
+		String id = request.getParameter("id");
+		long applicationId = Long.parseLong(id);
+		FireRecommendation fireRecommendation = fireRecommendationService.get(applicationId);
+		String email = fireRecommendation.getAppEmail();
+		String mobileNo = fireRecommendation.getMobileNo();
+		String rtiApplnNumber = rtiApplication.getRtiApplnNumber();
+		String applicantName = rtiApplication.getApplicantName();
+		long rtirefId = rtiApplication.getRtiApplicationRefId();
+
+		if (fireRecommendation != null) {
+			if (workflowProcessDetails != null) {
+				String processId = workflowProcessDetails.getProcessId();
+				if (processId != null) {
+					processDetails = workflowProcessDetailsService.getWorkflowProcessDetailsByProcessId(processId);
+				}
+				if (!workflowService.isProcessEnded(processId)) {
+					String taskId = workflowService.getCurrentTaskId(processId);
+					Task task = null;
+					if (taskId != null)
+						task = taskService.getTask(taskId);
+					if (processDetails != null) {
+						PersonalTask personalTask = new PersonalTask();
+						personalTask.setTask(task);
+						personalTask.setEntityId(processDetails.getEntityId());
+						personalTask.setEntityName(processDetails.getEntityName());
+						personalTask.setWorkflowInitator(processDetails.getUserName());
+						personalTask.setEntityDetails(processDetails.getEntityDetails());
+						request.setAttribute("personalTask", personalTask);
+					}
+
+					rtiApplication.setWorkFlowStatus(3);
+					rtiApplicationService.save(rtiApplication);
+					String link = "https://tinyurl.com/4hhhy9w9";
+					String msg = "Dear " + applicantName
+							+ " your document verification has been successfully completed. Kindly use this link https://tinyurl.com/3ntc2jae  to make a payment in order for your application "
+							+ rtiApplnNumber + " to be processed further.Regards, NMCGOV";
+
+					msg.replace("var3", "");
+					SendEmail.sendEmail(email, "Payment link for your Appl. No." + mobileNo, msg);
+					SendSMS.sendSingleSMS("1507167421309610108", "NMCGov", mobileNo, msg);
+
+					if (request.getParameter("WORKFLOW_TRANSISTION").isEmpty()
+							|| request.getParameter("WORKFLOW_TRANSISTION") == null) {
+
+					}
+					if (task != null && sessionUser.getUserName().equals(task.getAssignee())) {
+						request.setAttribute("userAccess", 1);
+						request.setAttribute("workFlowTask", task);
+					}
+				} else if (request.getParameter("WORKFLOW_TRANSISTION").equals("Close-Application")) {
+
+					rtiApplication.setWorkFlowStatus(1);
+					rtiApplicationService.save(rtiApplication);
+					String msg = "Dear " + applicantName
+							+ " please click on this link https://tinyurl.com/5emnw6u7 to download the Certificate for your application "
+							+ rtiApplnNumber + " Regards, NMCGOV";
+
+					msg.replace("var3", "");
+					SendEmail.sendEmail(email, "Completion of your Appl. No." + rtiApplnNumber, msg);
+					SendSMS.sendSingleSMS("1507167421320245636", "NMCGov", mobileNo, msg);
+					request.setAttribute("workFlowCompleted", "1");
+				} else if (request.getParameter("WORKFLOW_TRANSISTION").equals("Reject")) {
+					rtiApplication.setWorkFlowStatus(5);
+					rtiApplicationService.save(rtiApplication);
+					String msg = "Dear " + applicantName + " your " + rtiApplnNumber
+							+ " has been rejected due to shortfall of documents. Please use this link https://tinyurl.com/5emnw6u7 to know the pending mandatory documents and track the status of your application.Regards, NMCGOV";
+					msg.replace("var3", "");
+					SendEmail.sendEmail(email, "Rejection of your Appl. No." + rtiApplnNumber, msg);
+					SendSMS.sendSingleSMS("1507167421296109813", "NMCGov", mobileNo, msg);
+					request.setAttribute("workFlowCompleted", "1");
+				}
+			} else {
+				session.setAttribute("rejected", 5);
+				rtiApplication.setWorkFlowStatus(5);
+				rtiApplicationService.save(rtiApplication);
+				String msg = "Dear " + applicantName + " your " + rtiApplnNumber
+						+ " has been rejected due to shortfall of documents. Please use this link https://tinyurl.com/5emnw6u7 to know the pending mandatory documents and track the status of your application.Regards, NMCGOV";
+				msg.replace("var3", "");
+				SendEmail.sendEmail(email, "Rejection of your Appl. No." + rtiApplnNumber, msg);
+				SendSMS.sendSingleSMS("1507167421296109813", "NMCGov", mobileNo, msg);
+				request.setAttribute("workFlowCompleted", "1");
+
+			}
+
+		}
+
+		request.setAttribute(WorkflowConstants.WORKFLOW_REQUIRED, "true");
+		request.setAttribute(WorkflowConstants.WORKFLOW_NAME, CoreConstants.RTI_FIRE_WORKFLOW_ENTITY);
+		request.setAttribute(WorkflowConstants.WORKFLOW_ENTITYNAME, CoreConstants.RTI_FIRE_WORKFLOW_ENTITY);
+		request.setAttribute(WorkflowConstants.WORKFLOW_ENTITYID, rtiApplicationId);
+		request.setAttribute("rtiApplication", rtiApplication);
+		request.setAttribute("rtiApplicationRefId", rtiApplicationId);
+		// ModelAndView modelAndView = new ModelAndView("manageMandapPermission",
+		// "mandapPermission", mandapPermission);
+		session.setAttribute("rtirefId", rtirefId);
+		return new ModelAndView("redirect:/rtsapplication/editFireRecommendation.do");
+	}
+
+	@RequestMapping("/ws/rtsapplication/firePaymentSucess.do")
+	public ModelAndView firePaymentSucess(HttpServletRequest request,
+			HttpServletResponse response) {
+		String applicationNumber = request.getParameter("rtiApplicationNumber");
+
+try {
+		String status = request.getSession().getAttribute("status").toString();
+		if (status.equals("2") && applicationNumber != null) {
+			RTIApplication rtsapp = rtiApplicationService
+					.get(Long.parseLong(applicationNumber));
+			RTIApplication rts = rtiApplicationService.merge(rtsapp);
+			String mobileNo = rts.getMobileNumber();
+			String name = rts.getApplicantName();
+			String link = "https://tinyurl.com/4hhhy9w9";
+			String applnNo = rts.getRtiApplnNumber();
+
+			String msg = "Dear " + name
+					+ " your application with Application No. " + applnNo
+					+ " submitted successfully. Kindly Save for RTS Tracking record. Regards, NMCGOV";
+
+			msg.replace("var3", "");
+
+			SendSMS.sendSingleSMS("1507167462244373944", "NMCGov", mobileNo,
+					msg);
+			SendEmail.sendEmail(rts.getEmail(),
+					"Application Submitted Successfully" + applnNo, msg);
+			request.setAttribute("rtiApplicationNumberi", rts.getRtiApplnNumber());
+			ModelAndView model = new ModelAndView(
+					"newRTIFireRecommendationSuccess", "fireRecommendation",
+					rts);
+			return model;
+		} else {
+			RTIApplication rtsapp = rtiApplicationService
+					.get(Long.parseLong(applicationNumber));
+			rtsapp.setRtiserviceid(0);
+			RTIApplication rts = rtiApplicationService.merge(rtsapp);
+			throw new NullPointerException("Somthing went wrong.");
+		}
+
+	
+	}catch(Exception ex) {
+		ex.printStackTrace();
+		RTIApplication rtsapp = rtiApplicationService
+				.get(Long.parseLong(applicationNumber));
+		rtiApplicationService.delete(rtsapp.getRtiApplicationId());
+		throw new NullPointerException("Somthing went wrong.");
+	}
+	}
+}

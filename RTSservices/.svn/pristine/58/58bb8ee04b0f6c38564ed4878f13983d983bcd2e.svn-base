@@ -1,0 +1,169 @@
+package com.mars.common.dao;
+
+
+
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+
+import org.hibernate.type.NullableType;
+
+import com.mars.common.model.District;
+import com.mars.common.search.DistrictSearch;
+/**
+ * <p>Title: DistrictDAO.java </p>
+
+ * <p>Description: This interface is used for hibernate operations for District</p>
+
+ * @see com.mars.common.model.District
+ 
+ * Copyright (c) 2014 for Mars Telecom India Pvt Ltd 
+
+ * @version: 1.0
+
+ * @author : eGovernance development team <Mars Telecom Systems Pvt Ltd>
+ * 
+ */
+
+public interface DistrictDAO {
+
+  
+	/**
+	 * This method returns District object for a given Id
+	 * 
+	 * @param id as long
+	 * @return District as model object
+	 */
+	public District get(long id);
+		
+    
+    /**
+	 * This method save/updates the District information to the database.
+	 * 
+	 * @param District object
+	 * 
+	 */
+	public void save(District entity);
+	
+     /**
+	 * This method to merge the District information to the database.
+	 * 
+	 * @param District object
+	 * 
+	 */
+    public District merge(District entity);
+    
+    /**
+	 * This method delete District for a given Id
+	 * 
+	 * @param id as long
+	 * 
+	 */
+    public void delete(long id) ;
+	
+	/**
+	 * This method will return a list of all District from the database
+	 * 
+	 * @return List of District
+	 */
+	public List<District> getAll();
+	
+	/**
+     * This method save/updates a list of District information to the database.
+     * 
+     * @param listDistrict as List
+     * 
+     */
+    public void saveAll(List<District> listDistrict);
+    
+    
+    /**
+     * This method is used to delete a list of District records from the database.
+     * 
+     * @param listDistrict as List
+     */
+    public void deleteAll(List<District> listDistrict);
+    
+	    /**
+		 * This method returns list of the District objects available based page number.
+		 * 
+		 * @param long PageNumber
+		 * @param String orderBy
+		 * @param String sortBy
+		 * @return List
+		 * @exception Exception
+		 */
+		public List<District> getDistrictList(long pageNumber,String orderBy, String sortBy);
+		
+		/**
+		 * This method returns list of the District objects available based on Search
+		 * 
+		 * @param searchDistrict
+		 * @param 
+		 * @param 
+		 * @return List
+		 * @exception Exception
+		 */
+		public List<District> getDistrictListBySearch(DistrictSearch searchDistrict);
+		
+		/**
+		 * This method returns count of the District objects from the database
+		 * 
+		 * @return long
+		 * @exception Exception
+		 */
+		public long getDistrictCount();
+	
+		/**
+		 * This method returns count of the District objects from the database based on search
+		 * @param searchDistrict
+		 * @return long
+		 * @exception Exception
+		 */
+		public long getDistrictCountBySearch(DistrictSearch searchDistrict);
+		
+	
+	/**
+	 * This method returns list of District objects available based on the value for a particular property.
+	 * @param String propertyName
+	 * @param Object value
+	 * @return List
+	 * @exception Exception
+	 */
+    public List<District> findByProperty(String propertyName, Object value);
+
+	/**
+	 * This method returns District object for a given data
+	 * 
+	 * @param District as district
+	 * @return District as model object
+	 */
+	public District checkForDuplicates(District district);
+	
+	/**
+	 * This method returns list of District objects available based on the query names passed.
+	 * @param String namedQuery
+	 * @param hstKeyValues as Hashatble containing the Parameter name as key and value.
+	 * @return List
+	 * @exception Exception
+	 */
+	public List<District> getListByNamedQuery(String namedQuery, Hashtable<String, Object> hstKeyValues);
+
+    /**
+	 * This method returns list of District objects available based on the SQL query and parameters.
+	 * @param String SQL Query
+	 * @param hstDataTypes as Hashatble containing the Scalar Variable and Value
+	 * @return List
+	 * @exception Exception
+	 */
+	public List<District> getEntityListBySQLQuery(String strSql, Hashtable<String, NullableType> hstDataTypes);
+	
+    /**
+	 * This method returns list selected columns as list based on the SQL query and parameters.
+	 * @param String SQL Query
+	 * @return List
+	 * @exception Exception
+	 */
+	public List<ArrayList> getListBySQLQuery(String strSql, Hashtable<String, NullableType> hstDataTypes);
+}
+

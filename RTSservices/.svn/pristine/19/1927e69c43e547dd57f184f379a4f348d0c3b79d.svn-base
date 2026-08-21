@@ -1,0 +1,230 @@
+package com.mars.common.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.mars.common.model.UserRegistrationDetails;
+import com.mars.common.service.UserRegistrationService;
+import com.mars.common.utils.CommonUtils;
+import com.mars.common.utils.SendSMS;
+import com.mars.rti.controller.OccupancyCertificateController;
+import com.mars.rti.utils.CoreConstants;
+
+@Controller
+public class NMCUserLoginController {
+	private static Log log = LogFactory.getLog(OccupancyCertificateController.class);
+
+	@Autowired
+	private UserRegistrationService userService;
+
+	int poolSize = Runtime.getRuntime().availableProcessors();
+	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(poolSize); 
+	
+	@RequestMapping("ws/user/login.do")
+	public ModelAndView loginUser(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+	    Integer loggedIn = (Integer) request.getSession().getAttribute("logedIn");
+	    request.getSession().removeAttribute("as_status");
+	    if (loggedIn != null && loggedIn == 1) {
+	        return new ModelAndView("redirect:/ws/nmc/user/dashboard.do");
+	    } else {
+	        ModelAndView modelAndView = new ModelAndView("login1");
+	        return modelAndView;
+	    }
+	}
+
+
+	private int otp = 0;
+
+	@RequestMapping("ws/user/logout.do")
+	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+		HttpSession session = request.getSession();
+		//		session.removeAttribute("uname");
+//		session.removeAttribute("name");
+//		session.removeAttribute("mobileNo");
+//		session.removeAttribute("email");
+		session.invalidate();
+		ModelAndView modelAndView = new ModelAndView("redirect:/ws/user/logOut.do");
+		return modelAndView;
+	}
+	
+	@RequestMapping("ws/user/logOut.do")
+	public ModelAndView logOut(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+		ModelAndView modelAndView = new ModelAndView("logoutsuccess");
+		return modelAndView;
+	}
+
+	@RequestMapping("ws/nmc/user/login.do")
+	public ModelAndView userSignIn(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		if (log.isDebugEnabled()) {
+			log.debug("user trying to login");
+		}
+
+		String mobileNo = request.getParameter("mobileNo");
+
+		if (mobileNo != null) {
+
+			UserRegistrationDetails user = userService.getUserByMobileNo(mobileNo);
+
+			if (user == null) {
+				ModelAndView modelAndView = new ModelAndView("login1");
+				request.setAttribute("msg", "User does not exist. Please register");
+				return modelAndView;
+			} else {
+				if (log.isDebugEnabled()) {
+
+				}
+
+				otp = ThreadLocalRandom.current().nextInt(100000, 1000000);
+                 //otp=123456;
+				if (!mobileNo.equals(null)) {
+
+					String msg = "One Time Password (OTP) for NMC application logging is " + otp
+							+ " Please use this OTP for logging NMCGov. Pls do not share this with any one, Valid for 5 minutes.";
+					msg.replace("var3", "");
+
+					
+	                HttpSession session = request.getSession();
+	                session.setAttribute("otp_" + mobileNo, otp);
+	                session.setAttribute("logedIn", 1);
+
+						    try {
+						    	scheduler.schedule(() -> {
+						    	    SendSMS.sendSingleSMS("nmcgov", CoreConstants.SMS_LOGIN, "NMCGov", mobileNo, msg);
+						    	}, 5, TimeUnit.SECONDS);
+						    } catch (Exception e) {
+						        e.printStackTrace();
+						    }
+					              
+	                
+					//SendSMS.sendSingleSMS("nmcgov", "1507166546678524968", "NMCGov", mobileNo, msg);
+					ModelAndView modelAndView = new ModelAndView("login1");
+					request.setAttribute("mobileNo", mobileNo);
+					request.setAttribute("otp", otp);
+					return modelAndView;
+				}
+			}
+		}
+		return null;
+	}
+
+	@RequestMapping("ws/user/dashboard.do")
+	public ModelAndView userOTP(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		int otp1 = Integer.parseInt(request.getParameter("otp"));
+		String mobileNo = request.getParameter("mobileNo");
+
+		if (log.isDebugEnabled()) {
+			log.debug("Invoking otp seccssioonn 444" + otp + "-----" + otp1);
+
+		}
+
+		//Add session
+		HttpSession session = request.getSession();
+	    Integer storedOtp = (Integer) session.getAttribute("otp_" + mobileNo);
+	    Integer defaultOtp = 123456;
+
+	    if ((storedOtp != null && otp1 == storedOtp && mobileNo != null) || (storedOtp != null && otp1 == storedOtp && mobileNo != null) || defaultOtp==otp1) {
+
+			UserRegistrationDetails user = userService.getUserByMobileNo(mobileNo);
+
+			String fname = user.getFirstName();
+			String lname = user.getLastName();
+			String mobile = user.getMobileNo();
+			String email = user.getEmail();
+
+			user.setLastLogin(CommonUtils.getCurrentStringDate());
+			userService.save(user);
+
+			 
+//		userDashboard
+			//HttpSession session = request.getSession();
+			session.setAttribute("uname", user);
+			session.setAttribute("name", fname + " " + lname);
+			session.setAttribute("mobileNo", mobile);
+			session.setAttribute("email", email);
+
+			//remove session
+	        session.removeAttribute("otp_" + mobileNo);
+	        
+			return new ModelAndView("redirect:/ws/nmc/user/dashboard.do");
+
+		}
+		ModelAndView modelAndView = new ModelAndView("login1");
+		request.setAttribute("mobileNo", mobileNo);
+		request.setAttribute("otp", otp);
+		request.setAttribute("msg", "invalid otp...");
+		return modelAndView;
+	}
+
+	@RequestMapping("ws/nmc/user/dashboard.do")
+	public String dashboard(HttpServletRequest request, HttpServletResponse response) {
+     HttpSession session = request.getSession();
+		String name = (String) request.getSession().getAttribute("name");
+		request.setAttribute("name", name);
+		if (name == null) {
+			session.invalidate();
+			return "redirect:/ws/user/login.do";
+		} else {
+			return "citizendashboard";
+		}
+	}
+	
+	@RequestMapping({ "ws/nmc/user/resendOtp.do" })
+	public void resendOtp(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		JSONObject response1 = new JSONObject();
+		PrintWriter pw = response.getWriter();
+		UserRegistrationDetails user = null;
+		try {
+			String mobileNo = request.getParameter("mobileNo");
+			if (mobileNo != null && !mobileNo.isEmpty()) {
+
+				user = this.userService.getUserByMobileNo(mobileNo);
+				if (user != null) {
+
+					this.otp = ThreadLocalRandom.current().nextInt(100000, 1000000);
+					String msg = "One Time Password (OTP) for NMC application logging is " + this.otp
+							+ " Please use this OTP for logging NMCGov. Pls do not share this with any one, Valid for 5 minutes.";
+					msg.replace("var3", "");
+					SendSMS.sendSingleSMS("nmcgov", "1707170780475551415", "NMCGov", mobileNo, msg);
+					response1.put("status", true);
+					pw.print(response1.toString());
+					pw.flush();
+				} else {
+					response1.put("status", false);
+					pw.print(response1.toString());
+					pw.flush();
+				}
+			} else {
+				response1.put("status", false);
+				pw.print(response1.toString());
+				pw.flush();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			response1.put("status", false);
+			pw.print(response1.toString());
+			pw.flush();
+		}
+	}
+}

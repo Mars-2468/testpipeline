@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2025-08-11T17:21:22 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ZoneCertificate" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" isIgnorePagination="true" uuid="604a6bc3-ae55-4fb3-995f-76c562a21e2b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="net.sf.jasperreports.print.create.bookmarks" value="false"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="rtiapplrefid" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from egovrti.ganesh_mandap_permission mp, egovrti.rti_application ra where mp.rti_ref_id = ra.rti_application_id and mp.rti_ref_id=$P{rtiapplrefid}]]>
+	</queryString>
+	<field name="ganesh_mandap_permission_id" class="java.lang.Long"/>
+	<field name="title" class="java.lang.String"/>
+	<field name="first_name" class="java.lang.String"/>
+	<field name="middle_name" class="java.lang.String"/>
+	<field name="last_name" class="java.lang.String"/>
+	<field name="full_name" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="pincode" class="java.lang.String"/>
+	<field name="email_id" class="java.lang.String"/>
+	<field name="mobile_no" class="java.lang.String"/>
+	<field name="aadhar_no" class="java.lang.String"/>
+	<field name="zone_no" class="java.lang.String"/>
+	<field name="ward_no" class="java.lang.String"/>
+	<field name="address_for_institution" class="java.lang.String"/>
+	<field name="venue_address" class="java.lang.String"/>
+	<field name="registration_no" class="java.lang.String"/>
+	<field name="event_date" class="java.lang.String"/>
+	<field name="pavilion_length" class="java.lang.String"/>
+	<field name="pavilion_breadth" class="java.lang.String"/>
+	<field name="pavilion_start_date" class="java.lang.String"/>
+	<field name="pavilion_end_date" class="java.lang.String"/>
+	<field name="registration_date" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="802">
+			<frame>
+				<reportElement x="1" y="117" width="553" height="203" uuid="7e57a7c4-b57e-4da8-b207-59167f168c99"/>
+				<staticText>
+					<reportElement x="20" y="0" width="60" height="20" uuid="e4259ae0-d1df-44fe-bccd-cb74be522145"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial Unicode MS" size="14"/>
+					</textElement>
+					<text><![CDATA[विषय :-]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="72" y="0" width="472" height="19" uuid="04571639-39b3-4761-b54a-53dcc33fcc86"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial Unicode MS" size="14"/>
+					</textElement>
+					<text><![CDATA[श्री गणेश उत्सव संबंधाने अस्थायी मंडप उभारण्याकरिता वाहतुकीच्या दृष्टीने ना-हरकत प्रमाणपत्र .]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="20" y="47" width="90" height="20" uuid="e44eb9f7-58f7-4bb2-aa0d-82d6fcf41717"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial Unicode MS" size="14"/>
+					</textElement>
+					<text><![CDATA[परवानगी क्र. :-]]></text>
+				</staticText>
+				<line>
+					<reportElement x="72" y="19" width="471" height="1" uuid="b2b7fc3b-a9a3-4af4-b0a3-5824ad5d786f"/>
+				</line>
+				<textField>
+					<reportElement x="125" y="47" width="210" height="20" uuid="0b0efd75-74aa-434c-921a-1ee8f6fd2f82"/>
+					<textElement textAlignment="Left">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ganesh_mandap_permission_id}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="20" y="68" width="90" height="19" uuid="4ae9b50c-b421-44da-b9d5-41aae6e8095c"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial Unicode MS" size="14"/>
+					</textElement>
+					<text><![CDATA[अ) अर्ज दिनांक :- ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="20" y="87" width="100" height="20" uuid="ae6135b9-7a9d-4852-a25c-caa773cfde39"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial Unicode MS" size="14"/>
+					</textElement>
+					<text><![CDATA[ब) अर्जदार :-]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="125" y="87" width="424" height="20" uuid="ff0119a7-e584-4fc8-ac2d-ba4aefcd44b2"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial Unicode MS" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{first_name} + " "+$F{middle_name} + " "+$F{last_name}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="19" y="112" width="100" height="22" uuid="27296b5d-98b0-497f-817a-ca6a5001e66c"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial Unicode MS" size="14"/>
+					</textElement>
+					<text><![CDATA[क) मंडपाचे स्थळ :-]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="125" y="107" width="424" height="22" uuid="e0671734-b807-4805-a344-1a7c4718dd73"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial Unicode MS" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="19" y="133" width="120" height="19" uuid="354d4aae-8d25-412d-8793-49a68efaeab1"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial Unicode MS" size="14"/>
+					</textElement>
+					<text><![CDATA[ड) कालावधी दिनांक :-]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="150" y="129" width="309" height="20" uuid="57a0170f-55af-418c-8cdd-a77860c1f696"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial Unicode MS" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pavilion_start_date}+" to "+$F{pavilion_end_date}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="19" y="152" width="70" height="22" uuid="900674b6-2c6e-4c87-93c6-53cb96776a9e"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial Unicode MS" size="14"/>
+					</textElement>
+					<text><![CDATA[ इ) आकार :-]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="130" y="153" width="384" height="20" uuid="1d9c560a-87a1-4432-916a-77921e21690c"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial Unicode MS" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pavilion_length}+"  ते  "+$F{pavilion_breadth} +"चौ. मी."]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="130" y="68" width="246" height="19" uuid="6c17a64c-a7fd-4744-aee2-c274461561b7"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial Unicode MS" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{registration_date}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="30" y="210" width="513" height="1" uuid="476c9ae2-f0c1-4d8b-ab16-b73069bcb1bf"/>
+				</line>
+				<textField>
+					<reportElement x="20" y="174" width="523" height="23" uuid="2d675375-4171-4cab-95b7-068f58ccabe2"/>
+					<textElement>
+						<font fontName="Arial Unicode MS" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA["ई) मंडळाचे नाव व पत्ता :-" + $F{address_for_institution}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="20" width="526" height="25" uuid="f8ca7c63-b146-4b55-9252-58838462a6b1"/>
+					<textElement>
+						<font fontName="Arial Unicode MS" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA["संदर्भ :- श्री गणेश स्थापना ना-हरकत प्रमाणपत्र " +
+Integer.toString(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR))
+    .replace('0','०').replace('1','१').replace('2','२').replace('3','३')
+    .replace('4','४').replace('5','५').replace('6','६').replace('7','७')
+    .replace('8','८').replace('9','९')
++ "-" +
+String.format("%02d", (java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)+1)%100)
+    .replace('0','०').replace('1','१').replace('2','२').replace('3','३')
+    .replace('4','४').replace('5','५').replace('6','६').replace('7','७')
+    .replace('8','८').replace('9','९')
++"  बाबत."]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="0" y="19" width="560" height="98" uuid="6a8155fc-d490-4237-8479-4fb2978892dd"/>
+				<staticText>
+					<reportElement x="7" y="60" width="543" height="19" uuid="7c7ccf15-c333-40b6-be20-85c8c0dd9084"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[सार्वजनिक गणेश उत्सव मंडप नाहरकत प्रमाणपत्र]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="2" y="79" width="551" height="19" uuid="f9c0cd9e-6cf4-4c42-919a-d5310d6459d9"/>
+					<textElement textAlignment="Center">
+						<font fontName="SansSerif" size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Ganesh Utsav Mandap Certificate]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="2" y="0" width="551" height="30" uuid="afcdfd98-c218-4d0c-a9fb-c252630e0e88"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="18"/>
+					</textElement>
+					<text><![CDATA[वाहतूक विभाग]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="3" y="30" width="550" height="30" uuid="08da5c53-b793-4a1f-99cf-c68e67759ce8"/>
+					<textElement textAlignment="Center">
+						<font fontName="SansSerif" size="18"/>
+					</textElement>
+					<text><![CDATA[Traffic Department]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement x="3" y="420" width="557" height="220" uuid="133349b0-3dc0-4358-816c-b6c2554f7842"/>
+				<staticText>
+					<reportElement x="40" y="0" width="507" height="20" uuid="9a1e2210-0bcb-4d30-814f-2f75cf5cb571"/>
+					<textElement>
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[अस्थाई मंडप तेथील वाहतुकीस अडथळा निर्माण होईल अशा प्रकारे उभारू नये.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="0" width="39" height="20" uuid="14ab9225-1fee-47b2-b8d9-785b741d8695"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[१.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="40" y="20" width="510" height="20" uuid="1221e618-2f7d-47c6-a5aa-866362ba60a5"/>
+					<textElement>
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[श्रीगणेश दर्शना करिता येणाऱ्या लोकांची वाहनांचे पार्किग करिता स्वतंत्र व्यवस्था करावी.
+]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="2" y="20" width="34" height="20" uuid="aaee4a5d-aec2-4564-b96c-1265c11873e4"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[२]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="39" y="40" width="511" height="20" uuid="929d2f38-1070-4689-9951-ff2f2fde7c18"/>
+					<textElement>
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[अस्थाई मंडप पुढे स्वयंसेवक नेमून वाहतुकीस अडथळा होणार नाही याबाबत आयोजकांनी दक्षता घ्यावी.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="40" width="36" height="20" uuid="f7010bdc-8c58-4aa9-9159-d5f893dec4c6"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[३ ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="40" y="60" width="503" height="20" uuid="d65cd0e3-94c6-44a7-b31c-3025e668d232"/>
+					<textElement>
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[उपरोक्त प्रमाणे मापाचे मंडप उभारण्यात येतील याबाबत आयोजकांनी दक्षता घ्यावी. परवानगी पत्र जवळ बाळगावे.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="60" width="39" height="20" uuid="b5334822-afae-4d6d-aa5e-5d5069d1f7af"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[४]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="41" y="80" width="501" height="20" uuid="28cd3f1b-ea5a-46ee-b9a2-3e6b81625b5b"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[दिलेल्या कालावधी प्रमाणे वेळेत मंडप काढून घेण्याची जबाबदारी अर्जदार यांची राहील.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="-2" y="80" width="42" height="20" uuid="f8b764eb-771c-4627-bac9-b6aca5aa5b7e"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[५]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="39" y="100" width="516" height="40" uuid="eb84eec3-2606-4e73-a5f6-08ebd8a2bbd0"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[अस्थाई मंडप जवळ कोणतेही वाहन पार्क होणार नाही. तसेच आकस्मिक सेवेतील वाहनांचे (उदा. रुग्णवाहिका, अग्निशामक, पोलीस इत्यादी वाहने) वाहतुकीस अडथळा होणार नाही, याची दक्षता घ्यावी.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="100" width="36" height="20" uuid="9d9da28d-7265-4110-a1c6-44e0a182200b"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[६]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="2" y="140" width="35" height="20" uuid="42e6adc8-2ad7-4a2c-a7f6-01ea4241a2ad"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[७]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="42" y="200" width="515" height="20" uuid="71b5157b-a72e-4aa6-91eb-a5d9a59eb309"/>
+					<textElement>
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[सदरचे पत्र वाहतूक दृष्ट्या ना-हरकत पत्र आहे. परवानगी नाही.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="2" y="160" width="35" height="20" uuid="096fb126-fbaa-4e5a-89ee-7924f5def6f0"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[८]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="6" y="200" width="34" height="20" uuid="9aa275dc-1735-4ca2-8b32-4e7d3407d9b9"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[९ ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="40" y="140" width="514" height="20" uuid="0b443914-c844-4386-a084-c566e5e82b58"/>
+					<textElement>
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[पोलिसांनी वेळोवेळी दिलेल्या सूचनांचे पालन करावे.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="40" y="160" width="514" height="40" uuid="4eb32011-efeb-4205-929a-3f824cde1b54"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Arial Unicode MS" size="12"/>
+					</textElement>
+					<text><![CDATA[मा. उच्च न्यायालय खंडपीठ, नागपूर यांनी रिट पिटीशन क्र. ६१७७/२००६ अन्वये दिलेल्या आदेशानुसार मंडप स्वागतद्वार/पेंडॉल/कमानी हे सार्वजनिक रोड किंवा चौका किंवा फुटपाथवर बांधता येणार नाही.]]></text>
+				</staticText>
+			</frame>
+			<staticText>
+				<reportElement x="360" y="660" width="160" height="20" uuid="a4561287-dbad-41b2-ba4a-68f71b2b3c47"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[वरिष्ठ पोलिस निरीक्षक,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="336" y="680" width="210" height="30" uuid="aba4a1ab-3a92-4a3f-ab42-389ce7852caf"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="16"/>
+				</textElement>
+				<text><![CDATA[वाहतूक परिमंडळ, नागपूर शहर.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="330" width="552" height="90" uuid="a3df0dd9-799a-4a5e-b8aa-ffb226b60353"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[नमूद अर्जाचे अनुषगाने बिट अधिकारी व पोलीस स्टेशनचे खुपिया कर्मचारी यांचे कडून अस्थाई मंडप उभारण्यात येणाऱ्या ठिकाणाची पाहणी करण्यात आलेली आहे. नमूद ठिकाण हे नागपूर येथील रस्त्याचे कडेला मोकळ्या जागेतील आहे. सदर ठिकाणी १० x १० फुटाचा मापाचा अस्थाई मंडप उभारल्यास वाहतुकीस अडथळा होणार असल्याचे दिसून येत नसल्याने अर्जदाराचे विनंतीवरून खालील अटी प्रमाणे उपरोक्त ठिकाणी अस्थाई मंडप उभारण्या करिता परवानगी देण्यास या कार्यालयाची हरकत आहे / हरकत नाही.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="720" width="445" height="30" uuid="40e1c363-d949-4cc6-be90-ed2074339c4e"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[प्रत सविनय सादर :- मा. पोलीस उप आयुक्त, वाहतूक विभाग, नागपूर शहर.]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

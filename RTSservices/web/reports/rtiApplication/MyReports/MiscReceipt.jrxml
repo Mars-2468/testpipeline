@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2025-12-23T12:08:38 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MiscReceipt" pageWidth="595" pageHeight="700" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="92a35bfe-1e45-4194-985b-9e58dc8a4a5a">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="miscNo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT * FROM
+   egovrti.misc_application ph
+WHERE 
+    ph.misc_id = $P{miscNo}]]>
+	</queryString>
+	<field name="misc_id" class="java.lang.Long"/>
+	<field name="date" class="java.lang.String"/>
+	<field name="phone" class="java.lang.String"/>
+	<field name="zone" class="java.lang.String"/>
+	<field name="ward" class="java.lang.String"/>
+	<field name="department" class="java.lang.String"/>
+	<field name="purpose" class="java.lang.String"/>
+	<field name="receivedfrom" class="java.lang.String"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="paymentmode" class="java.lang.String"/>
+	<field name="receivedby" class="java.lang.String"/>
+	<title>
+		<band height="86">
+			<staticText>
+				<reportElement x="0" y="11" width="555" height="30" uuid="91ce605a-ab1c-44a7-81a5-1b810356389c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nagpur Municipal Corporation, Nagpur]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="42" width="555" height="25" uuid="4c80149a-207f-48a6-8a9a-23d79ce9e425"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MISCELLANEOUS RECEIPT]]></text>
+			</staticText>
+			<image>
+				<reportElement x="13" y="5" width="70" height="70" uuid="ae348b17-de6d-4825-84eb-ce1853e3bb18"/>
+				<imageExpression><![CDATA["../../images/AMC_Logo.jpeg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="400">
+			<textField>
+				<reportElement x="10" y="9" width="530" height="25" uuid="5ebfc7a7-96b3-432a-819b-9e26efa7efb7">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Receipt No : NMC/MISC/"+ java.util.Calendar.getInstance().get(java.util.Calendar.YEAR) +"/" + ($F{misc_id}== null || $F{misc_id}.toString().trim().isEmpty() ? "-" : $F{misc_id}.toString())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="49" width="270" height="25" uuid="7ad6a24f-f978-4fae-b844-013f55549c4d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Date : " +($F{date}== null || $F{date}.toString().trim().isEmpty() ? "-" : $F{date}.toString())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="77" width="270" height="25" uuid="34850a86-4621-44b8-8f23-177fb949b40a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Zone : " +($F{zone}== null || $F{zone}.toString().trim().isEmpty() ? "-" : $F{zone}.toString())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="107" width="270" height="25" uuid="f5083b43-4073-4970-b22d-490cf6f68d11"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Department : " + ($F{department}== null || $F{department}.toString().trim().isEmpty() ? "-" : $F{department}.toString())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="49" width="255" height="25" uuid="f6ffc3cf-94d5-4c85-bd4d-eb8a14267e32">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Phone No. : " + ($F{phone}== null || $F{phone}.toString().trim().isEmpty() ? "-" : $F{phone}.toString())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="136" width="270" height="25" uuid="c34cc410-742a-4997-ad61-2bef9444b63d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Received From : " + ($F{receivedfrom}== null || $F{receivedfrom}.toString().trim().isEmpty() ? "-" : $F{receivedfrom}.toString())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="77" width="255" height="25" uuid="18384018-9f28-4191-9e20-1c539a196b96">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ward No. : " +($F{ward}== null || $F{ward}.toString().trim().isEmpty() ? "-" : $F{ward}.toString())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="163" width="270" height="25" uuid="e3d47c30-041c-4739-8c65-1dc59db790a7">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Address : "+($F{address}== null || $F{address}.toString().trim().isEmpty() ? "-" : $F{address}.toString())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="191" width="270" height="25" uuid="9578e904-1aea-4a38-abd1-a8a3214cd03f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Mode of Payment : " + ($F{paymentmode}== null || $F{paymentmode}.toString().trim().isEmpty() ? "-" : $F{paymentmode}.toString())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="107" width="255" height="25" uuid="db79e6cf-b939-4cee-b344-7a2123059d4e">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Purpose : "+($F{purpose}== null || $F{purpose}.toString().trim().isEmpty() ? "-" : $F{purpose}.toString())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="136" width="255" height="25" uuid="8c47cc71-81d8-4b09-905d-7e127af08a1e">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Amount : "+($F{amount}== null || $F{amount}.toString().trim().isEmpty() ? "-" : $F{amount}.toString())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="163" width="255" height="25" uuid="7a6eeac4-f273-4a4b-ae8a-3a29fa999018">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Received By : "+($F{receivedby}== null || $F{receivedby}.toString().trim().isEmpty() ? "-" : $F{receivedby}.toString())]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="40" width="555" height="1" uuid="43ae6c8a-b90b-4342-9d0a-2a515ec64ce6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="0" y="-2" width="555" height="1" uuid="b76ceafc-ef8c-42fa-9348-cc488216df36">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="0" y="257" width="555" height="1" uuid="639aa323-6039-4213-9386-3ddd09bff404"/>
+			</line>
+			<line>
+				<reportElement x="0" y="351" width="555" height="1" uuid="705c75ee-7439-4975-b8b4-45067f39e100"/>
+			</line>
+			<textField>
+				<reportElement x="0" y="282" width="555" height="41" uuid="ffae9fd8-42e8-4f94-ad81-bcfcde49c520"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["This is a computer-generated receipt and does not require a physical signature."+"\n"+
+"Thank you for your payment!!"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-1" y="-3" width="1" height="355" uuid="afbdb771-f40e-47ba-bc13-a2ba5513fb15">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="555" y="-3" width="1" height="355" uuid="8b052801-66c4-4c4a-866b-54b563334d04">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

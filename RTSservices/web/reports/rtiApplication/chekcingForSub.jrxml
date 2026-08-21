@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2024-09-03T14:11:45 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GaneshMandappermission" pageWidth="595" pageHeight="950" whenNoDataType="NoDataSection" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isSummaryNewPage="true" whenResourceMissingType="Error" uuid="78239694-2992-474a-bf1f-cae7cac197a4">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="egvNmc"/>
+	<parameter name="rtiapplrefid" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+    mp.ganesh_mandap_permission_id ,
+    TO_CHAR(TO_DATE(ra.registration_date, 'dd/mm/yyyy hh24:mi:ss'), 'dd/mm/yyyy') AS registration_date,
+    ra.applicant_name,
+    mp.address,
+    TO_CHAR(TO_TIMESTAMP(mp.pavilion_start_date, 'yyyy-mm-dd'), 'dd/mm/yyyy') AS pavilion_start_date,
+    TO_CHAR(TO_TIMESTAMP(mp.pavilion_end_date, 'yyyy-mm-dd'), 'dd/mm/yyyy') AS pavilion_end_date,
+    mp.address_for_institution,
+    mp.pavilion_length,
+    mp.pavilion_breadth
+FROM
+    egovrti.ganesh_mandap_permission mp
+    JOIN egovrti.rti_application ra ON mp.rti_ref_id = ra.rti_application_id
+WHERE
+    mp.rti_ref_id = $P{rtiapplrefid};]]>
+	</queryString>
+	<field name="ganesh_mandap_permission_id" class="java.lang.Long"/>
+	<field name="registration_date" class="java.lang.String"/>
+	<field name="applicant_name" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="pavilion_start_date" class="java.lang.String"/>
+	<field name="pavilion_end_date" class="java.lang.String"/>
+	<field name="address_for_institution" class="java.lang.String"/>
+	<field name="pavilion_length" class="java.lang.String"/>
+	<field name="pavilion_breadth" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Immediate">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</title>
+	<detail>
+		<band height="930">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="45" y="11" width="508" height="40" uuid="3bb26c6f-5e7e-41ca-b195-a0f830a08e69">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[पर्यावरण विभाग, पोलिस विभाग, विविध न्यायालय, नागपूर महानगरपालिका व ईतर सस्याम प्राधिकरणाद्वारे वेळोवेळी देण्यात आलेल्या आदेशांची काटेकोरपणे पालन करण्याची जबाबदारी संबंधित अर्जदार/संस्थेची राहील.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="11" width="20" height="35" uuid="d6ca3665-adad-49d5-8ef6-323e8d044e8b">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[8.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="51" width="508" height="50" uuid="9c0630e5-f877-4197-8ebc-61b9f15ee9f4">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[संबधित उत्सवाकरिता अर्जदाराने/संस्थेने मिळालेल्या विविध आवश्यक परवानगीची प्रत उभारण्यात आलेल्या पेंडाल/मंडप/स्टेज किंवा स्वागतद्वार/कमनीच्या दोन्ही बाजूस दर्शनी भागात सामान्य नागरिकांना सहज पाहता येईल. अश्या आकारमानात प्रदर्शित करण्यात यावी.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="51" width="20" height="35" uuid="12406bc3-4e88-4b13-b7f9-c3ff8cb3f229">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[9.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="102" width="509" height="33" uuid="e3204d67-52fc-47c4-9843-d5c31f02a39f">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[अर्जदाराने/संस्थेनी ध्वनी प्रदूषण आरोग्य संबंधी तक्रारी सुरक्षा व विविध प्रकारच्या उपद्रावंची तक्रार ज्या सक्षम प्राधिकरणाकडे करता येईल त्या सर्व सक्षम प्राधिकरणाचे नाव, हुद्दा त्यांचा मोबाईल नंबर सह उभारण्यात आलेल्या तात्पुरते रचनेच्या दर्शनीय भागात सर्वसाधारण जनतेला सहजपणे दिसेल अश्या आकारमानात प्रद्शित करण्यात यावे. प्रस्तुतकर्ता अर्जदार/संस्था यांचे तपशिलामध्ये संस्था/अर्जदार नाव, पत्ता, दुध्वनी आणि भ्रमणध्वनी जोडण्यात येईल.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="102" width="20" height="21" uuid="855710df-6353-4957-9554-a10b8d349936">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[10.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="135" width="20" height="30" uuid="45876200-84e9-48d1-bb71-80f6df9a1776">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[11.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="172" width="20" height="30" uuid="012bb6b6-2be1-4e4b-b6ac-02bb25298de8">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[12]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="205" width="507" height="21" uuid="e54f26a6-b451-4a51-a9ff-79fa4d7967e5"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[नाकारण्यात आलेल्या अर्जा साठी अर्जदार/संस्था यांना अति. आयुक्त/आयुक्तांकडे अपील करता येईल. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="207" width="20" height="20" uuid="e5c8fd0d-0a38-42c4-8972-25b884a68bf7">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[13]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="499" width="508" height="17" uuid="1487ea4a-70fc-467c-af69-fadfa6862d0c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[मंडळाचे गणेश मुर्तीचे विसर्जन मनपाने तयार करण्यात आलेल्या कृत्रिम तलावातच करावे.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="499" width="20" height="17" uuid="8caa9dcb-8c85-4f39-97e9-428fa47edfba">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[19]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="517" width="509" height="33" uuid="4e5e8651-4c5c-4616-b1cf-64d606294e5f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[नैसर्गिक जलाशयामध्ये विसर्जन केल्यास त्यांच्यावर नियमानुसार मंडळाचे / समितीच्या सदस्या विरुद्ध दंडात्मक कारवाई करण्यात येईल.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="519" width="20" height="20" uuid="097cc1a0-8b4e-44d3-a66a-61ff49540322">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[20]]></text>
+			</staticText>
+			<line>
+				<reportElement x="19" y="551" width="535" height="1" uuid="19e929c9-2be4-440b-bd1c-0bb5e689210a">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="19" y="551" width="1" height="170" uuid="11740c09-dd7a-4743-b68f-9c2cc3c8e595">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="19" y="552" width="54" height="48" uuid="b4c096b5-f497-47e0-bed9-2185376e4768"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[क्षेत्र कोड ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="73" y="552" width="1" height="170" uuid="f26eb0c9-f1d2-453c-b428-e2ca48c7db55"/>
+			</line>
+			<staticText>
+				<reportElement x="74" y="552" width="148" height="48" uuid="e63dc2d1-921e-4dcf-9b52-d23abaae1cfd">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[क्षेत्र विविरण ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="223" y="551" width="1" height="170" uuid="3ed1fc18-c66c-4dfa-bdeb-9adb5c0fcf5f"/>
+			</line>
+			<staticText>
+				<reportElement x="223" y="552" width="180" height="48" uuid="c2354bf4-472a-4230-9a4c-d29c2898ad5b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[दिवसा dp (A) leq (6.00 AM TO 10.00 PM)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="404" y="552" width="144" height="48" uuid="33da6cd9-6bab-4a6e-b014-64dbb5df3cbf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[रात्री dp (A) leq (6.00 AM TO 10.00 PM)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="553" y="551" width="1" height="170" uuid="f7b11a93-7cfc-4f09-807a-0fce3827c969"/>
+			</line>
+			<line>
+				<reportElement x="19" y="601" width="535" height="1" uuid="72f991c7-d134-43b7-b554-e7c623143e33">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="403" y="552" width="1" height="169" uuid="3740feab-5a0c-4074-981c-9ce173935621"/>
+			</line>
+			<line>
+				<reportElement x="19" y="631" width="535" height="1" uuid="7e5d08f0-6b73-4d36-9839-98d0560bac9b">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="23" y="602" width="36" height="26" uuid="16c93d7e-3c82-4e6a-a3e2-41dd9656f1b5">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(अ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="94" y="603" width="101" height="26" uuid="85fd2247-0a7d-4c0b-8c77-34bfc9d133fa">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[औद्योगिक  क्षेत्र ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="602" width="100" height="28" uuid="1bd9ee05-3ea5-403a-969e-514215c3d5b8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[75]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="428" y="602" width="100" height="28" uuid="d419f2b8-4dfb-422f-b4c7-e9311621a7e5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[70]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="632" width="36" height="30" uuid="082e4b1f-a3a7-45d9-b144-0a3a26e128e8">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(ब)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="19" y="662" width="535" height="1" uuid="413965d8-daf0-40c9-bfb9-3a97ffa5deff">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="94" y="632" width="101" height="30" uuid="34bdc666-ce3a-4947-8fdd-75dc163aa0df">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[व्यवसायिक क्षेत्र]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="253" y="632" width="100" height="30" uuid="a083e135-c4c5-4656-af4a-0bd798b9d821"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[65]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="428" y="632" width="100" height="30" uuid="3f4c9cf9-53b9-402b-a37b-a5a196bbb3c3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[55]]></text>
+			</staticText>
+			<line>
+				<reportElement x="19" y="691" width="535" height="1" uuid="fa4ec92e-aa5d-49a2-b146-e0ccec4ce03e">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="19" y="721" width="535" height="1" uuid="840a6115-89d0-4931-a593-3311c7c27ff2">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="23" y="663" width="36" height="26" uuid="30fccf02-1b9e-4a6c-ab69-53c81506533b">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(क)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="94" y="663" width="101" height="28" uuid="148bcac4-50b7-4615-a5fc-2ea150111d33">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[निवासी क्षेत्र ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="253" y="665" width="100" height="24" uuid="73ca4ced-d814-489f-ab18-2935174f896c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[55]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="428" y="665" width="100" height="24" uuid="8887f957-c363-4631-8acd-500f68a2c736"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[45]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="93" y="692" width="101" height="28" uuid="d1bf2e86-5ce5-4ba0-82a5-e4817854f97f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[शांतता क्षेत्र ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="253" y="692" width="100" height="28" uuid="36d18de8-13c7-4374-ad28-80dcec06616b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[50]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="428" y="694" width="100" height="25" uuid="ee0e96e3-6ce2-4a5e-accb-fc91ab9fb757"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<text><![CDATA[40]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="692" width="36" height="28" uuid="eef1cf7e-92a0-480a-ae6f-541a4f1a8a8f">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(ड)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="727" width="505" height="40" uuid="f7ccf542-e4a9-4612-ada6-a6d0bdd91273"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[रिट पिटीशन क्र. ६१७७/२००६ मनोहर खोरगडे वि. म.न.पा व ईतर या मध्ये मा. उच्च न्यायालय खंडपीठ यांनी वेळोवेळी पारित केल्याला आदेशाचे उल्घन होणार नाही. याची दक्षता घ्यावी.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="727" width="25" height="30" uuid="15e43124-cb37-4d98-8689-d6299a589965">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[21]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="172" width="508" height="33" uuid="ab174c07-5a28-4403-b70e-3f8674f1f156"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[रस्त्यावर चूल पेटवून स्वयंपाक करण्यात सक्त मनाई आहे असे केल्यास रु. २०००/- दंड आकारण्यात येईल किंवा जप्त करण्यात येईल. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="767" width="504" height="20" uuid="3a4e257e-aa3c-4589-85a2-5d5f309a3bf4"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[नियम व अटी चे पालन न करण्यावर फौजदारी गुन्हा दाखल करण्यात येईल.
+
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="767" width="27" height="20" uuid="e57ae627-7152-433d-be95-329c6772908d"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[22]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="135" width="510" height="36" uuid="ce005880-2d08-48f9-86c7-2ca7bc014824"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[प्रस्तुत धोरण अंतर्गत मनापाद्वारे देण्यात आलेली परवानगी कोणतेही कारण न सागंताना परत घेण्याचे किंवा निरस्तर करण्याचे संपुर्ण अधिकार महानगरपालिका आयुक्तांकडे राहतो.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="226" width="20" height="30" uuid="d721b6c2-b5e8-4031-8768-3a72461fed8f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[14]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="226" width="508" height="33" uuid="e3bf4a8f-c37e-4023-b3a3-a49182c8f0ab"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[मंडप/मंच/स्वागतद्वार कमानीचे संरचने मुळे अपघात अगर धोका झाल्यास त्याची सर्वसी जबाबदारी संस्था/अर्जादारची राहील ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="259" width="508" height="68" uuid="fe032da1-a9f9-46af-a1dc-b2b9816e220b"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[सदर परवानगी ही पी ओ पी व त्या समान सामग्रीच्या मूर्तीची स्थापना करण्यासाठी नसून, ही परवानगी मूर्तीची स्थापना केंद्रीय प्रदूषण नियंत्रण मंडळाने दि. 12/05/2020 रोजी पारित केलेल्या सुधारित मार्गदर्शन तत्वे तसेच महाराष्ट्र शासनाचे पर्यावरण व वातावरणीय बदल विभागाने दि. 26/04/2024 रोजी निर्गमित केलेल्या निर्देशांची पूर्तता करणारी असावी.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="259" width="20" height="40" uuid="099d251c-e59d-46b3-b0da-faf3898d373a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[15]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="332" width="508" height="50" uuid="1e0d9092-c599-4371-aba9-0b9d6b56f2c4">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[गणेश मंडळाने पर्यावरण पूरक मुर्तीची स्थापना करण्यात यावी. तसेच मुर्तीच्या सजावटी करिता पर्यावरण पुरक साहित्याचा वापर करण्यात यावा व जलाशयाचे प्रदूषण थांबविण्याकरिता कृत्रिम तलावातच श्री गणेशाच्या मुर्तीचे विसर्जन करण्यात यावे.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="332" width="20" height="30" uuid="7c18b114-eab8-40cc-b3cd-3e997a6c6cf4">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[16]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="382" width="20" height="30" uuid="39d90ef3-005c-47c7-9170-8cc0b070044a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[17]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="382" width="508" height="51" uuid="b7bc9660-7ba8-4c75-bd66-09f71a16287d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[मंडळाने केंद्रीय प्रदुषण नियंत्रण मंडळाचे दि. १२/०५/२०२० रोजी पारित केलेल्या सुधारित मार्गदर्शक तत्वे तसेच महाराष्ट्र शासनाचे पर्यावरण व वातावरणीय बदल विभागाने दि. २६/०४/२०२४ रोजी निर्गमित केलेल्या निर्देशांचे पालन करणे आवश्यक आहे.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="434" width="20" height="30" uuid="43c83b8e-f099-4467-b6e4-70921095ec32">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[18]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="433" width="508" height="65" uuid="870f2759-a33b-4475-9d23-d61767eb9504">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[मंडळास परवानगी  मिळाल्यानंतर पीओपी मुर्तीची स्थापना केल्याचे आढळल्यास अशा मंडळाची परवानगी सक्षम प्राधिकरणाद्वारे रद्द करण्यात येईल तसेच मंडळाला पुढील वर्षापासुन काळ्या यादीत टाकुन त्यांच्यावर बंदी घालण्यात येईल तसेच मनपाच्या अधिकाऱ्यास तपासणी दरम्यान पीओपी मुर्ती स्थापना करतांना आढळुन आल्यास मंडळाचे / समितीचे पदाधिकारी यांच्यावर नियमानुसार दंडात्मक कारवाई करण्यात येईल.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="877" width="180" height="20" uuid="94be2e5b-c125-4902-b230-9e37a7776dd2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[उप अभियंता]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="897" width="194" height="22" uuid="2633178c-d4d7-4bb6-8929-3ab4627db796"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[नागपूर महानगरपालिका, नागपूर. ]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

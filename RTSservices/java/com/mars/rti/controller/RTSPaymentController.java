@@ -1,0 +1,686 @@
+package com.mars.rti.controller;
+
+	import java.io.IOException;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+
+import com.mars.common.utils.SessionUser;
+import com.mars.rti.model.Collection;
+import com.mars.rti.model.CollectionBuffer;
+import com.mars.rti.model.RTIApplication;
+import com.mars.rti.payment.BOMInitiateFirePayment;
+import com.mars.rti.payment.PaymentConstants;
+import com.mars.rti.search.RTIApplicationSearch;
+import com.mars.rti.service.CollectionBufferService;
+import com.mars.rti.service.CollectionService;
+import com.mars.rti.service.RTIApplicationService;
+import com.mars.rti.utils.AESUtil;
+import com.mars.rti.utils.CoreConstants;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+	@Controller
+	public class RTSPaymentController extends MultiActionController implements
+	InitializingBean{
+
+		  @Override
+		    public void afterPropertiesSet() throws Exception {
+		        // Initialization logic here
+		        System.out.println("RTSPaymentController has been initialized");
+		    }
+		  private static Log log = LogFactory.getLog(CitizenController.class);
+
+		@Autowired
+		private CollectionBufferService collectionBufferService;
+
+		@Autowired
+		private CollectionService collectionService;
+
+		@Autowired
+		private SessionFactory sessionFactory;
+		
+
+	    @Autowired
+	    private ServletContext servletContext;
+		@Autowired
+		public RTIApplicationService rtiApplicationService;
+
+		@RequestMapping("ws/search.do")
+		public  ModelAndView search(HttpServletRequest request,
+				HttpServletResponse response)
+				throws ServletException, Exception {
+			//String applicationNumber = request.getParameter("rtiApplicationNumber");
+
+			// String rtsApplicationNumber = request.getParameter("rtsAppNo");
+			 //String lastFourDigits = rtsApplicationNumber.substring(Math.max(rtsApplicationNumber.length() - 4, 0));
+//RTIApplication rtiApplication = null;
+//rtiApplication = rtiApplicationService.get(Long.parseLong(rtsApplicationNumber));
+
+String token = request.getParameter("token");
+
+String rtsApplicationNumber = AESUtil.decrypt(token);
+
+RTIApplication rtiApplication = rtiApplicationService.get(Long.parseLong(rtsApplicationNumber));
+
+					if ((rtsApplicationNumber != null && rtsApplicationNumber.trim().length() > 0
+							&& !rtsApplicationNumber.isEmpty())) {
+						List<RTIApplication> rtiApplicationList = new ArrayList<RTIApplication>();
+						RTIApplicationSearch applicationSearch = new RTIApplicationSearch();
+						List<RTIApplication> fireRecommendation = new ArrayList<RTIApplication>();
+						if ((rtsApplicationNumber != null && rtsApplicationNumber.trim().length() > 0)) {
+							applicationSearch.setRtiApplicationNumber(rtiApplication.getRtiApplnNumber());
+							//applicationSearch.setRtiApplicationNumber(rtsApplicationNumber);
+							applicationSearch.setRtiserviceid(0);
+							List<RTIApplication> rtiApplicationList2 = rtiApplicationService.getRTIApplicationList(applicationSearch);
+							request.getSession().setAttribute("refid", rtiApplicationList2.get(0).getRtiApplicationRefId());
+							if (rtiApplicationList2 != null) {
+								fireRecommendation.addAll(rtiApplicationList2);
+							}
+						}
+						
+//												 managewebpayementt.jsp
+						return new ModelAndView("manageWebPaymentt", "rtiApplication", rtiApplication);
+
+					}
+					return new ModelAndView("managewebpayementt");
+				}
+
+		
+		
+		
+		@RequestMapping("/rtsapplication/searchApplicaationId.do")
+		public ModelAndView searchApplicaationId(HttpServletRequest request,	HttpServletResponse response)
+				throws ServletException, Exception {
+			
+			return new ModelAndView("manageSearchApplicationId");
+		}
+		
+		@RequestMapping("/rtsapplication/goForSaveCollection.do")
+		public ModelAndView goForSaveCollection(HttpServletRequest request,	HttpServletResponse response)
+				throws ServletException, Exception {
+			String applicationId = request.getParameter("applicationId");
+			RTIApplication rtiApplication= rtiApplicationService.findByRTIApplicationNumber(applicationId);
+			if(rtiApplication != null) {
+				long workFlowStatus=rtiApplication.getWorkFlowStatus();
+				double applicationCost=rtiApplication.getApplicationCost();
+
+				if(workFlowStatus==3 && (applicationCost!=0.0 || applicationCost!=0)) {//3 means demand sent
+			request.setAttribute("rtiApplicationId", rtiApplication.getRtiApplicationId());
+			request.setAttribute("amount", rtiApplication.getApplicationCost());
+			return new ModelAndView("manageCollection");
+				}else {//application submitted/Payment completed/application completed/application rejected
+
+					request.setAttribute("error", "Payment collection is not allowed for this application. Please check the application status.");
+					return new ModelAndView("manageSearchApplicationId");
+				}
+			
+			}
+			else
+			{
+				request.setAttribute("error", "Record Not Found");
+				return new ModelAndView("manageSearchApplicationId");
+			}
+		}
+			
+		@RequestMapping("/rtsapplication/saveCashCollection.do")
+		public ModelAndView saveCashCollection(HttpServletRequest request,	HttpServletResponse response)
+				throws ServletException, Exception {
+			
+			
+			long rtiApplicationId = Long.parseLong(request.getParameter("rtiApplicationId"));
+			if(rtiApplicationId != 0 ) {
+				long collectionId = 0;
+			RTIApplication updatedRtiApplication = null;
+			Collection collection = new Collection();
+			RTIApplication rtiApplication = rtiApplicationService.get(rtiApplicationId);
+			int randomNumber = new Random().nextInt(900000) + 100000;
+			LocalDate currentDate = LocalDate.now();
+			
+			CollectionBuffer collectionBuffer = new CollectionBuffer();
+			if(rtiApplication.getWorkFlowStatus() == 3 && (rtiApplication.getApplicationCost()!=0.0 || rtiApplication.getApplicationCost()!=0)) {
+
+			collectionBuffer.setrTIApplication(rtiApplication);
+			collectionBuffer.setStatus(2);
+			collectionBuffer.setAmount(rtiApplication.getApplicationCost());
+			collectionBuffer.setBankName("Bank of Maharashtra");
+			collectionBuffer.setBranchName(request.getParameter("branchName"));
+			collectionBuffer.setReceiptDate("receiptDate");
+			
+			String g =request.getParameter("chequeDDRTGSNumber");
+			if(request.getParameter("chequeDDRTGSNumber") != null && !request.getParameter("chequeDDRTGSNumber").isEmpty())
+			{
+				collectionBuffer.setPaymentMode("chequeDDRTGS");
+			}
+			else
+			{
+				collectionBuffer.setPaymentMode("cash");
+			}
+			collectionBuffer.setChequeDDRTGSDate(request.getParameter("chequeDDRTGSDate"));
+			collectionBuffer.setReceiptDate(LocalDate.now().toString());
+			collectionBuffer.setReceiptNumber(randomNumber+"");
+			collectionBuffer.setUniqPgid("");
+			
+			//new fields
+			collectionBuffer.setUser_id(request.getParameter("user_id"));
+			collectionBuffer.setUser_name(request.getParameter("user_name"));
+			collectionBuffer.setUser_dept(request.getParameter("user_dept"));
+			String ipAddress = request.getRemoteAddr();  
+			collectionBuffer.setUser_machine_ip(ipAddress);
+			collectionBuffer.setUser_time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
+
+			collectionBuffer = collectionBufferService.saveCollectionbuffer(collectionBuffer, "");
+			
+			if(collectionBuffer != null) {
+			
+			collection.setRtiApplication(rtiApplication.getRtiApplicationId());
+			collection.setBankName(collectionBuffer.getBankName());
+			collection.setBranchName(collectionBuffer.getBranchName());
+			collection.setChequeDDRTGSDate(collectionBuffer.getChequeDDRTGSDate());
+			collection.setChequeDDRTGSDate(collectionBuffer.getChequeDDRTGSNumber());
+			collection.setReceiptDate(collectionBuffer.getReceiptDate());
+			collection.setAmount(collectionBuffer.getAmount());
+			collection.setPaymentMode(collectionBuffer.getPaymentMode());
+			collection.setReceiptDate(collectionBuffer.getReceiptDate());
+			collection.setStatus(collectionBuffer.getStatus());
+			collection.setReceiptNumber(collectionBuffer.getReceiptNumber());
+			//new fields
+			collection.setUser_id(collectionBuffer.getUser_id());
+			collection.setUser_name(collectionBuffer.getUser_name());
+			collection.setUser_dept(collectionBuffer.getUser_dept());
+			collection.setUser_machine_ip(collectionBuffer.getUser_machine_ip());
+			collection.setUser_time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
+
+			updatedRtiApplication = rtiApplicationService.get(rtiApplicationId);
+			updatedRtiApplication.setIsApplicationParked(1);
+			updatedRtiApplication.setWorkFlowStatus(2);
+			updatedRtiApplication.setInformationRequired(collectionBuffer.getUser_id() +" "+collectionBuffer.getUser_machine_ip());
+
+			updatedRtiApplication.setFinalStatus(CoreConstants.RTI_FINALSTATUS_APPROVED);
+
+			Collection existingCollection = collectionService.getCollection(rtiApplicationId);
+			
+			
+				rtiApplicationService.merge(updatedRtiApplication);
+				collection = collectionService.saveCollection(collection);
+				collectionId = collection.getCollectionId();
+				// Send email and SMS
+				String phNo = rtiApplication.getPhoneNumber();
+				String rtiApplicatonNumber = rtiApplication.getRtiApplnNumber();
+				String name = rtiApplication.getApplicantName();
+				String mail=rtiApplication.getEmail();
+//				String link = "https://tinyurl.com/2c8cdcex";
+//				String msg = "Dear " + name + " your payment towards " + rtiApplicatonNumber
+//						+ " has been received. Please click on this link " + link
+//						+ " to download the payment receipt. Regards, NMCGOV";
+//				msg.replace("var3", "");
+//				SendEmail.sendEmail(rtiApplication.getEmail(),
+//						"Payment Received Successfully" + rtiApplicatonNumber, msg);
+//				SendSMS.sendSingleSMS("1507167421316383071", "NMCGov", phNo, msg);
+//				
+				SendSMSEmailController.sendPaymentCompleted(name, phNo, rtiApplicatonNumber, mail);
+
+				request.setAttribute("collectionId", collectionId);
+//		        return new ModelAndView("redirect:/rtsapplication/printRecieptDownload11.do?rtiApplicationId=" + rtiApplicationId+ "&collectionId="+collectionId);
+
+//				return printRecieptDownload11(request, response, rtiApplicationId, collectionId);
+			
+			}
+		
+			}
+			else
+			{
+				if(rtiApplication.getWorkFlowStatus() == 0) {
+					request.setAttribute("error", "Please Do send Demand");
+					return new ModelAndView("manageCollection");
+				}
+				else
+				{
+					request.setAttribute("error", "Already Paid Payment");
+					return new ModelAndView("manageCollection");
+				}				
+			}
+			}
+			
+			
+	        return new ModelAndView("manageCollectionReceipt");
+//			return new ModelAndView("redirect:/rtsapplication/getReceipt.do");
+		}
+
+//		@RequestMapping("/rtsapplication/getReceipt.do")
+//		public ModelAndView getReceipt(HttpServletRequest request,HttpServletResponse response) {
+//			
+//			
+//			
+//			return new ModelAndView("manageCollectionReceipt");
+//			
+//		}
+		
+		@RequestMapping("/rtsapplication/printRecieptDownload11.do")
+		public void printRecieptDownload11(HttpServletRequest request,
+				HttpServletResponse response) {
+			
+			try (Connection connection = sessionFactory.getCurrentSession()
+					.connection();
+					OutputStream outputStream = response.getOutputStream()) {
+				HttpSession session1 = request.getSession();
+				SessionUser sessionUser = (SessionUser) session1.getAttribute("SessionUser");
+				Collection collection=null;
+				long collectionId = Long.parseLong(request.getParameter("collectionId"));
+				
+				
+				String reportName = "/fireCollectionReceipt";
+
+				HashMap<String, Object> parameters = new HashMap<>();
+				parameters.put("collection_id", collectionId);
+				parameters.put("amc_logo",
+						getServletContext().getRealPath("/images/AMC_Logo.jpeg"));
+
+				String reportFilePath = getServletContext().getRealPath(
+						"/reports/rtiApplication" + reportName + ".jasper");
+				JasperPrint jasperPrint = JasperFillManager.fillReport(
+						reportFilePath, parameters, connection);
+				byte[] pdf = JasperExportManager.exportReportToPdf(jasperPrint);
+
+				response.setHeader("Content-Disposition", "attachment; filename="
+						+ reportName + ".pdf");
+				response.setContentType("application/pdf");
+				response.setContentLength(pdf.length);
+				outputStream.write(pdf);
+				outputStream.flush();
+
+			} catch (JRException | IOException | SQLException e) {
+				e.printStackTrace();
+				
+			}
+		}
+
+		
+		@RequestMapping("ws/rtsapplication/pay.do")
+		public void pay(HttpServletRequest request,	HttpServletResponse response)
+				throws ServletException, Exception {
+			
+			String applicationNumber =request.getParameter("rtiApplicationNumber");
+
+			RTIApplicationSearch applicationSearch = new RTIApplicationSearch();
+			if (applicationNumber != null&& applicationNumber.trim().length() > 0) {
+				applicationSearch.setRtiserviceid(0);
+				applicationSearch.setRtiApplicationNumber(applicationNumber);
+			}
+			List<RTIApplication> rtiApplicationList = rtiApplicationService.getRTIApplicationList(applicationSearch);
+			long fireRecommendationId = Long.parseLong(request.getParameter("fireId"));
+
+			Long apprefid = rtiApplicationList.get(0).getRtiApplicationRefId();
+			if (fireRecommendationId == apprefid) {
+				if (rtiApplicationList.size() > 0) {
+					RTIApplication rtiApplication = rtiApplicationList.get(0);
+					String applicantName = rtiApplication.getApplicantName();
+					String mobileNumber = rtiApplication.getMobileNumber();
+					String email = rtiApplication.getEmail();
+					Integer workFlowStatus = rtiApplication.getWorkFlowStatus();
+					if (workFlowStatus != 2) {
+						String random = Integer.toString(new Random().nextInt(Integer.SIZE - 1))
+								+ (System.currentTimeMillis() / 1000L);
+						//double applicationCost = Double.parseDouble(rtiApplication.getFirstPaymentFees());
+						BigDecimal applicationCost = new BigDecimal(rtiApplication.getFirstPaymentFees())
+		            	        .setScale(0, RoundingMode.HALF_UP);
+
+		            	request.setAttribute("rtiApplnCost", applicationCost);
+		                
+						
+						//request.setAttribute("rtiApplnCost", applicationCost);
+
+						String url = request.getParameter("url");
+						HashMap<String, String> params = new HashMap<>();
+						params.put("surl", url + "rtsapplication/firePrintRecieptDownload.do");
+						params.put("furl", url + "rtsapplication/firePrintRecieptDownload.do");
+						params.put("txnid", random);
+						//params.put("amount", applicationCost + "");
+						//params.put("amount", String.valueOf((int) applicationCost));
+			           	   params.put("amount", applicationCost.toPlainString());
+
+						params.put("firstname",
+								(applicantName != null&& applicantName.trim().length() != 0)? applicantName: "demoName");
+						params.put("email",(email != null && email.trim().length() != 0)? email: "demo@gmail.com");
+						params.put("phone",
+								(mobileNumber != null&& mobileNumber.trim().length() != 0)? mobileNumber: "0123456789");
+						params.put("productinfo", rtiApplication.getSubject());
+						log.info(params);
+						log.debug("pay method params "+params);
+
+						CollectionBuffer collectionBuffer = new CollectionBuffer();
+						collectionBuffer.setrTIApplication(rtiApplication);
+						collectionBuffer.setStatus(-1);
+		                collectionBuffer.setAmount(Double.valueOf( applicationCost.toPlainString()));
+		                		//applicationCost.doubleValue());
+
+						//collectionBuffer.setAmount(applicationCost);
+						collectionBuffer.setBankName("Bank of Maharashtra");
+						collectionBuffer.setPaymentMode("Online");
+						collectionBuffer.setReceiptDate(LocalDate.now().toString());
+						int randomNumber = new Random().nextInt(900000) + 100000;
+						collectionBuffer.setReceiptNumber(String.valueOf(randomNumber));
+						collectionBuffer.setUniqPgid(random);
+						collectionBufferService.saveCollectionBuffer(collectionBuffer);
+					    params.put("sub_merchant_id", PaymentConstants.Submerchant1);  // FIRE
+	            	    params.put("sub_merchant_name", PaymentConstants.Submerchant_name);  //
+
+
+						String responseURL = BOMInitiateFirePayment.initiatePayment(params);
+						
+						log.debug("pay method responseURL "+responseURL);
+						if (responseURL.length() > 0) {
+							response.sendRedirect(responseURL);
+						} else {
+							log.debug("pay method responseURL NullPointerException block"+responseURL);
+
+							throw new NullPointerException("Somthing went wrong.");
+						}
+					}
+				}
+			} else {
+				
+				throw new NullPointerException("Somthing went wrong.");
+			}
+		}
+
+
+//		@RequestMapping("ws/rtsapplication/firePrintRecieptDownload.do")
+//		public ModelAndView firePrintRecieptDownload(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+//			log.debug("Print Receipt is Trigerred");
+//			ModelAndView modelAndView = new ModelAndView();
+//			RTIApplication updatedRtiApplication = null;
+//			try {
+//			if (BOMInitiateFirePayment.compareHash(request)) {
+//				String txnid = request.getParameter("txnid");
+//				log.debug("Transaction="+txnid);
+//				String status = request.getParameter("status");
+//				log.debug("status="+status);
+//				String refNum = request.getParameter("bank_ref_num");
+//				log.debug("Reference Number="+refNum);
+//				CollectionBuffer collectionBuffer = collectionBufferService.getBufferPgData(txnid);
+//				long rtiApplicationId = collectionBuffer.getrTIApplication().getRtiApplicationId();
+//				RTIApplication rtiApplication = rtiApplicationService.get(rtiApplicationId);
+////				CollectionBuffer collectionBuffer = new CollectionBuffer();
+//				collectionBuffer.setReferenceNumber(refNum);
+//				collectionBuffer.setrTIApplication(rtiApplication);
+//				collectionBuffer.setStatus(status.equalsIgnoreCase("success") ? 2 : -1);
+//				collectionBuffer.setAmount(
+//					    rtiApplication.getFirstPaymentFees() != null
+//					        && !rtiApplication.getFirstPaymentFees().trim().isEmpty()
+//					        ? Double.parseDouble(rtiApplication.getFirstPaymentFees().trim())
+//					        : 0.0
+//					);
+//				//collectionBuffer.setAmount(Double.parseDouble(rtiApplication.getFirstPaymentFees()));
+//				collectionBuffer.setBankName("Bank of Maharashtra");
+//				collectionBuffer.setPaymentMode("Online");
+//				collectionBuffer.setReceiptDate(LocalDate.now().toString());
+//				collectionBuffer.setReceiptNumber(collectionBuffer.getReceiptNumber());
+//				collectionBuffer.setUniqPgid(txnid);
+//
+//				collectionBuffer = collectionBufferService.saveCollectionbuffer(collectionBuffer, txnid);
+//
+//				if (status.equalsIgnoreCase("success")) {
+//					Collection collection = new Collection();
+//					collection.setRtiApplication(rtiApplication.getRtiApplicationId());
+//					collection.setBankName(collectionBuffer.getBankName());
+//					collection.setReceiptDate(collectionBuffer.getReceiptDate());
+//					collection.setAmount(collectionBuffer.getAmount());
+//					collection.setPaymentMode(collectionBuffer.getPaymentMode());
+//					collection.setStatus(2);
+//					collection.setReceiptNumber(collectionBuffer.getReceiptNumber());
+//					collection.setUniqPgid(collectionBuffer.getUniqPgid());
+//					collection.setReferenceNumber(collectionBuffer.getReferenceNumber());
+//
+//				    updatedRtiApplication = rtiApplicationService.get(rtiApplicationId);
+//				updatedRtiApplication.setWorkFlowStatus(0);
+//					updatedRtiApplication.setIsApplicationParked(1);
+//
+//					updatedRtiApplication.setFinalStatus(CoreConstants.RTI_FINALSTATUS_APPROVED);
+//
+//					Collection existingCollection = collectionService.getCollection(rtiApplicationId);
+//					if (existingCollection == null
+//							|| !collectionBuffer.getUniqPgid().equals(existingCollection.getUniqPgid())) {
+//						rtiApplicationService.merge(updatedRtiApplication);
+//						collectionService.saveCollection(collection);
+//
+//						// Send email and SMS
+//						String phNo = rtiApplication.getPhoneNumber();
+//						String rtiApplicatonNumber = rtiApplication.getRtiApplnNumber();
+//						String name = rtiApplication.getApplicantName();
+//						String mail = rtiApplication.getEmail();
+//
+////						String link = "https://tinyurl.com/2c8cdcex";
+////						String msg = "Dear " + name + " your payment towards " + rtiApplicatonNumber
+////								+ " has been received. Please click on this link " + link
+////								+ " to download the payment receipt. Regards, NMCGOV";
+////						msg.replace("var3", "");
+////						SendEmail.sendEmail(rtiApplication.getEmail(),
+////								"Payment Received Successfully" + rtiApplicatonNumber, msg);
+////						SendSMS.sendSingleSMS("1507167421316383071", "NMCGov", phNo, msg);
+//						
+//						SendSMSEmailController.sendPaymentCompleted(name, phNo, rtiApplicatonNumber, mail);
+//
+//					}
+//
+//					modelAndView.addObject("collection", collectionBuffer);
+//					modelAndView.addObject("rts", rtiApplication);
+//					request.getSession().setAttribute("status", 2);
+//					long s = rtiApplication.getRtiApplicationId();
+//					return new ModelAndView("redirect:/ws/rtsapplication/firePaymentSucess.do?rtiApplicationNumber="+rtiApplication.getRtiApplicationId());
+//				} else {
+//					Map<String, String[]> parameters1 = request.getParameterMap();
+//					for (String parameter : parameters1.keySet()) {
+//						log.info(parameter + " : " + parameters1.get(parameter)[0].toString());
+//					}
+//					request.getSession().setAttribute("status", -1);
+////					RTIApplication rtsapp = rtiApplicationService
+////							.get((rtiApplicationId));
+////					rtsapp.setRtiserviceid(0);
+////					rtiApplicationService.merge(rtsapp);
+//					modelAndView.addObject("collection", collectionBuffer);
+//					modelAndView.addObject("rts", rtiApplication);
+//					log.debug("Payment Failed Receipt Returns");
+//					modelAndView.setViewName("paymentfailedReciept");
+//				}
+//			} else {
+//				modelAndView.setViewName("redirect:ws/pay.do");
+//			}
+//		}
+//			catch(Exception ex){
+//				ex.printStackTrace();
+//				ex.getMessage();
+//				log.debug(ex.getMessage());
+//			}
+//			return modelAndView;
+//			}
+		
+		@RequestMapping("ws/rtsapplication/firePrintRecieptDownload.do")
+		public ModelAndView firePrintRecieptDownload(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+		    log.debug("Print Receipt is Trigerred");
+		    ModelAndView modelAndView = new ModelAndView();
+		    RTIApplication updatedRtiApplication = null;
+		    try {
+		        String txnid = request.getParameter("txnid");
+		        log.debug("Transaction=" + txnid);
+
+		        CollectionBuffer collectionBuffer = collectionBufferService.getBufferPgData(txnid);
+
+		        if (collectionBuffer != null) {
+		            if (collectionBuffer.getStatus() == 2) {
+		                log.debug("txnid=" + txnid + " already processed successfully. Skipping re-save.");
+		                RTIApplication existingApp = collectionBuffer.getrTIApplication();
+		                modelAndView.addObject("collection", collectionBuffer);
+		                modelAndView.addObject("rts", existingApp);
+		                request.getSession().setAttribute("status", 2);
+		                return new ModelAndView("redirect:/ws/rtsapplication/firePaymentSucess.do?rtiApplicationNumber=" + existingApp.getRtiApplicationId());
+		            }
+		        }
+
+		        if (BOMInitiateFirePayment.compareHash(request)) {
+		            String status = request.getParameter("status");
+		            log.debug("status=" + status);
+		            String refNum = request.getParameter("bank_ref_num");
+		            log.debug("Reference Number=" + refNum);
+
+		            long rtiApplicationId = collectionBuffer.getrTIApplication().getRtiApplicationId();
+		            RTIApplication rtiApplication = rtiApplicationService.get(rtiApplicationId);
+
+		            collectionBuffer.setReferenceNumber(refNum);
+		            collectionBuffer.setrTIApplication(rtiApplication);
+		            collectionBuffer.setStatus(status.equalsIgnoreCase("success") ? 2 : -1);
+		            // NOTE: do NOT overwrite amount here from getFirstPaymentFees() — that's the unrounded value
+		            // and would wipe out the actual-charged amount saved in pay(). Keep the buffer's existing amount.
+		            collectionBuffer.setBankName("Bank of Maharashtra");
+		            collectionBuffer.setPaymentMode("Online");
+		            collectionBuffer.setReceiptDate(LocalDate.now().toString());
+		            collectionBuffer.setReceiptNumber(collectionBuffer.getReceiptNumber());
+		            collectionBuffer.setUniqPgid(txnid);
+		            // roundOffAmount already set at pay() time on this same row — preserved automatically.
+
+		            collectionBuffer = collectionBufferService.saveCollectionbuffer(collectionBuffer, txnid);
+
+		            if (status.equalsIgnoreCase("success")) {
+		                Collection collection = new Collection();
+		                collection.setRtiApplication(rtiApplication.getRtiApplicationId());
+		                collection.setBankName(collectionBuffer.getBankName());
+		                collection.setReceiptDate(collectionBuffer.getReceiptDate());
+		                collection.setAmount(collectionBuffer.getAmount());
+		                //collection.setRoundOffAmount(collectionBuffer.getRoundOffAmount());   // carry round-off through
+		                collection.setPaymentMode(collectionBuffer.getPaymentMode());
+		                collection.setStatus(2);
+		                collection.setReceiptNumber(collectionBuffer.getReceiptNumber());
+		                collection.setUniqPgid(collectionBuffer.getUniqPgid());
+		                collection.setReferenceNumber(collectionBuffer.getReferenceNumber());
+
+		                updatedRtiApplication = rtiApplicationService.get(rtiApplicationId);
+		                updatedRtiApplication.setWorkFlowStatus(0);
+		                updatedRtiApplication.setIsApplicationParked(1);
+		                updatedRtiApplication.setFinalStatus(CoreConstants.RTI_FINALSTATUS_APPROVED);
+
+		                Collection existingCollection = collectionService.getCollection(rtiApplicationId);
+		                boolean savedNow = false;
+		                if (existingCollection == null || !collectionBuffer.getUniqPgid().equals(existingCollection.getUniqPgid())) {
+		                    try {
+		                        rtiApplicationService.merge(updatedRtiApplication);
+		                        collectionService.saveCollection(collection);
+		                        savedNow = true;
+		                    } catch (org.springframework.dao.DataIntegrityViolationException dup) {
+		                        log.warn("Duplicate collection insert prevented for txnid=" + txnid, dup);
+		                        savedNow = false;
+		                    }
+
+		                    if (savedNow) {
+		                        String phNo = rtiApplication.getPhoneNumber();
+		                        String rtiApplicatonNumber = rtiApplication.getRtiApplnNumber();
+		                        String name = rtiApplication.getApplicantName();
+		                        String mail = rtiApplication.getEmail();
+		                        SendSMSEmailController.sendPaymentCompleted(name, phNo, rtiApplicatonNumber, mail);
+		                    } else {
+		                        updatedRtiApplication = rtiApplicationService.get(rtiApplicationId);
+		                    }
+		                }
+
+		                modelAndView.addObject("collection", collectionBuffer);
+		                modelAndView.addObject("rts", rtiApplication);
+		                request.getSession().setAttribute("status", 2);
+		                return new ModelAndView("redirect:/ws/rtsapplication/firePaymentSucess.do?rtiApplicationNumber=" + rtiApplication.getRtiApplicationId());
+		            } else {
+		                Map<String, String[]> parameters1 = request.getParameterMap();
+		                for (String parameter : parameters1.keySet()) {
+		                    log.info(parameter + " : " + parameters1.get(parameter)[0].toString());
+		                }
+		                request.getSession().setAttribute("status", -1);
+		                modelAndView.addObject("collection", collectionBuffer);
+		                modelAndView.addObject("rts", rtiApplication);
+		                log.debug("Payment Failed Receipt Returns");
+		                modelAndView.setViewName("paymentfailedReciept");
+		            }
+		        } else {
+		            modelAndView.setViewName("redirect:ws/pay.do");
+		        }
+		    } catch (Exception ex) {
+		        ex.printStackTrace();
+		        ex.getMessage();
+		        log.debug(ex.getMessage());
+		    }
+		    return modelAndView;
+		}
+			
+		@RequestMapping("ws/rtsapplication/getPrintRecieptt.do")
+		public ModelAndView getPrintRecieptt(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+			ModelAndView modelAndView = new ModelAndView("printReciept");
+			String applicationNumber = request.getParameter("rtiApplicationNumber");
+			//return new ModelAndView("redirect:/ws/rtiapplication/submitApplicationSuccess.do?rtsAppNo=" + retunRti.getRtiApplnNumber() + "&rtiApplicationNumber=" + applicationNumber);
+
+			return modelAndView;
+		}
+		@RequestMapping("ws/rtsapplication/getListt.do")
+		public ModelAndView getListt(HttpServletRequest request, HttpServletResponse response) {
+		    try {
+		        String applicationNumber = request.getParameter("rtiApplnNumber");
+		        RTIApplicationSearch applicationSearch = new RTIApplicationSearch();
+		        RTIApplication rtiApplication = new RTIApplication();
+
+		        ModelAndView modelAndView = new ModelAndView();
+
+		        if (applicationNumber != null && !applicationNumber.trim().isEmpty()) {
+		            applicationSearch.setRtiApplicationNumber(applicationNumber);
+		            applicationSearch.setRtiserviceid(0);
+		            rtiApplication = rtiApplicationService.findByRTIApplicationNumber(applicationNumber);
+		            long id = rtiApplication.getRtiApplicationId();
+
+		            List<RTIApplicationDTO> rtiList = rtiApplicationService.getList(id);
+
+		            if (rtiList == null) {
+		                rtiList = new ArrayList<>();
+		            }
+
+		            modelAndView.addObject("rtiList", rtiList);
+		        } else {
+		            modelAndView.addObject("error", "Record Not Found. Please Enter a Valid Application Number!");
+		        }
+
+		        modelAndView.setViewName("printReciept");
+		        return modelAndView;
+		    } catch (Exception ex) {
+		        // Handle exceptions appropriately, e.g., log the error
+		        ModelAndView errorModelAndView = new ModelAndView();
+		        errorModelAndView.addObject("error", "An error occurred while fetching the record.");
+		        errorModelAndView.setViewName("errorPage"); // Replace "errorPage" with your actual error page
+		        return errorModelAndView;
+		    }
+		}
+
+
+
+		
+	}

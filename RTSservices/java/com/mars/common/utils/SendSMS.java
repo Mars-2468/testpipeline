@@ -1,0 +1,298 @@
+package com.mars.common.utils;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+
+public class SendSMS {
+
+
+	static HttpURLConnection conn = null;
+   /* public static HttpURLConnection send_sms_old(String username, String password, String senderId,String mobileNo, String message) {
+
+	static HttpURLConnection conn = null;
+    /*public static HttpURLConnection sendSingleSMS(String username, String password, String senderId,String mobileNo, String message) {
+
+
+try {                               
+		URL url = new URL(Constants.SMSGateWayURL);
+	    connection = (HttpURLConnection)url.openConnection();
+	    
+	    connection.setDoInput(true);
+	    
+	    connection.setDoOutput(true);
+	    
+	    connection.setRequestMethod("POST");
+	    
+	    HttpURLConnection.setFollowRedirects(true);
+	
+	    String route = "2";
+	    String unicode = "2";
+	    
+	    String query = "username=" + URLEncoder.encode(username) + 
+	    
+	      "&password=" + URLEncoder.encode(password) + 
+	      
+	      "&route=" + URLEncoder.encode(route) + 
+	      "&unicode=" + URLEncoder.encode(unicode) + 
+	      
+	      "&message=" + URLEncoder.encode(message) + "&number=" + 
+	      
+	      URLEncoder.encode(mobileNo) + "&senderid=" + 
+	      
+	      URLEncoder.encode(senderId);   
+	
+		   connection.setRequestProperty("Content-length", String.valueOf(query.length()));
+		     
+		   connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+		    
+		   connection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)");
+	
+	       DataOutputStream output = new DataOutputStream(connection
+	    
+	      .getOutputStream());
+	    
+	
+	       int queryLength = query.length();
+	    
+	       output.writeBytes(query);
+	    
+	    DataInputStream input = new DataInputStream(connection
+	    
+	      .getInputStream());
+	    for (int c = input.read(); c != -1; c = input.read()) {
+	      input.close();
+	    }
+  }
+  catch (Exception e)
+  {
+    System.out.println("Something bad just happened.");
+    
+    System.out.println(e);
+    
+    e.printStackTrace();
+  }
+  return connection;
+}
+
+*/    
+    
+	public static HttpURLConnection sendSingleSMS_olds
+	(String username, String templateid, String senderId,String mobileNo, String message) {
+    	   
+
+        try {
+        
+         String SMSUsername="ASCDCL";
+         String SMSPassword="abc123";
+         
+ 
+ String to = "&mobile=" + URLEncoder.encode(mobileNo, "UTF-8");
+ String message_m = "&message=" + URLEncoder.encode(message, "UTF-8");
+
+ String data = "http://smsatm.net/v3/api.php?username=ASCDCL&apikey=73c741e6e8fcc2cb12ff" +
+ 		"&senderid=INVITN&templateid=1507161527581011215&mobile="+mobileNo+"&message="+message;
+ URL url = new URL(data);
+ URLConnection conn = url.openConnection();
+ conn.setDoOutput(true);
+        
+ BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+ String line;
+ String sResult="";
+ while ((line = rd.readLine()) != null) {
+ // Process line...
+ sResult=sResult+line+" ";
+ }
+ rd.close();
+
+        }
+        catch (Exception e) {
+        	System.out.println("Something bad just happened.");
+            
+            System.out.println(e);
+            
+      
+        }
+		return conn;
+        
+    }
+
+    
+    
+	 public static HttpURLConnection sendSingleSMS(String username, String templateId, String senderId,String mobileNo, String message) {
+		 
+		  HttpURLConnection conn = null;
+
+		 try {
+		        
+			  //message="Dear ÃƒÂ Ã‚Â¤Ã‚Â­ÃƒÂ Ã‚Â¤Ã‚Â¾ÃƒÂ Ã‚Â¤Ã‚Â¡ÃƒÂ Ã‚Â¥Ã¢â‚¬Â¡ÃƒÂ Ã‚Â¤Ã¢â‚¬Â¢ÃƒÂ Ã‚Â¤Ã‚Â°ÃƒÂ Ã‚Â¥Ã¯Â¿Â½ ÃƒÂ Ã‚Â¤Ã‚Â¶ÃƒÂ Ã‚Â¤Ã‚Â¾ÃƒÂ Ã‚Â¤Ã¢â‚¬â€œÃƒÂ Ã‚Â¤Ã‚Â¾ ÃƒÂ Ã‚Â¤Ã‚ÂµÃƒÂ Ã‚Â¥Ã¯Â¿Â½ÃƒÂ Ã‚Â¤Ã‚Â¯ÃƒÂ Ã‚Â¤Ã‚ÂµÃƒÂ Ã‚Â¤Ã‚Â¸ÃƒÂ Ã‚Â¥Ã¯Â¿Â½ÃƒÂ Ã‚Â¤Ã‚Â¥ÃƒÂ Ã‚Â¤Ã‚Â¾ÃƒÂ Ã‚Â¤Ã‚ÂªÃƒÂ Ã‚Â¤Ã¢â‚¬Â¢, Your Property tax bill for Property no G0003255 for the year 2022-2023 is Rs Rs 672447.To check and pay your bill click on the link given below https://aurangabadmahapalika.org:8443/TaxCollection/pg/property/getPropertyPgWebApi You may pay your bill online or at the nearest Citizen Facilitation Centre (CFC)";
+			 //message="Dear ÃƒÂ Ã‚Â¤Ã‚Â­ÃƒÂ Ã‚Â¤Ã‚Â¾ÃƒÂ Ã‚Â¤Ã‚Â¡ÃƒÂ Ã‚Â¥Ã¢â‚¬Â¡ÃƒÂ Ã‚Â¤Ã¢â‚¬Â¢ÃƒÂ Ã‚Â¤Ã‚Â°ÃƒÂ Ã‚Â¥Ã¯Â¿Â½ ÃƒÂ Ã‚Â¤Ã‚Â¶ÃƒÂ Ã‚Â¤Ã‚Â¾ÃƒÂ Ã‚Â¤Ã¢â‚¬â€œÃƒÂ Ã‚Â¤Ã‚Â¾ ÃƒÂ Ã‚Â¤Ã‚ÂµÃƒÂ Ã‚Â¥Ã¯Â¿Â½ÃƒÂ Ã‚Â¤Ã‚Â¯ÃƒÂ Ã‚Â¤Ã‚ÂµÃƒÂ Ã‚Â¤Ã‚Â¸ÃƒÂ Ã‚Â¥Ã¯Â¿Â½ÃƒÂ Ã‚Â¤Ã‚Â¥ÃƒÂ Ã‚Â¤Ã‚Â¾ÃƒÂ Ã‚Â¤Ã‚ÂªÃƒÂ Ã‚Â¤Ã¢â‚¬Â¢ ÃƒÂ Ã‚Â¤Ã‚Â¸ÃƒÂ Ã‚Â¥Ã¢â‚¬Â¡ÃƒÂ Ã‚Â¤Ã¢â‚¬Å¡ÃƒÂ Ã‚Â¤Ã…Â¸ÃƒÂ Ã‚Â¥Ã¯Â¿Â½ÃƒÂ Ã‚Â¤Ã‚Â°, Your Property tax bill for Property no G0003255 for the year 2022-2023 is Rs 672447.To check and pay your bill click on the link given below https://aurangabadmahapalika.org:8443/TaxCollection/pg/property/getPropertyPgWebApi You may pay your bill online or at the nearest Citizen Facilitation Centre (CFC) Regards, Aurangabad Municipal Corporation";              
+		 
+		 String to =  URLEncoder.encode(mobileNo, "UTF-8");
+		 
+		   System.out.println("utf8 "+message);
+		 
+		 String message_m =  URLEncoder.encode(message, "UTF-8");
+		 System.out.println("message_m "+message_m);
+		 String data= "https://bulksmsservice.co.in/httpapi/v1/sendsms?api-token=1p,_7u4.ic9fdwje0z23)5th*nxmg8vosyklqa(r&numbers="+to+"&route=2&message="+message_m+"&sender="+senderId+"&template-id="+templateId;
+
+		// String data = "http://smsatm.net/v3/api.php?username=nmcgov&apikey=fe4ba54cf34bec238813&senderid="+senderId+"&templateid="+templateId+"&mobile="+to+"&message="+message_m;
+
+		 
+		 /*String data = "http://smsatm.net/v3/api.php?username=ASCDCL&apikey=c01f32640f54e44f7660&senderid=AMCGOV" +
+			 		"1707164422881011734="+templateId+"8102036445="+to+"hello="+message_m;*/
+		 
+		  
+		 URL url = new URL(data);
+		 conn = (HttpURLConnection)url.openConnection();
+		 conn.setDoOutput(true);
+		        
+		 BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		 String line;
+		 String sResult="";
+		 while ((line = rd.readLine()) != null) {
+		 // Process line...
+		 sResult=sResult+line+" ";
+		 }
+		 rd.close();
+		 
+		        }
+		        catch (Exception e) {
+		        	System.out.println("Something bad just happened.");
+		            
+		            System.out.println(e);
+		            
+		      
+		        }
+				return conn;
+		        
+		    }
+		    
+
+
+   public static boolean SendsSMStoApplicantNew(String mobileNo,String message){
+	   
+	boolean flag = false;
+	 try {
+		 
+		     //1707166443132258594 marathi
+		    //english 1707166400075780981
+ 			 java.net.HttpURLConnection connection = com.mars.common.utils.SendSMS.sendSingleSMS("ASCDCL","1707166400075780981","AMCGOV",mobileNo, message);
+
+            if(connection.getResponseCode()==200)
+            {
+           	 flag=true;
+            }
+
+	       } catch (MalformedURLException e) {
+
+	          // TODO Auto-generated catch block
+
+	          e.printStackTrace();
+
+	      } catch (IOException e) 
+	      {
+
+	          // TODO Auto-generated catch block
+
+	          e.printStackTrace();
+
+	      }
+	 return flag;
+	}
+
+    public static boolean sendSingleSMS(String templateId, String senderId,String mobileNo, String message) {
+    	HttpURLConnection conn = null;
+    	boolean flag = false;
+        try {
+                       
+        	if(mobileNo!=null){
+			 String to =  URLEncoder.encode(mobileNo, "UTF-8");
+			 String message_m =  URLEncoder.encode(message, "UTF-8");
+			
+			 //String data = "http://smsatm.net/v3/api.php?username=nmcgov&apikey=fe4ba54cf34bec238813&senderid="+senderId+"&templateid="+templateId+"&mobile="+to+"&message="+message_m;--new 
+			 /*String data = "http://smsatm.net/v3/api.php?username=ASCDCL&apikey=c01f32640f54e44f7660&senderid=AMCGOV" +
+				 		"1707164422881011734="+templateId+"8102036445="+to+"hello="+message_m;*/
+			 
+			 String data= "https://bulksmsservice.co.in/httpapi/v1/sendsms?api-token=1p,_7u4.ic9fdwje0z23)5th*nxmg8vosyklqa(r&numbers="+to+"&route=2&message="+message_m+"&sender="+senderId+"&template-id="+templateId;
+			 URL url = new URL(data);
+			 conn = (HttpURLConnection)url.openConnection();
+			 conn.setDoOutput(true);
+			        
+			 BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			 String line;
+			 String sResult="";
+			 while ((line = rd.readLine()) != null) {
+			 // Process line...
+			 sResult=sResult+line+" ";
+			 }
+			 rd.close();
+			 
+			       
+			        if(conn.getResponseCode()==200)
+			        {
+			       	 flag=true;
+			        }
+        	}
+        }
+        catch (Exception e) {
+        	System.out.println("Something bad just happened.");
+            
+            System.out.println(e);
+            
+      
+        }
+        
+					return flag;
+			        
+    }
+    
+    public static boolean sendSMS(String mobileNo, String message) {
+    	HttpURLConnection conn = null;
+    	boolean flag = false;
+        try {
+                       
+        	if(mobileNo!=null){
+			 String to =  URLEncoder.encode(mobileNo, "UTF-8");
+			 String message_m =  URLEncoder.encode(message, "UTF-8");
+			
+			 String data = "http://bhashsms.com/api/sendmsg.php?user=NMCGOV19&pass=123456&sender=NMCGov&phone="+to+"&text="+ message_m+"&priority=ndnd&stype=normal";			 
+			  
+			 URL url = new URL(data);
+			 conn = (HttpURLConnection)url.openConnection();
+			 conn.setDoOutput(true);
+			        
+			 BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			 String line;
+			 String sResult="";
+			 while ((line = rd.readLine()) != null) {
+			 // Process line...
+			 sResult=sResult+line+" ";
+			 }
+			 rd.close();
+			 
+			       
+			        if(conn.getResponseCode()==200)
+			        {
+			       	 flag=true;
+			        }
+        	}
+        }
+        catch (Exception e) {
+        	System.out.println("Something bad just happened.");
+            
+            System.out.println(e);
+            
+      
+        }
+        
+					return flag;
+			        
+    }
+
+}

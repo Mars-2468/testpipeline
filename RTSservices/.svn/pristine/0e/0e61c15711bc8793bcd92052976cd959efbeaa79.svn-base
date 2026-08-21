@@ -1,0 +1,1181 @@
+package com.mars.rti.model;
+
+import java.util.ArrayList;
+
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "fire_recommendation_main", schema = "egovrti")
+public class FireRecommendation {
+
+	
+	@Id
+	@Column(name = "fire_recommendation_id", nullable = false, unique = true)
+	@SequenceGenerator(name = "rti_firerecommendation_seq", sequenceName = "rti_firerecommendation_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rti_firerecommendation_seq")
+	private long fireRecommendationId;
+	
+	
+
+	@Column(name = "catagory", nullable = true)
+	private String catagory;
+	
+	@Column(name = "title", nullable = true)
+	private String title;
+
+	@Column(name = "first_name", nullable = true)
+	private String firstName;
+
+	@Column(name = "middle_name", nullable = true)
+	private String middleName;
+
+	@Column(name = "last_name", nullable = true)
+	private String lastName;
+
+	@Column(name = "full_name", nullable = true)
+	private String fullName;
+
+	@Column(name = "flat_no", nullable = true)
+	private String plotNumber;
+
+	@Column(name = "survey_no", nullable = true)
+	private String surveyNo;
+
+	@Column(name = "street_name", nullable = true)
+	private String streetName;
+
+	@Column(name = "house_no", nullable = true)
+	private String houseNo;
+
+	@Column(name = "pin_code", nullable = true)
+	private String pinCode;
+
+	@Column(name = "landmark", nullable = true)
+	private String landmark;
+
+	@Column(name = "mobile_no", nullable = true)
+	private String mobileNo;
+
+	@Column(name = "app_email", nullable = true)
+	private String appEmail;
+
+	@Column(name = "nameofpower_attorney", nullable = true)
+	private String nameOfPowerAttorney;
+
+	@Column(name = "no_standby", nullable = true)
+	private String noStandby;
+
+	@Column(name = "address_of_power_attorney", nullable = true)
+	private String addressOfPowerAttorney;
+
+	@Column(name = "hight_of_building", nullable = true)
+	private String hightOfBuilding;
+
+	@Column(name = "floors", nullable = true)
+	private String floors;
+
+	@Column(name = "type_of_building", nullable = true)
+	private String typeOfBuilding;
+
+	@Column(name = "type_of_height", nullable = true)
+	private String typeOfHeight;
+
+	@Column(name = "type_of_construction", nullable = true)
+	private String typeOfConstruction;
+
+	@Column(name = "total_plot_area", nullable = true)
+	private String totalPlotArea;
+
+	@Column(name = "build_up_area", nullable = true)
+	private String buildUpArea;
+
+	@Column(name = "super_build_area", nullable = true)
+	private String superBuildarea;
+
+	@Column(name = "number_of_building", nullable = true)
+	private String numberOfBuilding;
+
+	@Column(name = "num_of_wings", nullable = true)
+	private String numOfWings;
+
+	@Column(name = "present_position", nullable = true)
+	private String presentPosition;
+
+	@Column(name = "front_margin_width", nullable = true)
+	private String frontMarginWidth;
+
+	@Column(name = "real_margin", nullable = true)
+	private String realMargin;
+
+	@Column(name = "side_margine", nullable = true)
+	private String sideMargine;
+	
+	@Column(name = "side_margine_two", nullable = true)
+	private String sideMargineTwo;
+	
+
+	@Column(name = "width_of_entrance", nullable = true)
+	private String widthOfEntrance;
+
+	@Column(name = "height_of_entrance", nullable = true)
+	private String heightOfEntrance;
+
+	@Column(name = "number_of_external", nullable = true)
+	private String numberOfExternal;
+
+	@Column(name = "width_of_external", nullable = true)
+	private String widthOfExternal;
+	
+	@Column(name = "from_internal_staricase", nullable = true)
+	private String fromInternalStaricase;
+	
+	@Column(name = "from_external_staricase", nullable = true)
+	private String fromExternalStaricase;
+
+	@Column(name = "num_internal_staircase_provided", nullable = true)
+	private String numInternalStaircaseProvided;
+
+	@Column(name = "width_internal_staircase_provided", nullable = true)
+	private String widthInternalStaircaseProvided;
+
+	@Column(name = "no_lift", nullable = true)
+	private String noLift;
+
+	@Column(name = "area_of_basement", nullable = true)
+	private String areaOfBasement;
+
+	@Column(name = "capacity_of_undergroundank", nullable = true)
+	private String capacityOfUnderGroundTank;
+
+	@Column(name = "capacity_ofover_headtank", nullable = true)
+	private String capacityOFOverHeadTank;
+
+	@Column(name = "fire_fighting_systemnbc", nullable = true)
+	private String fireFightingSystemNBC;
+
+	@Column(name = "location_of_transferroom", nullable = true)
+	private String locationOfTransferRoom;
+
+	@Column(name = "electric_pump", nullable = true)
+	private String electricPump;
+
+	@Column(name = "diesel_pump", nullable = true)
+	private String dieselPump;
+
+	@Column(name = "jocky_pump", nullable = true)
+	private String jockyPump;
+
+	@Column(name = "booster_pump", nullable = true)
+	private String boosterPump;
+
+	@Column(name = "num_stand_by", nullable = true)
+	private String numStandBy;
+
+	@Column(name = "ac_plant", nullable = true)
+	private String acPlant;
+
+	@Column(name = "zone_no", nullable = true)
+	private String zoneNO;
+	
+	@Column(name = "nooffloors", nullable = true)
+	private String noOfFloors;
+
+	@Column(name = "super_build_up_area", nullable = true)
+	private String superBuildUpArea;
+
+	@Column(name = "scrutiny_fees_on_above_total", nullable = true)
+	private String scrutinyFeesOnAboveTotal;
+
+	@Column(name = "rti_application_ref_id", nullable = true)
+	private String rtiapplrefno;
+
+	@Column(name = "rti_ref_id", nullable = true)
+	private long rti_ref_id;
+		
+	@Column(name = "type_of_lift", nullable = true)
+	private String typeOfLift;
+	
+	@Column(name = "electric_pump_capacity", nullable = true)
+	private String electricPumpCapacity;
+	
+	@Column(name = "diesel_pump_capacity", nullable = true)
+	private String dieselPumpCapacity;
+	
+	@Column(name = "jocky_pump_capacity", nullable = true)
+	private String jockyPumpCapacity;
+	
+	@Column(name = "booster_pump_capacity", nullable = true)
+	private String boosterPumpCapacity;
+	
+	@Column(name = "title_architecture", nullable = true)
+	private String titleArchitecture;
+	
+	@Column(name = "first_name_architecture", nullable = true)
+	private String firstNameArchitecture;
+	
+	@Column(name = "middle_name_architecture", nullable = true)
+	private String middleNameArchitecture;
+	
+	@Column(name = "last_name_architecture", nullable = true)
+	private String lastNameArchitecture;
+
+	@Column(name = "full_name_architecture", nullable = true)
+	private String fullNameArchitecture;
+	
+	@Column(name = "mobile_no_architecture", nullable = true)
+	private String mobileNoArchitecture;
+	
+	@Column(name = "app_email_architecture", nullable = true)
+	private String appEmailArchitecture;
+	
+	@Column(name = "architect_licence_number", nullable = true)
+	private String architectLicenceNumber;
+	
+	@Column(name = "name_of_building_owner", nullable = true)
+	private String nameofBuildingOwner;
+	
+	@Column(name = "address_of_building", nullable = true)
+	private String addressofbuilding;
+	
+	@Column(name = "sheet_no", nullable = true)
+	private String sheetNo;	
+	
+	@Column(name = "khasara_no", nullable = true)
+	private String khasaraNo;
+	
+	@Column(name = "ward_no", nullable = true) 
+	private String wardNo;
+
+	@Column(name = "floor_name", nullable = true)
+	private String floorName;
+
+	@Column(name = "comm_area", nullable = true)
+	private String commArea;
+
+	@Column(name = "resid_area", nullable = true)
+	private String residArea;
+
+	@Column(name = "primum_ar", nullable = true)
+	private String primumAr;
+
+	@Column(name = "other_use", nullable = true)
+	private String otherUse;
+
+	@Column(name = "first_payment_fees")
+	private String firstPaymentFees;
+	
+	@Column(name = "fire_department_wise_login")
+	private String fireDepartmentWiseLogin;
+	
+	@Column(name = "fire_sub_department_wise_login")
+	private String fireSubDepartmentWiseLogin;
+	
+	
+	@Column(name = "east")
+	private String east;
+	
+	@Column(name = "west")
+	private String west;
+	
+	@Column(name = "north")
+	private String north;
+	
+	@Column(name = "south")
+	private String south;
+
+	@Column(name = "total_fees", nullable = true)
+	private String totalFeess;
+	
+	@Transient
+	private String filesPath;
+	
+	@OneToMany(mappedBy = "fireRecommendation")
+	private List<FireDetails> fireDetails = new ArrayList<FireDetails>();
+
+	
+	
+	
+
+
+
+
+
+
+	public String getNameofBuildingOwner() {
+		return nameofBuildingOwner;
+	}
+
+
+
+
+
+	public void setNameofBuildingOwner(String nameofBuildingOwner) {
+		this.nameofBuildingOwner = nameofBuildingOwner;
+	}
+
+
+
+
+
+	public String getAddressofbuilding() {
+		return addressofbuilding;
+	}
+
+
+
+
+
+	public void setAddressofbuilding(String addressofbuilding) {
+		this.addressofbuilding = addressofbuilding;
+	}
+
+
+
+
+
+	public String getFirstPaymentFees() {
+		return firstPaymentFees;
+	}
+
+
+
+
+
+	public void setFirstPaymentFees(String firstPaymentFees) {
+		this.firstPaymentFees = firstPaymentFees;
+	}
+
+
+
+
+
+	public long getFireRecommendationId() {
+		return fireRecommendationId;
+	}
+
+	
+
+
+
+	public String getCatagory() {
+		return catagory;
+	}
+
+
+
+
+
+	public void setCatagory(String catagory) {
+		this.catagory = catagory;
+	}
+
+
+
+
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public String getSurveyNo() {
+		return surveyNo;
+	}
+
+	public String getStreetName() {
+		return streetName;
+	}
+
+	public String getPinCode() {
+		return pinCode;
+	}
+
+	public String getLandmark() {
+		return landmark;
+	}
+
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+	public String getAppEmail() {
+		return appEmail;
+	}
+
+	public String getNameOfPowerAttorney() {
+		return nameOfPowerAttorney;
+	}
+
+	public String getNoStandby() {
+		return noStandby;
+	}
+
+	public String getPlotNumber() {
+		return plotNumber;
+	}
+
+	public void setPlotNumber(String plotNumber) {
+		this.plotNumber = plotNumber;
+	}
+
+	public String getAddressOfPowerAttorney() {
+		return addressOfPowerAttorney;
+	}
+
+	public String getHightOfBuilding() {
+		return hightOfBuilding;
+	}
+
+	public String getFloors() {
+		return floors;
+	}
+
+	public String getTotalPlotArea() {
+		return totalPlotArea;
+	}
+
+	public String getBuildUpArea() {
+		return buildUpArea;
+	}
+
+	public String getNumberOfBuilding() {
+		return numberOfBuilding;
+	}
+
+	public String getNumOfWings() {
+		return numOfWings;
+	}
+
+	public String getPresentPosition() {
+		return presentPosition;
+	}
+
+	public String getFrontMarginWidth() {
+		return frontMarginWidth;
+	}
+
+	public String getRealMargin() {
+		return realMargin;
+	}
+
+	public String getSideMargine() {
+		return sideMargine;
+	}
+	
+	
+
+	public String getSideMargineTwo() {
+		return sideMargineTwo;
+	}
+
+
+
+
+
+	public void setSideMargineTwo(String sideMargineTwo) {
+		this.sideMargineTwo = sideMargineTwo;
+	}
+
+
+
+
+
+	public String getWidthOfEntrance() {
+		return widthOfEntrance;
+	}
+
+	public String getHeightOfEntrance() {
+		return heightOfEntrance;
+	}
+
+	public String getNumberOfExternal() {
+		return numberOfExternal;
+	}
+
+	public String getWidthOfExternal() {
+		return widthOfExternal;
+	}
+
+	public String getNumInternalStaircaseProvided() {
+		return numInternalStaircaseProvided;
+	}
+
+	public String getWidthInternalStaircaseProvided() {
+		return widthInternalStaircaseProvided;
+	}
+
+	public String getNoLift() {
+		return noLift;
+	}
+
+	public void setNoLift(String noLift) {
+		this.noLift = noLift;
+	}
+
+	public String getElectricPump() {
+		return electricPump;
+	}
+
+	public String getAreaOfBasement() {
+		return areaOfBasement;
+	}
+
+	public String getDieselPump() {
+		return dieselPump;
+	}
+
+	public String getJockyPump() {
+		return jockyPump;
+	}
+
+	public String getBoosterPump() {
+		return boosterPump;
+	}
+
+	public String getNumStandBy() {
+		return numStandBy;
+	}
+
+	public String getCapacityOfUnderGroundTank() {
+		return capacityOfUnderGroundTank;
+	}
+
+	public String getCapacityOFOverHeadTank() {
+		return capacityOFOverHeadTank;
+	}
+
+	public String getFireFightingSystemNBC() {
+		return fireFightingSystemNBC;
+	}
+
+	public String getLocationOfTransferRoom() {
+		return locationOfTransferRoom;
+	}
+
+	public String getNoOfFloors() {
+		return noOfFloors;
+	}
+
+	public String getSuperBuildUpArea() {
+		return superBuildUpArea;
+	}
+
+	public String getScrutinyFeesOnAboveTotal() {
+		return scrutinyFeesOnAboveTotal;
+	}
+
+	public String getFloorName() {
+		return floorName;
+	}
+
+	public String getAcPlant() {
+		return acPlant;
+	}
+
+	public String getFilesPath() {
+		return filesPath;
+	}
+
+	public String getRtiapplrefno() {
+		return rtiapplrefno;
+	}
+
+	public long getRti_ref_id() {
+		return rti_ref_id;
+	}
+
+	public void setFireRecommendationId(long fireRecommendationId) {
+		this.fireRecommendationId = fireRecommendationId;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+
+	public void setSurveyNo(String surveyNo) {
+		this.surveyNo = surveyNo;
+	}
+
+	public void setStreetName(String streetName) {
+		this.streetName = streetName;
+	}
+
+	public void setPinCode(String pinCode) {
+		this.pinCode = pinCode;
+	}
+
+	public void setLandmark(String landmark) {
+		this.landmark = landmark;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
+	}
+
+	public void setAppEmail(String appEmail) {
+		this.appEmail = appEmail;
+	}
+
+	public void setNameOfPowerAttorney(String nameOfPowerAttorney) {
+		this.nameOfPowerAttorney = nameOfPowerAttorney;
+	}
+
+	public void setNoStandby(String noStandby) {
+		this.noStandby = noStandby;
+	}
+
+	public void setAddressOfPowerAttorney(String addressOfPowerAttorney) {
+		this.addressOfPowerAttorney = addressOfPowerAttorney;
+	}
+
+	public void setHightOfBuilding(String hightOfBuilding) {
+		this.hightOfBuilding = hightOfBuilding;
+	}
+
+	public void setFloors(String floors) {
+		this.floors = floors;
+	}
+
+	public String getTypeOfBuilding() {
+		return typeOfBuilding;
+	}
+
+	public void setTypeOfBuilding(String typeOfBuilding) {
+		this.typeOfBuilding = typeOfBuilding;
+	}
+
+	public String getTypeOfHeight() {
+		return typeOfHeight;
+	}
+
+	public void setTypeOfHeight(String typeOfHeight) {
+		this.typeOfHeight = typeOfHeight;
+	}
+
+	public String getTypeOfConstruction() {
+		return typeOfConstruction;
+	}
+
+	public void setTypeOfConstruction(String typeOfConstruction) {
+		this.typeOfConstruction = typeOfConstruction;
+	}
+
+	public void setTotalPlotArea(String totalPlotArea) {
+		this.totalPlotArea = totalPlotArea;
+	}
+
+	public void setBuildUpArea(String buildUpArea) {
+		this.buildUpArea = buildUpArea;
+	}
+
+	public void setNumberOfBuilding(String numberOfBuilding) {
+		this.numberOfBuilding = numberOfBuilding;
+	}
+
+	public void setNumOfWings(String numOfWings) {
+		this.numOfWings = numOfWings;
+	}
+
+	public void setPresentPosition(String presentPosition) {
+		this.presentPosition = presentPosition;
+	}
+
+	public void setFrontMarginWidth(String frontMarginWidth) {
+		this.frontMarginWidth = frontMarginWidth;
+	}
+
+	public void setRealMargin(String realMargin) {
+		this.realMargin = realMargin;
+	}
+
+	public void setSideMargine(String sideMargine) {
+		this.sideMargine = sideMargine;
+	}
+
+	public void setWidthOfEntrance(String widthOfEntrance) {
+		this.widthOfEntrance = widthOfEntrance;
+	}
+
+	public void setHeightOfEntrance(String heightOfEntrance) {
+		this.heightOfEntrance = heightOfEntrance;
+	}
+
+	public void setNumberOfExternal(String numberOfExternal) {
+		this.numberOfExternal = numberOfExternal;
+	}
+
+	public void setWidthOfExternal(String widthOfExternal) {
+		this.widthOfExternal = widthOfExternal;
+	}
+
+	public void setNumInternalStaircaseProvided(String numInternalStaircaseProvided) {
+		this.numInternalStaircaseProvided = numInternalStaircaseProvided;
+	}
+
+	public void setWidthInternalStaircaseProvided(String widthInternalStaircaseProvided) {
+		this.widthInternalStaircaseProvided = widthInternalStaircaseProvided;
+	}
+
+	public void setElectricPump(String electricPump) {
+		this.electricPump = electricPump;
+	}
+
+	public void setAreaOfBasement(String areaOfBasement) {
+		this.areaOfBasement = areaOfBasement;
+	}
+
+	public void setDieselPump(String dieselPump) {
+		this.dieselPump = dieselPump;
+	}
+
+	public void setJockyPump(String jockyPump) {
+		this.jockyPump = jockyPump;
+	}
+
+	public void setBoosterPump(String boosterPump) {
+		this.boosterPump = boosterPump;
+	}
+
+	public void setNumStandBy(String numStandBy) {
+		this.numStandBy = numStandBy;
+	}
+
+	public void setCapacityOfUnderGroundTank(String capacityOfUnderGroundTank) {
+		this.capacityOfUnderGroundTank = capacityOfUnderGroundTank;
+	}
+
+	public void setCapacityOFOverHeadTank(String capacityOFOverHeadTank) {
+		this.capacityOFOverHeadTank = capacityOFOverHeadTank;
+	}
+
+	public void setFireFightingSystemNBC(String fireFightingSystemNBC) {
+		this.fireFightingSystemNBC = fireFightingSystemNBC;
+	}
+
+	public void setLocationOfTransferRoom(String locationOfTransferRoom) {
+		this.locationOfTransferRoom = locationOfTransferRoom;
+	}
+
+	public void setNoOfFloors(String noOfFloors) {
+		this.noOfFloors = noOfFloors;
+	}
+
+	public void setSuperBuildUpArea(String superBuildUpArea) {
+		this.superBuildUpArea = superBuildUpArea;
+	}
+
+	public void setScrutinyFeesOnAboveTotal(String scrutinyFeesOnAboveTotal) {
+		this.scrutinyFeesOnAboveTotal = scrutinyFeesOnAboveTotal;
+	}
+
+	public void setFloorName(String floorName) {
+		this.floorName = floorName;
+	}
+
+	public void setAcPlant(String acPlant) {
+		this.acPlant = acPlant;
+	}
+
+	public void setFilesPath(String filesPath) {
+		this.filesPath = filesPath;
+	}
+
+	public void setRtiapplrefno(String rtiapplrefno) {
+		this.rtiapplrefno = rtiapplrefno;
+	}
+
+	public void setRti_ref_id(long rti_ref_id) {
+		this.rti_ref_id = rti_ref_id;
+	}
+
+	public String getZoneNO() {
+		return zoneNO;
+	}
+
+	public void setZoneNO(String zoneNO) {
+		this.zoneNO = zoneNO;
+	}
+
+	public String getCommArea() {
+		return commArea;
+	}
+
+	public void setCommArea(String commArea) {
+		this.commArea = commArea;
+	}
+
+	public String getResidArea() {
+		return residArea;
+	}
+
+	public void setResidArea(String residArea) {
+		this.residArea = residArea;
+	}
+
+	public String getPrimumAr() {
+		return primumAr;
+	}
+
+	public void setPrimumAr(String primumAr) {
+		this.primumAr = primumAr;
+	}
+
+	public String getOtherUse() {
+		return otherUse;
+	}
+
+	public void setOtherUse(String otherUse) {
+		this.otherUse = otherUse;
+	}
+
+
+
+	public String getSuperBuildarea() {
+		return superBuildarea;
+	}
+
+	public void setSuperBuildarea(String superBuildarea) {
+		this.superBuildarea = superBuildarea;
+	}
+
+	public String getHouseNo() {
+		return houseNo;
+	}
+
+	public void setHouseNo(String houseNo) {
+		this.houseNo = houseNo;
+	}
+
+
+	public String getTotalFeess() {
+		return totalFeess;
+	}
+
+
+	public void setTotalFeess(String totalFeess) {
+		this.totalFeess = totalFeess;
+	}
+
+
+	public List<FireDetails> getFireDetails() {
+		return fireDetails;
+	}
+
+	public void setFireDetails(List<FireDetails> fireDetails) {
+		this.fireDetails = fireDetails;
+	}
+
+	
+
+	public String getTypeOfLift() {
+		return typeOfLift;
+	}
+
+	public void setTypeOfLift(String typeOfLift) {
+		this.typeOfLift = typeOfLift;
+	}
+
+	public String getElectricPumpCapacity() {
+		return electricPumpCapacity;
+	}
+
+	public void setElectricPumpCapacity(String electricPumpCapacity) {
+		this.electricPumpCapacity = electricPumpCapacity;
+	}
+
+	public String getDieselPumpCapacity() {
+		return dieselPumpCapacity;
+	}
+
+	public void setDieselPumpCapacity(String dieselPumpCapacity) {
+		this.dieselPumpCapacity = dieselPumpCapacity;
+	}
+
+	public String getJockyPumpCapacity() {
+		return jockyPumpCapacity;
+	}
+
+	public void setJockyPumpCapacity(String jockyPumpCapacity) {
+		this.jockyPumpCapacity = jockyPumpCapacity;
+	}
+
+	public String getBoosterPumpCapacity() {
+		return boosterPumpCapacity;
+	}
+
+	public void setBoosterPumpCapacity(String boosterPumpCapacity) {
+		this.boosterPumpCapacity = boosterPumpCapacity;
+	}
+
+	public String getTitleArchitecture() {
+		return titleArchitecture;
+	}
+
+	public void setTitleArchitecture(String titleArchitecture) {
+		this.titleArchitecture = titleArchitecture;
+	}
+
+	public String getFirstNameArchitecture() {
+		return firstNameArchitecture;
+	}
+
+	public void setFirstNameArchitecture(String firstNameArchitecture) {
+		this.firstNameArchitecture = firstNameArchitecture;
+	}
+
+	public String getMiddleNameArchitecture() {
+		return middleNameArchitecture;
+	}
+
+	public void setMiddleNameArchitecture(String middleNameArchitecture) {
+		this.middleNameArchitecture = middleNameArchitecture;
+	}
+
+	public String getLastNameArchitecture() {
+		return lastNameArchitecture;
+	}
+
+	public void setLastNameArchitecture(String lastNameArchitecture) {
+		this.lastNameArchitecture = lastNameArchitecture;
+	}
+
+	public String getFullNameArchitecture() {
+		return fullNameArchitecture;
+	}
+
+	public void setFullNameArchitecture(String fullNameArchitecture) {
+		this.fullNameArchitecture = fullNameArchitecture;
+	}
+
+	public String getMobileNoArchitecture() {
+		return mobileNoArchitecture;
+	}
+
+	public void setMobileNoArchitecture(String mobileNoArchitecture) {
+		this.mobileNoArchitecture = mobileNoArchitecture;
+	}
+
+	public String getAppEmailArchitecture() {
+		return appEmailArchitecture;
+	}
+
+	public void setAppEmailArchitecture(String appEmailArchitecture) {
+		this.appEmailArchitecture = appEmailArchitecture;
+	}
+
+
+	public String getWardNo() {
+		return wardNo;
+	}
+
+
+	public void setWardNo(String wardNo) {
+		this.wardNo = wardNo;
+	}
+
+
+	public String getArchitectLicenceNumber() {
+		return architectLicenceNumber;
+	}
+
+
+	public void setArchitectLicenceNumber(String architectLicenceNumber) {
+		this.architectLicenceNumber = architectLicenceNumber;
+	}
+
+
+	public String getSheetNo() {
+		return sheetNo;
+	}
+
+
+	public void setSheetNo(String sheetNo) {
+		this.sheetNo = sheetNo;
+	}
+
+
+	public String getKhasaraNo() {
+		return khasaraNo;
+	}
+
+
+	public void setKhasaraNo(String khasaraNo) {
+		this.khasaraNo = khasaraNo;
+	}
+
+
+
+
+
+	public String getFireDepartmentWiseLogin() {
+		return fireDepartmentWiseLogin;
+	}
+
+
+
+
+
+	public void setFireDepartmentWiseLogin(String fireDepartmentWiseLogin) {
+		this.fireDepartmentWiseLogin = fireDepartmentWiseLogin;
+	}
+
+
+
+
+
+	public String getFireSubDepartmentWiseLogin() {
+		return fireSubDepartmentWiseLogin;
+	}
+
+
+
+
+
+	public String getEast() {
+		return east;
+	}
+
+
+
+
+
+	public void setEast(String east) {
+		this.east = east;
+	}
+
+
+
+
+
+	public String getWest() {
+		return west;
+	}
+
+
+
+
+
+	public void setWest(String west) {
+		this.west = west;
+	}
+
+
+
+
+
+	public String getNorth() {
+		return north;
+	}
+
+
+
+
+
+	public void setNorth(String north) {
+		this.north = north;
+	}
+
+
+
+
+
+	public String getSouth() {
+		return south;
+	}
+
+
+
+
+
+	public void setSouth(String south) {
+		this.south = south;
+	}
+
+	
+
+
+
+
+	public String getFromInternalStaricase() {
+		return fromInternalStaricase;
+	}
+
+
+
+
+
+	public void setFromInternalStaricase(String fromInternalStaricase) {
+		this.fromInternalStaricase = fromInternalStaricase;
+	}
+
+
+
+
+
+	public String getFromExternalStaricase() {
+		return fromExternalStaricase;
+	}
+
+
+
+
+
+	public void setFromExternalStaricase(String fromExternalStaricase) {
+		this.fromExternalStaricase = fromExternalStaricase;
+	}
+
+
+
+
+
+	public void setFireSubDepartmentWiseLogin(String fireSubDepartmentWiseLogin) {
+		this.fireSubDepartmentWiseLogin = fireSubDepartmentWiseLogin;
+	}
+
+
+
+	
+	
+}

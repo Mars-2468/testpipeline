@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2024-03-29T17:30:24 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TreeTrimingCertificate" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" whenResourceMissingType="Error" isIgnorePagination="true" uuid="604a6bc3-ae55-4fb3-995f-76c562a21e2b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Egov_Nmc"/>
+	<parameter name="rtiapplrefid" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select  tt.full_name,
+tt.rti_appl_ref_no,
+tt.address,
+tt.resone_tree_trimming,
+tt.wardno,
+tt.number_of_tree_trimming,
+tt.treetype ,
+tt.totalnonheritage ,
+tt.totalheritage ,
+tt.actualnumberoftreetrimming ,
+tt.street_name,
+tt.tree_address
+from egovrti.tree_trimming tt
+where tt.rti_ref_id  = $P{rtiapplrefid};]]>
+	</queryString>
+	<field name="full_name" class="java.lang.String"/>
+	<field name="rti_appl_ref_no" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="resone_tree_trimming" class="java.lang.String"/>
+	<field name="wardno" class="java.lang.String"/>
+	<field name="number_of_tree_trimming" class="java.lang.String"/>
+	<field name="treetype" class="java.lang.String"/>
+	<field name="totalnonheritage" class="java.lang.String"/>
+	<field name="totalheritage" class="java.lang.String"/>
+	<field name="actualnumberoftreetrimming" class="java.lang.String"/>
+	<field name="street_name" class="java.lang.String"/>
+	<field name="tree_address" class="java.lang.String"/>
+	<title>
+		<band height="842">
+			<image scaleImage="FillFrame">
+				<reportElement stretchType="RelativeToBandHeight" x="-20" y="0" width="594" height="831" uuid="54572876-a2ff-4cc0-bccb-4421a5c2deb1">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<graphicElement fill="Solid"/>
+				<imageExpression><![CDATA["../../images/backgroundTree.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="110" y="251" width="346" height="364" uuid="6c52a9c4-462c-4e45-ba7f-25fa40b183e4"/>
+				<imageExpression><![CDATA["../../images/BackGroundImageTree.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="167" y="129" width="219" height="20" uuid="a9554b7f-4af7-4d4e-816b-fc907937496d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[उद्यान व वृक्ष प्राधिकरण विभाग]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="167" y="149" width="220" height="20" uuid="69c9ede8-48c9-404b-9545-3e017ea4c520"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="14" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[झाडाच्या फांद्या छाटण्याची परवानगी]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="167" y="170" width="219" height="20" uuid="aa75ef9a-8c4d-4aed-b8d1-8e452e48c2ca"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Tree Trimming Permission]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="14" y="236" width="535" height="130" uuid="69bfa7fc-1456-48b9-b10a-c7138eb9d6f4"/>
+				<staticText>
+					<reportElement x="10" y="20" width="30" height="20" uuid="db1d0206-2dd6-4edc-b14f-2aea9460dc69"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial Unicode MS" size="10"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[प्रति,]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="10" y="40" width="130" height="20" uuid="dbc09318-1ae4-460b-ae54-14e61420dc1b"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial Unicode MS" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{full_name}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="10" y="60" width="367" height="20" uuid="f38f8ff0-2c47-4934-aa48-30ff00ce7482"/>
+					<textElement>
+						<font fontName="Arial Unicode MS" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="10" y="88" width="220" height="20" uuid="cd28d26d-0c10-4213-915f-e6159bc8ca60"/>
+					<textElement>
+						<font fontName="Arial Unicode MS" size="10"/>
+					</textElement>
+					<text><![CDATA[विषय : वृक्षांच्या धोकादायक फांद्या छाटणेबाबत]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="397" y="-7" width="104" height="18" uuid="9ca4cf94-7fd1-432f-82f2-5ad750c3d39d"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="10" y="108" width="500" height="21" uuid="5ff934e9-c7d7-4155-9b7e-ff9a23523d31"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial Unicode MS" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA["संदर्भ :- "+$F{full_name}+" यांचा वृक्षांच्या फांद्या छाटण्यासाठी अर्ज."]]></textFieldExpression>
+				</textField>
+			</frame>
+			<textField>
+				<reportElement x="24" y="228" width="230" height="20" uuid="78510f54-4b9b-414e-bf87-e2c2524eacad"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["क्रमांक : "+$F{rti_appl_ref_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="22" y="368" width="516" height="44" uuid="9634606a-19f2-43ab-b817-0beeb7188416"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["उपरोक्त विषयांकित प्रकरणीआपला संदर्भीयअर्ज या कार्यालयास प्राप्त झाला आहे. आपणास खालीलअटी शर्तीसआधीन राहून  "+$F{tree_address}+"  येथील घराच्या परिसरातील / घरासमोरील प्रजातीच्या वृक्षाच्या विद्युत तारेस  बाधीत होणाऱ्या / घरास धोका निर्माण करणाऱ्या धोकादायक फांद्या छाटण्याची  परवानगी देण्यात येत आहे.."]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="20" y="416" width="516" height="64" uuid="6a5964b3-f196-44fb-9e92-f6a2aae95822"/>
+			</rectangle>
+			<line>
+				<reportElement x="346" y="415" width="1" height="66" uuid="8ee5c90f-0be1-4481-8e75-fa8e906695f2"/>
+			</line>
+			<line>
+				<reportElement x="233" y="416" width="1" height="65" uuid="39687a12-375b-4e5b-b515-ae62e7d4ff63"/>
+			</line>
+			<line>
+				<reportElement x="20" y="450" width="517" height="1" uuid="d436b467-ae53-4b11-881d-a33d9b03ef74"/>
+			</line>
+			<staticText>
+				<reportElement x="134" y="416" width="99" height="34" uuid="3dc09b99-18b6-467d-8d83-10b8eb3917b8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[हेरीटेज वृक्षांची एकूण संख्या]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="346" y="416" width="189" height="34" uuid="9fe315ff-59f6-4e1f-a8e6-a4a8d8852e8e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[वृक्षांच्या धोकादायक फांद्या छाटन्याचे कारण]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="416" width="110" height="34" uuid="45bdedf3-d676-408b-b2aa-2ac1568ddbaa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[वृक्षांची संख्या]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="135" y="451" width="97" height="30" uuid="31fb9d7e-dfce-45da-a7e3-38322f9866bb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalheritage}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="345" y="451" width="190" height="30" uuid="7d88eed6-70ab-481f-8b98-4fc828537e03"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{resone_tree_trimming}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="30" y="512" width="508" height="110" uuid="10430414-e580-498b-8dde-ff1e39523662"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="10"/>
+				</textElement>
+				<text><![CDATA[ वृक्षाच्या धोकादायक फांद्या छाटत असताना सभोवतालचे तार कुंपण/झाडे/विद्युत तारा/ टेलिफोन तारा व इतर मालमत्तेचे नुकसान होणार  नाही याची दक्षता घ्यावी व त्यातील वित्त अथवा इतर हानीस वृक्ष प्राधिकरण जबाबदार राहणार नाही.
+ कार्यवाही रविवारी करू नये.
+सदर कार्यवाही मनपा प्रतिनिधी समक्षच करावी.
+ परवानगीपेक्षा जास्त झाडांच्या फांध्याची छाटणी केल्यास महाराष्ट्र (शहरी क्षेत्र) वृक्षजतन कायदा क्रमांक एक्स एल आय व्ही,१९७५ सेक्शन-८ (१) चे उल्लंघन केल्यामुळे आपणावर  कायदेशीर कार्यवाही करण्यात येईल याची नोंद घ्यावी.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="223" width="68" height="30" uuid="5f0b7c03-5f04-4b32-8d4e-39c48e85ea0e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS"/>
+				</textElement>
+				<text><![CDATA[दिनांक :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="494" width="82" height="20" uuid="b75335b4-04d4-4d34-8cc4-74a4a50376f6"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" isBold="true"/>
+				</textElement>
+				<text><![CDATA[अटी व शर्ती :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="512" width="32" height="30" uuid="1799e1bf-3acd-4ae5-add6-d5499c06896a"/>
+				<textElement>
+					<font fontName="Arial Unicode MS"/>
+				</textElement>
+				<text><![CDATA[१)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="539" width="19" height="26" uuid="fdebdf8e-d08a-4eb0-ba77-02394188a259"/>
+				<textElement>
+					<font fontName="Arial Unicode MS"/>
+				</textElement>
+				<text><![CDATA[२)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="553" width="19" height="26" uuid="6606a471-ed61-488c-8a69-72915eb4da00"/>
+				<textElement>
+					<font fontName="Arial Unicode MS"/>
+				</textElement>
+				<text><![CDATA[३) ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="566" width="19" height="26" uuid="4dad9edc-33ce-4663-ad16-ebafc77416fb"/>
+				<textElement>
+					<font fontName="Arial Unicode MS"/>
+				</textElement>
+				<text><![CDATA[४)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="700" width="150" height="21" uuid="1640f487-3e94-4a96-ac71-b237fe966968"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[वृक्षअधिकारी]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="720" width="152" height="20" uuid="e058f63b-ec41-4be0-b961-e438196755c2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[नागपूर महानगरपालिका]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="102" width="515" height="25" uuid="31941ec9-0c60-4081-85c8-55de6d56226e">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="18"/>
+				</textElement>
+				<text><![CDATA[नागपूर महानगरपालिका, नागपूर]]></text>
+			</staticText>
+			<image>
+				<reportElement x="252" y="40" width="60" height="61" uuid="985b25f9-1356-430d-9760-99fc93fad7d0"/>
+				<imageExpression><![CDATA["../../images/nmclogo.jpeg"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="22" y="451" width="112" height="28" uuid="9909ba1f-32c8-4272-ad60-e50464b327b2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{actualnumberoftreetrimming}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="234" y="416" width="112" height="34" uuid="0c878279-c5ee-4403-9e69-bb26c93ed3f5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[नाॅन-हेरीटेज वृक्षांची एकूण संख्या]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="234" y="450" width="112" height="30" uuid="c84036bc-fd82-45cb-83be-8b16b9818c4c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalnonheritage}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="133" y="417" width="1" height="62" uuid="eb25e343-ce0c-40db-80e5-cd85ec18d6f8"/>
+			</line>
+		</band>
+	</title>
+</jasperReport>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	
+	<!--Generated tiles config for WorkflowTemplate-->
+		<definition name="listWorkflowTemplate" extends="egov.mainLogin">
+		<put-attribute name="parentMenu" value="Workflow-Masters" type="string" />
+	<put-attribute name="content" value="/pages/workflow/workflowtemplate/listWorkflowTemplate.jsp"/>
+	<put-attribute name="selectedMenu" value="workflowtemplate"  type="string" />
+	
+	</definition>
+	
+	<definition name="manageWorkflowTemplate" extends="egov.mainLogin">
+	<put-attribute name="parentMenu" value="Workflow-Masters" type="string" />
+	<put-attribute name="selectedMenu" value="workflowtemplate"  type="string" />
+	<put-attribute name="content" value="/pages/workflow/workflowtemplate/manageWorkflowTemplate.jsp"/>
+				<put-list-attribute name="breadcrumbsList">
+					<item link="#" value="Workflow Masters" />
+					<item link="/workflowtemplate/listWorkflowTemplate.do"
+						value="workflowtemplate.list.pagetitle.list" />
+				</put-list-attribute>
+	</definition>
+	
+	<!--Generated tiles config for WorkflowTemplateUserMapping-->
+		<definition name="listWorkflowTemplateUserMapping" extends="egov.mainLogin">
+		<put-attribute name="parentMenu" value="Workflow-Masters" type="string" />
+		<put-attribute name="selectedMenu" value="workflowtemplateusermapping"  type="string" />
+	<put-attribute name="content" value="/pages/workflow/workflowtemplateusermapping/listWorkflowTemplateUserMapping.jsp"/>
+	</definition>
+	
+	<definition name="manageWorkflowTemplateUserMapping" extends="egov.mainLogin">
+	<put-attribute name="parentMenu" value="Workflow-Masters" type="string" />
+	<put-attribute name="content" value="/pages/workflow/workflowtemplateusermapping/manageWorkflowTemplateUserMapping.jsp"/>
+				<put-list-attribute name="breadcrumbsList">
+					<item link="#" value="Workflow Masters" />
+					<item link="/workflowtemplateusermapping/listWorkflowTemplateUserMapping.do"
+						value="workflowtemplateusermapping.list.pagetitle.list" />
+				</put-list-attribute>
+	</definition>
+
+</tiles-definitions>

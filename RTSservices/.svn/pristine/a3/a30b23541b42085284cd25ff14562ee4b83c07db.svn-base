@@ -1,0 +1,139 @@
+package com.mars.rti.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.mars.common.utils.SendEmail;
+import com.mars.common.utils.SendSMS;
+import com.mars.rti.utils.CoreConstants;
+
+@Controller
+public class SendSMSEmailController {
+
+	// Requested Submitted
+	public static void sendApplicationSubmitted(String name, String mobileNo, String applnNo, String email) {
+
+		String msg = "Dear " + name + " your application with Application No. " + applnNo
+				+ " submitted successfully. Kindly Save for RTS Tracking record. Regards, NMCGOV";
+
+		msg.replace("var3", "");
+
+		SendSMS.sendSingleSMS(CoreConstants.SMS_REQUESTED_SUBMITTED, "NMCGov", mobileNo, msg);
+		SendEmail.sendEmail(email, "Application Submitted Successfully" + applnNo, msg);
+
+	}
+
+	// Payment Link
+	public static void sendPayment(String name, String mobileNo, String applnNo, String email) {
+
+		//String paymentLink = "https://nmcnagpur.gov.in/RTSservices/ws/pay.do";
+		String paymentLink="https://tinyurl.com/3ct5v4ny";
+		String paymentLink2 = "rtsNo=" + applnNo;
+
+				
+		String msg = "Dear " + name
+				+ " your document verification has been successfully completed. Kindly use this link " + paymentLink
+				+ "?" + paymentLink2 + " to make a payment in order for your application " + applnNo
+				+ " to be processed further. Regards, NMCGOV";
+
+		msg.replace("var3", "");
+		SendEmail.sendEmail(email, "Payment link for your Appl. No." + mobileNo, msg);
+		SendSMS.sendSingleSMS(CoreConstants.SMS_PAYMENT_LINK, "NMCGov", mobileNo, msg);
+	}
+
+	// Completed--Certificate uploaded
+	public static void sendApplicationCompleted(String name, String mobileNo, String applnNo, String email) {
+
+		String msg = "Dear " + name
+				+ " please click on this link https://tinyurl.com/3r8nrwmy to download the Certificate for your application "
+				+ applnNo + " Regards, NMCGOV";
+
+		msg.replace("var3", "");
+		SendEmail.sendEmail(email, "Completion of your Appl. No." + applnNo, msg);
+		SendSMS.sendSingleSMS(CoreConstants.SMS_CERTIFICATE_UPLOADED, "NMCGov", mobileNo, msg);
+	}
+
+	// Rejected
+	public static void sendApplicationRejected(String name, String mobileNo, String applnNo, String email) {
+
+		String msg = "Dear " + name + " your " + applnNo
+				+ " has been rejected due to shortfall of documents. Please use this link https://tinyurl.com/3r8nrwmy to know the pending mandatory documents and track the status of your application.Regards, NMCGOV";
+		msg.replace("var3", "");
+		SendEmail.sendEmail(email, "Rejection of your Appl. No." + applnNo, msg);
+		SendSMS.sendSingleSMS(CoreConstants.SMS_APP_REJECTED, "NMCGov", mobileNo, msg);
+	}
+
+	// Water Payment Link
+	public static void sendWaterPayment(String name, String mobileNo, String applnNo, String email) {
+
+		String msg = "Dear " + name
+				+ " Your document verification has been successfully completed. Kindly make a payment to proceed with the processing of your application "
+				+ applnNo + ", Regards,NMCGOV";
+
+		msg.replace("var3", "");
+		SendEmail.sendEmail(email, "Payment link for your Appl. No." + mobileNo, msg);
+		SendSMS.sendSingleSMS(CoreConstants.SMS_WATER_PAYMENT_LINK, "NMCGov", mobileNo, msg);
+	}
+	
+	// Payment Completed
+	public static void sendPaymentCompleted(String name, String mobileNo, String applnNo, String email) {
+
+		String link = "https://tinyurl.com/muzmhtjv";
+		String msg = "Dear " + name + " your payment towards " + applnNo
+				+ " has been received. Please click on this link " + link
+				+ " to download the payment receipt. Regards, NMCGOV";
+		msg.replace("var3", "");
+		SendEmail.sendEmail(email,
+				"Payment Received Successfully" + applnNo, msg);
+		SendSMS.sendSingleSMS(CoreConstants.SMS_PAYMENT_COMPLTED, "NMCGov", mobileNo, msg);
+	}
+	
+	//marriage payment
+	public static void sendMarriagePayment(String name, String mobileNo, String applnNo, String email) {
+		String paymentLink = "https://nmcnagpur.gov.in/RTSservices/ws/pay.do";
+		String paymentLink2 = "rtsNo=" + applnNo;
+		String msg ="Dear "+name+", your visit verification has been successfully completed. Kindly use this link "
+				+ paymentLink+"?"+paymentLink2+", to make a payment in order for your marriage application "+applnNo+" to be processed further. Regards, NMCGOV";
+		msg.replace("var3", "");
+		SendEmail.sendEmail(email, "Payment link for your Appl. No." + mobileNo, msg);
+		SendSMS.sendSingleSMS(CoreConstants.MARRIAGE_APYMENT_SMS, "NMCGov", mobileNo, msg);
+	}
+
+
+	public static void sendPaymentOfPropertyTax(String name, String mobileNo, String applnNo, String email) {
+
+		String paymentLink = "https://tinyurl.com";
+		String paymentLink2 = "ysvdjecd";
+
+		String msg = "Dear " + name
+				+ " your document verification has been successfully completed. Kindly use this link " + paymentLink
+				+ "/" + paymentLink2 + " to make a payment in order for your application " + applnNo
+				+ " to be processed further. Regards, NMCGOV";
+
+		msg.replace("var3", "");
+		SendEmail.sendEmail(email, "Payment link for your Appl. No." + mobileNo, msg);
+		SendSMS.sendSingleSMS(CoreConstants.SMS_PAYMENT_LINK, "NMCGov", mobileNo, msg);
+	}
+
+	//marriage Pending Payment link
+	@RequestMapping("/sendSMSForMarriage.do")
+	public ModelAndView sendSMSForMarriage(String name, String mobileNo, String applnNo, String email) {
+		try {
+		String paymentLink = "https://nmcnagpur.gov.in/RTSservices/ws/pay.do";
+		String paymentLink2 = "rtsNo=" + applnNo;
+		String fullPaymentLink = paymentLink + "?" + paymentLink2;
+
+		String msg = "Dear "+name+", Please ensure that the balance amount for your marriage application "+applnNo+" is paid. The certificate will not be valid until the payment is completed. You can make the payment using the following link: "
+				+ fullPaymentLink + ". Regards, NMCGOV";
+
+		msg.replace("var3", "");
+		SendSMS.sendSingleSMS("1707172353039518836", "NMCGov", mobileNo, msg);
+		SendEmail.sendEmail(email, "Payment link for your Appl. No." + mobileNo, msg);
+
+		}catch(Exception ex) {
+			ex.printStackTrace();		
+	    }
+		return new ModelAndView("manageMarriageSms");
+	}
+}

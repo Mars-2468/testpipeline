@@ -1,0 +1,10 @@
+package com.mars.rti.dao;
+import java.util.List;
+
+import com.mars.rti.model.ZoneCrematious;
+
+public interface ZoneCrematiousDAO {
+	
+	public List<ZoneCrematious> getAllZoneCrematiousList(String zoneNo);
+
+}

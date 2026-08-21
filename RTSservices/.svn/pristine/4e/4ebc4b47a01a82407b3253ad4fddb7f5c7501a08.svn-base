@@ -1,0 +1,2175 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="com.mars.common.utils.CommonUtils"%>
+<%@page import="com.mars.rti.utils.CoreConstants"%>
+<%@include file="/pages/common/include.jsp"%>
+<%@page import="com.mars.common.utils.Constants"%>
+<%@page import="com.mars.workflow.utils.WorkflowConstants"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@include file="/pages/common/include.jsp"%>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+<%
+
+pageContext.setAttribute("DATE_TIME_FORMAT", WorkflowConstants.WORKFLOW_DATE_FORMAT);
+
+pageContext.setAttribute("WORKFLOW_PRIORITY", WorkflowConstants.WORKFLOW_PRIORITY);
+pageContext.setAttribute("WORKFLOW_PRIORITY_LOW", WorkflowConstants.WORKFLOW_PRIORITY_LOW);
+pageContext.setAttribute("WORKFLOW_PRIORITY_LOW_LABEL", WorkflowConstants.WORKFLOW_PRIORITY_LOW_LABEL);
+pageContext.setAttribute("WORKFLOW_PRIORITY_MEDIUM", WorkflowConstants.WORKFLOW_PRIORITY_MEDIUM);
+pageContext.setAttribute("WORKFLOW_PRIORITY_MEDIUM_LABEL", WorkflowConstants.WORKFLOW_PRIORITY_MEDIUM_LABEL);
+pageContext.setAttribute("WORKFLOW_PRIORITY_HIGH", WorkflowConstants.WORKFLOW_PRIORITY_HIGH);
+pageContext.setAttribute("WORKFLOW_PRIORITY_HIGH_LABEL", WorkflowConstants.WORKFLOW_PRIORITY_HIGH_LABEL);
+pageContext.setAttribute("WORKFLOW_PROCESSDESCRIPTION", WorkflowConstants.WORKFLOW_PROCESSDESCRIPTION);
+pageContext.setAttribute("WORKFLOW_TRANSITION", WorkflowConstants.WORKFLOW_TRANSITION);
+pageContext.setAttribute("WORKFLOW_NAME", WorkflowConstants.WORKFLOW_NAME);
+pageContext.setAttribute("WORKFLOW_ACTION", WorkflowConstants.WORKFLOW_ACTION);
+pageContext.setAttribute("WORKFLOW_ACTION_COMPLETE_TASK", WorkflowConstants.WORKFLOW_ACTION_COMPLETE_TASK);
+pageContext.setAttribute("WORKFLOW_ACTION_CREATE_PROCESS", WorkflowConstants.WORKFLOW_ACTION_CREATE_PROCESS);
+pageContext.setAttribute("TAKE_TASK", WorkflowConstants.WORKFLOW_ACTION_TAKE_TASK);
+pageContext.setAttribute("KILL_JOB", WorkflowConstants.WORKFLOW_ACTION_KILL_JOB);
+pageContext.setAttribute("END_JOB", WorkflowConstants.WORKFLOW_ACTION_KILL_JOB);
+pageContext.setAttribute("WORKFLOW_TRANSISTION", WorkflowConstants.WORKFLOW_TRANSISTION);
+pageContext.setAttribute("WORKFLOW_ENTITYNAME", WorkflowConstants.WORKFLOW_ENTITYNAME);
+pageContext.setAttribute("WORKFLOW_ENTITYID", WorkflowConstants.WORKFLOW_ENTITYID);
+pageContext.setAttribute("WORKFLOW_JOB_ID", WorkflowConstants.WORKFLOW_JOB_ID);
+pageContext.setAttribute("WORKFLOW_TASK_ID", WorkflowConstants.WORKFLOW_TASK_ID);
+pageContext.setAttribute("WORKFLOW_COMMENTS", WorkflowConstants.WORKFLOW_COMMENTS);
+pageContext.setAttribute("WORKFLOW_DUE_DATE", WorkflowConstants.WORKFLOW_DUE_DATE);
+
+pageContext.setAttribute("APPL_STATUS_CLOSED", CoreConstants.APPL_STATUS_CLOSED);
+pageContext.setAttribute("APPL_STATUS_NEW", CoreConstants.APPL_STATUS_NEW);
+pageContext.setAttribute("APPL_STATUS_PARKED", CoreConstants.APPL_STATUS_PARKED);
+pageContext.setAttribute("APPL_STATUS_APPROVED", CoreConstants.APPL_STATUS_APPROVED);
+pageContext.setAttribute("APPL_STATUS_VERIFICATION", CoreConstants.APPL_STATUS_VERIFICATION);
+pageContext.setAttribute("APPL_STATUS_CREATE", CoreConstants.APPL_STATUS_CREATE);
+
+%>
+
+
+
+
+
+
+<script>
+window.onload = function () {
+    let isDisabled = ${requestScope.rtiApplication.workFlowStatus != 0};
+    if (isDisabled) {
+        document.querySelectorAll('.form-control').forEach(function (input) {
+            input.setAttribute('disabled', 'true');
+        });
+    }
+};
+</script>
+
+
+<script type="text/javascript">
+	function editRTIApplicationdog() {
+		//document.getElementById('rtiApplicationId').value = id;
+		onPageSubmit('<c:out value="${contextRoot}"/>/rtiapplication/editMarriageCertificate.do');
+	}
+
+	function saveMarriageCertificates() {
+
+		onPageSubmit('<c:out value="${contextRoot}"/>/rtiapplication/saveMarriageCertificates.do');
+	}
+
+	function rtiApplicationSearch() {
+		onPageSubmit('<c:out value="${contextRoot}"/>/rtiApplicationReport/listRTIApplicationReports.do');
+	}
+
+	function viewNoting() {
+		onPageSubmit('<c:out value="${contextRoot}"/>/rtiApplicationReport/viewNoting.do');
+	}
+
+	function viewDrafts() {
+		//document.getElementById('manageRTIApplicationId').value=id;
+		onPageSubmit('<c:out value="${contextRoot}"/>/rtiApplicationReport/viewDrafts.do');
+	}
+
+	function downloadRTIApplicationList() {
+		//document.getElementById('manageRTIApplicationId').value=id;
+		onPageSubmit('<c:out value="${contextRoot}"/>/rtiApplicationReport/downloadRTIApplicationList.do');
+	}
+
+	function listRTIApplicationReports() {
+		onPageSubmit('<c:out value="${contextRoot}"/>/rtiApplicationReport/listRTIApplicationReports.do');
+	}
+
+	function sendEmail() {
+		//document.getElementById('manageRTIApplicationId').value=id;
+		document.getElementById('actionTaken').value = 'email';
+		onPageSubmit('<c:out value="${contextRoot}"/>/emailsms/emailSMS.do');
+	}
+
+	function sendSMS() {
+		//document.getElementById('manageRTIApplicationId').value=id;
+		document.getElementById('actionTaken').value = 'sms';
+		onPageSubmit('<c:out value="${contextRoot}"/>/emailsms/emailSMS.do');
+	}
+
+	function downloads(id, url) {
+		document.getElementById('rtiApplicationRefId').value = id;
+
+		alert("Certificate has been generated successfully.");
+
+		onPageSubmit('<c:out value="${contextRoot}"/>/rtiApplicationReport/'
+				+ url);
+
+	}
+	function edit(event) {
+		   $("form:first").addClass("needs-validation");
+	       $("form:first").attr("novalidate", "");
+	       
+	    var form = document.querySelector(".needs-validation");
+	    
+	    if (!form.checkValidity()) {
+	        event.preventDefault();  // Prevent form submission if invalid
+	        form.classList.add("was-validated");  // Ensure Bootstrap validation is triggered
+	        return false;
+	    }
+
+	    // If form is valid, proceed with submission
+	    onPageSubmit('<c:out value="${contextRoot}"/>/rtsapplication/editMarriageCertificateApp.do');
+	}
+
+</script>
+
+<style type="text/css">
+input[type="text"], textarea {
+	background-color: #e9ecef;
+	width: 290px;
+	box-sizing: border-box;
+	border: 1px solid #c8c8c8;
+	box-shadow: 0 0 2px #c8c8c8;
+	border-radius: 5px;
+	color: #333;
+}
+
+.ClsSelect {
+	background-color: white;
+	width: 200px;
+	box-sizing: border-box;
+	border: 1px solid #c8c8c8;
+	box-shadow: 0 0 2px #c8c8c8;
+	border-radius: 5px;
+	color: #333;
+}
+
+.imagefile.downloadFile:hover {
+	background-color: #008CBA;
+	color: white;
+	transition: background-color 0.3s;
+}
+
+.mainHdr {
+	background-color: white;
+}
+
+.form {
+	background-color: white;
+	background-image: url("D:\nmmc_RTS1\RTI\web\images\flag-bg.jpg");
+	background-position: right center;
+}
+
+.ClsLabel {
+	font-style: normal;
+	font-family: inherit;
+	font-size: 10px;
+	font-weight: 520 !important;
+}
+</style>
+
+<style type="text/css">
+input[type=text] {
+	height: 35px;
+	font-size: 15px;
+}
+
+a {
+	text-decoration: none !important;
+}
+
+.action {
+	width: 100px !important;
+	height: 32px !important;
+}
+
+.generateaction {
+	width: 155px !important;
+	height: 32px !important;
+}
+
+#table1 {
+	padding: 7px;
+	font-size: 11px;
+	width: 100%;
+}
+
+#table2 {
+	padding: 5px;
+	font-size: 11px;
+	width: 100%;
+}
+
+.download {
+	font-size: 13px;
+}
+</style>
+<style type="text/css">
+.btn-success { -
+	-bs-btn-color: #fff; -
+	-bs-btn-bg: #00a659; -
+	-bs-btn-border-color: #198754; -
+	-bs-btn-hover-color: #fff; -
+	-bs-btn-hover-bg: #168b54;
+	border: none;
+	border-radius: 5px;
+	min-height: 30px;
+	min-width: 120px;
+}
+
+.btn-danger { -
+	-bs-btn-color: #fff; -
+	-bs-btn-bg: #e61f2c; -
+	-bs-btn-border-color: #df2d2d; -
+	-bs-btn-hover-color: #fff; -
+	-bs-btn-hover-bg: #ee1717;
+	border: none;
+	border-radius: 5px;
+	min-height: 30px;
+	min-width: 120px;
+}
+
+.ClsTRHeaderList {
+	background: #678dc5;
+	font-weight: bold;
+	color: white;
+}
+
+.form-control {
+	width: 180px;
+	height: 30px;
+}
+
+.btn-success {
+	width: 50px;
+	height: 30px;
+	font-size: 10px;
+}
+.ui-datepicker {
+width:300px;
+    
+    padding: .2em .2em 0;
+}
+.ui-datepicker .ui-datepicker-prev {
+    left: -10px;
+}
+.ui-datepicker table{
+margin-left:-8px;
+}
+
+.ui-datepicker th {
+    padding: 0.7em em 0em 2em;
+    text-align: center;
+    font-weight: bold;
+    border: 0;
+}
+a {
+    margin-left: 10px;
+}
+.ClsTextboxDate{
+font-size: 15px;
+width:130px;
+height:30px;
+}
+</style>
+<style>
+    .form-container {
+    background-color: #dcdcdc;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+}
+
+.custom-switch {
+    position: relative;
+    width: 60px;
+    height: 34px;
+    margin-left: 10px;
+}
+
+.custom-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+label {
+    color: #555;
+    font-size: 13px;
+    font-weight: bold;
+}
+</style>
+<div class="mainHdr">
+	<h3>
+
+		<fmt:message key="Application form for Marriage Certificate" />
+		:
+		<c:if test="${requestScope.rtiApplication != null}">
+			<c:out value="${requestScope.rtiApplication.rtiApplnNumber}"></c:out>
+		</c:if>
+
+
+	</h3>
+</div>
+    <form class="needs-validation" novalidate>
+
+<div class="form" valign="top" id="">
+	<input type="hidden" name="id"
+		value="${marriageCertificate.marriageCertificateID}">
+	<table width="100%" colspan="" border="0" cellpadding="2"
+		cellspacing="2" class="dataForm" id="data">
+		<tr>
+		<td><input type="hidden" class="form-control" style="background-image: none;width: 280px"
+				id="title" maxlength="50" name="title"
+				value="<c:out value="${marriageCertificate.title}"/>" required/>
+	<div class="invalid-feedback">Please Enter Valid Name.</div>
+				</td>
+		</tr>
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.firstname" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="first_name" maxlength="50" name="firstName"
+				pattern="^[A-Za-z]+( [A-Za-z]+)*$"
+				oninput="updateFullName()" 
+				value="<c:out value="${marriageCertificate.firstName}"/>" required/>
+	<div class="invalid-feedback">Please Enter Valid Name.</div>
+				</td>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.middlename" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="middle_name" maxlength="50" name="middleName"
+				pattern="^[A-Za-z]+( [A-Za-z]+)*$"
+				 oninput="updateFullName()"
+				value="<c:out value="${marriageCertificate.middleName}"/>" />
+					<div class="invalid-feedback">Please Enter Valid Middle Name.</div>
+				</td>
+
+			
+		</tr>
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.lastname" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="last_name" maxlength="50" name="lastName"
+				pattern="[A-Za-z]+"
+				 oninput="updateFullName()"
+				value="<c:out value="${marriageCertificate.lastName}"/>" />
+					<div class="invalid-feedback">Please Enter Valid Surname.</div>
+				
+				</td>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.fullname" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="full_name" maxlength="50" name="fullName"
+				pattern="^[A-Za-z]+( [A-Za-z]+)*$"
+				value="<c:out value="${marriageCertificate.fullName}"/>" 
+											required/>
+					<div class="invalid-feedback">Please Enter Valid Full Name.</div>
+				</td>
+				<script>
+				function updateFullName() {
+				    let firstName = document.getElementById('first_name').value.trim();
+				    let middleName = document.getElementById('middle_name').value.trim();
+				    let lastName = document.getElementById('last_name').value.trim();
+				    
+				    let fullName = [firstName, middleName, lastName].filter(Boolean).join(' ');
+				    
+				    document.getElementById('full_name').value = fullName;
+				}
+				</script>
+		<tr>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.pincode" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="pinCode" maxlength="30"
+				name="pinCode" pattern="[0-9]{6}" maxlength="6" 
+				value="<c:out value="${marriageCertificate.pinCode}"/>" required/> &nbsp;
+					<div class="invalid-feedback">Please Enter Valid Pincode.</div>
+				</td>
+
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.husbandAadhar" />:</span><span
+				class="ClsRequiredFields"></span></td>
+
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="aadhaarNo" maxlength="50" name="aadhaarNo"
+				pattern="[0-9]{12}" maxlength="12"
+				value="<c:out value="${marriageCertificate.aadhaarNo}"/>" />
+					<div class="invalid-feedback">Please Enter Aadhaar No.</div>
+				</td>
+
+
+
+
+			<%-- <td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.aadhaarno" />:</span><span class="ClsRequiredFields"></span></td>
+			<td><input type="text" class="form-control" style="width: 180px"
+				id="ownerName" maxlength="50" name="ownerName"
+				value="<c:out value="${marriageCertificate.aadhaarNo}"/>" /></td> --%>
+
+		</tr>
+		<c:set var="doc"
+					value="${fn:split(rtiApplication.pdfUploadFromPortal, ',')}" />
+	<c:set var="image"
+					value="${fn:split(marriageCertificate.marriageImages, ',')}" />
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.emailid" /><span class="ClsRequiredFields"></span>:
+			</td>
+			<td><input type="email" class="form-control" style="background-image: none;width: 280px"
+				id="email" maxlength="50" name="email"
+				value="<c:out value="${marriageCertificate.email}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Email Id.</div>
+				</td>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.mobileno" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="mobileNumber" maxlength="30"
+				name="mobileNumber" pattern="[6-9]{1}[0-9]{9}" maxlength="10"
+				value="<c:out value="${marriageCertificate.mobileNumber}"/>" required/>
+				&nbsp;
+					<div class="invalid-feedback">Please Enter Valid Mobile Number.</div>
+				</td>
+		</tr>
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.fulladdress" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><textarea class="form-control" style="background-image: none;width: 280px"
+					id="myTextarea" maxlength="200" name="fullAddress" oninput=" validateTextarea()" required>${marriageCertificate.fullAddress}</textarea>
+	<div class="invalid-feedback">Please Enter Valid Full Address.</div>
+
+			</td>
+			<script>
+                    function validateTextarea() {
+                        const textarea = document.getElementById('myTextarea');
+                        const errorFeedback = document.getElementById('errorFeedback');
+                        const text = textarea.value;
+
+                        // Regular expression to check for leading spaces before the first letter
+                        const regex = /^\s*(\S)/;
+
+                        if (regex.test(text)) {
+                            textarea.classList.remove('is-invalid');
+                            errorFeedback.style.display = 'none';
+                        } else {
+                            textarea.classList.add('is-invalid');
+                            errorFeedback.style.display = 'block';
+                        }
+                    }
+                </script>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.dateOfMarriage" />:</span></td>
+			<td>
+			<input type="date" class="form-control" style="background-image: none;width: 280px"
+				 maxlength="30"
+				name="marriageDate"
+				 onchange="myfun()"
+							onmouseover="setTodayMaxDate(this)" id="datefees"
+				value="<c:out value="${marriageCertificate.marriageDate}"/>" required/>
+				&nbsp;
+					<div class="invalid-feedback">Please Enter Valid Marriage Date.</div>
+				</td>
+		</tr>
+		<input type="hidden" name="marrgfs" value="" id="marrgfs" />
+		<script>
+    
+    function myfun() {
+
+
+        
+        let today = new Date().toISOString().slice(0, 10)
+
+        const startDate = document.getElementById("datefees").value;
+        const endDate = today;
+        
+
+        const diffInMs = new Date(endDate) - new Date(startDate)
+        const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+
+      
+
+
+        if (diffInDays <= 365 && diffInDays > 0) {
+
+            document.getElementById("days").value = diffInDays;
+            document.getElementById("fees").value = 1000;
+            document.getElementById("marrgfs").value = 100;
+
+
+        } else if (diffInDays > 365) {
+            document.getElementById("days").value = diffInDays;
+            document.getElementById("fees").value = 1500;
+            document.getElementById("marrgfs").value = 1500;
+
+        }
+
+        else {
+
+        }
+    }
+    
+
+    function setTodayMaxDate(input) {
+        var today = new Date().toISOString().split('T')[0];
+        input.setAttribute('max', today);
+    }
+
+</script>
+		
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.placeOfMarriage" /><span
+					class="ClsRequiredFields"></span>: </td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="marriagePlace" maxlength="50" name="marriagePlace"
+				value="<c:out value="${marriageCertificate.marriagePlace}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Marriage Place.</div>
+				</td>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.personalLaw" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="marriageLawReligion" maxlength="50" name="marriageLawReligion"
+				value="<c:out value="${marriageCertificate.marriageLawReligion}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Marriage Law Religion.</div>
+				</td>
+		</tr>
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.zone" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="zoneNo" maxlength="50" name="zoneNo"
+				value="<c:out value="${marriageCertificate.zoneNo}"/>" required readonly/>
+					<div class="invalid-feedback">Please Enter Valid Zone Number.</div>
+				</td>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.tenant" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="tenant" maxlength="50" name="tenant"
+				value="<c:out value="${marriageCertificate.tenant}"/>" required readonly/>
+					<div class="invalid-feedback">Please Enter Valid tenant.</div>
+				</td>
+				
+		</tr>
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.husbandtitle" />:</span><span
+				class="ClsRequiredFields"></span></td>
+
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="husbandTitle" maxlength="50" name="husbandTitle"
+				value="<c:out value="${marriageCertificate.husbandTitle}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Title.</div>
+				</td>
+
+
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.husbandSurname" />:</span><span
+				class="ClsRequiredFields"></span></td>
+
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="husbandLastName" maxlength="50" name="husbandLastName"
+				 pattern="[A-Za-z]+" value="<c:out value="${marriageCertificate.husbandLastName}"/>" />
+				 	<div class="invalid-feedback">Please Enter Valid Surname.</div>
+				 </td>
+
+
+		</tr>
+		<tr>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.husbandName" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="husbandFirstName" maxlength="30"
+				name="husbandFirstName"  pattern="^[A-Za-z]+( [A-Za-z]+)*$" 
+				value="<c:out value="${marriageCertificate.husbandFirstName}"/>" required/>
+				&nbsp;
+					<div class="invalid-feedback">Please Enter Valid Name.</div>
+				</td>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.husbandFather" /><span
+					class="ClsRequiredFields"></span>: </td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="husbandFatherName" maxlength="50" name="husbandFatherName"
+				 pattern="^[A-Za-z]+( [A-Za-z]+)*$"  value="<c:out value="${marriageCertificate.husbandFatherName}"/>" />
+				 	<div class="invalid-feedback">Please Enter Valid Father Name.</div>
+				 </td>
+
+		</tr>
+
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.husbandAadhar" />:</span><span
+				class="ClsRequiredFields"></span></td>
+
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="husbandAadhaarNo" maxlength="50" name="husbandAadhaarNo"
+				pattern="[0-9]{12}" maxlength="12" 
+				value="<c:out value="${marriageCertificate.husbandAadhaarNo}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Aadhaar Number.</div>
+				</td>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.husbandAltName" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="husbandAltName" maxlength="50" name="husbandAltName"  pattern="^[A-Za-z]+( [A-Za-z]+)*$"
+				value="<c:out value="${marriageCertificate.husbandAltName}"/>" />
+					<div class="invalid-feedback">Please Enter Valid Husband Alternate Name.</div>
+				</td>
+
+
+		</tr>
+
+		<tr>
+
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.husbandReligion" />:</span><span
+				class="ClsRequiredFields"></span></td>
+
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="husbandBirthReligion" maxlength="50" name="husbandBirthReligion"
+				value="<c:out value="${marriageCertificate.husbandBirthReligion}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Husband Birth Religion.</div>
+				</td>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.husbandAdoption" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="husbandAdoptReligion" maxlength="50" name="husbandAdoptReligion"
+				value="<c:out value="${marriageCertificate.husbandAdoptReligion}"/>" />
+					<div class="invalid-feedback">Please Enter Valid Husband Adopt Religion.</div>
+				</td>
+
+
+		</tr>
+		<tr>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.fullAddressOfHusband" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="myTextareaa" maxlength="50" name="husbandFullAddr"
+				oninput=" validateTextareaa()" value="<c:out value="${marriageCertificate.husbandFullAddr}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Husband Full Address.</div>
+				</td>
+<script>
+                    function validateTextareaa() {
+                        const textarea = document.getElementById('myTextareaa');
+                        const errorFeedback = document.getElementById('errorFeedbacka');
+                        const text = textarea.value;
+
+                        // Regular expression to check for leading spaces before the first letter
+                        const regex = /^\s*(\S)/;
+
+                        if (regex.test(text)) {
+                            textarea.classList.remove('is-invalid');
+                            errorFeedback.style.display = 'none';
+                        } else {
+                            textarea.classList.add('is-invalid');
+                            errorFeedback.style.display = 'block';
+                        }
+                    }
+                </script>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.husbandSolYear" />:</span><span
+				class="ClsRequiredFields"></span></td>
+
+
+			<td><input type="date" class="form-control" style="background-image: none;width: 280px"
+				id="dob1" maxlength="50" name="husbandSolemAgeYear"
+				onchange="calculateAgeHusband()"
+				value="<c:out value="${marriageCertificate.husbandSolemAgeYear}"/>" required/>
+        <div class="invalid-feedback">Please Select Valid Date (Age must be at least 18 years).</div>
+				</td>
+		</tr>
+		
+		<tr>
+
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.husbandSolMon" />:</span><span
+				class="ClsRequiredFields"></span></td>
+
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="result1" maxlength="50" name="husbandSolemAgeMonth"
+				value="<c:out value="${marriageCertificate.husbandSolemAgeMonth}"/>" required readonly/>
+				</td>
+				
+				<script>
+function calculateAgeHusband() {
+    var dobInput = document.getElementById('dob1');
+    var dob = new Date(dobInput.value);
+
+    var currentDate = new Date();
+
+    var years = currentDate.getFullYear() - dob.getFullYear();
+    var months = currentDate.getMonth() - dob.getMonth();
+
+    if (currentDate.getDate() < dob.getDate()) {
+        months--;
+    }
+
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    var ageString = years + " Years/" + months + " Months";
+
+    document.getElementById('result1').value = ageString;
+
+    // Check if age is less than 18 years
+    if (years < 18) {
+        dobInput.setCustomValidity("Age must be at least 18 years.");
+    } else {
+        dobInput.setCustomValidity('');
+    }
+}
+</script>
+<script>
+// Get the current date
+var currentDate = new Date().toISOString().split("T")[0];
+
+// Set the maximum attribute of the input field
+document.getElementById("dob1").setAttribute("max", currentDate);
+</script>
+
+
+	<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.husbandProofAge" />:</span><span
+				class="ClsRequiredFields"></span></td>
+
+
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="husbanndAgeProof" maxlength="50" name="husbanndAgeProof"
+				value="<c:out value="${marriageCertificate.husbanndAgeProof}"/>" required/>
+        <div class="invalid-feedback">Please Select Valid Age Proof.</div>
+				</td>
+</tr>
+<tr>
+													<c:if test="${doc[0] != 'null'}">
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.husbandProofAge" />:</span></td>
+			<td> <a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${doc[0]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+					</c:if>
+
+
+
+		
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.husbandOccup" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="husbandOccup" maxlength="50" name="husbandOccup"
+				value="<c:out value="${marriageCertificate.husbandOccup}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Husband Occupation.</div>
+				 <br>
+				<c:if test="${not empty marriageCertificate.husbandOccupOthers}">
+					<input type="text" class="form-control" style="background-image: none;width: 180px"
+						id="husbandOccupOthers" maxlength="100" name="husbandOccupOthers"
+						value="<c:out value="${marriageCertificate.husbandOccupOthers}"/>" />
+				</c:if></td>
+
+
+</tr>
+		<tr>
+
+
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.husbandAddress" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><textarea class="form-control" style="background-image: none;width: 280px"
+					id="husbandOfficeAddr" maxlength="200" name="husbandOfficeAddr" >${marriageCertificate.husbandOfficeAddr}</textarea>
+						<div class="invalid-feedback">Please Enter Valid Office Address.</div>
+					
+				</td>
+		
+		<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+					key="label.marriage.husbandMarrgStatus" />:</span></td>
+					<td>
+		<input type="text" class="form-control" style="background-image: none;width: 280px"
+			id="husbandStatus" maxlength="50" name="husbandStatus"
+			value="<c:out value="${marriageCertificate.husbandStatus}"/>" required/>
+				<div class="invalid-feedback">Please Enter Husband Status.</div>
+			</td>
+</tr>
+		<tr>
+									<c:if test="${image[0] != 'null'}">
+
+		<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+					key="label.marriage.HusbandSign" />:</span><span
+			class="ClsRequiredFields"></span></td>
+		<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${image[0]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+				</c:if>
+											<c:if test="${image[1] != 'null'}">
+		
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.husbandPhoto" />:</span></td>
+			<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${image[1]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+</c:if>
+		</tr>
+
+		<tr>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.wifeTite" />:</span><span class="ClsRequiredFields"></span></td>
+
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="wifeTitle" maxlength="50" name="wifeTitle"
+				value="<c:out value="${marriageCertificate.wifeTitle}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Title.</div>
+				</td>
+
+		
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.wifeSurname" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="wifeLastName" maxlength="50" name="wifeLastName" pattern="[A-Za-z]+" 
+				value="<c:out value="${marriageCertificate.wifeLastName}"/>" />
+					<div class="invalid-feedback">Please Enter Valid Surname.</div>
+				</td>
+
+
+</tr>
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.wifeName" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="wifeFirstName" maxlength="50" name="wifeFirstName"
+				pattern="^[A-Za-z]+( [A-Za-z]+)*$"
+				value="<c:out value="${marriageCertificate.wifeFirstName}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Name.</div>
+				</td>
+		
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.wifeFatherName" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="wifeFatherName" maxlength="50" name="wifeFatherName"
+				pattern="^[A-Za-z]+( [A-Za-z]+)*$"
+				value="<c:out value="${marriageCertificate.wifeFatherName}"/>" />
+					<div class="invalid-feedback">Please Enter Valid Father Name.</div>
+				</td>
+
+</tr>
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.wifeAadhaar" />:</span><span
+				class="ClsRequiredFields"></span></td>
+
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="wifeAadhaarNo" maxlength="50" name="wifeAadhaarNo"
+				pattern="[0-9]{12}" maxlength="12"
+				value="<c:out value="${marriageCertificate.wifeAadhaarNo}"/>" required/>
+					<div class="invalid-feedback">Please Enter Aadhaar Number.</div>
+				</td>
+		
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.wifeAltName" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="wifealtName" maxlength="50" name="wifealtName" pattern="^[A-Za-z]+( [A-Za-z]+)*$"
+				value="<c:out value="${marriageCertificate.wifealtName}"/>" />
+					<div class="invalid-feedback">Please Enter Valid Name.</div>
+				</td>
+
+</tr>
+		<tr>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.wifeReligion" />:</span><span
+				class="ClsRequiredFields"></span></td>
+
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="wifeBirthReligion" maxlength="50" name="wifeBirthReligion"
+				value="<c:out value="${marriageCertificate.wifeBirthReligion}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Wife Birth Religion.</div>
+				</td>
+		
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.wifeAdoption" />:</span><span
+				class="ClsRequiredFields"></span></td>
+
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="wifeAdoptReligion" maxlength="50" name="wifeAdoptReligion"
+				value="<c:out value="${marriageCertificate.wifeAdoptReligion}"/>" />
+					<div class="invalid-feedback">Please Enter Valid Wife Adopt Religion.</div>
+				</td>
+</tr>
+		<tr>
+
+
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.wifeFullAddrs" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><textarea class="form-control" style="background-image: none;width: 280px"
+					id="myTextareaaa" maxlength="200" name="wifeFullAddress"
+					oninput=" validateTextareaaa()" maxlength="80" required>${marriageCertificate.wifeFullAddress}</textarea>
+	<div class="invalid-feedback">Please Enter Valid Name.</div>
+
+			</td>
+<script>
+                                function validateTextareaaa() {
+                                    const textarea = document.getElementById('myTextareaaa');
+                                    const errorFeedback = document.getElementById('errorFeedbackaa');
+                                    const text = textarea.value;
+            
+                                    // Regular expression to check for leading spaces before the first letter
+                                    const regex = /^\s*(\S)/;
+            
+                                    if (regex.test(text)) {
+                                        textarea.classList.remove('is-invalid');
+                                        errorFeedback.style.display = 'none';
+                                    } else {
+                                        textarea.classList.add('is-invalid');
+                                        errorFeedback.style.display = 'block';
+                                    }
+                                }
+                            </script>
+
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.wifeSoYear" />:</span></td>
+			<td><input type="date" class="form-control" style="background-image: none;width: 280px"
+				id="dob" maxlength="50" name="wifeSolemAgeYear" onchange="calculateAge()"
+				value="<c:out value="${marriageCertificate.wifeSolemAgeYear}"/>" required/>
+        <div class="invalid-feedback">Please Select Valid Date (Age must be at least 18 years).</div>
+				</td>
+</tr>
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.wifeSolMon" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="result" maxlength="50" name="wifeSolemAgeMonth"
+				value="<c:out value="${marriageCertificate.wifeSolemAgeMonth}"/>" required readonly/>
+					<div class="invalid-feedback">Please Enter Valid Wife Solem Age Month.</div>
+				</td>
+				<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.wifeAgeProof" />:</span><span
+				class="ClsRequiredFields"></span></td>
+				<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="wifeAgeProof" maxlength="50" name="wifeAgeProof"
+				value="<c:out value="${marriageCertificate.wifeAgeProof}"/>" required readonly/>
+					<div class="invalid-feedback">Please Enter Valid Wife Age Proof.</div>
+				</td>
+		</tr>
+
+<script>
+function calculateAge() {
+    var dobInput = document.getElementById('dob');
+    var dob = new Date(dobInput.value);
+
+    var currentDate = new Date();
+
+    var years = currentDate.getFullYear() - dob.getFullYear();
+    var months = currentDate.getMonth() - dob.getMonth();
+
+    if (currentDate.getDate() < dob.getDate()) {
+        months--;
+    }
+
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    var ageString = years + " Years/" + months + " Months";
+
+    document.getElementById('result').value = ageString;
+
+    // Check if age is less than 18 years
+    if (years < 18) {
+        dobInput.setCustomValidity("Age must be at least 18 years.");
+    } else {
+        dobInput.setCustomValidity('');
+    }
+}
+</script>
+
+<script>
+// Get the current date
+var currentDate = new Date().toISOString().split("T")[0];
+
+// Set the maximum attribute of the input field
+document.getElementById("dob").setAttribute("max", currentDate);
+</script>
+				
+		<tr>
+									<c:if test="${doc[1] != 'null'}">
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.wifeAgeProof" />:</span><span
+				class="ClsRequiredFields"></span></td>
+
+			<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${doc[1]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+					</c:if>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.wifeMarrgeStatus" />:</span><span
+				class="ClsRequiredFields"></span></td>
+
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="wifeStatus" maxlength="50" name="wifeStatus"
+				value="<c:out value="${marriageCertificate.wifeStatus}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Wife Status.</div>
+					
+				</td>
+
+		</tr>
+
+		<tr>
+											<c:if test="${image[2] != 'null'}">
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.wifeSign" />:</span></td>
+			<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${image[2]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+</c:if>
+					<c:if test="${image[3] != 'null'}">
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.wifePhoto" />:</span></td>
+			<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${image[3]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+					</c:if>
+		</tr>
+
+		<tr>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.firstWitName" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="firstWitnFullName" maxlength="50" name="firstWitnFullName"
+					pattern="^([A-Za-z]{0,})([A-Za-z]{1,}\s?)+$" 
+				value="<c:out value="${marriageCertificate.firstWitnFullName}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Name.</div>
+				</td>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.firstWitFulAdrs" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><textarea class="form-control" style="background-image: none;width: 280px"
+					id="firstWitnFullAddr" maxlength="200" name="firstWitnFullAddr" required>${marriageCertificate.firstWitnFullAddr}</textarea>
+					<div class="invalid-feedback">Please Enter Valid Address.</div>
+
+			</td>
+		</tr>
+		<tr>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.firstWitndate" />:</span></td>
+			<td><input type="date" class="form-control" style="background-image: none;width: 280px"
+				id="dw1" maxlength="50" name="firstWitndate"
+				value="<c:out value="${marriageCertificate.firstWitndate}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Date.</div>
+				</td>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.firstAadhaarNo" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="aadhaarNumber" maxlength="200" name="firstAadhaarNo"
+				 pattern="[0-9]{12}" maxlength="12"
+				 value="<c:out value="${marriageCertificate.firstAadhaarNo}"/>" required/>
+				 	<div class="invalid-feedback">Please Enter Valid Aadhaar No.</div>
+				 </td>
+		</tr>
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.firstWitoccup" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="firstWitnOccup" maxlength="50" name="firstWitnOccup"
+				value="<c:out value="${marriageCertificate.firstWitnOccup}"/>" required/> 
+					<div class="invalid-feedback">Please Enter Valid Occupation.</div>
+				<br>
+				<c:if test="${not empty marriageCertificate.firstOccupOthers}">
+					<input type="text" class="form-control" style="background-image: none;width: 280px"
+						id="firstOccupOthers" maxlength="50" name="firstOccupOthers"
+						value="<c:out value="${marriageCertificate.firstOccupOthers}"/>" />
+							<div class="invalid-feedback">Please Enter Occupation.</div>
+						
+				</c:if>
+				</td>
+
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.firstWitOfcAddrs" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><textarea class="form-control" style="background-image: none;width: 280px"
+					id="firstWitnOfficeAddr" maxlength="200" name="firstWitnOfficeAddr">${marriageCertificate.firstWitnOfficeAddr}</textarea>
+	<div class="invalid-feedback">Please Enter Valid Name.</div>
+
+			</td>
+
+		</tr>
+
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.firstWitRelation" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="firstWitnRelMarCouple" maxlength="50" name="firstWitnRelMarCouple"
+				value="<c:out value="${marriageCertificate.firstWitnRelMarCouple}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Name.</div>
+				
+				<br> <c:if
+					test="${not empty marriageCertificate.firstRelationOthers}">
+					<input type="text" class="form-control" style="background-image: none;width: 280px"
+						id="firstRelationOthers" maxlength="50" name="firstRelationOthers"
+						value="<c:out value="${marriageCertificate.firstRelationOthers}"/>" />
+				</c:if></td>
+
+									<c:if test="${image[4] != 'null'}">
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.firstWitSign" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${image[4]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+					</c:if>
+		</tr>
+
+		<tr>
+											<c:if test="${image[5] != 'null'}">
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.firstWitPhoto" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${image[5]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+</c:if>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.secondWitName" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="secondWitnFullName" maxlength="50" name="secondWitnFullName"
+				pattern="^([A-Za-z]{0,})([A-Za-z]{1,}\s?)+$"
+				value="<c:out value="${marriageCertificate.secondWitnFullName}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Name.</div>
+				</td>
+		</tr>
+
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.secondWitFulAdrs" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><textarea class="form-control" style="background-image: none;width: 280px"
+					id="secondWitnFullAddr" maxlength="200" name="secondWitnFullAddr" required>${marriageCertificate.secondWitnFullAddr}</textarea>
+	<div class="invalid-feedback">Please Enter Valid Address.</div>
+
+			</td>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.secondWitoccup" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="secondWitnOccup" maxlength="50" name="secondWitnOccup"
+				value="<c:out value="${marriageCertificate.secondWitnOccup}"/>" required/>
+	<div class="invalid-feedback">Please Enter Valid Occupation.</div>
+
+				<br> <c:if
+					test="${not empty marriageCertificate.secondOccupOthers}">
+
+					<input type="text" class="form-control" style="background-image: none;width: 280px"
+						id="secondOccupOthers" maxlength="50" name="secondOccupOthers"
+						value="<c:out value="${marriageCertificate.secondOccupOthers}"/>" />
+				</c:if></td>
+		</tr>
+		<tr>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.secondWitndate" />:</span></td>
+			<td><input type="date" class="form-control" style="background-image: none;width: 280px"
+				id="dw2" maxlength="50" name="secondWitndate"
+				value="<c:out value="${marriageCertificate.secondWitndate}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Date.</div>
+				</td>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.secondAadhaarNo" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="secondAadhaarNo" maxlength="200" name="secondAadhaarNo"
+				pattern="[0-9]{12}" maxlength="12"
+				value="<c:out value="${marriageCertificate.secondAadhaarNo}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Aadhaar No.</div>
+				</td>
+		</tr>
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.secondWitOfcAddrs" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><textarea class="form-control" style="background-image: none;width: 280px"
+					id="secondWitnOfficeAddr" maxlength="200" name="secondWitnOfficeAddr">${marriageCertificate.secondWitnOfficeAddr}</textarea>
+	<div class="invalid-feedback">Please Enter Valid Address.</div>
+
+			</td>
+
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.secondWitRelation" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="secondWitnRelMarCouple" maxlength="50" name="secondWitnRelMarCouple"
+				value="<c:out value="${marriageCertificate.secondWitnRelMarCouple}"/>" required/>
+	<div class="invalid-feedback">Please Enter Valid relation.</div>
+
+				<br> <c:if
+					test="${not empty marriageCertificate.secondRelationOthers}">
+
+					<input type="text" class="form-control" style="background-image: none;width: 280px"
+						id="secondRelationOthers" maxlength="50" name="secondRelationOthers"
+						value="<c:out value="${marriageCertificate.secondRelationOthers}"/>" />
+				</c:if>
+					<div class="invalid-feedback">Please Enter Valid Name.</div>
+				</td>
+
+
+		</tr>
+		<tr>
+													<c:if test="${image[6] != 'null'}">
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.secondWitSign" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${image[6]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+</c:if>
+											<c:if test="${image[7] != 'null'}">
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.secondWitPhoto" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${image[7]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+					</c:if>
+		</tr>
+
+
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.thirdWitName" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="thirdWitnFullName" maxlength="50" name="thirdWitnFullName"
+					pattern="^([A-Za-z]{0,})([A-Za-z]{1,}\s?)+$"
+					value="<c:out value="${marriageCertificate.thirdWitnFullName}"/>" required/>
+						<div class="invalid-feedback">Please Enter Valid Name.</div>
+					</td>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.thirdWitFulAdrs" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><textarea class="form-control" style="background-image: none;width: 280px"
+					id="thirdWitnFullAddr" maxlength="200" name="thirdWitnFullAddr" required>${marriageCertificate.thirdWitnFullAddr}</textarea>
+	<div class="invalid-feedback">Please Enter Valid Address.</div>
+
+			</td>
+		</tr>
+		<tr>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.thirdWitndate" />:</span></td>
+			<td><input type="date" class="form-control" style="background-image: none;width: 280px"
+				id="dw3" maxlength="50" name="thirdWitndate"
+				value="<c:out value="${marriageCertificate.thirdWitndate}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Date.</div>
+				</td>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.thirdAadhaarNo" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="thirdAadhaarNo" maxlength="200" name="thirdAadhaarNo"
+				pattern="[0-9]{12}" maxlength="12"
+				value="<c:out value="${marriageCertificate.thirdAadhaarNo}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Aadhaar No.</div>
+				</td>
+		</tr>
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.thirdWitoccup" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="thirdWitnOccup" maxlength="50" name="thirdWitnOccup"
+				value="<c:out value="${marriageCertificate.thirdWitnOccup}"/>" required/> <br>
+					<div class="invalid-feedback">Please Enter Valid Occupation.</div>
+				
+				<c:if test="${not empty marriageCertificate.thirdOccupOthers}">
+
+					<input type="text" class="form-control" style="background-image: none;width: 280px"
+						id="thirdOccupOthers" maxlength="50" name="thirdOccupOthers"
+						value="<c:out value="${marriageCertificate.thirdOccupOthers}"/>" />
+							<div class="invalid-feedback">Please Enter Valid Name.</div>
+						
+				</c:if></td>
+
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.thirdWitOfcAddrs" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><textarea class="form-control" style="background-image: none;width: 280px"
+					id="thirdWitnOfficeAddr" maxlength="200" name="thirdWitnOfficeAddr">${marriageCertificate.thirdWitnOfficeAddr}</textarea>
+	<div class="invalid-feedback">Please Enter Valid Address.</div>
+
+			</td>
+		</tr>
+
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.thirdWitRelation" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="thirdWitnRelMarCouple" maxlength="50" name="thirdWitnRelMarCouple"
+				value="<c:out value="${marriageCertificate.thirdWitnRelMarCouple}"/>" required />
+	<div class="invalid-feedback">Please Enter Valid Relation.</div>
+
+				<br> <c:if
+					test="${not empty marriageCertificate.thirdRelationOthers}">
+
+					<input type="text" class="form-control" style="background-image: none;width: 280px"
+						id="thirdRelationOthers" maxlength="50" name="thirdRelationOthers"
+						value="<c:out value="${marriageCertificate.thirdRelationOthers}"/>" />
+											<div class="invalid-feedback">Please Enter Valid Name.</div>
+						
+				</c:if>
+				</td>
+											<c:if test="${image[8] != 'null'}">
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.thirdWitSign" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${image[8]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+					</c:if>
+		</tr>
+		<tr>
+													<c:if test="${image[9] != 'null'}">
+		
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.thirdWitPhoto" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${image[9]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+					</c:if>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.priestName" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="priestName" maxlength="50" name="priestName"
+				pattern="^([A-Za-z]{0,})([A-Za-z]{1,}\s?)+$" 
+				value="<c:out value="${marriageCertificate.priestName}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Priest Name.</div>
+				</td>
+
+		</tr>
+
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.priestAddress" />:</span><span
+				class="ClsRequiredFields"></span></td>
+			<td><textarea class="form-control" style="background-image: none;width: 280px"
+					id="priestFullAddr" maxlength="200" name="priestFullAddr" required>${marriageCertificate.priestFullAddr}</textarea>
+	<div class="invalid-feedback">Please Enter Valid Address.</div>
+
+			</td>
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.priestReligion" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="priestReligion" maxlength="50" name="priestReligion"
+				value="<c:out value="${marriageCertificate.priestReligion}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Priest Religion.</div>
+				</td>
+		</tr>
+
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.priestAge" />:</span><span class="ClsRequiredFields"></span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="priestAge" maxlength="50" name="priestAge"
+				onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+				value="<c:out value="${marriageCertificate.priestAge}"/>" required/>
+					<div class="invalid-feedback">Please Enter Valid Priest Age.</div>
+				</td>
+
+
+											<c:if test="${image[10] != 'null'}">
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.priestSign" />:</span></td>
+			<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${image[10]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+					</c:if>
+		</tr>
+		<tr>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.daysCalculated" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="days" maxlength="50" name="daysCalculatedForCertificate"
+				value="<c:out value="${marriageCertificate.daysCalculatedForCertificate}"/>" readonly required/>
+				</td>
+
+
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="label.marriage.feeApplicable" />:</span></td>
+			<td><input type="text" class="form-control" style="background-image: none;width: 280px"
+				id="fees" maxlength="50" name="feeApplicable"
+				value="<c:out value="${marriageCertificate.feeApplicable}"/>" readonly required/>
+				</td>
+		</tr>
+
+<c:if test="${requestScope.rtiApplication.workFlowStatus==0}">
+            <tr style="height: 60px;">
+                <td colspan="7" style="background-color: #e0e0e0; text-align: center;">
+                    <button type="submit" id="saveButton" class="btn btn-primary"
+                        style="background-color: #8B4513; border-color: #8B4513;"
+                        onclick="edit(event);">
+                        Edit & Save
+                    </button>
+                </td>
+            </tr>
+        </c:if>
+</form>
+<table>
+
+
+		<tr style="height: 60px;">
+			<td colspan="7"
+				style="background-color: white; background-color: #e0e0e0;"><span
+				class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="marriagedate" /><span class="ClsRequiredFields">*</span>:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+				<c:set var="schedule" value="${marriageCertificate.sechedule}" /> <c:set
+					var="reschedule" value="${marriageCertificate.reschedule}" /> 
+					<label
+				for="schedule" class="ClsLabel" style="font-size: 12px;">
+					&nbsp;&nbsp;&nbsp;<input type="checkbox" class="form-check-input"
+					style="width: 20px; height: 20px; margin-top: -2px;"
+					name="schedule" id="schedule" value="yes"
+					<c:if test="${schedule=='yes'}">checked</c:if>>
+					Schedule&nbsp;&nbsp;&nbsp;
+			</label> 
+						<c:if test="${requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==12 || requestScope.rtiApplication.workFlowStatus==1}">
+			<label for="reschedule" class="ClsLabel" style="font-size: 12px;">
+					&nbsp;&nbsp;&nbsp;<input type="checkbox" name="reschedule"
+					style="width: 20px; height: 20px; margin-top: -2px;"
+					class="form-check-input" id="reschedule" value="yes"
+					<c:if test="${reschedule=='yes'}">checked</c:if>>
+					Reschedule
+			</label></c:if></td>
+
+
+
+		</tr>
+
+		<tr>
+
+			<td id="first"><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="marriage.visitdate" />:</span></td>
+			<td id="first1"><input type="text" class="ClsTextboxDate"
+				style="width: 180px;" id="visitdate" onmouseover="setTodayMaxDate(this)" name="visitdate"
+				value="<c:out value="${marriageCertificate.visitdate}"/>" readonly/> 
+				<br><br>
+			
+  <label for="visitTime">Visit Time:</label>
+  
+  <c:choose>
+  <c:when test="${empty marriageCertificate.visitTime}">
+  <input type="time" style="width:200px;"class="form-control" id="visitTime" name="visitTime"  step="3600" />
+  </c:when>
+  
+  <c:otherwise>
+ <c:out value="${marriageCertificate.visitTime}"/>
+  
+  </c:otherwise>
+  </c:choose>
+
+</td>
+			<c:if test="${requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==12 || requestScope.rtiApplication.workFlowStatus==1}">
+				<td id="second"><span class="ClsLabel" style="font-size: 14px"><fmt:message
+							key="marriage.secondvisitdate" />:</span></td>
+				<td id="second1"><input type="text" class="ClsTextboxDate"
+					style="width: 180px;" id="secondvisitdate" name="secondvisitdate"
+					value="<c:out value="${marriageCertificate.secondvisitdate}"/>" readonly/>
+					<br><br>
+			
+  <label for="visitTime">Visit Time:</label>
+					<c:choose>
+  <c:when test="${empty marriageCertificate.secondVisitTime}">
+  <input type="time" style="width:200px;"class="form-control" id="secondVisitTime" name="secondVisitTime"  step="3600" />
+  </c:when>
+  
+  <c:otherwise>
+ <c:out value="${marriageCertificate.secondVisitTime}"/>
+  
+  </c:otherwise>
+  </c:choose>
+  
+			</c:if>
+
+		</tr>
+                                          <script>
+                                          function setTodayMinMaxDate(inputElement) {
+                                        	    var today = new Date();
+                                        	    var dd = today.getDate();
+                                        	    var mm = today.getMonth() + 1; 
+                                        	    var yyyy = today.getFullYear();
+
+                                        	    if (dd < 10) {
+                                        	        dd = '0' + dd;
+                                        	    }
+
+                                        	    if (mm < 10) {
+                                        	        mm = '0' + mm;
+                                        	    }
+
+                                        	    var todayFormatted = dd + '/' + mm + '/' + yyyy;
+
+                                        	    inputElement.setAttribute('max', todayFormatted);
+                                        	    inputElement.setAttribute('min', todayFormatted);
+                                        	}
+
+</script>
+
+		
+
+			<c:if test="${requestScope.rtiApplication.workFlowStatus==2}">
+
+				<tr>
+					<td colspan="6" align="center"><a
+						class="bg-button btn btn-success bd-highlight generateaction"
+						id="genCerBtn" style="color: white"
+						onclick="downloads('${marriageCertificate.rti_ref_id}', 'marriageCertificateReport.do');"
+						type="button" target="_blank"> <span class="download"
+							style="display: flex; align-items: center;width: 160px;">Generate
+								Certificate</span>
+					</a><a class="bg-button btn btn-success bd-highlight action"
+											style="color: white" id="dsc" type="button" target="_blank"
+											onclick="download1(${marriageCertificate.rti_ref_id});return false;"><span
+												class="download" style="align-items: center">Apply
+													DSC</span></a></td>
+				</tr>
+			</c:if>
+			<tr>
+				<td><span class="ClsLabel" style="font-size: 14px">
+						Current Status:</span></td>
+				<td style="width: 230px; height: 30px"><span class="ClsLabel" style="font-size:14px;color:forestgreen;"> <c:if
+							test="${requestScope.rtiApplication.workFlowStatus==0}">
+						Citizen Form Submitted
+					</c:if> <c:if test="${requestScope.rtiApplication.workFlowStatus==3}">
+						Citizen Payment Pending
+					</c:if> <c:if test="${requestScope.rtiApplication.workFlowStatus==2}">
+						Citizen Payment Completed
+					</c:if> <c:if test="${requestScope.rtiApplication.workFlowStatus==1}">
+						Completed and File Uploaded for Citizen
+					</c:if> <c:if test="${requestScope.rtiApplication.workFlowStatus==5}">
+						Rejected
+					</c:if> <c:if test="${requestScope.rtiApplication.workFlowStatus==12}">
+						Citizen Visit Date Rescheduled
+					</c:if>
+				</span></td>
+				<td>
+														<c:if test="${requestScope.rtiApplication.workFlowStatus==3 || requestScope.rtiApplication.workFlowStatus==2 || requestScope.rtiApplication.workFlowStatus==1 || requestScope.rtiApplication.workFlowStatus==12 || requestScope.rtiApplication.workFlowStatus==5}">
+				
+				<span class="ClsLabel" style="font-size: 14px">Certificate
+						Upload: </span></td>
+					
+				<%@include file="/pages/common-pages/dms/fileUpload.jsp"%>
+				
+				</c:if>
+			</tr>
+
+			<tr>
+				<!-- <td colspan="6" style="padding-top: 5px"><img
+					src="../images/Transpx.gif" height="15px" /></td> -->
+			</tr>
+
+			<tr>
+				<td colspan="6"
+					style="background-color: white; background-color: #c5ddfe;"><span
+					class="ClsLabel"
+					style="height: 37px; padding: 7px 10px 11px; font-size: 17px; color: #01293d; font-style: italic;"><fmt:message
+							key="List of Documents (Attachment) For Marriage Certificate" />:</span></td>
+
+
+			</tr>
+			<tr>
+														<c:if test="${doc[2] != 'null'}">
+			
+				<td colspan='2'><span class="ClsLabel" style="font-size: 14px"><fmt:message
+							key="label.marriage.marrgeCard" />:</span> <c:if
+						test="${requestScope.downloadCount>0}">
+						<a target="_blank"
+							href="<c:out value="${requestScope.downloadPath[0]}"/>"
+							id="download1">
+					</c:if> <c:if test="${requestScope.downloadCount==0}">
+						<a target="_blank" href="http://175.101.6.10:8085/RTS/UploadDoc/">
+					</c:if></td>
+				<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${doc[2]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+
+</c:if>
+<c:if test="${doc[3] != 'null'}">
+				<td colspan='2'><span class="ClsLabel" style="font-size: 14px"><fmt:message
+							key="label.marriage.husbandDivorced" />:</span> <c:if
+						test="${requestScope.downloadCount>0}">
+						<a target="_blank"
+							href="<c:out value="${requestScope.downloadPath[1]}"/>"
+							id="download2">
+					</c:if> <c:if test="${requestScope.downloadCount==0}">
+						<a target="_blank" href="http://175.101.6.10:8085/RTS/UploadDoc/">
+					</c:if></td>
+				<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${doc[3]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+						</c:if>
+			<tr>
+
+<c:if test="${doc[4] != 'null'}">
+
+				<td colspan='2'><span class="ClsLabel" style="font-size: 14px"><fmt:message
+							key="label.marriage.wifeDivorced" />:</span> <c:if
+						test="${requestScope.downloadCount>0}">
+						<a target="_blank"
+							href="<c:out value="${requestScope.downloadPath[2]}"/>"
+							id="download2">
+					</c:if> <c:if test="${requestScope.downloadCount==0}">
+						<a target="_blank"
+							href="http://175.101.6.10:8085/RTS/UploadDoc/Hospital.pdf">
+					</c:if></td>
+				<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${doc[4]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+</c:if>
+<!--<c:if test="${doc[5] != 'null'}">
+
+
+				<td colspan='2'><span class="ClsLabel" style="font-size: 14px"><fmt:message
+							key="label.marriage.propertyTaxPaid" />:</span> <c:if
+						test="${requestScope.downloadCount>0}">
+						<a target="_blank"
+							href="<c:out value="${requestScope.downloadPath[3]}"/>"
+							id="download2">
+					</c:if> <c:if test="${requestScope.downloadCount==0}">
+						<a target="_blank" href="http://175.101.6.10:8085/RTS/UploadDoc/">
+					</c:if></td>
+				<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${doc[5]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td></c:if>-->
+			</tr>
+
+			<tr>
+
+<c:if test="${doc[5] != 'null'}">
+
+				<td colspan='2'><span class="ClsLabel" style="font-size: 14px"><fmt:message
+							key="label.marriage.proofOfResidence" />:</span> <c:if
+						test="${requestScope.downloadCount>0}">
+						<a target="_blank"
+							href="<c:out value="${requestScope.downloadPath[4]}"/>"
+							id="download2">
+					</c:if> <c:if test="${requestScope.downloadCount==0}">
+						<a target="_blank" href="http://175.101.6.10:8085/RTS/UploadDoc/">
+					</c:if></td>
+				<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${doc[5]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+</c:if>
+<c:if test="${doc[6] != 'null'}">
+
+				<td colspan='2'><span class="ClsLabel" style="font-size: 14px"><fmt:message
+							key="label.marriage.courtFeeStamp" />:</span> <c:if
+						test="${requestScope.downloadCount>0}">
+						<a target="_blank"
+							href="<c:out value="${requestScope.downloadPath[5]}"/>"
+							id="download2">
+					</c:if> <c:if test="${requestScope.downloadCount==0}">
+						<a target="_blank" href="http://175.101.6.10:8085/RTS/UploadDoc/">
+					</c:if></td>
+				<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${doc[6]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+</c:if>
+			</tr>
+
+
+
+
+			<tr>
+			<c:if test="${doc[7] != 'null'}">
+			
+				<td colspan='2'><span class="ClsLabel" style="font-size: 14px"><fmt:message
+							key="label.marriage.affidavit" />:</span> <c:if
+						test="${requestScope.downloadCount>0}">
+						<a target="_blank"
+							href="<c:out value="${requestScope.downloadPath[6]}"/>"
+							id="download2">
+					</c:if> <c:if test="${requestScope.downloadCount==0}">
+						<a target="_blank" href="http://175.101.6.10:8085/RTS/UploadDoc/">
+					</c:if></td>
+				<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${doc[7]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+</c:if>
+											<c:if test="${image[11] != 'null'}">
+
+				<td colspan='2'><span class="ClsLabel" style="font-size: 14px"><fmt:message
+							key="label.marriage.photographOfHusband" />:</span> <c:if
+						test="${requestScope.downloadCount>0}">
+						<a target="_blank"
+							href="<c:out value="${requestScope.downloadPath[7]}"/>"
+							id="download2">
+					</c:if> <c:if test="${requestScope.downloadCount==0}">
+						<a target="_blank" href="http://175.101.6.10:8085/RTS/UploadDoc/">
+					</c:if></td>
+				<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${image[11]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+						</c:if>
+			</tr>
+			<tr>
+			<c:if test="${doc[8] != 'null'}">
+			
+				<td colspan='2'><span class="ClsLabel" style="font-size: 14px"><fmt:message
+							key="label.marriage.deathCertificate" />:</span> <c:if
+						test="${requestScope.downloadCount>0}">
+						<a target="_blank"
+							href="<c:out value="${requestScope.downloadPath[8]}"/>"
+							id="download2">
+					</c:if> <c:if test="${requestScope.downloadCount==0}">
+						<a target="_blank" href="http://175.101.6.10:8085/RTS/UploadDoc/">
+					</c:if></td>
+				<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${doc[8]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+						</c:if>
+			</tr>
+<!-- tenant -->
+<tr>
+			<c:if test="${doc[9] != 'null'}">
+			
+				<td colspan='2'><span class="ClsLabel" style="font-size: 14px"><fmt:message
+							key="label.marriage.tenantcertificate" />:</span> <c:if
+						test="${requestScope.downloadCount>0}">
+						<a target="_blank"
+							href="<c:out value="${requestScope.downloadPath[9]}"/>"
+							id="download2">
+					</c:if> <c:if test="${requestScope.downloadCount==0}">
+						<a target="_blank" href="http://175.101.6.10:8085/RTS/UploadDoc/">
+					</c:if></td>
+				<td><a class="bg-button btn btn-primary bd-highlight action"
+   type="button"
+   target="_blank"
+   onclick="docDownload('${doc[9]}');">
+   <span class="download" style="align-items: center;color:white;">Download</span>
+</a></td>
+						</c:if>
+			</tr>
+
+
+
+			<!--		<tr>
+			<td colspan="6" align="center"><input type="button"
+				class="ClsButton" id="save" name="save" value="Save"
+				onclick="javascript:savemTPRegistrationCertificate(this.form);"
+				tabindex="31"> <input type="button" class="ClsButton"
+				id="clear" name="clear"
+				value="<fmt:message key="common.button.clear"/>"
+				onclick="javascript:clearFields('SearchTable');searchRTIApplication()" />
+	
+
+	<input type="hidden" class="ClsTextbox_mr" style="width: 180px"
+		id="mtpId" maxlength="12" name="mtpId"
+		value="<c:out value="${mTPRegistrationCertificate.mtpId}"/>" /> <input
+		type="hidden" class="ClsTextbox_mr" style="width: 180px"
+		id="rtiApplicationRefId" maxlength="12" name="rtiApplicationRefId"
+		value="<c:out value="${mTPRegistrationCertificate.mtpId}"/>" />
+		
+<input type="hidden" class="ClsTextbox" style="width:180px" id="rtiapplrefno" maxlength="12" name="rtiapplrefno" value="<c:out value="${treeTrimming.rtiapplrefno}"/>" />-->
+
+		<c:if test="${not empty marriageCertificate.visitdate}">
+<tr>
+			<td colspan="2">
+	<div class="form-container">
+    <div class="form-group flex-container">
+        <label for="verificationSwitch">Is Marriage Visit Verification completed?</label>
+        <div class="custom-switch">
+            <input type="checkbox" class="custom-control-input" id="verificationSwitch" name="visitVerification">
+            <label class="slider" for="verificationSwitch"></label>
+        </div>
+    </div>
+</div>
+			</td>
+			<td><span class="ClsLabel" style="font-size: 14px"><fmt:message
+						key="Remarks (रिमार्क्स)" />:</span></td>
+						<td colspan='2'>
+		 <textarea
+					class="form-control" style="width: 400px" id="remarks"
+					maxlength="30" name="remarks" maxlength="80" readonly>${marriageCertificate.remarks}</textarea>
+			
+			</td>
+			</tr>
+			</c:if>
+			
+			<c:if
+				test="${empty marriageCertificate.visitdate || empty marriageCertificate.secondvisitdate}">
+				<tr>
+					
+
+					<td colspan="4" align="center"><input type="button"
+						class="btn btn-primary"
+						style="min-height: 30px; min-width: 80px; color: white; border: none; outline: #28a745;"
+						id="savedate" name="savedate"
+						value="<fmt:message key="common.button.save"/>"
+						onclick="javascript:saveVisitDate(this.form);"></td>
+				</tr>
+			</c:if>
+			
+			
+		</table>
+		<br>
+		</div>
+		<input type="hidden" class="ClsTextbox" id="marriageCertificatesId"
+			style="width: 180px" name="marriageCertificatesId"
+			value="<c:out value="${marriageCertificate.marriageCertificateID}"/>" />
+		<input type="hidden" id="rtiApplicationRefId"
+			name="rtiApplicationRefId" value="" />
+		<input type="hidden" id="rtiApplicationRefIds"
+			name="rtiApplicationRefIds" value="${marriageCertificate.rti_ref_id}" />
+<input type="hidden" id="responseData" name="responseData"
+								value="" />
+			<%@include file="/pages/workflow/taskInclude.jsp"%>
+
+	<script type="text/javascript">
+    function saveEntity() {
+        onPageSubmit('<c:out value="${contextRoot}"/>/rtiapplication/createMarriageCertificateWork.do');
+    }
+
+    function saveVisitDate() {
+    	var flag=false;
+        var visitdate = $('#visitdate').val();
+        var secondvisitdate = $('#secondvisitdate').val();
+        if(visitdate !== '' || secondvisitdate !== '' && secondvisitdate==='undefined' ) {
+        	var vs = "${marriageCertificate.visitdate}";
+        	if(vs!==''){
+        		var remarks = $('#remarks').val();
+        		
+        		if(remarks!==''){
+        			$('#verifiedStatus').val(1);
+        			flag=true;
+        			if(!$('#verificationSwitch').is(":checked")){
+        				$('#verifiedStatus').val(0);
+        				flag=false;
+        				alert("Please check the visit verification!!");
+        				return false;
+        			}
+        		}else{
+        			flag=false;
+        			alert("Please enter the remarks");
+        			return false;
+        		}
+        	}
+            if (confirm('Are you sure you want to save?')) {
+            	flag=true;
+            	
+            	if(flag){
+                onPageSubmit('<c:out value="${contextRoot}"/>/rtiapplication/saveVisitdate.do?rtiApplicationRefId=${marriageCertificate.marriageCertificateID}');
+            	}else{
+            		flag=false;
+            		return false;
+            	}
+            	} else {
+            		flag=false;
+                return false;
+            }
+        } else {
+        	flag=false;
+            alert("Please Enter Schedule/Reschedule date!!");
+            return false;
+        }
+    }
+
+    $(document).ready(function () {
+        $("#visitdate").prop('disabled', false);
+        $("#secondvisitdate").prop('disabled', false);
+        $("#schedule").prop('disabled', false);
+        $("#reschedule").prop('disabled', false);
+        $("#savedate").prop('disabled', false);
+        $("#visitTime").prop("disabled", false);
+        $("#secondVisitTime").prop("disabled", false);
+        var visitdate = $('#visitdate').val();
+        var secondvisitdate = $('#secondvisitdate').val();
+        var vsitTime=$('#visitTime').val();
+        var secondvsitTime = $('#secondVisitTime').val();
+        var wfs ="${requestScope.rtiApplication.workFlowStatus}";
+        var remarks = $('#remarks').val();
+        var visitdate = "${marriageCertificate.visitdate}";
+        var secondvisitdate = "${marriageCertificate.secondvisitdate}";
+        //NEw Condition
+        if(secondvisitdate==='' && visitdate !== ''){
+        	$("#secondvisitdate").prop('disabled', false);
+            $("#reschedule").prop('disabled', false);
+            $("#secondVisitTime").prop("disabled", false);
+
+        }
+        if (visitdate !== '') {
+            $("#visitdate").prop('disabled', true);
+            $("#schedule").prop('disabled', true);
+            $("#schedule").prop("checked", true);
+        }
+        if (secondvisitdate !== '') {
+            $("#secondvisitdate").prop('disabled', true);
+            $("#reschedule").prop('disabled', true);
+            $("#reschedule").prop("checked", true);
+        }
+        if (visitdate !== '' && secondvisitdate !== '') {
+            $("#savedate").prop('disabled', true);
+        }
+
+        if (visitdate === '' && wfs!=='5') {
+            var elements = document.getElementsByClassName("tab")[0];
+            elements.innerHTML = "Please save the scheduled date or reject the application.".fontcolor("red");
+            $('#commentsDisable *').attr('disabled', true);
+            $('#CreateWorkflow').attr('disabled', true);
+            $('#RejectCreateWorkflow').attr('disabled', false);
+            $('#WORKFLOW_COMMENTS').attr('disabled', false);
+        }
+        if(remarks === '' || remarks === 'undefined'){
+        	var elements = document.getElementsByClassName("tab")[0];
+            elements.innerHTML = "Please verify the marriage visit verification".fontcolor("red");
+            $('#commentsDisable *').attr('disabled', true);
+            $('#CreateWorkflow').attr('disabled', true);
+            $('#RejectCreateWorkflow').attr('disabled', true);
+            $('#WORKFLOW_COMMENTS').attr('disabled', true);
+        }
+        
+        if(visitdate !== ''){
+        	$('#verificationSwitch').attr('disabled', false);
+        	$('#remarks').attr('disabled', false);
+        	$('#remarks').attr('readonly', false);
+        	$("#savedate").prop('disabled', false);
+        }else {
+        	$('#verificationSwitch').attr('disabled', true);
+        	$('#remarks').attr('readonly', true);
+        	
+        }
+        
+        if(remarks !==''){
+        	$('#verificationSwitch').attr('disabled', true);
+        	$('#remarks').attr('readonly', true);
+        	$("#savedate").prop('disabled', false);
+        	$('#verificationSwitch').prop('checked', true); 
+        }
+        
+        
+        if(wfs === 1 || wfs==='1' || wfs === 5 || wfs === '5'){
+        	$("#savedate").hide();
+        }
+       
+        
+    });
+
+
+    $(document).ready(function () {
+        $("#second").hide();
+        $("#first1").hide();
+        $("#second1").hide();
+        $("#first").hide();
+
+        $("#schedule").change(function () {
+            if (this.checked) {
+                $("#first").show();
+                $("#first1").show();
+            } else {
+                $("#first").hide();
+                $("#first1").hide();
+            }
+        });
+        
+        
+   
+        
+
+        $("#reschedule").change(function () {
+            if (this.checked) {
+                $("#second").show();
+                $("#second1").show();
+            } else {
+                $("#second").hide();
+                $("#second1").hide();
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        var visitdate = "${marriageCertificate.visitdate}";
+        var secondvisitdate = "${marriageCertificate.secondvisitdate}";
+
+        if ($("#schedule").prop("checked") && visitdate !== '') {
+            $("#first").show();
+            $("#first1").show();
+        } else {
+            var element = document.getElementById("visitdate");
+            element.style.backgroundColor = "white";
+        }
+        if ($("#reschedule").prop("checked") && secondvisitdate !== '') {
+            $("#second").show();
+            $("#second1").show();
+        } else {
+            var element = document.getElementById("secondvisitdate");
+            element.style.backgroundColor = "white";
+        }
+    });
+
+    $(document).ready(function () {
+        var workflowStatus = '${requestScope.rtiApplication.workFlowStatus}';
+        if (workflowStatus == 12) {
+            $('#idproof').removeAttr('disabled');
+        }
+    });
+    
+    
+	function docDownload(filesPath) {
+ 	    var encodedFilePath = encodeURIComponent(filesPath);
+
+ 	    var encodedFilesPath = btoa(encodedFilePath); 
+
+ 	    window.open('<c:out value="${contextRoot}"/>/rtsApplication/getPdf.do?fp=' + encodedFilesPath, '_blank');
+ 	}
+</script>

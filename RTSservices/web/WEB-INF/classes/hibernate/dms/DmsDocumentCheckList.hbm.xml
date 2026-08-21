@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="true" auto-import="true">
+	<class name="com.mars.dms.model.DmsDocumentCheckList" table="DMS_DOCUMENT_CHECK_LIST"
+		dynamic-update="false" dynamic-insert="false"
+		select-before-update="false" optimistic-lock="version">
+	<cache usage="nonstrict-read-write" />
+
+	<id name="dmsDocumentCheckListId" type="long">
+			<column name="DMS_DOCUMENT_CHECK_LIST_ID" precision="22" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">DMS_DOCUMENT_CHECK_LIST_SEQ</param>
+			</generator>
+		</id>
+		
+		 <property name="documentMasterId" type="long" length="10" >
+            <column name="DOCUMENT_MASTER_ID" />
+        </property>
+
+		
+		<property name="dmsUuid" type="string" length="100" >
+            <column name="DMS_UUID" />
+        </property>
+
+        <property name="fileName" type="string" length="100" >
+            <column name="FILE_NAME" />
+        </property>
+
+        <property name="entityName" type="string" length="100" >
+            <column name="ENTITY_NAME" />
+        </property>
+
+		 <property name="entityId" type="long" length="10" >
+            <column name="ENTITY_ID" />
+        </property>
+        
+        <property name="uploadedDate" type="string" length="10" >
+            <column name="UPLOADED_DATE" />
+        </property>
+		
+	</class>
+</hibernate-mapping>

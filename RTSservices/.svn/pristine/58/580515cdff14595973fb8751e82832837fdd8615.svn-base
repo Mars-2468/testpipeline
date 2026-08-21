@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2024-06-10T16:55:14 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DogLicenseMain" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c68e7a2f-db0b-468e-b4f9-13fd4d4d43e8">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="EGOV_NMC_UAT"/>
+	<subDataset name="Empty Dataset1" uuid="49cb1a45-7f0e-4130-b219-48fe4f40e9ad"/>
+	<parameter name="rtiapplrefid" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT 
+    dl.first_name, 
+    dl.dog_license_id, 
+    dl.middle_name, 
+    dl.last_name, 
+    dl.correspondence_address AS address, 
+    dd.dog_sub_type AS sub_type,
+    dd.dog_tail_length ,
+    dd.dog_img_files as d_image,
+    dd.dog_details_id as d_id,
+
+      to_char(TO_DATE(dd.first_dose_date,'yyyy-mm-dd'),'dd-mm-yyyy') as first_dose_date,
+            to_char(TO_DATE(dd.second_dose_date,'yyyy-mm-dd'),'dd-mm-yyyy') as second_dose_date,
+
+    
+      CASE
+        WHEN dd.dog_type = 'IndianDog' THEN 'Indian Dog'
+        WHEN dd.dog_type = 'BreedDog' THEN 'Breed Dog'
+    END AS dog_type,
+    CASE 
+        WHEN dl.zone_no = 1 THEN 'Zone No.1 - Laxmi Nagar'
+        WHEN dl.zone_no = 2 THEN 'Zone No.2 - Dharmpeth'
+        WHEN dl.zone_no = 3 THEN 'Zone No.3 - Hanuman Nagar'
+        WHEN dl.zone_no = 4 THEN 'Zone No.4 - Dhantoli'
+        WHEN dl.zone_no = 5 THEN 'Zone No.5 - Nehru Nagar'
+        WHEN dl.zone_no = 6 THEN 'Zone No.6 - Gandhibag'
+        WHEN dl.zone_no = 7 THEN 'Zone No.7 - Satranjipura'
+        WHEN dl.zone_no = 8 THEN 'Zone No.8 - Lakadganj'
+        WHEN dl.zone_no = 9 THEN 'Zone No.9 - Aashi Nagar'
+        WHEN dl.zone_no = 10 THEN 'Zone No.10 - Mangalwari'
+    END AS zone_no,
+    dd.* 
+FROM  
+    egovrti.doglicence dl
+    JOIN egovrti.dog_details dd 
+    ON dl.dog_license_id = dd.dog_license_id  
+WHERE  
+    dl.rti_ref_id   =  $P{rtiapplrefid};]]>
+	</queryString>
+	<field name="first_name" class="java.lang.String"/>
+	<field name="dog_license_id" class="java.lang.Long"/>
+	<field name="middle_name" class="java.lang.String"/>
+	<field name="last_name" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="sub_type" class="java.lang.String"/>
+	<field name="dog_tail_length" class="java.lang.Long"/>
+	<field name="d_image" class="java.lang.String"/>
+	<field name="d_id" class="java.lang.Long"/>
+	<field name="first_dose_date" class="java.lang.String"/>
+	<field name="second_dose_date" class="java.lang.String"/>
+	<field name="dog_type" class="java.lang.String"/>
+	<field name="zone_no" class="java.lang.String"/>
+	<field name="dog_details_id" class="java.lang.Long"/>
+	<field name="COLUMN_15" class="java.lang.String"/>
+	<field name="dog_sub_type" class="java.lang.String"/>
+	<field name="dog_name" class="java.lang.String"/>
+	<field name="gender" class="java.lang.String"/>
+	<field name="dog_age" class="java.lang.String"/>
+	<field name="dog_color" class="java.lang.String"/>
+	<field name="dog_height" class="java.lang.Long"/>
+	<field name="COLUMN_22" class="java.lang.Long"/>
+	<field name="amount" class="java.lang.Long"/>
+	<field name="COLUMN_24" class="java.lang.String"/>
+	<field name="COLUMN_25" class="java.lang.String"/>
+	<field name="batch_no" class="java.lang.String"/>
+	<field name="vaccine_name" class="java.lang.String"/>
+	<field name="surgeon_name" class="java.lang.String"/>
+	<field name="designation" class="java.lang.String"/>
+	<field name="COLUMN_30" class="java.lang.Long"/>
+	<field name="operated" class="java.lang.String"/>
+	<field name="dog_img_files" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="186" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="0" y="101" width="350" height="20" uuid="f203e166-9c92-422c-8853-2c3c77392dab">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Licence Number: " + $F{d_id} + "/SWM/"+"New"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="121" width="560" height="17" uuid="ea555166-9b48-4293-a3b5-aa820042629c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["         This Licence is valid up to the period of 31st March, "+ (Integer.parseInt(new SimpleDateFormat("yyyy").format(new java.util.Date())) + 1)
+ + ". "+"This Licence is hereby issued to "]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="138" width="83" height="17" uuid="ffe96a7c-d132-4fac-beb8-02429d554e7c">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Shri/Smt/Kum : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="83" y="138" width="476" height="17" uuid="0adb2497-b01b-49ea-ad75-cc616a162940">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{first_name}+" "+$F{middle_name}+" "+$F{last_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="155" width="560" height="31" uuid="d7517900-02ad-4e85-bcd3-4b6f42e368ef">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["To keep ONE DOG at "+ $F{address}+" which lies within the Nagpur City limit."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="100" width="210" height="20" uuid="da7c152c-07fb-4e38-b2d6-359a0e2335fa"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Date: "+new SimpleDateFormat("dd-MM-yyyy").format(new Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="110" y="50" width="339" height="25" uuid="25e21ade-84b2-4f76-9cf7-8a7e2c55fc9d">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Solid Waste Management Department]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="75" width="339" height="25" uuid="1257d84f-3ec7-485c-9e03-e1610eb991fb"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DOG LICENSE (Not Transferable)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="25" width="339" height="25" uuid="fa3ad755-751c-43b4-a7cb-68c32131387b">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Nagpur Municipal Corporation ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="0" width="339" height="25" uuid="428b93dc-b7d8-4094-9386-25b9c3181704">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="18"/>
+				</textElement>
+				<text><![CDATA[नागपूर महानगरपालिका]]></text>
+			</staticText>
+			<image>
+				<reportElement x="23" y="17" width="68" height="67" uuid="ce50fb74-aba1-4fab-9a67-659e8415b34e"/>
+				<imageExpression><![CDATA["../../images/amclogodash.jpeg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="100" width="560" height="1" uuid="ec0e18d8-8063-4372-a917-00282fc02413">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="445" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="430" y="10" width="130" height="20" uuid="b972d85b-4f34-4f12-933a-47387a1311c7">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dog_age}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="30" width="130" height="20" uuid="2c599b52-88f9-4962-93a7-4ac467b81102">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dog_color}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="50" width="130" height="20" uuid="629f638c-1f80-449c-a2d7-a8c0e07c1008">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dog_height}+" Cm"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="289" y="10" width="104" height="20" uuid="47e549ce-d95f-4fab-bd32-3fefc805c289">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Age]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="30" width="104" height="20" uuid="840caa9f-875c-40e5-914d-9301d8a1475d">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Color]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="50" width="104" height="20" uuid="6db3c3a4-9406-4057-a24e-9c72686bfcd1">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Height]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="150" y="10" width="118" height="20" uuid="5ad6803a-cfda-4451-827f-f8489ea87924">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dog_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="30" width="118" height="20" uuid="a4fb3cdc-55e6-443b-9c7f-1d22af95e3e8">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dog_type}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="70" width="122" height="20" uuid="88529438-2cfb-4351-9f48-8c236bcb7766">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{second_dose_date}==null?$F{first_dose_date}:$F{second_dose_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="10" width="115" height="20" uuid="40857ec1-a1da-467e-9d1f-f71780be75a2">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name of Dog]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="30" width="115" height="20" uuid="36539e0a-744f-4d8b-aa0b-ba4d36a41dee">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Type of Dog]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="70" width="122" height="20" uuid="1d14c313-23f3-4c86-8719-b91c35553f33">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date of Inoculation]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="430" y="70" width="130" height="20" uuid="84914d78-eede-482a-b5be-7c15d5762dd9">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dog_tail_length}+" Cm"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="289" y="70" width="104" height="20" uuid="d246ae67-f4e4-4e2f-8173-c45d4d47b210">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Length of Tail]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="150" y="50" width="118" height="20" uuid="f42c63f7-8ec0-4716-9280-8afecd39fa2a">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gender}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="50" width="115" height="20" uuid="bb97df4c-a685-4c41-9dab-092c829dd047">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gender]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="112" width="150" height="20" uuid="0a88bb74-a973-465c-85be-2a7279449416"/>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Terms & Conditions]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="95" width="560" height="17" uuid="0c177b2b-08b8-4fa6-8965-6ff7e814c181">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="12" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[In respect of the dog license, the dog owner must ensure the following.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="134" width="530" height="18" uuid="007af373-3813-43c4-b822-53ad44e87d7c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[The dog must wear a badge around its neck or collar.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="134" width="30" height="18" uuid="1c1b9acb-8fa6-402f-b5d4-5c03853e9742">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[•]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="152" width="530" height="18" uuid="2bc9ddd2-4e83-402c-b67c-8b94e325d910">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Spay or neuter your dog to help Animal Birth Control.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="152" width="30" height="18" uuid="92e59a3b-2904-49e0-8376-18192a2d2b13">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[•]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="170" width="530" height="18" uuid="3fc0584a-78db-46ca-8508-1f82d7394fb0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Do not allow your dog to defecate by the side of the road or in front of neighbors.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="170" width="30" height="18" uuid="f3557fd3-ded7-4b5e-818c-dee21200c1d4">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[•]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="188" width="530" height="18" uuid="8e1e6ff6-15da-49bf-85ad-9157703c9eec">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Dogs must be properly confined within the owner's premises.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="188" width="30" height="18" uuid="00f2948e-e704-4d22-93fe-56f9fc64c46a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[•]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="206" width="530" height="18" uuid="c8b6ee7e-e456-4ca5-ba05-8e9cec52d596">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[If the dogs are in a public place, they must be on a leash and properly supervised and controlled.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="206" width="30" height="18" uuid="6ffa11cb-83f5-4037-bf66-a84cd77ab31f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[•]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="224" width="30" height="18" uuid="30d9dc65-6b67-4eed-8caa-b56ae36a4f93">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[•]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="224" width="530" height="18" uuid="3e67bd82-bd13-4340-ab83-6d26660a1abf">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[The license is renewed annually.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="242" width="530" height="18" uuid="662f10b1-e0d2-454e-a675-2e61cbce560c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[NMC must be informed of any change of ownership of the dog.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="242" width="30" height="18" uuid="209718ea-3a81-42f3-ac19-87425dbc6ce9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[•]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="260" width="530" height="18" uuid="fa7405a9-733b-48cc-b140-20357814bd13">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[NMC must be informed of any change of address where the dog is kept.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="260" width="30" height="18" uuid="228144ce-a86b-46ce-8577-c62c0ef63888">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[•]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="278" width="530" height="18" uuid="07b084c9-063d-423c-94af-3a64d648d074">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[NMC must be informed if the dog is lost or has died.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="278" width="30" height="18" uuid="81697ed3-a4dc-413d-a8d7-6e4c3508dc5a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[•]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="296" width="30" height="18" uuid="9af3fd1a-2909-4ccf-8eba-2fe5c8b80ee9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[•]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="296" width="530" height="31" uuid="8ca0a351-540f-4ace-a47c-dd09a8151235">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[You are allowed by NMC to keep the dog in the registered premises as stated in your license application.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="327" width="30" height="18" uuid="6c97062c-bc07-4001-9628-19581d25c49d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[•]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="327" width="530" height="31" uuid="dd31ce5d-0794-419f-b967-c8959e1ebaee">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[The dog license is solely for licensing purposes and does not approve you to keep the dog at the stated premises.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="358" width="530" height="18" uuid="6decfd55-5bb4-4093-a210-941626dd0343">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Owners found breaching the rules or license conditions may be fined for the offense.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="358" width="30" height="18" uuid="f0316052-b488-410c-afda-89ff485977c2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[•]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="376" width="530" height="31" uuid="ae105472-f016-463c-857d-f6693761f791">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[To avoid a higher penalty in court and unnecessary inconvenience, please settle your compassion sum promptly.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="376" width="30" height="18" uuid="837822cb-0c4b-41f0-bde1-25993bb61ad8">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[•]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="407" width="30" height="18" uuid="da57c744-6e2a-489d-a85f-d4baa5c99663">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[•]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="407" width="530" height="18" uuid="6dda7811-f85e-4f6b-bc82-ef3804cf4c96">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[A maximum of three dogs are allowed per private premises, including commercial premises.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="425" width="530" height="18" uuid="12fb75ef-f27d-499c-afbc-e61196f96d98">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Special permission must be obtained from NMC to keep more than three dogs.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="425" width="30" height="18" uuid="234e4f46-5c94-4a14-87c0-83f6a7189fb0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[•]]></text>
+			</staticText>
+			<line>
+				<reportElement x="409" y="10" width="1" height="80" uuid="1f382a6e-d0a6-445c-baa7-d738b11f836b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="560" y="10" width="1" height="80" uuid="eee8a9ab-ae1a-4219-8135-e941aa6dce69">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="272" y="10" width="1" height="80" uuid="445111f5-59df-4359-98df-8a12ff764ae4">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="127" y="10" width="1" height="80" uuid="d1d0df68-9a17-4996-8209-9fafcef4de3d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="0" y="10" width="1" height="80" uuid="d1e04cfd-79b4-4b66-b158-ce680283b479">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="0" y="9" width="273" height="1" uuid="e8f17c67-8904-463e-966b-f42f7c1172b9">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="0" y="90" width="273" height="1" uuid="6eadb17d-8dd6-473a-83a7-51ccc08b14f7">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="286" y="9" width="275" height="1" uuid="2e2a5938-9592-445c-a558-afa1ec1481c8">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="286" y="10" width="1" height="80" uuid="e47d9c33-2c92-4e3f-a1b6-f9788f37937b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="286" y="90" width="275" height="1" uuid="9f88d86c-7307-4c8c-aa52-c0db34d6301b">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="286" y="69" width="275" height="1" uuid="c293d529-2ec1-4ff1-a4f9-d2a333edf5de">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="286" y="49" width="275" height="1" uuid="3851d209-c2a7-4249-a247-7e5c1c69799a">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="286" y="30" width="275" height="1" uuid="9d9b9147-d61b-4c96-84ee-ff25968fdc11">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="0" y="29" width="273" height="1" uuid="1bdbfc70-457c-480f-8a30-671f493e45a9">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="0" y="50" width="273" height="1" uuid="3f5141a1-948c-4f62-9f5f-4337884a6d1a">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="0" y="69" width="273" height="1" uuid="e131df5a-c7fd-445f-afe7-085c123f2a8a">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="120" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="285" y="79" width="274" height="18" uuid="1f029791-6f88-4f2e-86b0-3ec4325b3e43">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Licence Authority Officer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="97" width="274" height="18" uuid="11376252-8755-4cd5-b9c1-050cb45c6af2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Nagpur Municipal Corporation ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="285" y="65" width="274" height="14" uuid="801eae4d-d2ed-47d4-b503-04e6fd897a0d"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{zone_no}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="70" y="0" width="120" height="115" uuid="322c9bbd-51bb-4ef9-9d19-7a0788f02552"/>
+				<imageExpression><![CDATA[$F{d_image}]]></imageExpression>
+			</image>
+		</band>
+	</columnFooter>
+</jasperReport>

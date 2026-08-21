@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2025-08-19T13:57:11 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GaneshDailyReport" pageWidth="980" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="940" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d801ecdc-ec91-42ea-9dde-6b3a72aefc71">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Egov_Nmc"/>
+	<parameter name="FROM_DATE" class="java.lang.String"/>
+	<parameter name="TO_DATE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT 
+    -- Zone Mapping
+    CASE
+        WHEN ra.zone = 1 THEN 'Laxmi Nagar Zone 1'
+        WHEN ra.zone = 2 THEN 'Dharampeth Zone 2'
+        WHEN ra.zone = 3 THEN 'Hanuman Nagar Zone 3'
+        WHEN ra.zone = 4 THEN 'Dhantoli Zone 4'
+        WHEN ra.zone = 5 THEN 'Nehru Nagar Zone 5'
+        WHEN ra.zone = 6 THEN 'Gandhibag Zone 6'
+        WHEN ra.zone = 7 THEN 'Satranjipura Zone 7'
+        WHEN ra.zone = 8 THEN 'Lakadganj Zone 8'
+        WHEN ra.zone = 9 THEN 'Aashi Nagar Zone 9'
+        WHEN ra.zone = 10 THEN 'Mangalwari Zone 10'
+        ELSE 'BLANK Application'
+    END AS zone_name,
+    CAST(ra.zone AS INTEGER) AS zone_no,
+
+    -- Applications Received
+    COUNT(CASE WHEN ra.workflow_status IN (0,1,2,3,5,9,10,11) THEN 1 END) AS application_received,
+
+    -- In Process
+    COUNT(CASE WHEN ra.workflow_status IN (0,9,10,11,2) THEN 1 END) AS application_inprocess,
+
+    -- Police NOC
+    COUNT(CASE WHEN ra.police_noc IS NOT NULL THEN 1 END) AS police_noc_issued,
+
+    -- Traffic NOC
+    COUNT(CASE WHEN ra.traffic_noc IS NOT NULL THEN 1 END) AS traffic_noc_issued,
+
+    -- Fire NOC
+    COUNT(CASE WHEN ra.fire_noc IS NOT NULL THEN 1 END) AS fire_noc_issued,
+
+    -- Final NOC
+    COUNT(CASE WHEN ra.workflow_status = 1 THEN 1 END) AS final_noc_issued,
+
+    -- Rejected
+    COUNT(CASE WHEN ra.workflow_status = 5 THEN 1 END) AS rejected_application
+
+FROM egovrti.rti_application ra
+WHERE ra.rti_application_number IS NOT NULL
+  AND ra.rti_application_number != ''
+  AND ra.department = 'ESTATE-DEPARTMENT'
+  AND ra.rti_service_id = '90'
+  AND date_trunc('day', date(ra.created_date)) 
+    BETWEEN to_date($P{FROM_DATE}, 'dd/MM/yyyy') 
+        AND to_date($P{TO_DATE}, 'dd/MM/yyyy')
+ 
+GROUP BY ra.zone
+ORDER BY zone_no;
+]]>
+	</queryString>
+	<field name="zone_name" class="java.lang.String"/>
+	<field name="zone_no" class="java.lang.Integer"/>
+	<field name="application_received" class="java.lang.Long"/>
+	<field name="application_inprocess" class="java.lang.Long"/>
+	<field name="police_noc_issued" class="java.lang.Long"/>
+	<field name="traffic_noc_issued" class="java.lang.Long"/>
+	<field name="fire_noc_issued" class="java.lang.Long"/>
+	<field name="final_noc_issued" class="java.lang.Long"/>
+	<field name="rejected_application" class="java.lang.Long"/>
+	<variable name="total_app" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{application_received}]]></variableExpression>
+	</variable>
+	<variable name="app_inprocess" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{application_inprocess}]]></variableExpression>
+	</variable>
+	<variable name="police_noc_issued" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{police_noc_issued}]]></variableExpression>
+	</variable>
+	<variable name="traffic_noc_issued" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{traffic_noc_issued}]]></variableExpression>
+	</variable>
+	<variable name="fire_noc_issued" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{fire_noc_issued}]]></variableExpression>
+	</variable>
+	<variable name="rejected_app" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{rejected_application}]]></variableExpression>
+	</variable>
+	<variable name="final_noc_issued" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{final_noc_issued}]]></variableExpression>
+	</variable>
+	<title>
+		<band height="120" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="940" height="110" uuid="885979da-ed25-43f3-b07d-827940619e68"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="42" width="940" height="30" uuid="f4f6da64-c6ca-4105-9800-43aac5f4379e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Right to Services]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="74" width="940" height="27" uuid="3030b954-46a8-4076-ae65-76fba1b60df8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ganesh Mandap Permission Daily Report Dated "+"From "+ $P{FROM_DATE} +  " To " +$P{TO_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="15" width="940" height="28" uuid="7c36265e-9a05-4c8f-8eed-d8832cca0d6c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nagpur Municipal Corporation]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="70" height="30" backcolor="#E5FFD6" uuid="5897bdfd-be0f-43ae-b62a-30ffae8864b8"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sr.No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="70" y="0" width="307" height="30" backcolor="#FCF9CA" uuid="184a64eb-2272-48d3-9dbf-54c3beceacce"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Zone Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="377" y="0" width="80" height="30" forecolor="#030002" backcolor="#FBCFFC" uuid="09309a75-e8ee-4de0-9c1a-1d3fc3fe95a7"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#050405"/>
+					<leftPen lineWidth="1.0" lineColor="#050405"/>
+					<bottomPen lineWidth="1.0" lineColor="#050405"/>
+					<rightPen lineWidth="1.0" lineColor="#050405"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Applications Received]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="457" y="0" width="80" height="30" forecolor="#000205" backcolor="#9C8FCC" uuid="5f39b329-1483-45b6-9494-2552f112a4e0"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#050405"/>
+					<leftPen lineWidth="1.0" lineColor="#050405"/>
+					<bottomPen lineWidth="1.0" lineColor="#050405"/>
+					<rightPen lineWidth="1.0" lineColor="#050405"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Application In Process]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="538" y="0" width="80" height="30" forecolor="#000205" backcolor="#D3DE35" uuid="7b6597cf-d4fd-458c-ba7c-fdc52f6fdadc"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#050405"/>
+					<leftPen lineWidth="1.0" lineColor="#050405"/>
+					<bottomPen lineWidth="1.0" lineColor="#050405"/>
+					<rightPen lineWidth="1.0" lineColor="#050405"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Police NOC Issued]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="619" y="0" width="80" height="30" forecolor="#000205" backcolor="#FC3FBA" uuid="e2affa5b-ece5-4501-a840-9b5a1107e6e7"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#050405"/>
+					<leftPen lineWidth="1.0" lineColor="#050405"/>
+					<bottomPen lineWidth="1.0" lineColor="#050405"/>
+					<rightPen lineWidth="1.0" lineColor="#050405"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Traffic NOC Issued]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="700" y="0" width="80" height="30" forecolor="#000205" backcolor="#59ACFF" uuid="b34e27db-9d1a-4115-a415-8b729e9dcc6b"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#050405"/>
+					<leftPen lineWidth="1.0" lineColor="#050405"/>
+					<bottomPen lineWidth="1.0" lineColor="#050405"/>
+					<rightPen lineWidth="1.0" lineColor="#050405"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fire NOC Issued]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="860" y="0" width="80" height="30" forecolor="#000205" backcolor="#FC5B56" uuid="61dbab4e-78ff-4fd9-b0a0-0e638c7af7d7"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#050405"/>
+					<leftPen lineWidth="1.0" lineColor="#050405"/>
+					<bottomPen lineWidth="1.0" lineColor="#050405"/>
+					<rightPen lineWidth="1.0" lineColor="#050405"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Application Rejected]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="780" y="0" width="80" height="30" forecolor="#000205" backcolor="#54F6FF" uuid="10986697-2725-4e54-8edf-1c7a64128eee">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Final NOC Issued]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="0" y="0" width="70" height="30" uuid="57bd3e89-316b-42be-b1d3-f48a56725d2c"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="0" width="307" height="30" uuid="b3b5577f-fd5f-4b48-be6f-1cb1303fd95e"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{zone_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="377" y="0" width="80" height="30" forecolor="#050005" backcolor="#FBCFFC" uuid="23b5513a-4e12-483a-8ec7-7b9e29f86b42">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{application_received}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="457" y="0" width="80" height="30" backcolor="#9C8FCC" uuid="fd5f5dae-ea86-40ae-9fc8-ce3140600a8f"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{application_inprocess}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="538" y="0" width="80" height="30" backcolor="#D3DE35" uuid="650ec3fa-4b74-48c7-a03d-f9318ef71cf9">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{police_noc_issued}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="619" y="0" width="80" height="30" backcolor="#FC3FBA" uuid="9b30c3cf-8bbb-46e7-ad5c-70c2d9ae9a3b"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{traffic_noc_issued}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="700" y="0" width="80" height="30" backcolor="#59ACFF" uuid="4b12fd5f-9ee7-4120-b2c6-6e1ad545a8cb"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fire_noc_issued}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="860" y="0" width="80" height="30" backcolor="#FC5B56" uuid="e48acd00-89bc-4830-9d21-5cb15d46efd3"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rejected_application}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="780" y="0" width="80" height="30" backcolor="#54F6FF" uuid="4f5d66ba-151c-4979-a348-c2c3f203c3d0">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{final_noc_issued}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="30" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="840" y="5" width="100" height="20" uuid="5ac63ef5-c9a6-4a7e-b3ca-7389ae605ad1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page No "+ $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="30" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="0" y="0" width="377" height="29" uuid="cc2e5f96-a2c3-40a4-abbc-9044d2201718"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="377" y="0" width="80" height="29" backcolor="#FBCFFC" uuid="f1d2fd9c-f0c8-425e-8d3c-6bb1ce6d1dd5">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_app}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="457" y="0" width="80" height="29" backcolor="#9C8FCC" uuid="b8f3a712-579d-4b9a-aec2-8dfb4137d115">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{app_inprocess}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="538" y="0" width="80" height="29" backcolor="#D3DE35" uuid="b3bca606-a567-439f-9659-cc0505813afc">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{police_noc_issued}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="619" y="0" width="80" height="29" backcolor="#FC3FBA" uuid="b16e2c9b-8e11-4116-99d9-197a69fce6ce">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{traffic_noc_issued}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="700" y="0" width="80" height="29" backcolor="#59ACFF" uuid="0a2a645e-8780-4b89-a589-d8332436a235">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{fire_noc_issued}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="860" y="0" width="80" height="29" backcolor="#FC5B56" uuid="3ca8e55e-dd75-424e-a2a2-2514334cb60a">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{rejected_app}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="780" y="0" width="80" height="29" backcolor="#54F6FF" uuid="7573aeb1-3084-4666-931c-6445f67b4ee6">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{final_noc_issued}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement key="" mode="Opaque" x="2" y="10" width="938" height="31" uuid="04a654cd-a226-4c9f-b0b2-1616ec86c4d6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Data Not Found]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2025-07-15T01:46:02 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Water_noDuesCountReport" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2e980d26-8acd-4bae-844d-f6f6be77f79b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="4"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Egov_Nmc"/>
+	<property name="net.sf.jasperreports.export.xls.ignore.page.margins" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.one.page.per.sheet" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.remove.empty.space.between.rows" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
+	<parameter name="FROM_DATE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TO_DATE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ZONE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="WORKFLOW_STATUS" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{WORKFLOW_STATUS}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+    sc.cleaning_id,
+    sc.zone_name,
+    sc.zoneid,
+    sc.currentDate AS cleaning_date,
+    sc.block_no,
+    sc.blockUnit,
+    sc.latitude,
+    sc.longitude,
+    sc.latitude || ',' || sc.longitude AS google_coordinates,
+    sc.encoded_files_path,
+    sc.files_path,
+    sc.workflowstatus,
+    CASE 
+        WHEN sc.workflowstatus = 0 THEN 'Under Review'
+        WHEN sc.workflowstatus = 1 THEN 'Approved'
+        WHEN sc.workflowstatus = 5 THEN 'Rejected'
+        ELSE 'Unknown'
+    END AS workflow_status_text,
+    (string_to_array(TRIM(sc.files_path), ','))[1] AS file_url_1,
+    (string_to_array(TRIM(sc.files_path), ','))[2] AS file_url_2
+FROM 
+    egovrti.toilet_cleaning sc
+WHERE 
+    TO_DATE(sc.currentDate, 'yyyy-mm-dd') 
+        BETWEEN TO_DATE($P{FROM_DATE}, 'yyyy-mm-dd') 
+        AND TO_DATE($P{TO_DATE}, 'yyyy-mm-dd')
+    AND (
+        $P{ZONE} = 'ALL' 
+        OR sc.zoneid = $P{ZONE}
+    )
+    AND (
+        $P{WORKFLOW_STATUS} IS NULL 
+        OR TRIM($P{WORKFLOW_STATUS}) = '' 
+        OR sc.workflowstatus = $P{WORKFLOW_STATUS}
+    )
+ORDER BY 
+    sc.currentDate ASC;]]>
+	</queryString>
+	<field name="cleaning_id" class="java.lang.Long"/>
+	<field name="zone_name" class="java.lang.String"/>
+	<field name="zoneid" class="java.lang.String"/>
+	<field name="cleaning_date" class="java.lang.String"/>
+	<field name="block_no" class="java.lang.String"/>
+	<field name="blockunit" class="java.lang.String"/>
+	<field name="latitude" class="java.lang.String"/>
+	<field name="longitude" class="java.lang.String"/>
+	<field name="google_coordinates" class="java.lang.String"/>
+	<field name="encoded_files_path" class="java.lang.String"/>
+	<field name="files_path" class="java.lang.String"/>
+	<field name="workflowstatus" class="java.lang.Integer"/>
+	<field name="workflow_status_text" class="java.lang.String"/>
+	<field name="file_url_1" class="java.lang.String"/>
+	<field name="file_url_2" class="java.lang.String"/>
+	<variable name="s .no" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[new Integer(1)]]></variableExpression>
+	</variable>
+	<group name="CollectionSummary" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[]]></groupExpression>
+	</group>
+	<background>
+		<band height="46" splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="151" splitType="Stretch">
+			<staticText>
+				<reportElement x="28" y="16" width="759" height="36" uuid="7e416b4b-aa0c-45ef-ba4c-d982d14a0499"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NAGPUR MUNICIPAL CORPORATION]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="802" height="1" uuid="ba6810ef-cf4e-4b05-9dd3-8e2879d90e12">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="28" y="52" width="759" height="34" uuid="83e04c0f-58e7-4226-84b5-c67cc4c46c8e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Toilet Cleaning Report]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="28" y="100" width="339" height="20" uuid="b6b5f665-5f85-4bf3-8232-1ad65477f386"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["From Date :"+$P{FROM_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="612" y="100" width="175" height="20" uuid="8df72e4e-4090-4d53-a7b6-387c3a0314e7">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["To Date :"+$P{TO_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="28" y="125" width="340" height="20" uuid="c965615f-da7a-46bd-b309-5059b0dc1103"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Zone : " + (
+    $P{ZONE} == null || $P{ZONE}.trim().isEmpty() || $P{ZONE}.equals("ALL") ? 
+    "All" : 
+    $P{ZONE}.equals("1") ? "Zone No.1 - Laxmi Nagar" :
+    $P{ZONE}.equals("2") ? "Zone No.2 - Dharampeth" :
+    $P{ZONE}.equals("3") ? "Zone No.3 - Hanuman Nagar" :
+    $P{ZONE}.equals("4") ? "Zone No.4 - Dhantoli" :
+    $P{ZONE}.equals("5") ? "Zone No.5 - Nehru Nagar" :
+    $P{ZONE}.equals("6") ? "Zone No.6 - Gandhibagh" :
+    $P{ZONE}.equals("7") ? "Zone No.7 - Sataranjipura" :
+    $P{ZONE}.equals("8") ? "Zone No.8 - Lakadganj" :
+    $P{ZONE}.equals("9") ? "Zone No.9 - Aashi Nagar" :
+    "Unknown"
+)]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="801" y="0" width="1" height="151" uuid="12aa1614-e2d3-48e5-910b-1004d3a262fd">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="151" uuid="17f67943-2b88-4c3a-ad4e-60c84c252753">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement x="440" y="125" width="347" height="20" uuid="33cc3bb7-355d-4bdc-a092-0774948d5dd1">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{WORKFLOW_STATUS} == null || $P{WORKFLOW_STATUS}.trim().equals("") ? "All Records" :
+Integer.parseInt($P{WORKFLOW_STATUS}) == 0 ? "Under Review Records" :
+Integer.parseInt($P{WORKFLOW_STATUS}) == 1 ? "Approved Records" :
+Integer.parseInt($P{WORKFLOW_STATUS}) == 5 ? "Rejected Records" :
+"Unknown"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="249">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<line>
+				<reportElement positionType="Float" x="160" y="1" width="1" height="246" uuid="416607a0-ce36-4ff2-9e76-cfa13c433364"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="1" y="59" width="29" height="159" uuid="3468e345-9482-4f81-b7a9-9c01acb0ad19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{s .no}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="74" y="59" width="84" height="159" uuid="ed14291a-571d-42c9-affd-44c1484b2cac"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{zone_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="162" y="59" width="102" height="159" uuid="80e91830-8f3d-4ae0-b590-53e8e48cce88"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{blockunit}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="269" y="104" width="66" height="55" isRemoveLineWhenBlank="true" uuid="76b07ccf-e190-4355-b908-c7582e33713f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{block_no}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="340" y="104" width="82" height="55" uuid="59fdd62a-553a-4551-b98b-b79cbcfaa5db"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cleaning_date}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="32" y="1" width="1" height="246" uuid="b5e8d4a7-07df-4bf7-98e7-26ef60eb621f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="0" y="1" width="1" height="246" uuid="ca19f39e-6052-48fd-8a9b-c3eb852817af">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="266" y="1" width="1" height="246" uuid="ebd2fafa-8b72-4d48-beaa-03ac286ce106"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="338" y="1" width="1" height="246" uuid="2a44d544-57a2-48aa-a342-f04747f697b1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="247" width="802" height="1" uuid="b9adf860-b619-4e05-bd16-a9212df6321e">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="424" y="1" width="1" height="246" uuid="728cff7c-dc35-4f2d-815c-f0df7374595e"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="801" y="1" width="1" height="246" uuid="bbf52f0e-2b3c-4d2f-8151-3abf937597cc">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="732" y="59" width="67" height="159" uuid="9befcf2d-ad31-4049-9cde-38e3553ab115"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[32.13]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="3" width="27" height="27" uuid="c41f21dd-b9e5-4dfa-8d12-aef89e05147d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SrNo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="76" y="3" width="82" height="27" uuid="26b86056-d4c7-497a-936e-86a695132afc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Zone No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="2" width="104" height="29" uuid="0d5aa2c5-d5e2-4ed1-905f-4840ce26ef20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Block Number Unit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="268" y="3" width="69" height="28" uuid="946490fa-f0da-4437-a327-4e4b5e294c41"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Block Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="2" width="82" height="30" uuid="59c22cc9-8201-4f4e-94f1-148344857b0a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Of Cleaning]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="730" y="3" width="70" height="28" uuid="4a527c61-640e-49ad-a824-6aa20f043669">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="1" width="802" height="1" uuid="c0be5322-774f-4e08-9efb-34f0a7c480be">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="33" width="802" height="1" uuid="52a5a673-e496-4648-b6e9-f50899b55309">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="72" y="1" width="1" height="246" uuid="ede54df1-b0d9-4212-b9c8-66982db8b250">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="33" y="3" width="39" height="27" uuid="0d6ffcd0-337f-4aae-936f-a29ddea94923"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Id]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="34" y="59" width="35" height="159" uuid="9ceb4394-d3fa-4d53-9e7a-7fdcd8295ec4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cleaning_id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="50" y="10" width="629" height="30" uuid="bcfc0de7-64a6-4864-8678-d89664eeca75"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[No records found for the selected zone and date range.
+]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

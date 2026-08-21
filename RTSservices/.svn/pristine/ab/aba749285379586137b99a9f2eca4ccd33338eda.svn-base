@@ -1,0 +1,261 @@
+package com.mars.rti.ws.model;
+
+import java.io.Serializable;
+
+import javax.xml.bind.annotation.XmlElement;
+
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@SuppressWarnings("serial")
+@JsonPropertyOrder({"title","name","fatherName","surname","pinCode","fullName",
+"aadharNo","email","mobileNo","fullAddress","khasaraNo","zoneNo","citySurveyNo","mouje","userMobileNumber","responseStatus",
+"citySurvey712Coation","cityServeyMap","cityServeyMap","responseCode","status","response","result"})		
+public class PartMapRestDTO implements Serializable{
+	
+	private String title;
+
+	private String name;
+
+	private String fatherName;
+	
+	private String fullName;
+
+	private String surname;
+
+	private int pinCode;
+
+	private long aadharNo;
+	
+	private String email;
+
+	private long mobileNo;
+
+	private String fullAddress;
+
+	private long khasaraNo;
+
+	private int zoneNo;
+	
+	private String citySurveyNo;
+
+	private String mouje;
+	
+	private String responseStatus;
+	
+	private long userMobileNumber;
+	
+	private String citySurvey712Coation;
+	
+	private String cityServeyMap ;
+	
+	private String khasraMap ;
+		
+	private String result;
+	
+	private int responseCode;
+	
+	private String status;
+
+	
+	
+	@XmlElement(name = "title")
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	@XmlElement(name = "name")
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@XmlElement(name = "fatherName")
+	public String getFatherName() {
+		return fatherName;
+	}
+
+	public void setFatherName(String fatherName) {
+		this.fatherName = fatherName;
+	}
+
+	@XmlElement(name = "surname")
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	@XmlElement(name = "pinCode")
+	public int getPinCode() {
+		return pinCode;
+	}
+
+	public void setPinCode(int pinCode) {
+		this.pinCode = pinCode;
+	}
+
+	@XmlElement(name = "aadharNo")
+	public long getAadharNo() {
+		return aadharNo;
+	}
+
+	public void setAadharNo(long aadharNo) {
+		this.aadharNo = aadharNo;
+	}
+
+	@XmlElement(name = "email")
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@XmlElement(name = "mobileNo")
+	public long getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(long mobileNo) {
+		this.mobileNo = mobileNo;
+	}
+
+	@XmlElement(name = "fullAddress")
+	public String getFullAddress() {
+		return fullAddress;
+	}
+
+	public void setFullAddress(String fullAddress) {
+		this.fullAddress = fullAddress;
+	}
+
+	@XmlElement(name = "khasaraNo")
+	public long getKhasaraNo() {
+		return khasaraNo;
+	}
+
+	public void setKhasaraNo(long khasaraNo) {
+		this.khasaraNo = khasaraNo;
+	}
+	
+	@XmlElement(name = "zoneNo")
+	public int getZoneNo() {
+		return zoneNo;
+	}
+
+	
+
+	public void setZoneNo(int zoneNo) {
+		this.zoneNo = zoneNo;
+	}
+	
+	@XmlElement(name = "citySurveyNo")
+	public String getCitySurveyNo() {
+		return citySurveyNo;
+	}
+	
+	public void setCitySurveyNo(String citySurveyNo) {
+		this.citySurveyNo = citySurveyNo;
+	}
+
+	@XmlElement(name = "mouje")
+	public String getMouje() {
+		return mouje;
+	}
+
+	public void setMouje(String mouje) {
+		this.mouje = mouje;
+	}
+
+	@XmlElement(name = "citySurvey712Coation")
+	public String getCitySurvey712Coation() {
+		return citySurvey712Coation;
+	}
+
+	public void setCitySurvey712Coation(String citySurvey712Coation) {
+		this.citySurvey712Coation = citySurvey712Coation;
+	}
+
+	@XmlElement(name = "cityServeyMap")
+	public String getCityServeyMap() {
+		return cityServeyMap;
+	}
+
+	public void setCityServeyMap(String cityServeyMap) {
+		this.cityServeyMap = cityServeyMap;
+	}
+
+	@XmlElement(name = "khasraMap")
+	public String getKhasraMap() {
+		return khasraMap;
+	}
+
+	public void setKhasraMap(String khasraMap) {
+		this.khasraMap = khasraMap;
+	}
+
+	@XmlElement(name = "responseStatus")
+	public String getResponseStatus() {
+		return responseStatus;
+	}
+	
+	public void setResponseStatus(String responseStatus) {
+		this.responseStatus = responseStatus;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public int getResponseCode() {
+		return responseCode;
+	}
+
+	public void setResponseCode(int responseCode) {
+		this.responseCode = responseCode;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	@XmlElement(name="userMobileNumber")
+	public long getUserMobileNumber() {
+		return userMobileNumber;
+	}
+
+	public void setUserMobileNumber(long userMobileNumber) {
+		this.userMobileNumber = userMobileNumber;
+	}
+
+	@XmlElement(name="fullName")
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+	
+	
+	
+
+}

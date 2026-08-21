@@ -1,0 +1,1775 @@
+
+package com.mars.rti.controller;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+
+import com.mars.common.model.Department;
+import com.mars.common.service.DepartmentService;
+import com.mars.common.service.ReceivedModeService;
+import com.mars.common.service.SectionService;
+import com.mars.common.service.TenancyService;
+import com.mars.common.service.UserService;
+import com.mars.common.utils.CommonUtils;
+import com.mars.common.utils.Constants;
+import com.mars.common.utils.SessionUser;
+import com.mars.rti.model.BirthCertificate;
+import com.mars.rti.model.DeathCertificate;
+import com.mars.rti.model.GardenDetails;
+import com.mars.rti.model.MTPRegistrationCertificate;
+import com.mars.rti.model.MarriageCertificate;
+import com.mars.rti.model.RTIApplication;
+import com.mars.rti.search.RTIApplicationSearch;
+import com.mars.rti.service.BirthCertificateService;
+import com.mars.rti.service.DeathCertificateService;
+import com.mars.rti.service.DraftService;
+import com.mars.rti.service.FeeMasterService;
+import com.mars.rti.service.GardenDetailsService;
+import com.mars.rti.service.MTPRegistrationCertificateService;
+import com.mars.rti.service.MarriageCertificateService;
+import com.mars.rti.service.RTIApplicationService;
+import com.mars.rti.utils.CoreConstants;
+
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
+
+/**
+ * <p>
+ * Title: RTIApplicationController.java
+ * </p>
+ * 
+ * <p>
+ * Description: This is a rtiApplication controller class for controlling
+ * rtiApplication related actions
+ * </p>
+ * 
+ * @see com.mars.common.model.RTIApplication
+ * 
+ * 
+ * @version: 1.0
+ * 
+ * @author : eGovernance development team <Mars Telecom Systems Pvt Ltd>
+ * 
+ */
+@Controller
+public class RTIApplicationReportController extends MultiActionController implements InitializingBean {
+
+	private static String const_OrderBy = "OrderBy";
+
+	private static String const_SortBy = "SortBy";
+
+	private static Log log = LogFactory.getLog(RTIApplicationReportController.class);
+
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	@Autowired
+	private RTIApplicationService rtiApplicationService;
+	
+	@Autowired
+	private MTPRegistrationCertificateService mTPRegistrationCertificateService;
+
+	@Autowired
+	private MarriageCertificateService marriageCertificateService;
+	
+	@Autowired
+	private BirthCertificateService birthCertificateService;
+
+	@Autowired
+	private DeathCertificateService deathCertificateService;
+
+	@Autowired
+	private FeeMasterService feeMasterService;
+
+	@Autowired
+	private DepartmentService departmentService;
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private ReceivedModeService receivedModeService;
+
+	@Autowired
+	private SectionService sectionService;
+
+	@Autowired
+	private TenancyService tenancyService;
+
+	@Autowired
+	private DraftService draftService;
+	
+	@Autowired
+	private ApplicationQRCodeGenerator applicationQRCodeGenerator;
+
+
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	/**
+	 * @param rtiApplicationService sets the RTIApplicationService object.
+	 */
+	public void setRTIApplicationService(RTIApplicationService rtiApplicationService) {
+		this.rtiApplicationService = rtiApplicationService;
+	}
+
+	public void setFeeMasterService(FeeMasterService feeMasterService) {
+		this.feeMasterService = feeMasterService;
+	}
+
+	public void setDepartmentService(DepartmentService departmentService) {
+		this.departmentService = departmentService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	public void setRtiApplicationService(RTIApplicationService rtiApplicationService) {
+		this.rtiApplicationService = rtiApplicationService;
+	}
+
+	public void setTenancyService(TenancyService tenancyService) {
+		this.tenancyService = tenancyService;
+	}
+
+	public void afterPropertiesSet() throws Exception {
+
+	}
+
+	/**
+	 * This method is to bind the date objects in the specifed format.
+	 *
+	 */
+
+	@RequestMapping("/rtiApplicationReport/zoneCertificateReport.do")
+	public void zoneCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownloadQR(request, response, "Zone");
+	}
+
+	@RequestMapping("/rtiApplicationReport/mandapCertificateReport.do")
+	public void mandapCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "Mandappermissioncertificate");
+	}
+	
+	@RequestMapping("/rtiApplicationReport/ganeshMandapCertificateReport.do")
+	public void ganeshMandapCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "GaneshMandappermission");
+	}
+	
+	@RequestMapping("/rtiApplicationReport/durgaUtsavMandapCertificateReport.do")
+	public void durgaUtsavMandapCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "DurgaUtsavMandappermission");
+	}
+	
+	@RequestMapping("/rtiApplicationReport/dogLicenceReport.do")
+	public void dogLicenceReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "DogLicense");
+	}
+
+	@RequestMapping("/rtiApplicationReport/mobileTowerReport.do")
+	public void mobileTowerReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "MobileTower");
+	}
+
+	@RequestMapping("/rtiApplicationReport/partMapReport.do")
+	public void partMapReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "WardMapCertificate");
+	}
+
+	@RequestMapping("/rtiApplicationReport/marriageCertificateReport.do")
+	public void marriageCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownloadQR(request, response, "Marriage");
+	}
+
+	@RequestMapping("/rtiApplicationReport/nocTradeCertificateReport.do")
+	public void nocTradeCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "NOCTradeCertificate");
+	}
+
+	@RequestMapping("/rtiApplicationReport/tradeLicensePartnerCountUpdateReport.do")
+	public void tradeLicensePartnerCountUpdateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "TradeLicensePartnerCount");
+	}
+
+	@RequestMapping("/rtiApplicationReport/tradeLicenseNameChangeCertificateReport.do")
+	public void tradeLicenseNameChangeCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "TreadCertificateNameChange");
+	}
+
+	@RequestMapping("/rtiApplicationReport/tradeLicenseTypeChangeCertificateReport.do")
+	public void tradeLicenseTypeChangeCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "TradelicenseTypeChange");
+	}
+
+	@RequestMapping("/rtiApplicationReport/tradeLicenseCancellationCertificateReport.do")
+	public void tradeLicenseCancellationCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "TreadCancellation");
+	}
+
+	@RequestMapping("/rtiApplicationReport/tradeLicenseDuplicateCopyCertificateReport.do")
+	public void tradeLicenseDuplicateCopyCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "TradeLicenseCopy");
+	}
+
+	@RequestMapping("/rtiApplicationReport/tradeLicenseOutdatedRenewalReport.do")
+	public void tradeLicenseOutdatedRenewalReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "TradeCertificateOutdatedRenewal");
+	}
+
+	@RequestMapping("/rtiApplicationReport/tradeLicenseRenewalCertificateReport.do")
+	public void tradeLicenseRenewalCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "TradeLicenseRenewal");
+	}
+
+	@RequestMapping("/rtiApplicationReport/tradeLicenseNewCertificateReport.do")
+	public void tradeLicenseNewCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "NewTradeLicense");
+	}
+
+	@RequestMapping("/rtiApplicationReport/tradeLicensePartnerChnageCertificateReport.do")
+	public void tradeLicensePartnerChnageCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "TradeLicensePartnerChange");
+	}
+
+	@RequestMapping("/rtiApplicationReport/tradeCertificateTransferReport.do")
+	public void tradeCertificateTransferReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "TreadCertificateTrans");
+	}
+	
+	//GaneshMandapPermission Tibco 
+	@RequestMapping("/rtiApplicationReport/policeNocCertificateReport.do")
+	public void policeNocCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "GaneshPolicepermissioncertificate");
+	}
+	
+	@RequestMapping("/rtiApplicationReport/trafficNocCertificateReport.do")
+	public void trafficNocCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "GaneshTraficpermissioncertificate");
+	}
+	
+	@RequestMapping("/rtiApplicationReport/fireNocCertificateReport.do")
+	public void fireNocCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "FireNOCpermissioncertificate");
+	}
+
+	public void sendDownloadQR(HttpServletRequest request, HttpServletResponse response, String reportName) {
+		try (Connection connnection = sessionFactory.getCurrentSession().connection();) {
+			HashMap<String, Object> parameters = new HashMap<String, Object>();
+			String rtiapplrefid =request.getParameter("rtiApplicationRefId");//"1268";
+
+			int rtiApplrefid = 0;
+
+			if (rtiapplrefid !=null || !rtiapplrefid.isEmpty()) {
+				rtiApplrefid =Integer.parseInt(rtiapplrefid);
+			}
+
+			String requestURL = request.getRequestURL().toString();
+			String ctx = request.getContextPath();
+			String serverHost = requestURL.substring(0, requestURL.indexOf(ctx));
+			
+			String url = serverHost + ctx;
+			String base64Qr = applicationQRCodeGenerator.getQrCode(rtiApplrefid, url);
+			request.setAttribute("base64Qr", base64Qr);
+            parameters.put("base64Qr", base64Qr);
+
+
+            parameters.put("rtiapplrefid", rtiapplrefid);
+			 parameters.put("REPORT_NMC_LOGO_PATH", serverHost + request.getContextPath()
+			 + "/images/nmclogo.jpeg");
+
+			String reportFilePath = getServletContext().getRealPath("/reports/rtiApplication/" + reportName + ".jasper");
+			JasperPrint jasperPrint = JasperFillManager.fillReport(reportFilePath, parameters, connnection);
+			byte[] pdf = JasperExportManager.exportReportToPdf(jasperPrint);
+
+			response.setHeader("Content-Disposition", "attachoment; filename=" + reportName + ".pdf");
+			response.setContentType("application/pdf");
+			response.setContentLength(pdf.length);
+			response.getOutputStream().write(pdf);
+			response.getOutputStream().flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e.getMessage());
+		}
+	}
+
+	public void sendDownload(HttpServletRequest request, HttpServletResponse response, String reportName) {
+		try (Connection connnection = sessionFactory.getCurrentSession().connection();) {
+			HashMap<String, Object> parameters = new HashMap<String, Object>();
+//			//int servicemtpId=Integer.parseInt(request.getParameter("servicemtpId"));
+			String rtiapplrefid =request.getParameter("rtiApplicationRefId");//"1268";
+//	        boolean isMTP = false;
+//	        Boolean isMTPAttr = (Boolean) request.getAttribute("isMTP");
+//	        
+//	        if (isMTPAttr != null) {
+//	            isMTP = isMTPAttr;
+//	        }
+//
+//	        if (isMTP) {
+//	            rtiapplrefid = request.getParameter("mtpId");
+//	            parameters.put("mtpId", rtiapplrefid);
+//	        } else {
+			int rtiApplrefid = 0;
+
+			if (rtiapplrefid !=null || !rtiapplrefid.isEmpty()) {
+				rtiApplrefid =Integer.parseInt(rtiapplrefid);
+			}
+//	            parameters.put("rtiapplrefid", rtiapplrefid);
+	       // }		
+//			parameters.put("rtiapplrefid", rtiapplrefid);
+			String requestURL = request.getRequestURL().toString();
+			String ctx = request.getContextPath();
+			String serverHost = requestURL.substring(0, requestURL.indexOf(ctx));
+			
+//			String url = serverHost + ctx;
+//			String base64Qr = applicationQRCodeGenerator.getQrCode(rtiApplrefid, url);
+//			request.setAttribute("base64Qr", base64Qr);
+//            parameters.put("base64Qr", base64Qr);
+
+
+			//String url = "https://" + request.getServerName() + request.getContextPath();
+
+            parameters.put("rtiapplrefid", rtiapplrefid);
+			 parameters.put("REPORT_NMC_LOGO_PATH", serverHost + request.getContextPath()
+			 + "/images/nmclogo.jpeg");
+//			parameters.put("REPORT_NMC_BACKGROUND_IMAGE_PATH",
+//					serverHost + request.getContextPath() + "/images/NMCBackgroundFormat.jpg");
+//			
+//			System.out.println(parameters.put("REPORT_NMC_BACKGROUND_IMAGE_PATH",
+//					serverHost + request.getContextPath() +  "/images/NMCBackgroundFormat.jpg"));
+
+			
+			//http://rtsnagpur.egovmars.in/RTS/images/NMCBackgroundFormat.jpg
+			String reportFilePath = getServletContext().getRealPath("/reports/rtiApplication/" + reportName + ".jasper");
+			JasperPrint jasperPrint = JasperFillManager.fillReport(reportFilePath, parameters, connnection);
+			byte[] pdf = JasperExportManager.exportReportToPdf(jasperPrint);
+
+			response.setHeader("Content-Disposition", "attachoment; filename=" + reportName + ".pdf");
+			response.setContentType("application/pdf");
+			response.setContentLength(pdf.length);
+			response.getOutputStream().write(pdf);
+			response.getOutputStream().flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e.getMessage());
+		}
+	}
+	public String getParameterValue(String value) {
+		if (value == null) {
+			return "";
+		}
+		return value;
+	}
+//	
+//	@RequestMapping("ws/getApplicationDetails.do")
+//	public ModelAndView getApplicationDetails(HttpServletRequest request, HttpServletResponse response)
+//			throws ServletException, IOException {
+//		RTIApplication rtiApplication = null;
+//		String rtiApplrefid = request.getParameter("rtiApplrefid");
+//		if (rtiApplrefid != null || !rtiApplrefid.isEmpty()) {
+//			int refid = Integer.parseInt(rtiApplrefid);
+//			rtiApplication = rtiApplicationService.findByRTIApplicationNumberId(refid);
+//			
+//
+//			if (rtiApplication != null) {
+//				request.setAttribute("rtiApplication", rtiApplication);
+//				long serviceId=rtiApplication.getRtiserviceid();
+//				
+//
+////			    // Fetch application data based on serviceId
+//		        if (serviceId == 1) {//birth
+//					return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//		        } else if (serviceId == 2) {//death
+//					return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//		       }
+//		        else if (serviceId == 28) {//partmap
+//					return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//		       }else if (serviceId == 5) {//zone
+//					return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//		      }else if (serviceId == 48) {//newwaterconnection
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//		     }else if (serviceId == 49) {//changeofownership
+//					return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//		    }else if (serviceId == 47) {//waterconnectiontap size
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//		    }else if (serviceId == 6) {//water disconnection
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//		    }else if (serviceId == 50) {//water reconnection
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//		    }
+//		    else if (serviceId == 51) {//water change in category
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//		    }else if (serviceId == 68) {//water no dues 
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//		    }else if (serviceId == 73) {//tree cutting
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//		   }else if (serviceId == 75) {//tree trimming
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//		  }else if (serviceId == 23) {//Mandap permission
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//			  }
+//		  else if (serviceId == 90) {//Ganesh Mandap permission
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//
+//			  }
+//		  else if (serviceId == 91) {//Durga Utsav Mandap permission
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//
+//			  }
+//		  else if (serviceId == 92) {//Diksha bhumi Mandap permission
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//			  }
+//		  else if (serviceId == 93) {//Fire Crackers 
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//			  }
+//		  else if (serviceId == 55) {// Tax Utara 
+//			return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//	  }
+//		  else if (serviceId == 54) {// Tax no dues 
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//			  }
+//		  else if (serviceId == 104) {// Tax Transfer 
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//			  }
+//		  else if (serviceId == 103) {// new assesment Tax /mutation 
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//			  }
+//		  else if (serviceId == 58) {// Tax reassesment 
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//		  }
+//		  else if (serviceId == 72) {// Tax demand 
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//			  }
+//		  else if (serviceId == 71) {// Tax exemption 
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//			  }
+//		  else if (serviceId == 3) {// Dog License 
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//			  }
+//		  else if (serviceId == 102) {// Dog License Renewal
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//
+//			  }
+//		    else if (serviceId == 11) {//Marriage
+//		    	MarriageCertificate marriageCertificate =null ;
+//		    	marriageCertificate = marriageCertificateService.findByRTIApplicationNumberId(refid);
+//
+//				return new ModelAndView("marriageApplicationDetails", "rtiApplication", rtiApplication ,"marriageCertificate" , marriageCertificate);
+//
+//		   }else {
+//				return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+//			}
+//			}else {
+//				request.setAttribute("errMessage", "Something went wrong!!");
+//
+//			}
+//		} else {
+//			request.setAttribute("errMessage", "Something went wrong!!");
+//		}
+//		return new ModelAndView("applicationDetails");
+//	}
+	
+	@RequestMapping("ws/getApplicationDetails.do")
+	public ModelAndView getApplicationDetails(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
+	    RTIApplication rtiApplication = null;
+	    String rtiApplrefid = request.getParameter("rtiApplrefid");
+
+	    // Check if the rtiApplrefid is valid
+	    if (rtiApplrefid != null && !rtiApplrefid.isEmpty()) {
+	        try {
+	            int refid = Integer.parseInt(rtiApplrefid);
+	            rtiApplication = rtiApplicationService.findByRTIApplicationNumberId(refid);
+
+	            if (rtiApplication != null) {
+	                request.setAttribute("rtiApplication", rtiApplication);
+	                long serviceId = rtiApplication.getRtiserviceid();
+
+	                // Return common view if serviceId matches any specific cases
+	                switch ((int) serviceId) {
+	                    case 1:  // birth
+	                    	BirthCertificate birthCertificate = birthCertificateService.getDetails(refid);
+		                        return new ModelAndView("marriageApplicationDetails")
+		                            .addObject("rtiApplication", rtiApplication)
+		                            .addObject("birthCertificate", birthCertificate);
+	                       // return new ModelAndView("birthApplicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 2:  // death
+	                    	  DeathCertificate deathCertificate = deathCertificateService.getDetails(refid);
+		                        return new ModelAndView("marriageApplicationDetails")
+		                            .addObject("rtiApplication", rtiApplication)
+		                            .addObject("deathCertificate", deathCertificate);
+	                       // return new ModelAndView("deathApplicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 28: // partmap
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 5:  // zone
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 48: // newwaterconnection
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 49: // changeofownership
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 47: // waterconnectiontap size
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 6:  // water disconnection
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 50: // water reconnection
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 51: // water change in category	  
+	                    	return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 68: // water no dues
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 73: // tree cutting
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 75: // tree trimming
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 23: // Mandap permission
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 90: // Ganesh Mandap permission
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 91: // Durga Utsav Mandap permission
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 92: // Diksha bhumi Mandap permission
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 93: // Fire Crackers
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 55: // Tax Utara
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 54: // Tax no dues
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 104:// Tax Transfer
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 103:// new assessment Tax /mutation
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 58: // Tax reassessment
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 72: // Tax demand
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 71: // Tax exemption
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 3:  // Dog License
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+
+	                    case 102:// Dog License Renewal
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+	                    case 11: // Marriage
+	                        MarriageCertificate marriageCertificate = marriageCertificateService.getDetails(refid);
+	                        return new ModelAndView("marriageApplicationDetails")
+	                            .addObject("rtiApplication", rtiApplication)
+	                            .addObject("marriageCertificate", marriageCertificate);
+	                    default:
+	                        return new ModelAndView("applicationDetails", "rtiApplication", rtiApplication);
+	                }
+	            } else {
+	                request.setAttribute("errMessage", "No application found for the provided reference ID.");
+	            }
+	        } catch (NumberFormatException e) {
+	            request.setAttribute("errMessage", "Invalid RTI application reference ID.");
+	        } catch (Exception e) {
+	            request.setAttribute("errMessage", "An unexpected error occurred.");
+	        }
+	    } else {
+	        request.setAttribute("errMessage", "RTI application reference ID is required.");
+	    }
+
+	    return new ModelAndView("applicationDetails");
+	}
+
+
+
+	@InitBinder
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+		SimpleDateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT);
+		df.setLenient(true);
+		binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(df, true));
+	}
+
+	@RequestMapping("/rtiApplicationReport/viewNoting.do")
+	public void viewNoting(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+		if (log.isDebugEnabled()) {
+			log.debug("Invoking viewNoting Report");
+		}
+
+		HttpSession session = request.getSession();
+		SessionUser sessionUser = (SessionUser) session.getAttribute("SessionUser");
+		String tenancyId = sessionUser.getTenancyId() + "";
+
+		String strReportName = "Noting";
+		String strReportPath = "/reports/rtiApplication/";
+		String reportAs = Constants.CONTENT_TYPE_PDF;
+		HashMap<String, String> parameters = new HashMap<String, String>();
+
+		parameters.put("rti_application_id", (request.getParameter("rtiApplicationId").trim()));
+		parameters.put("tenancy_id", tenancyId);
+		request.setAttribute("strReportName", strReportName);
+		request.setAttribute("strReportPath", strReportPath);
+		request.setAttribute("reportParams", parameters);
+		request.setAttribute("reportAs", reportAs);
+
+		if (request.getHeader("referer") == null || (request.getHeader("referer") != null)
+				&& ((request.getHeader("referer").indexOf(request.getServerName()) == -1))) {
+			response.sendRedirect("pages/common/exception.jsp");
+			return;
+		}
+
+		request.getRequestDispatcher("/report/generateReportFromScreen.do").forward(request, response);
+	}
+
+	@RequestMapping("/rtiApplicationReport/viewDrafts.do")
+	public void viewDrafts(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+		if (log.isDebugEnabled()) {
+			log.debug("Invoking viewDrafts Report");
+		}
+
+		HttpSession session = request.getSession();
+		SessionUser sessionUser = (SessionUser) session.getAttribute("SessionUser");
+		String tenancyId = sessionUser.getTenancyId() + "";
+
+		String strReportName = "Drafts";
+		String strReportPath = "/reports/rtiApplication/";
+		String reportAs = Constants.CONTENT_TYPE_PDF;
+		HashMap<String, String> parameters = new HashMap<String, String>();
+
+		String whereClause = " Where  rti.rti_application_id = " + request.getParameter("rtiApplicationId").trim();
+		String draftType = request.getParameter("draftTypeName");
+		if (draftType != null && draftType.trim().length() > 0) {
+			whereClause = whereClause + " and dr.draft_type_id = " + draftType;
+		}
+
+		parameters.put("whereClause", whereClause);
+		parameters.put("tenancy_id", tenancyId);
+		request.setAttribute("strReportName", strReportName);
+		request.setAttribute("strReportPath", strReportPath);
+		request.setAttribute("reportParams", parameters);
+		request.setAttribute("reportAs", reportAs);
+
+		if (request.getHeader("referer") == null || (request.getHeader("referer") != null)
+				&& ((request.getHeader("referer").indexOf(request.getServerName()) == -1))) {
+			response.sendRedirect("pages/common/exception.jsp");
+			return;
+		}
+
+		request.getRequestDispatcher("/report/generateReportFromScreen.do").forward(request, response);
+	}
+
+	@RequestMapping("/rtiApplicationReport/downloadRTIApplicationList.do")
+	public void downloadRTIApplicationList(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+		if (log.isDebugEnabled()) {
+			log.debug("Invoking viewDrafts Report");
+		}
+
+		HttpSession session = request.getSession();
+		SessionUser sessionUser = (SessionUser) session.getAttribute("SessionUser");
+		String tenancyId = sessionUser.getTenancyId() + "";
+
+		String strReportName = "RTI_Application_List";
+		String reportHeading = "";
+		String strReportPath = "/reports/rtiApplication/";
+		String reportAs = Constants.CONTENT_TYPE_PDF;
+		HashMap<String, String> parameters = new HashMap<String, String>();
+
+		RTIApplicationSearch searchOptions = new RTIApplicationSearch();
+		searchOptions.setTenancyId(sessionUser.getTenancyId());
+		setSearchParameters(searchOptions, request);
+		String whereClause = getWhereClause(searchOptions);
+
+		Department department = departmentService.get(searchOptions.getRtiAplicationReceivedDepartment());
+
+		if ((searchOptions.getFinalStatus().equalsIgnoreCase(CoreConstants.APPL_STATUS_CLOSED)
+				|| searchOptions.getFinalStatus().equalsIgnoreCase(CoreConstants.APPL_STATUS_REJECTED))
+				&& searchOptions.getRtiAplicationReceivedDepartment() > 0) {
+			strReportName = "RTI_Application_List_Closed";
+			reportHeading = "RTI Closed  Applications Report Including Appeal - " + department.getName();
+		} else if ((!searchOptions.getFinalStatus().equalsIgnoreCase(CoreConstants.APPL_STATUS_CLOSED)
+				&& !searchOptions.getFinalStatus().equalsIgnoreCase(CoreConstants.APPL_STATUS_REJECTED)
+				&& !searchOptions.getFinalStatus().equalsIgnoreCase(""))
+				&& searchOptions.getRtiAplicationReceivedDepartment() > 0) {
+			strReportName = "RTI_Application_List_Pending";
+			reportHeading = "RTI  Applications Report Including Appeal - " + department.getName();
+
+		} else if ((searchOptions.getFinalStatus().equalsIgnoreCase(CoreConstants.APPL_STATUS_CLOSED)
+				|| searchOptions.getFinalStatus().equalsIgnoreCase(CoreConstants.APPL_STATUS_REJECTED))
+				&& searchOptions.getRtiAplicationReceivedDepartment() == 0) {
+			strReportName = "RTI_Application_List_Closed";
+			reportHeading = "RTI Closed  Applications Report Including Appeal - All Departmen";
+		} else if (!searchOptions.getFinalStatus().equalsIgnoreCase(CoreConstants.APPL_STATUS_CLOSED)
+				&& !searchOptions.getFinalStatus().equalsIgnoreCase(CoreConstants.APPL_STATUS_REJECTED)
+				&& !searchOptions.getFinalStatus().equalsIgnoreCase("")
+				&& searchOptions.getRtiAplicationReceivedDepartment() == 0) {
+			strReportName = "RTI_Application_List_Pending";
+			reportHeading = "RTI Applications Report Including Appeal - All Department";
+		} else if (searchOptions.getRtiAplicationReceivedDepartment() > 0) {
+			strReportName = "RTI_Application_List_DepartmentWise";
+			reportHeading = "RTI  Applications Report Including Appeal - " + department.getName();
+		}
+
+		parameters.put("whereClause", whereClause);
+		parameters.put("reportHeading", reportHeading);
+		parameters.put("tenancy_id", tenancyId);
+		request.setAttribute("strReportName", strReportName);
+		request.setAttribute("strReportPath", strReportPath);
+		request.setAttribute("reportParams", parameters);
+		request.setAttribute("reportAs", reportAs);
+
+		if (request.getHeader("referer") == null || (request.getHeader("referer") != null)
+				&& ((request.getHeader("referer").indexOf(request.getServerName()) == -1))) {
+			response.sendRedirect("pages/common/exception.jsp");
+			return;
+		}
+
+		request.getRequestDispatcher("/report/generateReportFromScreen.do").forward(request, response);
+	}
+
+	/*
+	 * @RequestMapping("rtiApplicationReport/listRTIApplicationReports.do") public
+	 * ModelAndView listRTIApplicationReports(HttpServletRequest request,
+	 * HttpServletResponse response) throws ServletException, IOException, Exception
+	 * { if (log.isDebugEnabled()) {
+	 * log.debug("Invoking listRTIApplicationReports"); } HttpSession session =
+	 * request.getSession(); SessionUser sessionUser = (SessionUser)
+	 * session.getAttribute("SessionUser"); long
+	 * tenancyId=sessionUser.getTenancyId();
+	 * 
+	 * RTIApplicationSearch searchOptions=new RTIApplicationSearch();
+	 * searchOptions.setTenancyId(tenancyId); setSearchParameters(searchOptions,
+	 * request);
+	 * 
+	 * request.setAttribute("currentPage", searchOptions.getCurrentPage());
+	 * request.setAttribute(const_OrderBy, searchOptions.getOrderBy());
+	 * request.setAttribute(const_SortBy, searchOptions.getSortBy());
+	 * request.setAttribute("SearchOptions", searchOptions);
+	 * request.setAttribute("departmentList", departmentService.getAll());
+	 * request.setAttribute("draftTypeList", draftService.getAllDraftType());
+	 * request.setAttribute("tenancyId", tenancyId);
+	 * 
+	 * if(searchOptions.getAssignedDepartment()==0 &&
+	 * searchOptions.getAssignedSection() ==0 && searchOptions.getAssignedUser()==0
+	 * && (searchOptions.getCreationFromDate()==null ||
+	 * searchOptions.getCreationFromDate().length()==0) &&
+	 * (searchOptions.getCreationToDate()==null ||
+	 * searchOptions.getCreationToDate().length()==0) &&
+	 * (searchOptions.getFinalStatus() == null ||
+	 * searchOptions.getFinalStatus().length() == 0) &&
+	 * (searchOptions.getRtiApplicationNumber() == null ||
+	 * searchOptions.getRtiApplicationNumber().length()==0) &&
+	 * (searchOptions.getReceivedFileRefNo() == null ||
+	 * searchOptions.getReceivedFileRefNo().length()==0) &&
+	 * (searchOptions.getSubject() == null || searchOptions.getSubject().length() ==
+	 * 0) && (searchOptions.getRtiAplicationReceivedDepartment() == 0 )){
+	 * 
+	 * return new ModelAndView("listRTIApplicationReports"); }
+	 * 
+	 * List<RTIApplication> rtiApplicationList =
+	 * rtiApplicationService.getRTIApplicationList(searchOptions); try { long
+	 * totalCount = rtiApplicationService.getRTIApplicationCount(searchOptions);
+	 * request.setAttribute("maximumPages", new
+	 * Long(CommonUtils.getMaxPage(totalCount))); request.setAttribute("totalCount",
+	 * totalCount); } catch (Exception e) { log.error(e.getMessage()); }
+	 * 
+	 * //Check if the fileCreateList is null if(rtiApplicationList==null){
+	 * rtiApplicationList = new ArrayList<RTIApplication>(); }
+	 * 
+	 * 
+	 * 
+	 * request.setAttribute("sectionList",sectionService.findByProperty(
+	 * "department.departmentId", searchOptions.getAssignedDepartment()));
+	 * request.setAttribute("userList",
+	 * userService.findByProperty("section.sectionId="+searchOptions.
+	 * getAssignedSection()+" and user.tenancy.tenancyId", tenancyId ));
+	 * //request.setAttribute("userList",
+	 * userService.findByProperty("section.sectionId",
+	 * searchOptions.getAssignedSection())); request.setAttribute(const_OrderBy,
+	 * applicationSearch.getOrderBy()); request.setAttribute(const_SortBy,
+	 * applicationSearch.getSortBy()); request.setAttribute("SearchOptions",
+	 * applicationSearch);
+	 * 
+	 * 
+	 * return new ModelAndView("listRTIApplicationReports","rtiApplicationList",
+	 * rtiApplicationList); }
+	 */
+
+	private void setSearchParameters(RTIApplicationSearch searchFileCreate, HttpServletRequest request) {
+		if (log.isDebugEnabled()) {
+			log.debug("setSearchParameters Method is called");
+		}
+
+		try {
+			long longCurrentPage = CommonUtils.checkPaginationAttributes(request);
+			String orderBy = request.getParameter(const_OrderBy);
+			String sortBy = request.getParameter(const_SortBy);
+
+			// setting default order by on fileCreateId
+			if (orderBy == null || orderBy.length() < 1) {
+				orderBy = "rtiApplicationId";
+				sortBy = "desc";
+			}
+
+			searchFileCreate.setCurrentPage(longCurrentPage);
+			searchFileCreate.setOrderBy(orderBy);
+			searchFileCreate.setSortBy(sortBy);
+
+			searchFileCreate.setRtiApplicationNumber(request.getParameter("rtiApplicationNumber"));
+			searchFileCreate.setSubject(request.getParameter("subject"));
+			searchFileCreate.setCreationToDate(request.getParameter("creationToDate"));
+			searchFileCreate.setCreationFromDate(request.getParameter("creationFromDate"));
+
+			if (request.getParameter("assignedDepartment") != null
+					&& !request.getParameter("assignedDepartment").equals(""))
+				searchFileCreate.setAssignedDepartment(Long.parseLong(request.getParameter("assignedDepartment")));
+
+			if (request.getParameter("assignedSection") != null && !request.getParameter("assignedSection").equals(""))
+				searchFileCreate.setAssignedSection(Long.parseLong(request.getParameter("assignedSection")));
+
+			if (request.getParameter("assignedUser") != null && !request.getParameter("assignedUser").equals(""))
+				searchFileCreate.setAssignedUser(Long.parseLong(request.getParameter("assignedUser")));
+
+			searchFileCreate.setReceivedFileRefNo(request.getParameter("receivedFileRefNo"));
+
+			String isRTIAppealApplication = request.getParameter("isRTIAppealApplication");
+			if (isRTIAppealApplication != null && isRTIAppealApplication.length() > 0)
+				searchFileCreate.setIsRTIAppealApplication(Integer.parseInt(isRTIAppealApplication));
+
+			String rtiAplicationReceivedDepartment = request.getParameter("rtiAplicationReceivedDepartment");
+			if (rtiAplicationReceivedDepartment != null && rtiAplicationReceivedDepartment.length() > 0) {
+				searchFileCreate.setRtiAplicationReceivedDepartment(Long.parseLong(rtiAplicationReceivedDepartment));
+			}
+
+			String fileStatus = request.getParameter("finalStatus");
+			searchFileCreate.setFinalStatus(fileStatus);
+
+		} catch (Exception err) {
+			log.error(err.getMessage());
+		}
+	}
+
+	private String getWhereClause(RTIApplicationSearch searchOptions) {
+		String condition = " and ";
+		String fromClause = "";
+		boolean conditionFound = false;
+		// String fromDate=searchOptions.getFromDate();
+		// String toDate=searchOptions.getToDate();
+		long tenancyId = searchOptions.getTenancyId();
+
+		if (searchOptions != null) {
+
+			String searchrtiApplnNumber = searchOptions.getRtiApplicationNumber();
+			String refNumber = searchOptions.getReceivedFileRefNo();
+			String RegistrationFromDate = searchOptions.getCreationFromDate();
+			String RegistrationToDate = searchOptions.getCreationToDate();
+
+			long department = searchOptions.getAssignedDepartment();
+			long section = searchOptions.getAssignedSection();
+			long user = searchOptions.getAssignedUser();
+			String finalStatus = searchOptions.getFinalStatus();
+			Integer IsRTIAppeal = searchOptions.getIsRTIAppealApplication();
+
+			fromClause = " Where rti.tenancyid=" + tenancyId + "   ";
+
+			if (StringUtils.isNotEmpty(searchrtiApplnNumber)) {
+				fromClause = fromClause + " and rti.rti_application_number='" + searchrtiApplnNumber + "'";
+			}
+
+			if (StringUtils.isNotEmpty(refNumber)) {
+				fromClause = fromClause + " and rti.received_refno='" + refNumber + "'";
+			}
+
+			if ((RegistrationFromDate != null && RegistrationFromDate.length() > 0)
+					&& (RegistrationToDate != null && RegistrationToDate.length() > 0)) {
+				fromClause = fromClause + " and "
+						+ (" (to_date(rti.registration_date,'" + Constants.DATE_FORMAT + "') between to_date('"
+								+ RegistrationFromDate + "','" + Constants.DATE_FORMAT + "') " + "and to_date('"
+								+ RegistrationToDate + "','" + Constants.DATE_FORMAT + "'))");
+			}
+
+			if (searchOptions.getRtiAplicationReceivedDepartment() > 0) {
+				fromClause = fromClause + " and  rti.application_department_id="
+						+ searchOptions.getRtiAplicationReceivedDepartment() + " ";
+			}
+
+			if (department > 0) {
+				fromClause = fromClause + " and  rti.assigned_department_id=" + department + " ";
+			}
+			if (section > 0) {
+				fromClause = fromClause + " and  rti.assigned_section_id=" + section + " ";
+			}
+
+			if (user > 0) {
+				fromClause = fromClause + " and  rti.assignee_user_id=" + user + " ";
+
+			}
+
+			if (IsRTIAppeal != null && IsRTIAppeal == 0) {
+				fromClause = fromClause + " and  rti.isRTIAppealApplication=" + 0 + " ";
+			} else if (IsRTIAppeal != null && IsRTIAppeal == 1) {
+				fromClause = fromClause + " and  rti.isRTIAppealApplication=" + 1 + " ";
+			}
+
+			if (finalStatus != null && finalStatus.length() > 0
+					&& finalStatus.equalsIgnoreCase("Closed_Not_Re_Assign")) {
+
+				fromClause = fromClause + " and upper(rti.final_status) = upper('" + finalStatus + "') ";
+
+			} else if (finalStatus != null && !finalStatus.equals("") && finalStatus.length() > 0
+					&& !finalStatus.equalsIgnoreCase("all")) {
+
+				fromClause = fromClause + " and upper(rti.final_status) = upper('" + finalStatus + "') ";
+
+			}
+
+		}
+		return fromClause + " order by  rti.rti_application_id " + searchOptions.getSortBy();
+	}
+
+	// list zone
+	/*
+	 * @RequestMapping("/rtiapplication/listRTIApplicationZCReport.do") public
+	 * ModelAndView listRTIApplicationZCReport(HttpServletRequest request,
+	 * HttpServletResponse response) throws ServletException {
+	 * 
+	 * if (log.isDebugEnabled()) { log.debug("Invoking listrtiApplicationBWD"); }
+	 * HttpSession session = request.getSession(); SessionUser sessionUser =
+	 * (SessionUser) session .getAttribute("SessionUser"); long tenancyId =
+	 * sessionUser.getTenancyId();
+	 * 
+	 * RTIApplicationSearch applicationSearch = new RTIApplicationSearch();
+	 * applicationSearch.setTenancyId(tenancyId);
+	 * applicationSearch.setIsRTIAppealApplication(0);
+	 * setSearchParameters(applicationSearch, request);
+	 * applicationSearch.setIsRTIAppealApplication(0);
+	 * applicationSearch.setRtiserviceid(5); List<RTIApplication> rtiApplicationList
+	 * = rtiApplicationService .getRTIApplicationZCList(applicationSearch); try {
+	 * long totalCount = rtiApplicationService
+	 * .getRTIApplicationCount(applicationSearch);
+	 * request.setAttribute("maximumPages", new
+	 * Long(CommonUtils.getMaxPage(totalCount))); request.setAttribute("totalCount",
+	 * totalCount); } catch (Exception e) { log.error(e.getMessage()); }
+	 * 
+	 * // Check if the fileCreateList is null if (rtiApplicationList == null) {
+	 * rtiApplicationList = new ArrayList<RTIApplication>(); }
+	 * 
+	 * User user = userService.get(sessionUser.getUserId());
+	 * 
+	 * request.setAttribute("user", user); request.setAttribute("currentPage",
+	 * applicationSearch.getCurrentPage()); request.setAttribute(const_OrderBy,
+	 * applicationSearch.getOrderBy()); request.setAttribute(const_SortBy,
+	 * applicationSearch.getSortBy()); request.setAttribute("SearchfileCreate",
+	 * applicationSearch); request.setAttribute("departmentList",
+	 * departmentService.getAll()); //
+	 * System.out.println("ref id@@@@@@@@@@@@="+rtiApplicationList.get(0).
+	 * getRtiApplicationRefId());
+	 * 
+	 * return new ModelAndView("listZoneCertificateReport", "rtiApplicationList",
+	 * rtiApplicationList); }
+	 * 
+	 */
+	
+	@RequestMapping("/rtiApplicationReport/ganeshSummaryReport.do")
+	public void ganeshSummaryReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownloadForExcel(request, response, "GaneshSummary");
+	}
+@RequestMapping("/rtiApplicationReport/ganeshVisarjan.do")
+	public void ganeshVisarjan(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownloadForExcel(request, response, "GaneshVisarjan");
+	}
+	
+
+public void sendDownloadForExcel(HttpServletRequest request, HttpServletResponse response, String reportName) {
+    try (Connection connnection = sessionFactory.getCurrentSession().connection();) {
+        HashMap<String, Object> parameters = new HashMap<String, Object>();
+        String rtiapplrefid = request.getParameter("rtiApplicationRefId");
+        parameters.put("rtiapplrefid", rtiapplrefid);
+        String requestURL = request.getRequestURL().toString();
+        String ctx = request.getContextPath();
+        String serverHost = requestURL.substring(0, requestURL.indexOf(ctx));
+        parameters.put("REPORT_NMC_LOGO_PATH", serverHost + request.getContextPath() + "/images/nmclogo.jpeg");
+        parameters.put("REPORT_NMC_BACKGROUND_IMAGE_PATH", serverHost + request.getContextPath() + "/images/NMCBackgroundFormat.jpg");
+
+        String reportFilePath = getServletContext().getRealPath("/reports/rtiApplication/" + reportName + ".jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(reportFilePath, parameters, connnection);
+
+        // Create a new Excel workbook using HSSFWorkbook (Excel 97-2003 format)
+        Workbook workbook = new HSSFWorkbook();
+
+        JRXlsExporter exporter = new JRXlsExporter();
+        exporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
+
+        // Set the response headers for Excel download
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-Disposition", "attachment; filename=" + reportName + ".xls");
+
+        // Get the output stream from the response
+        OutputStream outputStream = response.getOutputStream();
+
+        // Export the report to Excel and write it to the response output stream
+        exporter.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, outputStream);
+        exporter.exportReport();
+
+        // Close the output stream
+        outputStream.flush();
+        outputStream.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+	
+	
+	//DurgaUtsavMandapPermission Tibco 
+	@RequestMapping("/rtiApplicationReport/durgaUtsavpoliceNocCertificateReport.do")
+	public void durgaUtsavpoliceNocCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "DurgaUtsavPolicepermissioncertificate");
+	}
+	
+	@RequestMapping("/rtiApplicationReport/durgaUtsavtrafficNocCertificateReport.do")
+	public void durgaUtsavtrafficNocCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "DurgaUtsavTraficpermissioncertificate");
+	}
+	
+	@RequestMapping("/rtiApplicationReport/durgaUtsavfireNocCertificateReport.do")
+	public void durgaUtsavfireNocCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "DurgaUtsavFireNOCpermissioncertificate");
+	}
+	
+	
+	//Diksha BhumiMandapPermission Tibco 
+		@RequestMapping("/rtiApplicationReport/dikshaBhumipoliceNocCertificateReport.do")
+		public void dikshaBhumipoliceNocCertificateReport(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, Exception {
+
+			System.out.println("Reports calling");
+			sendDownload(request, response, "DikshaBhumiPolicepermissioncertificate");
+		}
+		
+		@RequestMapping("/rtiApplicationReport/dikshaBhumitrafficNocCertificateReport.do")
+		public void dikshaBhumitrafficNocCertificateReport(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, Exception {
+
+			System.out.println("Reports calling");
+			sendDownload(request, response, "DikshaBhumiTraficpermissioncertificate");
+		}
+		
+		@RequestMapping("/rtiApplicationReport/dikshaBhumifireNocCertificateReport.do")
+		public void dikshaBhumifireNocCertificateReport(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, Exception {
+
+			System.out.println("Reports calling");
+			sendDownload(request, response, "DikshaBhumiFireNOCpermissioncertificate");
+		}
+		
+		@RequestMapping("/rtiApplicationReport/dikshaBhumiMandapCertificateReport.do")
+		public void dikshaBhumiMandapCertificateReport(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, Exception {
+
+			System.out.println("Reports calling");
+			sendDownload(request, response, "DikshaBhumiMandappermission");
+		}
+		
+		//Durga Utsav Report
+		@RequestMapping("/rtiApplicationReport/durgaUtsavSummaryReport.do")
+			public void durgaUtsavSummaryReport(HttpServletRequest request, HttpServletResponse response)
+					throws ServletException, Exception {
+
+				System.out.println("Reports calling");
+				sendDownloadForExcel(request, response, "DurgaUtsavSummary");
+			}
+		
+		//dsc response
+		@RequestMapping(method = RequestMethod.POST, value = "rtiApplicationReport/DigitalSignResponse.do")
+		public void DigitalSignResponse( HttpServletRequest request, HttpServletResponse response) throws ServletException {
+			System.out.println("Its Going @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			String reportName=null;
+		String responseData1=request.getParameter("responseData");
+			System.out.println("RESPONSE@@@@@@@@@@@@@@@@@@@@@"+responseData1);
+
+			
+			try{
+				String rtiapplrefid = request.getParameter("rtiApplicationRefId");
+				RTIApplication rtiApplication=rtiApplicationService.get(Long.parseLong(rtiapplrefid));
+				
+				String dataStartTag1 = "<data>";
+				String dataEndTag1 = "</data>";
+			
+
+				String updatedResponseBody="";
+				int startIndex1 = responseData1.indexOf(dataStartTag1) + dataStartTag1.length();
+				int endIndex1 = responseData1.indexOf(dataEndTag1, startIndex1);
+				if (responseData1.startsWith("<![CDATA[", startIndex1)) {
+					 int cdataStartIndex = startIndex1 + "<![CDATA[".length();
+					    int cdataEndIndex = responseData1.indexOf("]]>", cdataStartIndex);
+					    updatedResponseBody = responseData1.substring(cdataStartIndex, cdataEndIndex);
+				}
+				else{
+					 updatedResponseBody = responseData1.substring(startIndex1, endIndex1);
+				}
+
+
+
+			System.out.println("Updated Response Body: " + updatedResponseBody);
+			
+			// Decode the Base64-encoded data
+			String BaseDir =null;
+//			String appType = request.getParameter("appType");
+			
+			
+			//if(appType.equals("1"))
+			BaseDir = getServletContext().getRealPath("") +"/BirthUpload/";
+//			File certFile = new File(BaseDir+"/New DS Capricorn Test.pfx");// Update certificate path
+			//byte[] decodedBytes = DatatypeConverter.parseBase64Binary(data);
+			int serviceId=rtiApplication.getRtiserviceid();
+			if(serviceId==73) {
+				String demandLetter = rtiApplication.getDemandletter();
+				if(demandLetter!=null) {
+					serviceId=73;
+				}else {
+					serviceId=73_1;
+				}
+				 reportName=reportName(serviceId);
+
+			}else if(serviceId==75) {
+				String demandLetter = rtiApplication.getDemandletter();
+				if(demandLetter!=null) {
+					serviceId=75;
+				}else {
+					serviceId=75_1;
+				}
+				 reportName=reportName(serviceId);
+
+				
+			}
+			else {
+				 reportName=reportName(rtiApplication.getRtiserviceid());
+
+			}
+			
+
+	    
+
+			byte[] decodedBytes = Base64.decodeBase64(updatedResponseBody.getBytes());
+
+			response.setHeader("Content-Disposition", "attachment; filename="
+					+ reportName + ".pdf");
+			response.setContentType("application/pdf");
+			response.setContentLength(decodedBytes.length);
+			response.getOutputStream().write(decodedBytes);
+			response.getOutputStream().flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		}
+
+
+		private String reportName(Integer rtiserviceid) {
+			switch (rtiserviceid) {
+		    case 3:
+		        return "DogLicense";
+		    case 6:
+		        return "MTP Certificate Form";
+		    case 7:
+		        return "Payment Receipt (BWD) Form";
+		    case 94:
+		        return "Certificate_of_Nursing_Registration";
+		    case 9:
+		        return "No Due Certificate (Property) Form";
+		    case 10:
+		        return "Tree Cutting Certificate Form";
+		    case 11:
+		        return "Marriage";
+		    case 96:
+		    	return "change_In_No_of_beds";
+		    case 12:
+		        return "Change of Owner (Property) Form";
+		    case 13:
+		        return "Change of Owner (Water) Form";
+		    case 14:
+		        return "Renewal Pet License Form";
+		    case 95:
+		        return "Renewal_Nursing_Registration_Certificate";
+		    case 92:
+		        return "DikshaBhumiMandappermission";
+		    case 91:
+		        return "DurgaUtsavMandappermission";
+		    case 69:
+		        return "FireNOCpermissioncertificate";
+		    case 90:
+		        return "GaneshMandappermission";
+		    case 23:
+		        return "Mandappermissioncertificate";
+		    case 44:
+		        return "NewTradeLicense";
+		    case 32:
+		        return "NOCTradeCertificate";
+		    case 41:
+		        return "TradeLicenseCopy";
+		    case 36:
+		        return "TradeLicensePartnerChange";
+		    case 39:
+		        return "TradeLicensePartnerCount";
+		    case 33:
+		        return "TradeLicenseRenewal";
+		    case 35:
+		        return "TradelicenseTypeChange";
+		    case 40:
+		        return "TreadCancellation";
+		    case 34:
+		        return "TreadCertificateNameChange";
+		    case 38:
+		        return "TreadCertificateTrans";
+		    case 28:
+		        return "WardMapCertificate";
+		    case 5:
+		        return "Zone";
+		    case 54:
+		        return "TaxNoDuesCertificate";
+		    case 68:
+		        return "waterNoDueCerticate";
+		    case 73:
+		        return "TreeCuttingCertificate";
+		    case 75:
+		        return "TreeTrimmingCertificate";
+		    case 73_1:
+				return "TreeCuttingDemandLetter";
+			case 97:			
+				return "MTPSubrReport";
+		   case 75_1:
+				return "TreeTrimmingDemandLetter";
+		    default:
+		        return "certificate";
+			}
+		}
+		
+		
+		@RequestMapping("/rtsApplicationReport/nurisngRegistration.do")
+		public void nurisngRegistration(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, Exception {
+
+			System.out.println("Reports calling");
+			sendDownload(request, response, "Certificate_of_Nursing_Registration");
+		}
+		
+		@RequestMapping("/rtsApplicationReport/renewalNurisngRegistration.do")
+		public void renewalNurisngRegistration(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, Exception {
+
+			System.out.println("Reports calling");
+			sendDownload(request, response, "Renewal_Nursing_Registration_Certificate");
+		}
+		
+		
+
+		@RequestMapping("/rtiApplicationReport/waterNoDuesCertificateReport.do")
+		public void waterNoDuesCertificateReport(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, Exception {
+
+			System.out.println("Reports calling");
+			sendDownload(request, response, "waterNoDuesCertificate");
+		}
+
+@RequestMapping("/rtiApplicationReport/taxNoduesCertificate.do")
+public void taxNoduesCertificate(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, Exception {
+
+	System.out.println("Reports calling");
+	sendDownload(request, response, "TaxNoDuesCertificate");
+}
+
+@RequestMapping("/rtiApplicationReport/treeTrimingCertificateReport.do")
+public void treeTrimingCertificateReport(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, Exception {
+
+	System.out.println("Reports calling");
+	sendDownload(request, response, "TreeTrimmingCertificate");
+}
+
+@RequestMapping("/rtiApplicationReport/treeCuttingCertificateReport.do")
+public void treeCuttingCertificateReport(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, Exception {
+
+	System.out.println("Reports calling");
+	sendDownload(request, response, "TreeCuttingCertificate");
+}
+
+
+//Tree Cutting Details
+@RequestMapping("/rtiApplicationReport/treeCuttingDetailsReport.do")
+public void treeCuttingDetailsReport(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, Exception {
+
+	System.out.println("Reports calling");
+	sendDownload(request, response, "TreeDetails");
+}
+
+
+
+@RequestMapping("/rtiApplicationReport/treeCuttingRejectionCertificateReport.do")
+public void treeCuttingRejectionCertificateReport(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, Exception {
+
+	System.out.println("Reports calling");
+	sendDownload(request, response, "Rejection_Water");
+}
+
+@RequestMapping("/rtiApplicationReport/treeCuttingDemandCertificateReport.do")
+public void treeCuttingDemandCertificateReport(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, Exception {
+
+	System.out.println("Reports calling");
+	sendDownload(request, response, "TreeCuttingDemandLetter");
+}
+@RequestMapping("/rtiApplicationReport/treeCuttingNocCertificateReport.do")
+public void treeCuttingNocCertificateReport(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, Exception {
+
+	System.out.println("Reports calling");
+	sendDownload(request, response, "Notice_Water");
+}
+
+//tree trimming details
+@RequestMapping("/rtiApplicationReport/treeTrimmingDetailsReport.do")
+public void treeTrimmingDetailsReport(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, Exception {
+
+	System.out.println("Reports calling");
+	sendDownload(request, response, "TreeTrimmingDetails");
+}
+
+@RequestMapping("/rtiApplicationReport/treeTrimmingRejectionCertificateReport.do")
+public void treeTrimmingRejectionCertificateReport(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, Exception {
+
+	System.out.println("Reports calling");
+	sendDownload(request, response, "Rejection_Water");
+}
+
+@RequestMapping("/rtiApplicationReport/treeTrimmingDemandCertificateReport.do")
+public void treeTrimmingDemandCertificateReport(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, Exception {
+
+	System.out.println("Reports calling");
+	sendDownload(request, response, "TreeTrimmingDemandLetter");
+}
+
+@RequestMapping("/rtiApplicationReport/treeTrimmingNocCertificateReport.do")
+public void treeTrimmingNocCertificateReport(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, Exception {
+
+	System.out.println("Reports calling");
+	sendDownload(request, response, "Notice_Water");
+}
+
+	
+	
+	@RequestMapping("/rtiApplicationReport/fireworksCertificateReport.do")
+	public void fireworksCertificateReport(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, Exception {
+
+		System.out.println("Reports calling");
+		sendDownload(request, response, "FireworksLicense");
+	}
+	
+@RequestMapping("/rtsApplicationReport/nurisngHomeChangeInApplication.do")
+public void nurisngHomeChangeInApplication(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, Exception {
+
+	String head_type="";
+	String typeOfcange=request.getParameter("type_change");
+	if(typeOfcange.equals("3")) {
+		head_type="Change of Owner in Nursing Home Registration";
+	}else if(typeOfcange.equals("4")) {
+		head_type="Change in Bed Count for Nursing Home Registration";
+
+	}
+	System.out.println("Reports calling");
+	request.setAttribute("head_type", head_type);
+
+	sendDownloadforChangeInNoOfBeds(request, response, "change_In_No_of_beds",typeOfcange,head_type);
+}
+
+public void sendDownloadforChangeInNoOfBeds(HttpServletRequest request, HttpServletResponse response, String reportName,String typeOfcange,String head_type) {
+	try (Connection connnection = sessionFactory.getCurrentSession().connection();) {
+		HashMap<String, Object> parameters = new HashMap<String, Object>();
+		String rtiapplrefid =request.getParameter("rtiApplicationRefId");//"1268";
+				
+		parameters.put("rtiapplrefid", rtiapplrefid);
+		parameters.put("head_type", typeOfcange);
+		parameters.put("title", head_type);
+		String requestURL = request.getRequestURL().toString();
+		String ctx = request.getContextPath();
+		String serverHost = requestURL.substring(0, requestURL.indexOf(ctx));
+
+		String reportFilePath = getServletContext().getRealPath("/reports/rtiApplication/" + reportName + ".jasper");
+		JasperPrint jasperPrint = JasperFillManager.fillReport(reportFilePath, parameters, connnection);
+		byte[] pdf = JasperExportManager.exportReportToPdf(jasperPrint);
+
+		response.setHeader("Content-Disposition", "attachoment; filename=" + reportName + ".pdf");
+		response.setContentType("application/pdf");
+		response.setContentLength(pdf.length);
+		response.getOutputStream().write(pdf);
+		response.getOutputStream().flush();
+	} catch (Exception e) {
+		e.printStackTrace();
+		log.error(e.getMessage());
+	}
+}
+
+///reportcontroller
+@RequestMapping("/rtiApplicationReport/mtpCertificateReport.do")
+public void mtpCertificateReport(HttpServletRequest request, HttpServletResponse response)
+throws ServletException, Exception {
+
+//	   System.out.println("Reports calling");
+//	    int servicemtpId = Integer.parseInt(request.getParameter("servicemtpId"));
+//	    String rtiapplrefid;
+//
+//	    if (servicemtpId == 97) {
+//	        rtiapplrefid = request.getParameter("mtpId");
+//	        request.setAttribute("isMTP", true);
+//	    } else {
+//	        rtiapplrefid = request.getParameter("rtiApplicationRefId");
+//	        request.setAttribute("isMTP", false);
+//	    }
+
+	System.out.println("Reports calling");
+	    sendDownload(request, response, "MTP");
+
+}
+
+public void sendDownloads(HttpServletRequest request, HttpServletResponse response, String reportName) {
+    try (Connection connnection = sessionFactory.getCurrentSession().connection();) {
+        HashMap<String, Object> parameters = new HashMap<>();
+        String rtiapplrefid = request.getParameter("rtiApplicationId");
+
+        parameters.put("rtiapplrefid", rtiapplrefid);
+
+        String requestURL = request.getRequestURL().toString();
+        String ctx = request.getContextPath();
+        String serverHost = requestURL.substring(0, requestURL.indexOf(ctx));
+
+        parameters.put("serverHost", serverHost);
+        parameters.put("ctx", ctx);
+        parameters.put("REPORT_NMC_LOGO_PATH", serverHost + ctx + "/images/nmclogo.jpeg");
+        parameters.put("REPORT_NMC_LOGO_PATH", serverHost + ctx + "/images/g21.png");
+      //  parameters.put("baseURL", request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort());
+
+        String reportFilePath = getServletContext().getRealPath("/reports/rtiApplication/" + reportName + ".jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(reportFilePath, parameters, connnection);
+        byte[] pdf = JasperExportManager.exportReportToPdf(jasperPrint);
+
+        // Use "inline" for viewing the PDF in a new tab
+        response.setHeader("Content-Disposition", "inline; filename=" + reportName + ".pdf");
+        response.setContentType("application/pdf");
+        response.setContentLength(pdf.length);
+
+        // Write PDF content to the response
+        response.getOutputStream().write(pdf);
+        response.getOutputStream().flush();
+    } catch (Exception e) {
+        e.printStackTrace();
+        log.error(e.getMessage());
+    }
+}
+//
+//
+//public void sendDownloads(HttpServletRequest request, HttpServletResponse response, String reportName) {
+//	try (Connection connnection = sessionFactory.getCurrentSession().connection();) {
+//		HashMap<String, Object> parameters = new HashMap<String, Object>();
+//		String rtiapplrefid =request.getParameter("rtiApplicationId");//"1268";
+//
+//            parameters.put("rtiapplrefid", rtiapplrefid);
+//      
+//		String requestURL = request.getRequestURL().toString();
+//		String ctx = request.getContextPath();
+//		String serverHost = requestURL.substring(0, requestURL.indexOf(ctx));
+//		 parameters.put("REPORT_NMC_LOGO_PATH", serverHost + request.getContextPath()
+//		 + "/images/nmclogo.jpeg");
+//		 parameters.put("REPORT_NMC_LOGO_PATH", serverHost + request.getContextPath()
+//		 + "/images/g21.png");
+////		parameters.put("REPORT_NMC_BACKGROUND_IMAGE_PATH",
+////				serverHost + request.getContextPath() + "/images/NMCBackgroundFormat.jpg");
+////		
+////		System.out.println(parameters.put("REPORT_NMC_BACKGROUND_IMAGE_PATH",
+////				serverHost + request.getContextPath() +  "/images/NMCBackgroundFormat.jpg"));
+//
+//		
+//		//http://rtsnagpur.egovmars.in/RTS/images/NMCBackgroundFormat.jpg
+//		String reportFilePath = getServletContext().getRealPath("/reports/rtiApplication/" + reportName + ".jasper");
+//		JasperPrint jasperPrint = JasperFillManager.fillReport(reportFilePath, parameters, connnection);
+//		byte[] pdf = JasperExportManager.exportReportToPdf(jasperPrint);
+//
+//		response.setHeader("Content-Disposition", "attachoment; filename=" + reportName + ".pdf");
+//		response.setContentType("application/pdf");
+//		response.setContentLength(pdf.length);
+//		response.getOutputStream().write(pdf);
+//		response.getOutputStream().flush();
+//	} catch (Exception e) {
+//		e.printStackTrace();
+//		log.error(e.getMessage());
+//	}
+//}
+//
+////
+
+
+@RequestMapping("/rtiapplication/miscReport.do")
+public void miscReport(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, Exception {
+	HttpSession session = request.getSession();
+	try {
+		sendDownloadNotice(request, response, "MiscReceipt");
+	} catch (Exception e) {
+		session.setAttribute("message", "Report Generation Failed.");
+	}
+}
+
+
+public void sendDownloadNotice(HttpServletRequest request, HttpServletResponse response, String reportName) {
+    try (Connection connnection = sessionFactory.getCurrentSession().connection();) {
+        HashMap<String, Object> parameters = new HashMap<>();
+        String miscNo = request.getParameter("miscNo");
+
+        parameters.put("miscNo", miscNo);
+
+        String requestURL = request.getRequestURL().toString();
+        String ctx = request.getContextPath();
+        String serverHost = requestURL.substring(0, requestURL.indexOf(ctx));
+
+        parameters.put("serverHost", serverHost);
+        parameters.put("ctx", ctx);
+        parameters.put("REPORT_NMC_LOGO_PATH", serverHost + ctx + "/images/nmclogo.jpeg");
+        parameters.put("REPORT_NMC_LOGO_PATH", serverHost + ctx + "/images/g21.png");
+      //  parameters.put("baseURL", request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort());
+
+        String reportFilePath = getServletContext().getRealPath("/reports/rtiApplication/" + reportName + ".jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(reportFilePath, parameters, connnection);
+        byte[] pdf = JasperExportManager.exportReportToPdf(jasperPrint);
+
+        // Use "inline" for viewing the PDF in a new tab
+        response.setHeader("Content-Disposition", "inline; filename=" + reportName + ".pdf");
+        response.setContentType("application/pdf");
+        response.setContentLength(pdf.length);
+
+        // Write PDF content to the response
+        response.getOutputStream().write(pdf);
+        response.getOutputStream().flush();
+    } catch (Exception e) {
+        e.printStackTrace();
+        log.error(e.getMessage());
+    }
+    
+}
+@RequestMapping("/fireapplication/generateApplicationPdf.do")
+public void generateApplicationPdf(HttpServletRequest request,
+                                   HttpServletResponse response) throws Exception {
+
+    String rtiapplrefid = request.getParameter("rtiapplrefid");
+
+    try {
+        sendFireDownloads(request, response, "FireNoc", rtiapplrefid);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+public void sendFireDownloads(HttpServletRequest request, 
+        HttpServletResponse response, 
+        String reportName,
+        String rtiapplrefid) {
+	try (Connection connection = sessionFactory.getCurrentSession().connection()) {
+
+		HashMap<String, Object> parameters = new HashMap<>();
+		
+	    rtiapplrefid = request.getParameter("rtiapplrefid");
+
+		String applicationIdstr=String.valueOf(rtiapplrefid);
+		parameters.put("rtiapplrefid", applicationIdstr);
+
+		String requestURL = request.getRequestURL().toString();
+		String ctx = request.getContextPath();
+		String serverHost = requestURL.substring(0, requestURL.indexOf(ctx));
+
+		parameters.put("serverHost", serverHost);
+		parameters.put("ctx", ctx);
+		parameters.put("REPORT_NMC_LOGO_PATH", serverHost + ctx + "/images/nmclogo.jpeg");
+
+		String reportFilePath = getServletContext()
+				.getRealPath("/reports/rtiApplication/" + reportName + ".jasper");
+
+		JasperPrint jasperPrint = JasperFillManager.fillReport(reportFilePath, parameters, connection);
+
+		byte[] pdf = JasperExportManager.exportReportToPdf(jasperPrint);
+
+		response.setHeader("Content-Disposition", "attachment; filename=" + reportName + ".pdf");
+		response.setContentType("application/pdf");
+		response.setContentLength(pdf.length);
+
+		response.getOutputStream().write(pdf);
+		response.getOutputStream().flush();
+
+	} catch (Exception e) {
+		e.printStackTrace();
+		log.error(e.getMessage());
+	}
+}
+
+}

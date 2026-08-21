@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2024-02-12T10:45:27 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Judgement_Reports" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="a122fd07-eda4-4ce1-9a4d-12ffb19f5af3">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="startDate" class="java.lang.String"/>
+	<parameter name="endDate" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[select cfe.case_file_entry_number as enerynumber,
+cfe .case_number as casenumber,
+cfe .case_file_entry_number as enerynumber,
+cfe .created_by as cby,
+cfe .applicant_petitioner_name  as citizenNmae,
+a.advocate_first_name as advname,
+c.court_name  as cname,
+cfe .case_filed_date as cdate
+from egovlcms.case_file_entry cfe, egovlcms.advocate a ,egovlcms.court c 
+where cfe .advocate_id =a.advocate_id and 
+cfe .court_id =c.court_id and
+to_date(cfe .case_filed_date ,'DD/MM/YYYY') between $P{startDate} and $P{endDate} ;]]>
+	</queryString>
+	<field name="enerynumber" class="java.lang.String"/>
+	<field name="casenumber" class="java.lang.String"/>
+	<field name="cby" class="java.lang.String"/>
+	<field name="advname" class="java.lang.String"/>
+	<field name="citizenNmae" class="java.lang.String"/>
+	<field name="cname" class="java.lang.String"/>
+	<field name="cdate" class="java.lang.String"/>
+	<variable name="s.no" class="java.lang.Integer" calculation="Count"/>
+	<group name="dogfooter"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="142" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="109" width="750" height="33" uuid="fca3c328-6659-467e-bb6c-6892068343cf"/>
+			</rectangle>
+			<line>
+				<reportElement x="26" y="109" width="1" height="33" uuid="84d1143e-0b72-49d6-907f-5c6fe4b07676"/>
+			</line>
+			<line>
+				<reportElement x="128" y="109" width="1" height="33" uuid="bbf6d5dc-366e-4652-a464-55d2355cff27"/>
+			</line>
+			<line>
+				<reportElement x="288" y="108" width="1" height="33" uuid="6463956b-8c19-4d63-8476-27d67f6bf364"/>
+			</line>
+			<line>
+				<reportElement x="384" y="109" width="1" height="33" uuid="d6ec2b2c-7f9a-4459-9bf3-aadd52ef26ff"/>
+			</line>
+			<line>
+				<reportElement x="482" y="109" width="1" height="33" uuid="072582f6-24a8-4b8f-88a1-2325e1a61e2b"/>
+			</line>
+			<line>
+				<reportElement x="571" y="109" width="1" height="33" uuid="5b645d5b-9182-4596-aa8d-5223972ceb9b"/>
+			</line>
+			<line>
+				<reportElement x="664" y="109" width="1" height="33" uuid="32920bdf-90e1-48da-93cb-4db471d2048c"/>
+			</line>
+			<staticText>
+				<reportElement x="131" y="112" width="157" height="30" uuid="4066e419-1cab-4aa8-98fa-57475d10696d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Applicant Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="110" width="103" height="30" uuid="4b12e92d-352e-4d2e-b852-708a007b327d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Case Entery No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="288" y="110" width="96" height="30" uuid="558cedcb-780d-4d59-8208-7f7756f0f578"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Case Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="111" width="96" height="30" uuid="cc6bf1d9-e5b8-48c7-90aa-dd9b5ff2d0be"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Court Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="483" y="111" width="88" height="30" uuid="12d1e564-1152-4666-9d53-c3626608c820"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Case Field Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="573" y="110" width="88" height="30" uuid="cf72d51f-1a6c-43bf-876f-fd2744f1b6df"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Advoacte Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="664" y="111" width="88" height="30" uuid="26cbd730-0567-43d8-a71b-bf3e2b60323e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Created By]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="111" width="24" height="30" uuid="33149b6d-4553-4a43-aeb9-a3e30334be07"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sr.No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="104" y="20" width="520" height="30" uuid="5e0eac9d-1ab7-43ea-b0d6-6397d795c886"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[छत्रपती संभाजी नगर महानगरपालिका]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="106" y="59" width="520" height="30" uuid="983371e3-efc3-408d-bdd1-8482026bd140"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Case Enery Reports]]></text>
+			</staticText>
+			<image>
+				<reportElement x="5" y="20" width="74" height="76" uuid="538e4cbf-b00d-411c-a099-58af912faaf6"/>
+				<imageExpression><![CDATA["https://aurangabadmahapalika.org/Watersupply/images/amc_logo.jpeg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="671" y="20" width="74" height="76" uuid="a5b6a476-f8ad-4726-89b4-64d801b57d12"/>
+				<imageExpression><![CDATA["https://aurangabadmahapalika.org/Watersupply/images/amc_logo.jpeg"]]></imageExpression>
+			</image>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="34">
+			<rectangle>
+				<reportElement x="0" y="0" width="750" height="33" uuid="2802a39f-bd9e-4e1a-b797-475584b6a324"/>
+			</rectangle>
+			<line>
+				<reportElement x="26" y="0" width="1" height="33" uuid="3f78290a-4b6e-4498-963e-aeba78e6b697"/>
+			</line>
+			<line>
+				<reportElement x="128" y="0" width="1" height="33" uuid="71be8e72-a2b0-420b-a88a-ee10a7ebf282"/>
+			</line>
+			<line>
+				<reportElement x="288" y="-1" width="1" height="33" uuid="f8f2cd73-b887-4ab4-8b3e-2c9cae35217b"/>
+			</line>
+			<line>
+				<reportElement x="384" y="0" width="1" height="33" uuid="c1317e8e-2516-4679-a6e2-550afa955a5b"/>
+			</line>
+			<line>
+				<reportElement x="482" y="0" width="1" height="33" uuid="3fe09dcb-cf90-44e6-b7c5-db56acb4317a"/>
+			</line>
+			<line>
+				<reportElement x="571" y="0" width="1" height="33" uuid="270ee487-3214-4f03-a878-dcdb5cc8484f"/>
+			</line>
+			<line>
+				<reportElement x="664" y="0" width="1" height="33" uuid="28d568e0-82ba-4437-9d32-17d139b19be9"/>
+			</line>
+			<textField>
+				<reportElement x="28" y="1" width="100" height="30" uuid="5abb50d5-7010-4a0d-a8f6-f1ed8083b2d5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{enerynumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="129" y="1" width="159" height="30" uuid="ddf38918-2668-49b4-9a2a-b62c3fa68355"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{citizenNmae}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="288" y="1" width="97" height="30" uuid="5e752d8b-ae45-4e8a-850c-b8f3562b0b62"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{casenumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="386" y="1" width="97" height="30" uuid="6f93016a-af21-439e-8a48-6cb8b8ba1015"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="482" y="1" width="89" height="30" uuid="a5cf8922-3352-498c-a684-802192a9b64c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cdate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="573" y="1" width="89" height="30" uuid="1445dd4e-1961-4363-812b-43c250b30499"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{advname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="665" y="1" width="89" height="30" uuid="d9ea53aa-c4f2-46b2-b15d-969e5ddf2e7a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cby}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="1" width="27" height="30" uuid="3a530845-a19c-4a1d-b230-171126523e25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="615" y="1" width="140" height="30" uuid="1d161daa-78bc-491c-9c92-f6aff0c2c37e"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

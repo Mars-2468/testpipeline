@@ -1,0 +1,384 @@
+package com.mars.rti.model;
+
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class GetRTSPropertyCollectionDetail {
+    
+    @JsonProperty("GetRTSPropertyCollectionDetailResult")
+    private GetRTSPropertyCollectionDetailResult getRTSPropertyCollectionDetailResult;
+
+    public GetRTSPropertyCollectionDetailResult getGetRTSPropertyCollectionDetailResult() {
+        return getRTSPropertyCollectionDetailResult;
+    }
+
+    public void setGetRTSPropertyCollectionDetailResult(
+            GetRTSPropertyCollectionDetailResult getRTSPropertyCollectionDetailResult) {
+        this.getRTSPropertyCollectionDetailResult = getRTSPropertyCollectionDetailResult;
+    }
+
+    public static class GetRTSPropertyCollectionDetailResult {
+
+        @JsonProperty("RecordCount")
+        private int recordCount;
+
+        @JsonProperty("ResponseCode")
+        private String responseCode;
+
+        @JsonProperty("Result")
+        private Result result;
+
+        @JsonProperty("ResultList")
+        private List resultList;
+
+        @JsonProperty("ResponseMessage")
+        private String responseMessage;
+        
+        public GetRTSPropertyCollectionDetailResult(
+                @JsonProperty("RecordCount") int recordCount,
+                @JsonProperty("ResponseCode") String responseCode,
+                @JsonProperty("Result") Result result,
+                @JsonProperty("ResultList") List resultList) {
+            this.recordCount = recordCount;
+            this.responseCode = responseCode;
+            this.result = result;
+            this.resultList = resultList;
+        }
+
+        public int getRecordCount() {
+            return recordCount;
+        }
+
+        public void setRecordCount(int recordCount) {
+            this.recordCount = recordCount;
+        }
+
+        public String getResponseCode() {
+            return responseCode;
+        }
+
+        public void setResponseCode(String responseCode) {
+            this.responseCode = responseCode;
+        }
+
+        public Result getResult() {
+            return result;
+        }
+
+        public void setResult(Result result) {
+            this.result = result;
+        }
+
+        public List getResultList() {
+            return resultList;
+        }
+
+        public void setResultList(List resultList) {
+            this.resultList = resultList;
+        }
+
+        public String getResponseMessage() {
+            return responseMessage;
+        }
+
+        public void setResponseMessage(String responseMessage) {
+            this.responseMessage = responseMessage;
+        }
+    }
+
+    public static class Result {
+        @JsonProperty("ADDRESS")
+        private String address;
+
+        @JsonProperty("ARREARSPAYMENTSTATUS")
+        private String arrearsPaymentStatus;
+
+        @JsonProperty("ARREARSPENDING")
+        private String arrearsPending;
+
+        @JsonProperty("AdvanceAmount")
+        private double advanceAmount;
+        
+        @JsonProperty("BLOCKNAME")
+        private String blockName;
+
+        @JsonProperty("BLOCKID")
+        private long blockNo;
+
+        @JsonProperty("BLOCKNO")
+        private String wardNo;
+        
+        @JsonProperty("DueAmount")
+        private double duesAmount;
+        
+        @JsonProperty("HOUSE_NO")
+        private String houseNo;
+        
+        @JsonProperty("MOBILENO")
+        private String mobileNo;
+
+        @JsonProperty("OCCUPIERNAME")
+        private String occupierName;
+        
+        @JsonProperty("OWNERNAME")
+        private String ownerName;
+        
+        @JsonProperty("OldPTN")
+        private String indexNumber;
+
+        @JsonProperty("PINCODE")
+        private String pincode;
+
+        @JsonProperty("PROPERTYID")
+        private long propertyId;
+
+        @JsonProperty("PTN")
+        private String ptn;
+
+        @JsonProperty("PaymentStatus")
+        private String paymentStatus;
+        
+        @JsonProperty("ZONEID")
+        private int zoneId;
+
+        @JsonProperty("ZONENAME")
+        private String zoneName;
+
+        @JsonProperty("ZONENO")
+        private String zoneNo;
+
+        @JsonProperty("ASSESSMENT_DETAIL_ID")
+		private String assessmentDetailsId;
+        
+        @JsonProperty("MUTATION_ID")
+        private long mutationId;
+
+		public String getAddress() {
+			return address;
+		}
+
+		public void setAddress(String address) {
+			this.address = address;
+		}
+
+		public String getArrearsPaymentStatus() {
+			return arrearsPaymentStatus;
+		}
+
+		public void setArrearsPaymentStatus(String arrearsPaymentStatus) {
+			this.arrearsPaymentStatus = arrearsPaymentStatus;
+		}
+
+		public String getArrearsPending() {
+			return arrearsPending;
+		}
+
+		public void setArrearsPending(String arrearsPending) {
+			this.arrearsPending = arrearsPending;
+		}
+
+		public double getAdvanceAmount() {
+			return advanceAmount;
+		}
+
+		public void setAdvanceAmount(double advanceAmount) {
+			this.advanceAmount = advanceAmount;
+		}
+
+		public String getBlockName() {
+			return blockName;
+		}
+
+		public void setBlockName(String blockName) {
+			this.blockName = blockName;
+		}
+
+		public long getBlockNo() {
+			return blockNo;
+		}
+
+		public void setBlockNo(long blockNo) {
+			this.blockNo = blockNo;
+		}
+
+		public String getWardNo() {
+			return wardNo;
+		}
+
+		public void setWardNo(String wardNo) {
+			this.wardNo = wardNo;
+		}
+
+		public double getDuesAmount() {
+			return duesAmount;
+		}
+
+		public void setDuesAmount(double duesAmount) {
+			this.duesAmount = duesAmount;
+		}
+
+		public String getHouseNo() {
+			return houseNo;
+		}
+
+		public void setHouseNo(String houseNo) {
+			this.houseNo = houseNo;
+		}
+
+		public String getMobileNo() {
+			return mobileNo;
+		}
+
+		public void setMobileNo(String mobileNo) {
+			this.mobileNo = mobileNo;
+		}
+
+		public String getOccupierName() {
+			return occupierName;
+		}
+
+		public void setOccupierName(String occupierName) {
+			this.occupierName = occupierName;
+		}
+
+		public String getOwnerName() {
+			return ownerName;
+		}
+
+		public void setOwnerName(String ownerName) {
+			this.ownerName = ownerName;
+		}
+
+		public String getIndexNumber() {
+			return indexNumber;
+		}
+
+		public void setIndexNumber(String indexNumber) {
+			this.indexNumber = indexNumber;
+		}
+
+		public String getPincode() {
+			return pincode;
+		}
+
+		public void setPincode(String pincode) {
+			this.pincode = pincode;
+		}
+
+		public long getPropertyId() {
+			return propertyId;
+		}
+
+		public void setPropertyId(long propertyId) {
+			this.propertyId = propertyId;
+		}
+
+		public String getPtn() {
+			return ptn;
+		}
+
+		public void setPtn(String ptn) {
+			this.ptn = ptn;
+		}
+
+		public String getPaymentStatus() {
+			return paymentStatus;
+		}
+
+		public void setPaymentStatus(String paymentStatus) {
+			this.paymentStatus = paymentStatus;
+		}
+
+		public int getZoneId() {
+			return zoneId;
+		}
+
+		public void setZoneId(int zoneId) {
+			this.zoneId = zoneId;
+		}
+
+		public String getZoneName() {
+			return zoneName;
+		}
+
+		public void setZoneName(String zoneName) {
+			this.zoneName = zoneName;
+		}
+
+		public String getZoneNo() {
+			return zoneNo;
+		}
+
+		public void setZoneNo(String zoneNo) {
+			this.zoneNo = zoneNo;
+		}
+
+		public String getAssessmentDetailsId() {
+			return assessmentDetailsId;
+		}
+
+		public void setAssessmentDetailsId(String assessmentDetailsId) {
+			this.assessmentDetailsId = assessmentDetailsId;
+		}
+
+		public long getMutationId() {
+			return mutationId;
+		}
+
+		public void setMutationId(long mutationId) {
+			this.mutationId = mutationId;
+		}
+
+		public Result(@JsonProperty("ADDRESS") String address,
+                @JsonProperty("ARREARSPAYMENTSTATUS") String arrearsPaymentStatus,
+                @JsonProperty("ARREARSPENDING") String arrearsPending,
+                @JsonProperty("AdvanceAmount") double advanceAmount,
+                @JsonProperty("BLOCKNAME") String blockName,
+                @JsonProperty("BLOCKID") long blockNo,
+                @JsonProperty("BLOCKNO") String wardNo,
+                @JsonProperty("DueAmount") double duesAmount,
+                @JsonProperty("HOUSE_NO") String houseNo,
+                @JsonProperty("MOBILENO") String mobileNo,
+                @JsonProperty("OCCUPIERNAME") String occupierName,
+                @JsonProperty("OWNERNAME") String ownerName,
+                @JsonProperty("OldPTN") String indexNumber,
+                @JsonProperty("PINCODE") String pincode,
+                @JsonProperty("PROPERTYID") long propertyId,
+                @JsonProperty("PTN") String ptn,
+                @JsonProperty("PaymentStatus") String paymentStatus,
+                @JsonProperty("ZONEID") int zoneId,
+                @JsonProperty("ZONENAME") String zoneName,
+                @JsonProperty("ZONENO") String zoneNo,
+                @JsonProperty("ASSESSMENT_DETAIL_ID") String assessmentDetailsId,
+                @JsonProperty("MUTATION_ID") long mutationId) {
+      this.address = address;
+      this.arrearsPaymentStatus = arrearsPaymentStatus;
+      this.arrearsPending = arrearsPending;
+      this.advanceAmount = advanceAmount;
+      this.blockName = blockName;
+      this.blockNo = blockNo;
+      this.wardNo = wardNo;
+      this.duesAmount = duesAmount;
+      this.houseNo = houseNo;
+      this.mobileNo = mobileNo;
+      this.occupierName = occupierName;
+      this.ownerName = ownerName;
+      this.indexNumber = indexNumber;
+      this.pincode = pincode;
+      this.propertyId = propertyId;
+      this.ptn = ptn;
+      this.paymentStatus = paymentStatus;
+      this.zoneId = zoneId;
+      this.zoneName = zoneName;
+      this.zoneNo = zoneNo;
+      this.assessmentDetailsId = assessmentDetailsId;
+      this.mutationId = mutationId;
+  }
+        
+        
+		}
+
+       
+    }
+

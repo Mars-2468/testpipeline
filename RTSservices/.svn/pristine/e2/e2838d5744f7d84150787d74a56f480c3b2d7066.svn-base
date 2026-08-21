@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2024-12-03T14:58:11 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DogLicenseReMainApplication" pageWidth="1030" pageHeight="1400" columnWidth="960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="47fea150-c831-4f21-980d-c72cc003dddc">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Egov_Nmc"/>
+	<parameter name="rtiapplrefid" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{rtiapplrefid}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from egovrti.doglicence mp, egovrti.rti_application ra where mp.rti_ref_id = ra.rti_application_id and mp.rti_ref_id=$P{rtiapplrefid}]]>
+	</queryString>
+	<field name="dog_license_id" class="java.lang.Long"/>
+	<field name="first_name" class="java.lang.String"/>
+	<field name="middle_name" class="java.lang.String"/>
+	<field name="last_name" class="java.lang.String"/>
+	<field name="plot_no" class="java.lang.String"/>
+	<field name="building_name" class="java.lang.String"/>
+	<field name="street_name" class="java.lang.String"/>
+	<field name="area_name" class="java.lang.String"/>
+	<field name="pin_code" class="java.lang.String"/>
+	<field name="nearby_landmark" class="java.lang.String"/>
+	<field name="mobile_number" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="colony_name" class="java.lang.String"/>
+	<field name="correspondence_address" class="java.lang.String"/>
+	<field name="no_of_dog" class="java.lang.Long"/>
+	<field name="dog_details" class="java.lang.String"/>
+	<field name="dog_type" class="java.lang.String"/>
+	<field name="dog_sub_type" class="java.lang.String"/>
+	<field name="dog_name" class="java.lang.String"/>
+	<field name="gender" class="java.lang.String"/>
+	<field name="dog_age" class="java.lang.Long"/>
+	<field name="dog_color" class="java.lang.String"/>
+	<field name="dog_height" class="java.lang.Long"/>
+	<field name="dog_tail_length" class="java.lang.Long"/>
+	<field name="amount" class="java.lang.Long"/>
+	<field name="first_dose_date" class="java.lang.String"/>
+	<field name="second_dose_date" class="java.lang.String"/>
+	<field name="batch_no" class="java.lang.String"/>
+	<field name="vaccine_name" class="java.lang.String"/>
+	<field name="surgeon_name" class="java.lang.String"/>
+	<field name="designation" class="java.lang.String"/>
+	<field name="vaccination_certificate" class="java.lang.String"/>
+	<field name="title" class="java.lang.String"/>
+	<field name="rti_appl_ref_no" class="java.lang.String"/>
+	<field name="rti_ref_id" class="java.lang.Long"/>
+	<field name="zone_no" class="java.lang.String"/>
+	<field name="ward_no" class="java.lang.String"/>
+	<field name="operated" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="dog_details_id" class="java.lang.Long"/>
+	<field name="dog_files" class="java.lang.String"/>
+	<field name="doc_noc" class="java.lang.String"/>
+	<field name="doc_land_availability" class="java.lang.String"/>
+	<field name="operated_files" class="java.lang.String"/>
+	<field name="vaccination_second" class="java.lang.String"/>
+	<field name="applicant_city" class="java.lang.String"/>
+	<field name="renewaldog" class="java.lang.String"/>
+	<field name="dog_img_files" class="java.lang.String"/>
+	<field name="certificate_issued" class="java.lang.String"/>
+	<field name="renewal_status" class="java.lang.Integer"/>
+	<field name="rti_application_id" class="java.lang.Long"/>
+	<field name="rti_application_number" class="java.lang.String"/>
+	<field name="inward_number" class="java.lang.String"/>
+	<field name="registration_date" class="java.lang.String"/>
+	<field name="received_date" class="java.lang.String"/>
+	<field name="closed_date" class="java.lang.String"/>
+	<field name="subject" class="java.lang.String"/>
+	<field name="information_required" class="java.lang.String"/>
+	<field name="number_of_copies" class="java.lang.Integer"/>
+	<field name="amount_per_copy" class="java.lang.Double"/>
+	<field name="application_cost" class="java.lang.Double"/>
+	<field name="workflow_status" class="java.lang.Integer"/>
+	<field name="final_status" class="java.lang.String"/>
+	<field name="final_status_when_parked" class="java.lang.String"/>
+	<field name="is_application_parked" class="java.lang.Integer"/>
+	<field name="created_date" class="java.lang.String"/>
+	<field name="is_feepaid" class="java.lang.Integer"/>
+	<field name="applicant_name" class="java.lang.String"/>
+	<field name="COLUMN_69" class="java.lang.Integer"/>
+	<field name="state" class="java.lang.String"/>
+	<field name="phone_number" class="java.lang.String"/>
+	<field name="COLUMN_72" class="java.lang.String"/>
+	<field name="COLUMN_73" class="java.lang.String"/>
+	<field name="pincode" class="java.lang.Integer"/>
+	<field name="bpl" class="java.lang.Integer"/>
+	<field name="bpl_card_number" class="java.lang.String"/>
+	<field name="address_line1" class="java.lang.String"/>
+	<field name="address_line2" class="java.lang.String"/>
+	<field name="district" class="java.lang.String"/>
+	<field name="postal_charges" class="java.lang.Double"/>
+	<field name="rti_application_ref_number" class="java.lang.String"/>
+	<field name="rti_application_ref_id" class="java.lang.Long"/>
+	<field name="is_rti_appeal_application" class="java.lang.Integer"/>
+	<field name="has_assigned_user" class="java.lang.Integer"/>
+	<field name="rti_service_id" class="java.lang.Integer"/>
+	<field name="received_mode_id" class="java.lang.Long"/>
+	<field name="fee_master_id" class="java.lang.Long"/>
+	<field name="created_user_id" class="java.lang.Long"/>
+	<field name="assigned_section_id" class="java.lang.Long"/>
+	<field name="assigned_department_id" class="java.lang.Long"/>
+	<field name="application_department_id" class="java.lang.Long"/>
+	<field name="assignee_user_id" class="java.lang.Long"/>
+	<field name="tenancyid" class="java.lang.Long"/>
+	<field name="pdf_files_saved_path" class="java.lang.String"/>
+	<field name="pdf_upload_from_portal" class="java.lang.String"/>
+	<field name="remarks" class="java.lang.String"/>
+	<field name="ward_name" class="java.lang.String"/>
+	<field name="zone" class="java.lang.String"/>
+	<field name="department" class="java.lang.String"/>
+	<field name="template_name" class="java.lang.String"/>
+	<field name="user_mobile_no" class="java.lang.String"/>
+	<field name="mobile_app_user_number" class="java.lang.String"/>
+	<field name="police_noc" class="java.lang.String"/>
+	<field name="fire_noc" class="java.lang.String"/>
+	<field name="traffic_noc" class="java.lang.String"/>
+	<field name="workflow_level_time" class="java.lang.String"/>
+	<field name="workflow_level" class="java.lang.String"/>
+	<field name="zone_map" class="java.lang.String"/>
+	<field name="property_payment_receipt" class="java.lang.String"/>
+	<field name="workflow_comments" class="java.lang.String"/>
+	<field name="rejectionletter" class="java.lang.String"/>
+	<field name="demandletter" class="java.lang.String"/>
+	<field name="noc" class="java.lang.String"/>
+	<field name="citizennoc" class="java.lang.String"/>
+	<field name="first_payment_fees" class="java.lang.String"/>
+	<field name="plantationletter" class="java.lang.String"/>
+	<field name="property_tax_certificate" class="java.lang.String"/>
+	<field name="tax_other_citizen_document_upload" class="java.lang.String"/>
+	<field name="aaplesarkar_user_mobile_no" class="java.lang.String"/>
+	<field name="year" class="java.lang.String"/>
+	<field name="kiosk_mobile_number" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="893" splitType="Stretch">
+			<subreport>
+				<reportElement positionType="Float" x="0" y="0" width="979" height="259" uuid="123e4567-e89b-12d3-a456-426614174000"/>
+				<subreportParameter name="rtiapplrefid">
+					<subreportParameterExpression><![CDATA[$P{rtiapplrefid}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["DogLicenseReApplication.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="270" width="980" height="315" uuid="00d01692-7996-446f-a85f-bca9add32df6"/>
+				<subreportParameter name="rtiapplrefid">
+					<subreportParameterExpression><![CDATA[$P{rtiapplrefid}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["DogSubReport.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="590" width="980" height="248" uuid="7ee4de10-a4eb-49a2-8eeb-9b791dccc621"/>
+				<subreportParameter name="rtiapplrefid">
+					<subreportParameterExpression><![CDATA[$P{rtiapplrefid}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["DogSecondSubReport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

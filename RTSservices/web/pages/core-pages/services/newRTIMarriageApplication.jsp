@@ -1,0 +1,2420 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:directive.include file="/pages/common/include.jsp" />
+<jsp:directive.include
+	file="/pages/core-pages/nmc_user/dashboard/header.jsp" />
+<jsp:directive.page import="com.mars.common.utils.Constants" />
+<jsp:directive.page import="com.mars.rti.utils.CoreConstants" />
+<jsp:directive.page import="com.mars.common.utils.CommonUtils" />
+
+
+<head>
+<title>Nagpur Municipal Corporation</title>
+<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="csrf-token"
+			content="L1tBXJBCG7Qg3zc8hd8zkv3US8Yq8R7ihDGuzHIc" />
+		<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+			integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+			crossorigin="anonymous"></script>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+			crossorigin="anonymous">
+			<script
+				src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+				integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+				crossorigin="anonymous"></script>
+			<!-- CSS only -->
+			<link
+				href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+				rel="stylesheet"
+				integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+				crossorigin="anonymous">
+				<script
+					src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+				<script src="jquery-3.6.1.min.js"></script>
+				<!-- JavaScript Bundle with Popper -->
+				<script
+					src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+					integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+					crossorigin="anonymous"></script>
+				<script src="Vjdog.js"></script>
+				<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+				<script type="text/javascript"
+					src="<c:out value=" ${contextRoot}" />/scripts/jquery/jquery.ajaxfileupload.js"></script>
+				<link rel="stylesheet"
+					href="<c:out value='${contextRoot}'/>/pages/core-pages/nmc_user/css/bootstrap.min.css">
+					<link rel="stylesheet" type="text/css"
+						href="<c:out value='${contextRoot}'/>/pages/core-pages/nmc_user/css/style2.css" />
+					<script
+						src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+					<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+					<%
+pageContext.setAttribute("DATE_FORMAT", Constants.DATE_FORMAT);
+pageContext.setAttribute("SESSION_TOKEN_KEY", Constants.SESSION_TOKEN_KEY);
+pageContext.setAttribute("STATUS_NO_LABEL", Constants.STATUS_NO_LABEL);
+pageContext.setAttribute("STATUS_YES_LABEL", Constants.STATUS_YES_LABEL);
+pageContext.setAttribute("STATUS_NO", Constants.STATUS_NO);
+pageContext.setAttribute("STATUS_YES", Constants.STATUS_YES);
+pageContext.setAttribute("UPLOAD_PATH", CoreConstants.UPLOAD_PATH);
+///pageContext.setAttribute("statusList", CommonUtils.getStatus());
+%>
+
+
+					<style>
+label {
+	font-weight: 600;
+}
+
+h3 {
+	font-weight: 500;
+}
+@page {
+  size: legal landscape; /* Landscape orientation for Legal size */
+}
+@media print {
+  body {
+    transform: scale(0.9); /* Adjust the scale factor as needed */
+    transform-origin: center center;
+  }
+
+}
+
+ @page {
+     size: auto ;
+     }
+</style>
+
+<!-- Local Video -->
+   <div class="text-center mt-3">
+    <h4>Video Guide for Filling the Form</h4>
+    <a href="${pageContext.request.contextPath}/ws/rtsapplication/marriageApplicationVideo.do" target="_blank" class="btn btn-primary mt-2">
+        Watch Full-Screen Video
+    </a>
+</div>
+   
+
+    <hr>
+    <form class="needs-validation" novalidate>
+	<div class="container-fluid mt-2" style="width: 190vh">
+		<div class="printable">
+			<h3 class="text-center">Application Form For Marriage
+				Certificate (विवाह प्रमाणपत्रासाठी अर्ज)</h3>
+		</div>
+		<h6 style="background-color: #dce2e8; padding: 10px;"
+			class="  rounded-2">
+			<strong> Applicant Details (अर्जदाराचे तपशील) </strong>
+		</h6>
+		
+		<div class="row">
+			<input type="hidden" name="_token" value="xyz">
+			<input type="hidden" name="str" value="<c:out value='${str}'/>">
+			<input type="hidden" name="serviceId" value="<c:out value='${serviceId}'/>">
+			<input type="hidden" name="fields" value="<c:out value='${fields_aps}'/>">
+			<input type="hidden" name="distric" value="<c:out value='${distric}'/>">
+			<input type="hidden" name="trackid" value="<c:out value='${trackid}'/>">
+			<input type="hidden" name="user" value="<c:out value='${user}'/>">
+			<input type="hidden" name="mobile" value="<c:out value='${mobile}'/>">
+			<input type="hidden" name="name" value="<c:out value='${name}'/>">
+			
+				<div class="col-md-3">
+					<div class="mb-3 mt-3">
+						<label for="" class="form-label lbleng">Title (शीर्षक) <span
+							class="text-danger">*</span>
+						</label> <select class="form-select" style="background-image: none;"
+							name="title" required>
+							<option value="">-Select-</option>
+							<option value="Mr (श्री)">Mr (श्री)</option>
+							<option value="Mrs (सौ)">Mrs (सौ)</option>
+							<option value="Ms (कु)">Ms (कु)</option>
+						</select>
+						<div class="invalid-feedback">Please Select Title.</div>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="mb-3 mt-3">
+						<label for="" class="form-label lbleng">Name (नाव)<span
+							class="text-danger">*</span></label> <input type="text"
+							class="form-control" style="background-image: none;"
+							id="first_name" placeholder="" name="firstName" value=""
+							pattern="^[A-Za-z]+( [A-Za-z]+)*$" onchange="Display(this.id)" required>
+							<div class="invalid-feedback">Please Enter Valid Name.</div>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="mb-3 mt-3">
+						<label for="" class="form-label lbleng">Father's Name
+							(वडीलांचे नाव)</label> <input type="text" class="form-control"
+							style="background-image: none;" id="middle_name" placeholder=""
+							name="middleName" value="" pattern="^[A-Za-z]+( [A-Za-z]+)*$"
+							onchange="Display(this.id)">
+							<div class="invalid-feedback">Please Enter Valid Data.
+												</div>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="mb-3 mt-3">
+						<label for="" class="form-label lbleng">Surname (आडनाव)</label> <input
+							type="text" class="form-control" style="background-image: none;"
+							name="lastName" id="last_name" value="" pattern="[A-Za-z]+"
+							onchange="Display(this.id)">
+							<div class="invalid-feedback">Please Enter Valid Surname.</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="mb-3 mt-3">
+						<label for="" class="form-label">Full Name (संपूर्ण नाव)</label> <input
+							type="text" class="form-control" style="background-image: none;"
+							id="full_name" placeholder="" name="fullName" value="" readonly>
+					</div>
+				</div> <script>
+                    function Display(id) {
+                                  $('#full_name').val( $('#first_name').val()+" "+ $('#middle_name').val()+" "+ $('#last_name').val())
+                            }
+                    </script>
+
+				<div class="col-md-3">
+					<div class="mb-3 mt-3">
+						<label for="" class="form-label lbleng">Pin Code (पिन कोड)<span
+							class="text-danger">*</span></label> <input type="text"
+							class="form-control" style="background-image: none;"
+							pattern="[0-9]{6}" name="pinCode" value="" maxlength="6" required>
+							<div class="invalid-feedback">Please Enter Valid Pin Code.
+							</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="mb-3 mt-3">
+						<label for="" class="form-label"> Aadhaar No. (आधार क्र.)
+						</label> <input type="text" class="form-control "
+							style="background-image: none;" id="aadhaarNumber" placeholder=""
+							name="aadhaarNo" value="" pattern="[0-9]{12}" maxlength="12">
+							<div class="invalid-feedback">Please Enter Valid Aadhaar
+								No.</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="mb-3 mt-3">
+
+						<label for="email" class="form-label lbleng"> Email Id (ई
+							- मेल आयडी) <span class="text-danger">*</span>
+						</label> <input type="email" class="form-control "
+							style="background-image: none;" name="email" value="" required>
+							<div class="invalid-feedback">Please Enter Valid Email Id.
+							</div>
+					</div>
+				</div>
+
+
+				<div class="col-md-3">
+					<div class="mb-3 mt-3">
+						<label for="" class="form-label"> Mobile No. (मोबाईल क्र.)<span
+							class="text-danger" style="color: red;">*</span>
+						</label> <input type="text" class="form-control "
+							style="background-image: none;" id="txtMobileNumber"
+							placeholder="" name="mobileNumber" value=""
+							pattern="[6-9]{1}[0-9]{9}" maxlength="10" required>
+							<div class="invalid-feedback">Please Enter Valid Mobile No.
+							</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="mb-3 mt-3">
+						<label for="" class="form-label ">Zone No(झोन क्र.)<span
+							class="text-danger" style="color: red;" id="zone"
+							onclick="Zoneno(this.form)">*</span>
+						</label> <select class="form-select " style="background-image: none;"
+							id="iFunction" name="zoneNo" onchange="changeddl(this)" required>
+							<option value="" selected="">-Select Zone-</option>
+							<option value="1">Zone No.1 - Laxmi Nagar (लक्ष्मी नगर)</option>
+							<option value="2">Zone No.2 - Dharmpeth (धरमपेठ)</option>
+							<option value="3">Zone No.3 - Hanuman Nagar (वंदनीय
+								राष्ट्रसंत तुकडोजी महाराज)</option>
+							<option value="4">Zone No.4 - Dhantoli (धंतोली)</option>
+							<option value="5">Zone No.5 - Nehru Nagar (नेहरू नगर
+								श्रेत्रिय कार्यालय)</option>
+							<option value="6">Zone No.6 - Gandhi Zone Mahal (गांधी
+								झोन ​​महाल)</option>
+							<option value="7">Zone No.7 - Satranjipura (सतरंजीपुरा)</option>
+							<option value="8">Zone No.8 - Lakadganj (लकडगंज)</option>
+							<option value="9">Zone No.9 - Aashi Nagar (आशी नगर)</option>
+							<option value="10">Zone No.10 - Mangalwari (मंगळवारी)</option>
+
+
+						</select>
+
+						<div class="invalid-feedback ">Please Enter Valid Zone No.</div>
+
+					</div>
+				</div>
+				     <!-- applicant tenant -->
+                  <div class="col-md-4">
+                    <div class="mb-2 mt-2 ">
+                        <label for="" class=" form-label "> Is the applicant a tenant?(अर्जदार भाडेकरू आहे का?)<span class=" text-danger" style="color: red;">
+                        *</span></label>
+                       
+                        <div class="d-flex mt-2 border rounded  p-2">
+                            <div class="form-check ms-3">
+                                <input type="radio" class="form-check-input" id="radio5" name="tenant" value="Yes"
+                                    required>
+                                <label class="form-check-label " for="radio1">Yes (होय)</label>
+                               </div>
+
+                            <div class="form-check ms-3">
+                                <input type="radio" class="form-check-input" id="radio6" name="tenant" value="No"
+                                    required>
+
+                                <label class="form-check-label " for="radio1">No (नाही)</label>
+                               
+                                <div class="invalid-feedback ">
+                                        Please Select Valid Option.
+                                    </div>  
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+				<div class="col-md-12">
+					<div class="mb-3 mt-3">
+						<label for="primary_full_address" class="form-label lbleng">Full
+							Address (संपूर्ण पत्ता)<span class="text-danger">*</span>
+						</label>
+						<textarea oninput=" validateTextarea()" type=" text"
+							maxlength="80" class="form-control"
+							style="background-image: none;" id="myTextarea" placeholder=""
+							name="fullAddress" value="" rows="2" required></textarea>
+						<div class="invalid-feedback" id="errorFeedback">Please
+							Enter Valid Address.</div>
+					</div>
+				</div> <script>
+                    function validateTextarea() {
+                        const textarea = document.getElementById('myTextarea');
+                        const errorFeedback = document.getElementById('errorFeedback');
+                        const text = textarea.value;
+
+                        // Regular expression to check for leading spaces before the first letter
+                        const regex = /^\s*(\S)/;
+
+                        if (regex.test(text)) {
+                            textarea.classList.remove('is-invalid');
+                            errorFeedback.style.display = 'none';
+                        } else {
+                            textarea.classList.add('is-invalid');
+                            errorFeedback.style.display = 'block';
+                        }
+                    }
+                </script>
+		</div>
+		<br>
+
+
+
+
+			<h6 style="background-color: #dce2e8; padding: 10px;"
+				class="  rounded-2">
+				<strong> Application Form Details (अर्जाचा तपशील) </strong>
+			</h6>
+
+
+
+
+			<div class="row">
+				<div class="col-md-3" id="sub">
+					<div class="mb-3 mt-5">
+						<label for="" class="form-label lbleng"> Date of Marriage
+							(विवाह दिनांक)<span class="text-danger" style="color: red;">*</span>
+						</label> <input type="date" class="form-control"
+							style="background-image: none;" onchange="myfun()"
+							onmouseover="setTodayMaxDate(this)" id="datefees" placeholder=""
+							name="marriageDate" required>
+						<div class="invalid-feedback">Please Enter Valid Date of
+							Marriage.</div>
+					</div>
+				</div>
+
+<input type="hidden" name="marrgfs" value="" id="marrgfs" />
+				<script>
+    
+    function myfun() {
+
+
+        
+        let today = new Date().toISOString().slice(0, 10)
+
+        const startDate = document.getElementById("datefees").value;
+        const endDate = today;
+        
+
+        const diffInMs = new Date(endDate) - new Date(startDate)
+        const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+
+      
+
+
+        if (diffInDays <= 365 && diffInDays > 0) {
+
+            document.getElementById("days").value = diffInDays;
+            document.getElementById("fees").value = 1000;
+            document.getElementById("marrgfs").value = 100;
+
+
+        } else if (diffInDays > 365) {
+            document.getElementById("days").value = diffInDays;
+            document.getElementById("fees").value = 1500;
+            document.getElementById("marrgfs").value = 1500;
+
+        }
+
+        else {
+
+        }
+    }
+    
+
+    function setTodayMaxDate(input) {
+        var today = new Date().toISOString().split('T')[0];
+        input.setAttribute('max', today);
+    }
+
+</script>
+
+
+
+				<div class="col-md-4">
+					<div class="mb-3 mt-5">
+						<label for="" class="form-label lbleng"> Place of Marriage
+							(विवाहाचे ठिकाण (संपूर्ण तपशीलासह)<span class="text-danger"
+							style="color: red;">*</span>
+						</label> <input type="text" class="form-control "
+							style="background-image: none;" id="" placeholder=""
+							name="marriagePlace" value="" required>
+							<div class="invalid-feedback">Please Enter Valid Place of
+								Marriage.</div>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="mb-3 mt-0 ">
+						<label for="" class="form-label lbleng"> Personal law
+							according to which the Marriage between Parties and Solemnized
+							(पक्षकारांमधील विवाह ज्या व्यक्तिगत कायदान्वये विधी संपन्न झाला
+							तो कायदा)<span class="text-danger" style="color: red;">*</span>
+						</label> <select class="form-select" style="background-image: none;"
+							id='others' name="marriageLawReligion" required>
+							<option value="">-Select-</option>
+							<option value="Hindu (हिंदू)">Hindu (हिंदू)</option>
+							<option value="Buddhist (बौद्ध)">Buddhist (बौद्ध)</option>
+							<option value="Muslim (मुस्लिम)">Muslim (मुस्लिम)</option>
+							<option value="Sikh (शीख)">Sikh (शीख)</option>
+							<option value="Christian (ख्रिश्चन)">Christian
+								(ख्रिश्चन)</option>
+							<option value="Jain (जैन)">Jain (जैन)</option>
+							<option value="Parasi (पारशी)">Parsi (पारशी)</option>
+							<option value="Other (इतर)">Other (इतर)</option>
+
+						</select>
+						<div class="invalid-feedback">Please Enter Valid Personal
+							law according to which the Marriage between Parties and
+							Solemnized.</div>
+					</div>
+				</div>
+
+				
+
+			</div> <br>
+			<h6 style="background-color: #dce2e8; padding: 10px;"
+				class="rounded-2">
+				<strong> Details Of Husband (वराचे तपशील)</strong>
+			</h6>
+			<div class="row">
+				<div class="col-md-3">
+					<div class="mb-3 mt-3">
+						<label for="" class="form-label lbleng">Title (शीर्षक) <span
+							class="text-danger" style="color: red;">*</span>
+						</label> <select class="form-select" style="background-image: none;"
+							name="husbandTitle" required>
+							<option value="">-Select-</option>
+							<option value="Mr (श्री)">Mr (श्री)</option>
+							<option value="Mrs (सौ)">Mrs (सौ)</option>
+							<option value="Ms (कु)">Ms (कु)</option>
+						</select>
+						<div class="invalid-feedback">Please Select Title.</div>
+					</div>
+				</div>
+
+				
+
+				<div class="col-md-3">
+					<div class="mb-3 mt-3">
+						<label for="" class="form-label lbleng">Name (नाव)<span
+							class="text-danger" style="color: red;">*</span>
+						</label> <input type="text" class="form-control"
+							style="background-image: none;" id="" placeholder=""
+							name="husbandFirstName" value="" pattern="^[A-Za-z]+( [A-Za-z]+)*$" required>
+							<div class="invalid-feedback">Please Enter Valid Name.</div>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="mb-3 mt-3">
+						<label for="" class="form-label lbleng">Father's Name
+							(वडीलांचे नाव)
+						</label> <input type="text" class="form-control"
+							style="background-image: none;" id="" placeholder=""
+							name="husbandFatherName" value="" pattern="^[A-Za-z]+( [A-Za-z]+)*$">
+							<div class="invalid-feedback">Please Enter Valid Data.
+												</div>
+							
+					</div>
+				</div>
+				
+				<div class="col-md-3">
+					<div class="mb-3 mt-3">
+						<label for="" class="form-label  lbleng">Surname (आडनाव)
+						</label> <input type="text" class="form-control"
+							style="background-image: none;" id="" placeholder=""
+							name="husbandLastName" value="" pattern="[A-Za-z]+">
+							<div class="invalid-feedback">Please Enter Valid Surname.</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-3">
+						<div class="mb-3 mt-4">
+							<label for="" class="form-label"> Aadhaar No. (आधार क्र.)<span
+							class="text-danger" style="color: red;">*</span>
+							</label> <input type="text" class="form-control "
+								style="background-image: none;" id="aadhaarNumber1"
+								placeholder="" name="husbandAadhaarNo" value=""
+								pattern="[0-9]{12}" maxlength="12" required>
+								<div class="invalid-feedback">Please Enter Valid Aadhaar
+									No.</div>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="mb-3 mt-0">
+							<label for="" class="form-label lbleng"> Alternate Name
+								(if any) (पर्यायी नाव (असल्यास))</label> <input type="text"
+								class="form-control " style="background-image: none;" id=""
+								placeholder="" name="husbandAltName" value=""
+								 pattern="^[A-Za-z]+( [A-Za-z]+)*$">
+								 <div class="invalid-feedback">Please Enter Valid Data.
+												</div>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="mb-3 mt-4">
+							<label for="" class="form-label lbleng"> Religion by
+								Birth (जन्माने धर्म) <span class="text-danger"
+								style="color: red;">*</span>
+							</label> <select class="form-select" style="background-image: none;"
+								name="husbandBirthReligion" required>
+								<option value="">-Select-</option>
+								<option value="Hindu (हिंदू)">Hindu (हिंदू)</option>
+								<option value="Buddhist (बौद्ध)">Buddhist (बौद्ध)</option>
+								<option value="Muslim (मुस्लिम)">Muslim (मुस्लिम)</option>
+								<option value="Sikh (शीख)">Sikh (शीख)</option>
+								<option value="Christian (ख्रिश्चन)">Christian
+									(ख्रिश्चन)</option>
+								<option value="Jain (जैन)">Jain (जैन)</option>
+								<option value="Parasi (पारशी)">Parasi (पारशी)</option>
+								<option value="Other (इतर)">Other (इतर)</option>
+
+							</select>
+							<div class="invalid-feedback">Please Enter Valid Religion
+								by Birth.</div>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="mb-3 mt-0 ">
+							<label for="" class="form-label lbleng"> Religion by
+								Adoption (if any) (दत्तक घेऊन धर्म (असल्यास)) </label> <select
+								class="form-select" style="background-image: none;"
+								name="husbandAdoptReligion">
+								<option value="">-Select-</option>
+								<option value="Hindu (हिंदू)">Hindu (हिंदू)</option>
+								<option value="Buddhist (बौद्ध)">Buddhist (बौद्ध)</option>
+								<option value="Muslim (मुस्लिम)">Muslim (मुस्लिम)</option>
+								<option value="Sikh (शीख)">Sikh (शीख)</option>
+								<option value="Christian (ख्रिश्चन)">Christian
+									(ख्रिश्चन)</option>
+								<option value="Jain (जैन)">Jain (जैन)</option>
+								<option value="Parasi (पारशी)">Parasi (पारशी)</option>
+								<option value="Other (इतर)">Other (इतर)</option>
+
+							</select>
+							<div class="invalid-feedback">Please Select Valid Data.
+												</div>
+						</div>
+					</div>
+				</div>
+				<br>
+
+
+
+					<div class="col-md-12">
+						<div class="mb-3 mt-3">
+							<label for="" class="form-label">Full Address of Husband
+								(वराचा संपूर्ण पत्ता)<span class="text-danger"
+								style="color: red;">*</span>
+							</label>
+							<textarea oninput=" validateTextareaa()" type=" text"
+								maxlength="80" class="form-control"
+								style="background-image: none;" id="myTextareaa" placeholder=""
+								name="husbandFullAddr" value="" rows="2" required></textarea>
+							<div class="invalid-feedback" id="errorFeedbacka">Please
+								Enter Valid Address.</div>
+						</div>
+					</div> <script>
+                    function validateTextareaa() {
+                        const textarea = document.getElementById('myTextareaa');
+                        const errorFeedback = document.getElementById('errorFeedbacka');
+                        const text = textarea.value;
+
+                        // Regular expression to check for leading spaces before the first letter
+                        const regex = /^\s*(\S)/;
+
+                        if (regex.test(text)) {
+                            textarea.classList.remove('is-invalid');
+                            errorFeedback.style.display = 'none';
+                        } else {
+                            textarea.classList.add('is-invalid');
+                            errorFeedback.style.display = 'block';
+                        }
+                    }
+                </script> <br>
+				<div class="row">
+					<div class="col-md-12 mb-3 lbleng">
+						<label> <strong>Age as on the Date of
+								Solemnization of Marriage (Years and Months) (विवाह विधी ज्या
+								तारखेस संपन्न झाला असेल त्या तारखेस असलेले वय (वर्ष आणि महिने))
+						</strong><span class="text-danger" style="color: red;">*</span></label>
+					</div>
+					<div class="col-md-3">
+    <div class="mb-3 mt-0">
+        <label for="dob" class="form-label lbleng">Date Of Birth(जन्मतारीख) 
+            <span class="text-danger" style="color: red;">*</span>
+        </label> 
+        <input type="date" class="form-control" style="background-image: none;" id="dob1" name="husbandSolemAgeYear" value="" onchange="calculateAgeHusband()" required>
+        <div class="invalid-feedback">Please Select Valid Date (Age must be at least 18 years).</div>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="mb-3 mt-0">
+        <label for="" class="form-label">Years/Months (वर्षे/महिने)</label> 
+        <input type="text" class="form-control" style="background-image: none;" id="result1" placeholder="" name="husbandSolemAgeMonth" value="" maxlength='2' readonly>
+    </div>
+</div>
+
+<script>
+function calculateAgeHusband() {
+    var dobInput = document.getElementById('dob1');
+    var dob = new Date(dobInput.value);
+
+    var currentDate = new Date();
+
+    var years = currentDate.getFullYear() - dob.getFullYear();
+    var months = currentDate.getMonth() - dob.getMonth();
+
+    if (currentDate.getDate() < dob.getDate()) {
+        months--;
+    }
+
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    var ageString = years + " Years/" + months + " Months";
+
+    document.getElementById('result1').value = ageString;
+
+    // Check if age is less than 18 years
+    if (years < 18) {
+        dobInput.setCustomValidity("Age must be at least 18 years.");
+    } else {
+        dobInput.setCustomValidity('');
+    }
+}
+</script>
+
+<script>
+// Get the current date
+var currentDate = new Date().toISOString().split("T")[0];
+
+// Set the maximum attribute of the input field
+document.getElementById("dob1").setAttribute("max", currentDate);
+</script>
+					
+			<div class="row">
+
+				<div class="col-md-3">
+					<div class="mb-3 mt-3 ">
+						<label for="" class="form-label lbleng">Proof of Age
+							(वयाचा दाखला)<span class="text-danger" style="color: red;">*</span>
+						</label> <select class="form-select" style="background-image: none;"
+							name="husbanndAgeProof" required>
+							<option value="">-Select -</option>
+							<option value="Birth Certificate (जन्म प्रमाणपत्र)">Birth
+								Certificate (जन्म प्रमाणपत्र)</option>
+							<option value="School Leaving Certificate (शाळा सोडल्याचा दाखला)">School
+								Leaving Certificate (शाळा सोडल्याचा दाखला)</option>
+							<option value="SSC Certificate (एसएससी प्रमाणपत्र)">SSC
+								Certificate (एसएससी प्रमाणपत्र)</option>
+							
+
+
+						</select>
+						<div class="invalid-feedback">Please Enter Valid Proof of
+							Age.</div>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="mb-3 mt-5 ">
+						<input type="file" accept=".pdf" class="form-control"
+							style="background-image: none;" id="doc1" placeholder=""
+							name="doc" required>
+							<div class="invalid-feedback">File selected is either
+								greater than 2Mb or not of type .pdf</div>
+					</div>
+				</div>
+
+
+
+			</div>
+			<div class="row mt-3">
+				<div class="col-md-12 mb-3 ">
+					<label> <strong>Occupation along with Office
+							Address (व्यवसाय कार्यालयाच्या पत्त्यासह )</strong>
+					</label>
+				</div>
+
+				<div class="col-md-4 ">
+
+					<div class="mb-3 mt-0">
+
+						<label for="" class="form-label lbleng"> Occupation
+							(व्यवसाय) <span class="text-danger" style="color: red;">*</span>
+						</label> <select class="form-select" style="background-image: none;"
+							name="husbandOccup" onchange='CheckColors(this.value);' required>
+							<option value="">-Select-</option>
+							<option value="Service (सेवा)">Service (सेवा)</option>
+							<option value="Business (व्यवसाय)">Business (व्यवसाय)</option>
+							<option value="Others (इतर)">Others (इतर)</option>
+						</select>
+						<div class="invalid-feedback">Please Enter Valid Occupation.
+						</div>
+					</div>
+				</div>
+
+
+				<div class="col-md-5">
+					<div class="mb-3 mt-0">
+						<label for="" class="form-label"> Address Details (पत्ता
+							तपशील)</label> <input type="text" class="form-control "
+							style="background-image: none;" id="" placeholder=""
+							name="husbandOfficeAddr" value="">
+							<div class="invalid-feedback">Please Enter Valid Data.
+												</div>
+					</div>
+
+				</div>
+
+
+			</div>
+			<div class="col-md-4">
+				<div class="mb-3 mt-0">
+					<input type="text" class="form-control " id="color" placeholder=""
+						name="husbandOccupOthers"
+						style='display: none; background-image: none;'>
+						<div class="invalid-feedback">Please Enter Valid Data.
+												</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-3">
+					<div class="mb-3 mt-0">
+						<label for="" class="form-label lbleng"> Status at the
+							time of marriage (विवाहाच्या वेळी स्थिती)<span
+							class="text-danger" style="color: red;">*</span>
+						</label> <select class="form-select" style="background-image: none;"
+							name="husbandStatus" id="husband_status_time_marriage" required>
+							<option value="">-Select-</option>
+							<option value="Unmarried">Unmarried (अविवाहित)</option>
+							<option value="Widower">Widower (विधुर)</option>
+							<option value="Divorced">Divorced (घटस्फोटित)</option>
+						</select>
+						<div class="invalid-feedback">Please Enter Valid Status at
+							the Time of Marriage .</div>
+					</div>
+				</div>
+
+				<div class="col-md-3 ">
+					<div class="mb-3 mt-4 ">
+						<label for="" class="form-label"> Signature of Husband
+							(वराची स्वाक्षरी)<span class="text-danger" style="color: red;">*</span>
+						</label> <input type="file" class="form-control"
+							style="background-image: none;" accept=".png, .jpeg, .jpg"
+							id="image1" placeholder=" " name="signphoto" required>
+							<div class="invalid-feedback">File selected is either greater than 2Mb or not of type jpg,jpeg,png.</div>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="mb-3 mt-4 ">
+
+						<label for="" class="form-label lbleng">Photograph of
+							Husband (वराचा फोटो)<span class="text-danger" style="color: red;"
+							required>*</span>
+						</label> <input type="file" class="form-control"
+						style="background-image: none;" onchange="validateImage(this)"
+						accept=".png, .jpeg, .jpg" id="image2" placeholder=""
+						name="signphoto" required>
+					<div class="invalid-feedback">File selected is either greater
+						than 2Mb or not of type jpg, jpeg, png. Photo size should be 350 X
+						350 pixels.</div>
+					</div>
+				</div>
+				<br>
+
+
+
+
+					<h6 style="background-color: #dce2e8; padding: 10px;"
+						class="  rounded-2">
+						<strong> Details Of Wife (वधूचे तपशील) </strong>
+
+					</h6>
+					<div class="row">
+
+						<div class="col-md-3">
+							<div class="mb-3 mt-3">
+								<label for="" class="form-label lbleng">Title (शीर्षक) <span
+									class="text-danger" style="color: red;" required>*</span>
+								</label> <select class="form-select" style="background-image: none;"
+									name="wifeTitle" required>
+									<option value="">-Select-</option>
+									<option value="Mr (श्री)">Mr (श्री)</option>
+									<option value="Mrs (सौ)">Mrs (सौ)</option>
+									<option value="Ms (कु)">Ms (कु)</option>
+								</select>
+								<div class="invalid-feedback">Please Select Title</div>
+							</div>
+						</div>
+
+
+
+						
+
+						<div class="col-md-3">
+							<div class="mb-3 mt-3">
+								<label for="" class="form-label lbleng">Name (नाव)<span
+									class="text-danger" style="color: red;">*</span>
+								</label> <input type="text" class="form-control"
+									style="background-image: none;" id="" placeholder=""
+									name="wifeFirstName" value="" pattern="^[A-Za-z]+( [A-Za-z]+)*$" required>
+									<div class="invalid-feedback">Please Enter Valid Name.</div>
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<div class="mb-3 mt-3">
+								<label for="" class="form-label lbleng">Father's Name
+									(वडीलांचे नाव)
+								</label> <input type="text" class="form-control"
+									style="background-image: none;" id="" placeholder=""
+									name="wifeFatherName" value="" pattern="^[A-Za-z]+( [A-Za-z]+)*$" >
+									<div class="invalid-feedback">Please Enter Valid Data.
+												</div>
+									
+							</div>
+						</div>
+						
+						<div class="col-md-3">
+							<div class="mb-3 mt-3">
+								<label for="" class="form-label  lbleng">Surname (आडनाव)
+								</label> <input type="text" class="form-control"
+									style="background-image: none;" id="" placeholder=""
+									name="wifeLastName" value="" pattern="[A-Za-z]+" >
+									<div class="invalid-feedback">Please Enter Valid Surname.
+									</div>
+							</div>
+						</div>
+
+						<div></div>
+						<div class="row">
+							<div class="col-md-3">
+								<div class="mb-3 mt-4">
+									<label for="" class="form-label"> Aadhaar No. (आधार
+										क्र.)<span
+									class="text-danger" style="color: red;">*</span>
+									 </label> <input type="text" class="form-control "
+										style="background-image: none;" id="aadhaarNumber2"
+										placeholder="" name="wifeAadhaarNo" value=""
+										pattern="[0-9]{12}" maxlength="12" required>
+										<div class="invalid-feedback">Please Enter Valid Aadhaar
+											No.</div>
+								</div>
+							</div>
+
+
+							<div class="col-md-3">
+								<div class="mb-3 mt-0">
+									<label for="" class="form-label lbleng"> Alternate
+										Name(if any) (पर्यायी नाव (असल्यास))</label> <input type="text"
+										class="form-control " style="background-image: none;" id=""
+										placeholder="" name="wifealtName" value="" pattern="^[A-Za-z]+( [A-Za-z]+)*$">
+										<div class="invalid-feedback">Please Enter Valid Data.
+												</div>
+								</div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="mb-3 mt-4 ">
+									<label for="" class="form-label lbleng"> Religion by
+										Birth (जन्माने धर्म) <span class="text-danger"
+										style="color: red;">*</span>
+									</label> <select class="form-select" style="background-image: none;"
+										name="wifeBirthReligion" required>
+										<option value="">-Select-</option>
+										<option value="Hindu (हिंदू)">Hindu (हिंदू)</option>
+										<option value="Buddhist (बौद्ध)">Buddhist (बौद्ध)</option>
+										<option value="Muslim (मुस्लिम)">Muslim (मुस्लिम)</option>
+										<option value="Sikh (शीख)">Sikh (शीख)</option>
+										<option value="Christian (ख्रिश्चन)">Christian
+											(ख्रिश्चन)</option>
+										<option value="Jain (जैन)">Jain (जैन)</option>
+										<option value="Parasi (पारशी)">Parasi (पारशी)</option>
+										<option value="Other (इतर)">Other (इतर)</option>
+
+									</select>
+									<div class="invalid-feedback">Please Enter Valid Religion
+										by Birth.</div>
+								</div>
+							</div>
+
+							<div class="col-md-3">
+								<div class="mb-3 mt-0 ">
+									<label for="" class="form-label lbleng"> Religion by
+										Adoption(if any) (दत्तक घेऊन धर्म (असल्यास))</label> <select
+										class="form-select" style="background-image: none;"
+										name="wifeAdoptReligion">
+										<option value="">-Select-</option>
+										<option value="Hindu (हिंदू)">Hindu (हिंदू)</option>
+										<option value="Buddhist (बौद्ध)">Buddhist (बौद्ध)</option>
+										<option value="Muslim (मुस्लिम)">Muslim (मुस्लिम)</option>
+										<option value="Sikh (शीख)">Sikh (शीख)</option>
+										<option value="Christian (ख्रिश्चन)">Christian
+											(ख्रिश्चन)</option>
+										<option value="Jain (जैन)">Jain (जैन)</option>
+										<option value="Parasi (पारशी)">Parasi (पारशी)</option>
+										<option value="Other (इतर)">Other (इतर)</option>
+
+									</select>
+									<div class="invalid-feedback">Please Select Valid Data.
+												</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+
+							<div class="mb-3 mt-0">
+								<label for="" class="form-label">Full Address of Wife
+									(वधूचा संपूर्ण पत्ता)<span class="text-danger"
+									style="color: red;">*</span>
+								</label>
+								<textarea oninput=" validateTextareaaa()" type=" text"
+									maxlength="80" class="form-control"
+									style="background-image: none;" id="myTextareaaa"
+									placeholder="" name="wifeFullAddress" value="" rows="2"
+									required></textarea>
+								<div class="invalid-feedback" id="errorFeedback">Please
+									Enter Valid Address.</div>
+							</div>
+
+
+							<script>
+                                function validateTextareaaa() {
+                                    const textarea = document.getElementById('myTextareaaa');
+                                    const errorFeedback = document.getElementById('errorFeedbackaa');
+                                    const text = textarea.value;
+            
+                                    // Regular expression to check for leading spaces before the first letter
+                                    const regex = /^\s*(\S)/;
+            
+                                    if (regex.test(text)) {
+                                        textarea.classList.remove('is-invalid');
+                                        errorFeedback.style.display = 'none';
+                                    } else {
+                                        textarea.classList.add('is-invalid');
+                                        errorFeedback.style.display = 'block';
+                                    }
+                                }
+                            </script>
+
+							<div class="row">
+								<div class="col-md-12 mb-3 lbleng">
+									<label><strong>Age as on the Date of
+											Solemnization of Marriage (Years and Months) (विवाह विधी ज्या
+											तारखेस संपन्न झाला असेल त्या तारखेस असलेले वय (वर्ष आणि
+											महिने))</strong> <span class="text-danger" style="color: red;">*</span>
+									</label>
+								</div>
+								<div class="col-md-3">
+    <div class="mb-3 mt-0">
+        <label for="dob" class="form-label lbleng">Date Of Birth(जन्मतारीख) 
+            <span class="text-danger" style="color: red;">*</span>
+        </label> 
+        <input type="date" class="form-control" style="background-image: none;" id="dob" name="wifeSolemAgeYear" value="" onchange="calculateAge()" required>
+        <div class="invalid-feedback">Please Select Valid Date (Age must be at least 18 years).</div>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="mb-3 mt-0">
+        <label for="" class="form-label">Years/Months (वर्षे/महिने)</label> 
+        <input type="text" class="form-control" style="background-image: none;" id="result" placeholder="" name="wifeSolemAgeMonth" value="" maxlength='2' readonly>
+    </div>
+</div>
+
+<script>
+function calculateAge() {
+    var dobInput = document.getElementById('dob');
+    var dob = new Date(dobInput.value);
+
+    var currentDate = new Date();
+
+    var years = currentDate.getFullYear() - dob.getFullYear();
+    var months = currentDate.getMonth() - dob.getMonth();
+
+    if (currentDate.getDate() < dob.getDate()) {
+        months--;
+    }
+
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    var ageString = years + " Years/" + months + " Months";
+
+    document.getElementById('result').value = ageString;
+
+    // Check if age is less than 18 years
+    if (years < 18) {
+        dobInput.setCustomValidity("Age must be at least 18 years.");
+    } else {
+        dobInput.setCustomValidity('');
+    }
+}
+</script>
+
+<script>
+// Get the current date
+var currentDate = new Date().toISOString().split("T")[0];
+
+// Set the maximum attribute of the input field
+document.getElementById("dob").setAttribute("max", currentDate);
+</script>
+								
+
+
+							<div class="row">
+								<div class="col-md-3">
+									<div class="mb-3 mt-3 ">
+										<label for="" class="form-label lbleng">Proof of Age
+											(वयाचा दाखला)<span class="text-danger" style="color: red;">*</span>
+										</label> <select class="form-select" style="background-image: none;"
+											name="wifeAgeProof" required>
+											<option value="">-Select -</option>
+											<option value="Birth Certificate (जन्म प्रमाणपत्र)">Birth
+												Certificate (जन्म प्रमाणपत्र)</option>
+											<option
+												value="School Leaving Certificate (शाळा सोडल्याचा दाखला)">School
+												Leaving Certificate (शाळा सोडल्याचा दाखला)</option>
+											<option value="SSC Certificate (एसएससी प्रमाणपत्र)">SSC
+												Certificate (एसएससी प्रमाणपत्र)</option>
+											
+
+										</select>
+										<div class="invalid-feedback">Please Enter Valid Proof
+											of Age.</div>
+
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="mb-3 mt-5 ">
+										<input type="file" accept=".pdf" class="form-control"
+											style="background-image: none;" id="doc2" placeholder=""
+											name="doc" required>
+											<div class="invalid-feedback">File selected is either
+												greater than 2Mb or not of type .pdf</div>
+									</div>
+								</div>
+
+
+
+							</div>
+
+							<div class="row mt-3">
+								<div class="col-md-3">
+									<div class="mb-3 mt-0 ">
+										<label for="" class="form-label lbleng"> Status at the
+											time of marriage (विवाहाच्या वेळी स्थिती)<span
+											class="text-danger" style="color: red;">*</span>
+										</label> <select class="form-select" style="background-image: none;"
+											name="wifeStatus" id="wife_status_marriage" required>
+											<option value="">-Select-</option>
+											<option value="Unmarried">Unmarried (अविवाहित)</option>
+											<option value="Widow">Widow (विधवा)</option>
+											<option value="Divorced">Divorced (घटस्फोटित)</option>
+										</select>
+										<div class="invalid-feedback">Please Enter Valid Status
+											at the time of marriage.</div>
+									</div>
+								</div>
+
+
+
+
+								<div class="col-md-3 ">
+									<div class="mb-3 mt-4 ">
+										<label for="" class="form-label"> Signature of Wife
+											(वधूची सही)<span class="text-danger" style="color: red;">*</span>
+										</label> <input type="file" class="form-control"
+											style="background-image: none;" accept=".png, .jpeg, .jpg"
+											id="image3" placeholder=" " name="signphoto" required>
+											<div class="invalid-feedback">File selected is either greater than 2Mb or not of type jpg,jpeg,png.</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="mb-3 mt-4 ">
+										<label for="" class="form-label lbleng">Photograph of
+											Wife (वधूचा फोटो)<span class="text-danger"
+											style="color: red;" required>*</span>
+										</label> <input type="file" class="form-control"
+						style="background-image: none;" onchange="validateImage(this)"
+						accept=".png, .jpeg, .jpg" id="image4" placeholder=""
+						name="signphoto" required>
+					<div class="invalid-feedback">File selected is either greater
+						than 2Mb or not of type jpg, jpeg, png. Photo size should be 350 X
+						350 pixels.</div>
+									</div>
+
+								</div>
+
+
+
+
+								<h6 style="background-color: #dce2e8; padding: 10px;"
+									class="rounded-2 mt-3 mb-3 lbleng">
+									<strong> Witness Details (साक्षीदार तपशील)</strong>
+								</h6>
+
+								<div class="row mx-2">
+
+									<table class="table table-bordered" style="font-size: 14px;">
+										<tr class="table-info">
+											<td valign="middle">S.No</td>
+											<td valign="middle" width="170" class="lbleng">Full Name
+												(संपूर्ण नाव)<span class="text-danger" style="color: red;">*</span>
+											</td>
+
+											<td valign="middle" width="170" class="lbleng">Full
+												Address (संपूर्ण पत्ता)<span class="text-danger"
+												style="color: red;">*</span>
+											</td>
+											<td valign="middle" width="80" class="lbleng">Date Of
+												Birth (जन्मतारीख)<span class="text-danger"
+												style="color: red;">*</span>
+											</td>
+											<td valign="middle" width="140" class="lbleng">Aadhaar
+												No. (आधार क्र.)<span class="text-danger" style="color: red;">*</span>
+											</td>
+
+
+											<td valign="middle" width="70" class="lbleng">
+												Occupation (व्यवसाय)<span class="text-danger"
+												style="color: red;">*</span>
+											</td>
+
+											<td valign="middle" width="440" class="lbleng">Office
+												Address (कार्यालयाचा पत्ता)</td>
+
+											<td valign="middle" width="330" class="lbleng">Relation
+												with Married Couple (विवाहित जोडप्याशी असलेले नाते)<span
+												class="text-danger" style="color: red;">*</span>
+											</td>
+
+											<td valign="middle" width="180" class="lbleng">
+												Signature (स्वाक्षरी)<span class="text-danger"
+												style="color: red;">*</span>
+												
+											</td>
+											<td valign="middle" width="180" class="lbleng">
+												Photograph (फोटो) <span class="text-danger"
+												style="color: red;">*</span>
+											</td>
+										</tr>
+
+										<tr>
+											<td valign="middle">1.<span class="text-danger"
+												style="color: red;">*</span> <input class="form-control"
+												type="hidden" name="table_witness_id[]" value="1" required></td>
+											<td valign="middle"><input type="text" class=""
+												name="firstWitnFullName" value=""
+												pattern="^([A-Za-z]{0,})([A-Za-z]{1,}\s?)+$" required>
+													<div class="invalid-feedback">Please Enter Valid Full
+														Name of Witnesss.</div></td>
+											<td><textarea rows="2" name="firstWitnFullAddr" class=""
+													style="background-image: none;" required></textarea>
+												<div class="invalid-feedback">Please Enter Valid
+													Address of Witness.</div></td>
+										<td valign="middle">
+    <input type="date" class="" name="firstWitndate" value="" id="dw1" style="width: 75px;" required>
+    <div class="invalid-feedback">Please Enter Valid Date Of Birth of Witness.</div>
+</td>
+											<td valign="middle"><input type="text"
+												class="form-control "
+												style="background-image: none; width: 130px;"
+												id="aadhaarNumber" placeholder="" name="firstAadhaarNo"
+												value="" pattern="[0-9]{12}" maxlength="12" required>
+													<div class="invalid-feedback">Please Enter Valid
+														Aadhaar No.</div></td>
+
+
+
+											<td valign="middle"><select class=""
+												style="background-image: none; width: 100%;"
+												name="firstWitnOccup" onchange='CheckColors1(this.value);'
+												required>
+
+													<option value="">-select-</option>
+													<option value="Service (सेवा)">Service (सेवा)</option>
+													<option value="Business (व्यवसाय)">Business
+														(व्यवसाय)</option>
+													<option value="Others (इतर)">Others (इतर)</option>
+											</select>
+												<div class="invalid-feedback">Please Enter Valid
+													Occupation of Witness.</div> <br> <br> <input
+														type="text" class="form-control " id="color1"
+														placeholder="" name="firstOccupOthers"
+														style='display: none; width: 100%; background-image: none;'></td>
+											<td valign="middle"><textarea rows="2"
+													name="firstWitnOfficeAddr" style="width: 105%;" class=""></textarea>
+													<div class="invalid-feedback">Please Enter Valid Data.
+												</div>
+
+											</td>
+											<td valign="middle"><select class=""
+												style="width: 100%;" name="firstWitnRelMarCouple"
+												onchange='Relation1(this.value);' required>
+													<option value="">-select-</option>
+													<option value="Father (वडील)">Father (वडील)</option>
+													<option value="Mother (आई)">Mother (आई)</option>
+													<option value="Brother (भाऊ)">Brother (भाऊ)</option>
+													<option value="Sister (बहीण)">Sister (बहीण)</option>
+													<option value="Uncle (काका)">Uncle (काका)</option>
+													<option value="Friend (मित्र/मैत्रिण)">Friend
+														(मित्र/मैत्रिण)</option>
+													<option value="GrandMother (आजी)">GrandMother
+														(आजी)</option>
+													<option value="GrandFather (आजोबा)">GrandFather
+														(आजोबा)</option>
+													<option value="Cousin (चुलत भाऊ)">Cousin (चुलत
+														भाऊ)</option>
+													<option value="Aunty (काकी)">Aunty (काकी)</option>
+													<option value="Other (इतर)">Other (इतर)</option>
+
+											</select>
+												<div class="invalid-feedback">Please Enter Valid
+													Relation with Married Couple.</div> <br> <br> <input
+														type="text" class="form-control " id="relation1"
+														placeholder="" name="firstRelationOthers"
+														style='display: none; width: 100%; background-image: none;'></td>
+											<td valign="middle">
+												<div class="d-flex justify-content-start"
+													style="width: 180px;">
+													<input type="file" accept=".png, .jpeg, .jpg" class=""
+														id="image5" name="signphoto" required>
+														<div class="invalid-feedback">File selected is either greater than 2Mb or not of type jpg,jpeg,png.</div>
+												</div>
+											</td>
+											<td valign="middle">
+												<div class="d-flex justify-content-start"
+													style="width: 180px;">
+													<input type="file" accept=".png, .jpeg, .jpg" class=""
+														id="image6" name="signphoto" required>
+														<div class="invalid-feedback">File selected is either greater than 2Mb or not of type jpg,jpeg,png.</div>
+												</div>
+											</td>
+
+										</tr>
+										<tr>
+											<td valign="middle">2.<span class="text-danger"
+												style="color: red;">*</span> <input type="hidden"
+												name="tableWitnessId[]" value="2" required></td>
+											<td valign="middle"><input type="text" class=""
+												name="secondWitnFullName" value=""
+												pattern="^([A-Za-z]{0,})([A-Za-z]{1,}\s?)+$" required>
+													<div class="invalid-feedback">Please Enter Valid Full
+														Name of Witnesss.</div></td>
+											<td><textarea rows="2" name="secondWitnFullAddr"
+													class="" required></textarea>
+												<div class="invalid-feedback">Please Enter Valid
+													Address of Witness.</div></td>
+											<td valign="middle">
+    <input type="date" class="" name="secondWitndate" value="" id="dw2" style="width: 75px;" required>
+    <div class="invalid-feedback">Please Enter Valid Date Of Birth of Witness.</div>
+</td>
+											<td valign="middle"><input type="text"
+												class="form-control "
+												style="background-image: none; width: 130px;"
+												id="aadhaarNumber" placeholder="" name="secondAadhaarNo"
+												value="" pattern="[0-9]{12}" maxlength="12" required>
+													<div class="invalid-feedback">Please Enter Valid
+														Aadhaar No.</div></td>
+											<td valign="middle"><select class=""
+												style="width: 100%;" name="secondWitnOccup"
+												onchange='CheckColors2(this.value);' required>
+
+
+													<option value="">-select-</option>
+													<option value="Service (सेवा)">Service (सेवा)</option>
+													<option value="Business (व्यवसाय)">Business
+														(व्यवसाय)</option>
+													<option value="Others (इतर)">Others (इतर)</option>
+											</select>
+												<div class="invalid-feedback">Please Enter Valid
+													Occupation of Witness.</div> <br> <br> <input
+														type="text" class="form-control " id="color2"
+														placeholder="" name="secondOccupOthers"
+														style='display: none; width: 100%; background-image: none;'></td>
+											<td valign="middle"><textarea rows="2"
+													name="secondWitnOfficeAddr" style="width: 105%;" class=""></textarea>
+													<div class="invalid-feedback">Please Enter Valid Data.
+												</div>
+
+											</td>
+											<td valign="middle"><select class=""
+												style="width: 100%;" name="secondWitnRelMarCouple"
+												onchange='Relation2(this.value);' required>
+													<option value="">-select-</option>
+													<option value="Father (वडील)">Father (वडील)</option>
+													<option value="Mother (आई)">Mother (आई)</option>
+													<option value="Brother (भाऊ)">Brother (भाऊ)</option>
+													<option value="Sister (बहीण)">Sister (बहीण)</option>
+													<option value="Uncle (काका)">Uncle (काका)</option>
+													<option value="Friend (मित्र/मैत्रिण)">Friend
+														(मित्र/मैत्रिण)</option>
+													<option value="GrandMother (आजी)">GrandMother
+														(आजी)</option>
+													<option value="GrandFather (आजोबा)">GrandFather
+														(आजोबा)</option>
+													<option value="Cousin (चुलत भाऊ)">Cousin (चुलत
+														भाऊ)</option>
+													<option value="Aunty (काकी)">Aunty (काकी)</option>
+													<option value="Other (इतर)">Other (इतर)</option>
+
+											</select>
+												<div class="invalid-feedback">Please Enter Valid
+													Relation with Married Couple.</div> <br> <br> <input
+														type="text" class="form-control " id="relation2"
+														placeholder="" name="secondRelationOthers"
+														style='display: none; width: 100%; background-image: none;'></td>
+											<td valign="middle">
+												<div class="d-flex justify-content-start"
+													style="width: 180px;">
+													<input type="file" accept=".png, .jpeg, .jpg" class=""
+														id="image7" name="signphoto" required>
+														<div class="invalid-feedback">File selected is either greater than 2Mb or not of type jpg,jpeg,png.</div>
+												</div>
+											</td>
+											<td valign="middle">
+												<div class="d-flex justify-content-start"
+													style="width: 180px;">
+													<input type="file" accept=".png, .jpeg, .jpg" id="image8"
+														class="" name="signphoto" required>
+														<div class="invalid-feedback">File selected is either greater than 2Mb or not of type jpg,jpeg,png.</div>
+												</div>
+											</td>
+
+										</tr>
+										<tr>
+											<td valign="middle">3.<span class="text-danger"
+												style="color: red;">*</span> <input type="hidden"
+												name="tableWitnessId[]" value="3" required></td>
+											<td valign="middle"><input type="text" class=""
+												name="thirdWitnFullName" value=""
+												pattern="^([A-Za-z]{0,})([A-Za-z]{1,}\s?)+$" required>
+													<div class="invalid-feedback">Please Enter Valid Full
+														Name of Witnesss.</div></td>
+											<td><textarea rows="2" name="thirdWitnFullAddr" class=""
+													required></textarea>
+												<div class="invalid-feedback">Please Enter Valid
+													Address of Witness.</div></td>
+
+											<td valign="middle">
+    <input type="date" class="" name="thirdWitndate" value="" id="dw3" style="width: 75px;" required>
+    <div class="invalid-feedback">Please Enter Valid Date Of Birth of Witness.</div>
+</td>
+											<td valign="middle"><input type="text"
+												class="form-control "
+												style="background-image: none; width: 130px;"
+												id="aadhaarNumber" placeholder="" name="thirdAadhaarNo"
+												value="" pattern="[0-9]{12}" maxlength="12" required>
+													<div class="invalid-feedback">Please Enter Valid
+														Aadhaar No.</div></td>
+											<td valign="middle"><select class=""
+												style="width: 100%;" name="thirdWitnOccup"
+												onchange='CheckColors3(this.value);' required>
+
+													<option value="">-select-</option>
+													<option value="Service (सेवा)">Service (सेवा)</option>
+													<option value="Business (व्यवसाय)">Business
+														(व्यवसाय)</option>
+													<option value="Others (इतर)">Others (इतर)</option>
+											</select>
+												<div class="invalid-feedback">Please Enter Valid
+													Occupation of Witness.</div> <br><br> <input
+														type="text" class="form-control " id="color3"
+														placeholder="" name="thirdOccupOthers"
+														style='display: none; width: 100%; background-image: none;'></td>
+											<td valign="middle"><textarea rows="2"
+													name="thirdWitnOfficeAddr" style="width: 105%;" class="">
+													</textarea>
+													<div class="invalid-feedback">Please Enter Valid Data.
+												</div>
+
+											</td>
+											<td valign="middle"><select class=""
+												style="width: 100%;" name="thirdWitnRelMarCouple"
+												onchange='Relation3(this.value);' required>
+													<option value="">-select-</option>
+													<option value="Father (वडील)">Father (वडील)</option>
+													<option value="Mother (आई)">Mother (आई)</option>
+													<option value="Brother (भाऊ)">Brother (भाऊ)</option>
+													<option value="Sister (बहीण)">Sister (बहीण)</option>
+													<option value="Uncle (काका)">Uncle (काका)</option>
+													<option value="Friend (मित्र/मैत्रिण)">Friend
+														(मित्र/मैत्रिण)</option>
+													<option value="GrandMother (आजी)">GrandMother
+														(आजी)</option>
+													<option value="GrandFather (आजोबा)">GrandFather
+														(आजोबा)</option>
+													<option value="Cousin (चुलत भाऊ)">Cousin (चुलत
+														भाऊ)</option>
+													<option value="Aunty (काकी)">Aunty (काकी)</option>
+													<option value="Other (इतर)">Other (इतर)</option>
+
+											</select>
+												<div class="invalid-feedback">Please Enter Valid
+													Relation with Married Couple.</div> <br> <br> <input
+														type="text" class="form-control " id="relation3"
+														placeholder="" name="thirdRelationOthers"
+														style='display: none; width: 100%; background-image: none;'></td>
+											<td valign="middle">
+												<div class="d-flex justify-content-start"
+													style="width: 180px;">
+													<input type="file" accept=".png, .jpeg, .jpg" class=""
+														id="image9" name="signphoto" required>
+														<div class="invalid-feedback">File selected is either greater than 2Mb or not of type jpg,jpeg,png.</div>
+												</div>
+											</td>
+											<td valign="middle">
+												<div class="d-flex justify-content-start"
+													style="width: 180px;">
+													<input type="file" accept=".png, .jpeg, .jpg" class=""
+														id="image10" name="signphoto" required>
+														<div class="invalid-feedback">File selected is
+															either greater than 2Mb or not of type .jpg,.jpeg,.png.</div>
+												</div>
+											</td>
+
+										</tr>
+									</table>
+
+								</div>
+
+								<h6 style="background-color: #dce2e8; padding: 10px;"
+									class="rounded-2 mt-3 mb-3 lbleng">
+									<strong> Priest Details (प्रिस्टचे तपशील)</strong>
+								</h6>
+								<div class="row">
+
+									<div class="col-md-6">
+										<div class="mb-3 mt-0">
+											<label for="" class="form-label lbleng"> Name of
+												Priest (प्रिस्टचे नाव)<span class="text-danger"
+												style="color: red;">*</span>
+											</label> <input type="text" class="form-control "
+												style="background-image: none;" id="" placeholder=""
+												name="priestName" value=""
+												pattern="^([A-Za-z]{0,})([A-Za-z]{1,}\s?)+$" required>
+												<div class="invalid-feedback">Please Enter Valid Name
+													of Priest.</div>
+										</div>
+
+									</div>
+
+									<div class="col-md-6">
+										<div class="mb-3 mt-0">
+											<label for="" class="form-label lbleng"> Full address
+												(संपूर्ण पत्ता)<span class="text-danger" style="color: red;">*</span>
+											</label> <input type="text" class="form-control "
+												style="background-image: none;" id="" placeholder=""
+												name="priestFullAddr" value="" required>
+												<div class="invalid-feedback">Please Enter Valid Full
+													Address.</div>
+										</div>
+									</div>
+
+									<div class="col-md-3">
+										<div class="mb-3 mt-0 ">
+											<label for="" class="form-label lbleng"> Religion
+												(धर्म)<span class="text-danger" style="color: red;">*</span>
+											</label> <select class="form-select" style="background-image: none;"
+												name="priestReligion" required>
+												<option value="">-select-</option>
+												<option value="Hindu (हिंदू)">Hindu (हिंदू)</option>
+												<option value="Buddhist (बौद्ध)">Buddhist (बौद्ध)</option>
+												<option value="Muslim (मुस्लिम)">Muslim (मुस्लिम)</option>
+												<option value="Sikh (शीख)">Sikh (शीख)</option>
+												<option value="Christian (ख्रिश्चन)">Christian
+													(ख्रिश्चन)</option>
+												<option value="Jain (जैन)">Jain (जैन)</option>
+												<option value="Parasi (पारशी)">Parasi (पारशी)</option>
+												<option value="Other (इतर)">Other (इतर)</option>
+											</select>
+											<div class="invalid-feedback">Please Enter Valid
+												Religion.</div>
+										</div>
+									</div>
+
+									<div class="col-md-3">
+										<div class="mb-3 mt-0">
+											<label for="" class="form-label lbleng"> Age (वय) <span
+												class="text-danger" style="color: red;">*</span>
+											</label> <input type="text" class="form-control "
+												style="background-image: none;" id="" placeholder=""
+												name="priestAge" value=""
+												onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+												maxlength="2" required>
+												<div class="invalid-feedback">Please Enter Valid Age.
+												</div>
+										</div>
+
+									</div>
+
+									<div class="col-md-3 ">
+										<div class="mb-3 mt-0 ">
+											<label for="" class="form-label"> Signature of Priest
+												(प्रिस्टची स्वाक्षरी)
+											</label> <input type="file" accept=".png, .jpeg, .jpg"
+												class="form-control" style="background-image: none;"
+												id="image11" placeholder=" " name="signphoto" >
+												<div class="invalid-feedback">File selected is either greater than 2Mb or not of type jpg,jpeg,png.</div>
+										</div>
+									</div>
+
+
+								</div>
+								<div class="row">
+
+									<h6 style="background-color: white; padding: 10px;"
+										class="mt-3 rounded-2">
+										<strong> Fees Details Of Certificate (प्रमाणपत्राचे
+											शुल्क तपशील)</strong>
+									</h6>
+									<div class="col-md-0">
+
+										<div class="mb-0 mt-0">
+
+											<div class=" d-flex mt-0 border rounded p-0"
+												style="height: 130px; width: 50em;">
+
+
+
+
+												<!--<div class="col-md-3 mb-3 ms-5">
+                                        <div class="mb-5">-->
+												<div class="col-md-5 mb-3 ms-5">
+													<div class="mb-3" style="margin-top: 23px;">
+														<label for="" class="form-label"> Days calculated
+															for getting certificate (प्रमाणपत्र मिळविण्यासाठी मोजलेले
+															दिवस)<span class="text-danger" style="color: red;">*</span>
+														</label> <input type="number" class="form-control"
+															style="background-image: none;" id="days" placeholder=""
+															name="daysCalculatedForCertificate" rows="4" readonly
+															required></input>
+
+													</div>
+												</div>
+												<!--<div class="col-md-3 mb-3 ms-5">
+                                        <div class="mb-3">-->
+												<div class="col-md-5 mb-3 ms-5">
+													<div class="mb-3 mt-0">
+														<label for="" class="form-label">Fees Applicable
+															(Auto calculate as per the basis on Days) (शुल्क लागू
+															(दिवसांच्या आधारावर स्वयंचलित गणना))<span
+															class="text-danger" style="color: red;">*</span>
+														</label> <input type="number" class="form-control"
+															style="background-image: none;" id="fees" placeholder=""
+															name="feeApplicable" rows="4" readonly required></input>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+
+									<h6 style="background-color: white; padding: 10px;"
+										class="mt-3 rounded-2">
+										<strong> List of Documents (with attachment)
+											(दस्तऐवजांची यादी (संलग्नकांसह))</strong>
+									</h6>
+
+									<div class="alert alert-info mb-0 p-2 mb-4">
+										<small><strong>Note: </strong> Upload Below Files only
+											.pdf(Max upto 2Mb) </small>
+									</div>
+
+									<input type="hidden" name="filesPath" id="filesPath" />
+									<input type="hidden" name="marriageImages" id="imagePath" />
+
+									<div class="col-md-3">
+										<div class="mb-3 mt-4">
+											<label for="" class="form-label lbleng">Wedding Card/Nikah Nama(लग्नपत्रिका/निकाह नामा)<span class="text-danger" style="color: red;"
+												required>*</span>
+											</label> <input type="file" accept=".pdf" class="form-control"
+												style="background-image: none;" id="doc3" placeholder=""
+												name="doc" required>
+												<div class="invalid-feedback">File selected is either
+													greater than 2Mb or not of type .pdf</div>
+												<div class="container mt-3"></div>
+										</div>
+									</div>
+
+
+
+
+									<div class="col-md-3">
+										<div class="mb-3 mt-4">
+											<label for="" class="form-label lbleng">Husband
+												Divorced Proof (If any) (वराचा घटस्फोटित पुरावा (असल्यास)) </label>
+
+											<input type="file" accept=".pdf" class="form-control"
+												style="background-image: none;" id="doc4" placeholder=""
+												name="doc">
+												<div class="invalid-feedback">File selected is either greater than 2Mb or not of type .pdf.</div>
+										</div>
+
+									</div>
+
+									<div class="col-md-3">
+										<div class="mb-3 mt-4 ">
+											<label for="" class="form-label lbleng">Wife Divorced
+												Proof (If any) (वधूचा घटस्फोटाचा पुरावा (असल्यास)) </label> <input
+												type="file" accept=".pdf" class="form-control"
+												style="background-image: none;" id="doc5" placeholder=""
+												name="doc">
+												<div class="invalid-feedback">File selected is either greater than 2Mb or not of type .pdf.</div>
+										</div>
+
+									</div>
+
+									<!-- <div class="col-md-3">
+										<div class="mb-3 mt-4">
+											<label for="" class="form-label lbleng"> Property Tax
+												Paid Receipt (मालमत्ता कर भरल्याची पावती) </label> <input
+												type="file" accept=".pdf" class="form-control"
+												style="background-image: none;" id="doc6" placeholder=""
+												name="doc">
+										</div>
+									</div>-->
+
+
+									<div class="col-md-3">
+										<div class="mb-3 mt-0">
+											<label for="" class="form-label lbleng">Proof Of
+												Residence(Ration card/MSEB Bills/Telephone Bills/Passport)
+												(निवासाचा पुरावा (रेशन कार्ड/एमएसईबी बिले/टेलिफोन
+												बिले/पासपोर्ट))<span class="text-danger" style="color: red;"
+												required>*</span>
+											</label> <input type="file" accept=".pdf" class="form-control"
+												style="background-image: none;" id="doc7" placeholder=""
+												name="doc" required>
+												<div class="invalid-feedback">File selected is either
+													greater than 2Mb or not of type .pdf</div>
+										</div>
+
+									</div>
+
+									<div class="col-md-3">
+										<div class="mb-3 mt-4 ">
+											<label for="" class="form-label lbleng">Rs.100/-
+												Court Fee Stamps(Under provision court fee Act.1859)Affixed
+												(रु. 100/- कोर्ट फी स्टॅम्प (तरतुदी कोर्ट फी कायदा 1859
+												अंतर्गत) चिकटवले)<span class="text-danger"
+												style="color: red;" required>*</span>
+											</label> <input type="file" accept=".pdf" class="form-control"
+												style="background-image: none;" id="doc8" placeholder=""
+												name="doc" required>
+												<div class="invalid-feedback">File selected is either
+													greater than 2Mb or not of type .pdf</div>
+										</div>
+
+									</div>
+									<div class="col-md-3">
+										<div class="mb-3 mt-5 ">
+											<label for="" class="form-label lbleng">Affidavit(If
+												necessary In case of doubtful cases) (प्रतिज्ञापत्र
+												(संशयास्पद प्रकरणांमध्ये आवश्यक असल्यास))</label> <input type="file"
+												accept=".pdf" class="form-control"
+												style="background-image: none;" id="doc9" placeholder=""
+												name="doc">
+												<div class="invalid-feedback">File selected is either greater than 2Mb or not of type .pdf.</div>
+										</div>
+
+									</div>
+									<div class="col-md-3">
+										<div class="mb-3 mt-5">
+											<label for="" class="form-label lbleng">Photograph Of
+												Husband and Wife(Combined) (वर आणि वधूचे छायाचित्र
+												(एकत्रित))<span class="text-danger" style="color: red;"
+												required>*</span>
+											</label> <input type="file" class="form-control"
+												accept=".png, .jpeg, .jpg" style="background-image: none;"
+												id="image12" placeholder="" name="signphoto" required>
+												<div class="invalid-feedback">File selected is either greater than 2Mb or not of type jpg,jpeg,png.</div>
+										</div>
+
+									</div>
+									<div class="col-md-3">
+										<div class="mb-3 mt-4 ">
+											<label for="" class="form-label lbleng">Death
+												Certificate of deceased spouse(where applicable) (मृत
+												जोडीदाराचे मृत्यू प्रमाणपत्र (जेथे लागू असेल))</span>
+											</label> <input type="file" accept=".pdf" class="form-control"
+												style="background-image: none;" id="doc10" placeholder=""
+												name="doc">
+												<div class="invalid-feedback">File selected is either greater than 2Mb or not of type .pdf.</div>
+										</div>
+
+									</div>
+									<!-- Tenant -->
+									<div class="col-md-3">
+										<div class="mb-3 mt-5 rentdoc">
+											<label for="" class="form-label lbleng">Rent Agreement Certificate (भाडे कराराचे प्रमाणपत्र) <span class="text-danger" style="color: red;">*</span>
+											</label> <input type="file" accept=".pdf" class="form-control"
+												style="background-image: none;" id="doc11" placeholder=""
+												name="doc" required>
+												<div class="invalid-feedback">File selected is either greater than 2Mb or not of type .pdf.</div>
+												
+										</div>
+
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="mb-5 mt-4 ">
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" id="check11"
+												name="declaration" value="something" required> <label
+												class="form-check-label ms-3 lbleng"
+												style="margin-top: -15px;"> <strong>Declaration
+														(घोषणा)<span class="text-danger" style="color: red;">*</span>
+														:-
+												</strong>Any person making any statement of declaration in the
+													memorandum, which is false in any material particulars or
+													submits any documents which he/she knows or has reason to
+													believe to be false shall be liable for penal action under
+													section 12. (कोणत्याही व्यक्तीने मेमोरँडममधील घोषणेचे
+													कोणतेही विधान केले, जे कोणत्याही भौतिक तपशीलांमध्ये खोटे
+													असेल किंवा कोणतीही कागदपत्रे सादर करेल जी त्याला/तिला माहित
+													असेल किंवा खोटे असल्याचे समजण्याचे कारण असेल तर कलम 12
+													अंतर्गत दंडात्मक कारवाईसाठी जबाबदार असेल.)
+											</label>
+												<div class="invalid-feedback">Please check the
+													declaration.</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-12 text-start mb-5">
+									<div class="text-center">
+										<button type="button" class="btn btn-danger btn_sm printMe">
+											View and Print</button>
+										<button class="btn btn-success btn_sm" type="submit"
+											id="submit">Submit</button>
+									</div>
+								</div>
+							</div>
+</form>
+
+<script>
+function validateWitnessAge() {
+    var dobInputs = [document.getElementById('dw1'), document.getElementById('dw2'), document.getElementById('dw3')];
+
+    for (var i = 0; i < dobInputs.length; i++) {
+        var dobInput = dobInputs[i];
+        var dob = new Date(dobInput.value);
+
+        var currentDate = new Date();
+
+        var years = currentDate.getFullYear() - dob.getFullYear();
+        var months = currentDate.getMonth() - dob.getMonth();
+
+        if (currentDate.getDate() < dob.getDate()) {
+            months--;
+        }
+
+        if (months < 0) {
+            years--;
+            months += 12;
+        }
+
+        // Check if age is less than 18 years
+        if (years < 18) {
+            dobInput.setCustomValidity("Witness must be at least 18 years old.");
+        } else {
+            dobInput.setCustomValidity('');
+        }
+    }
+}
+
+// Add event listener for change event to trigger validation
+document.getElementById('dw1').addEventListener('change', validateWitnessAge);
+document.getElementById('dw2').addEventListener('change', validateWitnessAge);
+document.getElementById('dw3').addEventListener('change', validateWitnessAge);
+</script>
+
+<script type="text/javascript">
+$('.printMe').on('click', function () {
+
+    window.print();
+});
+</script>
+<script type="text/javascript">
+
+$(document).ready(function () {
+	 var isUploadInProgress = false;
+   $("#submit").click(function (event) {
+
+       $("form:first").addClass("needs-validation");
+       $("form:first").attr("novalidate", "");
+       
+       const forms = document.querySelectorAll('.needs-validation');
+       
+       Array.from(forms).forEach(form => {
+           form.addEventListener('submit', event => {
+               var isFormValid = true;
+               
+               form.querySelectorAll('input[type="file"]').forEach(fileInput => {
+if (fileInput.name === "signphoto") {
+    if (fileInput.files.length > 0) {
+        var name = fileInput.files[0].name;
+        var validExtensions = ['.png', '.jpeg', '.jpg'];
+        if (!validExtensions.some(ext => name.endsWith(ext))) {
+            isFormValid = false;
+            fileInput.classList.remove('is-valid');
+            fileInput.classList.add('is-invalid');
+        } else if (fileInput.files[0].size >= 2000000) {
+            isFormValid = false;
+            fileInput.classList.remove('is-valid');
+            fileInput.classList.add('is-invalid');
+        } else {
+            fileInput.classList.remove('is-invalid');
+            fileInput.classList.add('is-valid');
+        }
+    }
+} else {
+    if (fileInput.files.length > 0) {
+        var name = fileInput.files[0].name;
+        if (!name.endsWith('.pdf')) {
+            isFormValid = false;
+            fileInput.classList.remove('is-valid');
+            fileInput.classList.add('is-invalid');
+        } else if (fileInput.files[0].size >= 2000000) {
+            isFormValid = false;
+            fileInput.classList.remove('is-valid');
+            fileInput.classList.add('is-invalid');
+        } else {
+            fileInput.classList.remove('is-invalid');
+            fileInput.classList.add('is-valid');
+        }
+    }
+}
+});
+
+               
+               if (!form.checkValidity() || !isFormValid) {
+                   event.preventDefault();
+                   event.stopPropagation();
+               } else {
+              	if (isUploadInProgress) {
+  	             return false;
+  	              }
+              	isUploadInProgress = true;
+              	upload(function(status) {
+              	
+              	    if (status === true || status === 'true') {
+              	        $("#submit").attr("disabled", true);
+                        onPageSubmit('/RTSservices/rtsapplication/saveMarriageCertificates.do');
+              	    } 
+              		
+              	    isUploadInProgress = false; 
+              	});
+                  
+               }
+               
+               form.classList.add('was-validated');
+           }, false);
+       });
+   });
+   
+   $('input[type="file"], input, select, textarea').on('focusout', function() {
+var isFileAllowed = true;
+
+if (this.getAttribute("type") === 'file') {
+    if (this.files.length > 0 && this.files[0].size >= 2000000) {
+        isFileAllowed = false;
+    }
+
+    if (this.name === 'signphoto') {
+        var validExtensions = ['.png', '.jpeg', '.jpg'];
+        if (this.files.length > 0 && !validExtensions.some(ext => this.files[0].name.endsWith(ext))) {
+            isFileAllowed = false;
+        }
+    }
+}
+
+if (this.checkValidity() && isFileAllowed) {
+    this.classList.remove('is-invalid');
+    this.classList.add('is-valid');
+} else {
+    this.classList.remove('is-valid');
+    this.classList.add('is-invalid');
+}
+});
+
+});
+
+ 
+       function upload(callback) {
+           console.log("@@upoading@@");
+           var url = window.location.href;
+           var basePath = '${pageContext.getAttribute("UPLOAD_PATH")}';
+           var filesPath = "";
+           var data = new FormData();
+
+          
+data.append('idProof1', $("#doc1").get(0).files[0]);
+data.append('idProof2', $("#doc2").get(0).files[0]);
+data.append('idProof3', $("#doc3").get(0).files[0]);
+data.append('idProof4', $("#doc4").get(0).files[0]);
+data.append('idProof5', $("#doc5").get(0).files[0]);
+//data.append('idProof6', $("#doc6").get(0).files[0]);
+data.append('idProof7', $("#doc7").get(0).files[0]);
+data.append('idProof8', $("#doc8").get(0).files[0]);
+data.append('idProof9', $("#doc9").get(0).files[0]);
+data.append('idProof10', $("#doc10").get(0).files[0]);
+data.append('idProof11', $("#doc11").get(0).files[0]);
+
+
+
+
+
+           var isFileSelected = false
+           const id = Math.floor(Math.random() * 9000) + 1000;
+           var array_element = "";
+           var file = $('input[name="doc"]');
+           for (var i = 0; i < file.length; i++) {
+            var array_element = file[i];
+            var element = array_element.value.split("\\");
+            var a = element[element.length-1];
+            const splitName = a.split(".pdf")[0].replaceAll(/[^a-zA-Z0-9]/g, ""); 
+            const value = splitName + ".pdf";
+             if(a==='' || a===undefined){
+                  filesPath += "null" + ",";
+                     isFileSelected = false;
+               } else {
+                   filesPath = filesPath + basePath + "marriageForm/" + id + value + ","
+                   isFileSelected = true;
+               }
+           }
+           $.ajax({
+               url: "<c:out value='${contextRoot}'/>/rtiapplication/uploadDocumentMarriage.do?id="+id,
+               type: 'POST',
+               data: data,
+               cache: false,
+               dataType: 'json',
+               processData: false,
+               contentType: false,
+               async: false, // Set to synchronous
+               success: function(data) {
+                   var status = data.status;
+                   if (status == true) {
+                       marriageImage(callback);
+                          
+                   } else {
+                       alert("Something Went Wrong !!");
+                       if (callback && typeof callback === 'function') {
+                           callback(false);
+                       }
+                   }
+               },
+               error: function(jqXHR, textStatus, errorThrown) {
+                   console.error("AJAX Error:", textStatus, errorThrown);
+                   if (callback && typeof callback === 'function') {
+                       callback('error');
+                   }
+               }
+           });
+
+           var a = filesPath.substring(0, filesPath.lastIndexOf(","));
+           filesPath = filesPath.replace(/\s/g, "");
+           $("#filesPath").val(filesPath);
+           console.log(filesPath);
+
+       }
+       
+       
+       
+       function marriageImage(callback) {
+           var url = window.location.href;
+           var basePath = '${pageContext.getAttribute("UPLOAD_PATH")}';
+           var filesPath = "";
+           var data = new FormData();
+           data.append('idProof1', $("#image1").get(0).files[0]);
+           data.append('idProof2', $("#image2").get(0).files[0]);
+           data.append('idProof3', $("#image3").get(0).files[0]);
+           data.append('idProof4', $("#image4").get(0).files[0]);
+           data.append('idProof5', $("#image5").get(0).files[0]);
+           data.append('idProof6', $("#image6").get(0).files[0]);
+           data.append('idProof7', $("#image7").get(0).files[0]);
+           data.append('idProof8', $("#image8").get(0).files[0]);
+           data.append('idProof9', $("#image9").get(0).files[0]);
+           data.append('idProof10', $("#image10").get(0).files[0]);
+           data.append('idProof11', $("#image11").get(0).files[0]);
+           data.append('idProof12', $("#image12").get(0).files[0]);
+
+           
+           var isFileSelected = false
+           const id = Math.floor(Math.random() * 9000) + 1000;
+           var array_element = "";
+           var file = $('input[name="signphoto"]');
+           var extension="";
+           var filename="";
+           for (var i = 0; i < file.length; i++) {
+               var array_element = file[i];
+               var element = array_element.value.split("\\");
+                filename=element[element.length-1];
+               var lastDotIndex = filename.lastIndexOf('.');
+               if (lastDotIndex >= 0) {
+            	    extension = filename.substring(lastDotIndex + 1).toLowerCase(); // Convert to lowercase
+                   filename = filename.substring(0, lastDotIndex);
+               }
+               
+
+               if (filename === '' || filename === undefined) {
+                   filesPath += "null" + ",";
+                   isFileSelected = false;
+                   const splitName='';
+                   const value='';
+               } else {
+                   if (extension === 'jpg') {
+                   	  splitName = filename.replaceAll(/[^a-zA-Z0-9]/g, ""); 
+                         value = splitName + ".jpg";
+                  } else if(extension === 'jpeg'){
+               	    splitName = filename.replaceAll(/[^a-zA-Z0-9]/g, ""); 
+                       value = splitName + ".jpeg";
+                  }else if(extension === 'png'){
+               	    splitName = filename.replaceAll(/[^a-zA-Z0-9]/g, ""); 
+                       value = splitName + ".png";
+                  }
+                   filesPath = filesPath + basePath + "marriageForm/" + id + value + ",";
+                   isFileSelected = true;
+               }
+               
+           }
+
+           $.ajax({
+               url: "<c:out value='${contextRoot}'/>/rtiapplication/marriageImgFiles.do?id=" + id,
+               type: 'POST',
+               data: data,
+               cache: false,
+               dataType: 'json',
+               processData: false,
+               contentType: false,
+               async: false, // Set to synchronous
+               success: function(data) {
+                   var status = data.status;
+                   if (callback && typeof callback === 'function') {
+                       callback(status);
+                   }
+               },
+               error: function(jqXHR, textStatus, errorThrown) {
+                   console.error("AJAX Error:", textStatus, errorThrown);
+                   if (callback && typeof callback === 'function') {
+                       callback(false);
+                   }
+               }
+           });
+
+           var a = filesPath.substring(0, filesPath.lastIndexOf(","));
+           filesPath = filesPath.replace(/\s/g, "");
+           $("#imagePath").val(filesPath);
+           console.log(filesPath);
+       }
+
+
+	   function validateImage(fileInput) {
+    	    const file = fileInput.files[0];
+
+    	    if (file) {
+    	        const reader = new FileReader();
+
+    	        reader.onload = function (e) {
+    	            const img = new Image();
+    	            img.src = e.target.result;
+
+    	            img.onload = function () {
+    	                const passportSizeWidth = 350;
+    	                const passportSizeHeight = 350;
+
+    	                if (img.width === passportSizeWidth && img.height === passportSizeHeight) {
+    	                    // Valid dimensions
+    	                    fileInput.classList.remove('is-invalid');
+    	                    fileInput.classList.add('is-valid');
+    	                } else {
+    	                    // Invalid dimensions
+    	                    fileInput.classList.remove('is-valid');
+    	                    fileInput.classList.add('is-invalid');
+    	                    fileInput.value = "";
+    	                }
+    	            };
+
+    	            img.onerror = function () {
+    	                // Error loading image
+    	                fileInput.classList.remove('is-valid');
+    	                fileInput.classList.add('is-invalid');
+    	            };
+    	        };
+
+    	        reader.readAsDataURL(file);
+    	    }
+    	}
+
+   </script>
+<script>
+$(window).on('load', function(){
+    
+    
+    $('#myModal').modal('show');
+    
+    $('#myModal .modal-footer .btn').on('click', function(e) {
+        console.log('button pressed');              
+        // just as an example...
+        $('#myModal').modal('hide');                
+        // dismiss the dialog
+    });
+})
+</script>
+<div id="myModal" class="modal fade">
+
+	<div class="modal-dialog">
+
+		<div class="modal-content">
+
+			<div class="modal-header">
+
+				<h6>
+					<strong>Note(नोंद): </strong> Upload below files in .pdf...Max upto
+					2 MB(खालील फाइल .pdf मध्ये अपलोड करा..कमाल २ MB पर्यंत)
+				</h6>
+
+			</div>
+
+			<!-- dialog body -->
+
+			<div class="modal-body" style="color: green">
+
+
+
+				<p style="color: red">
+
+					<strong>List of document to be attached : </strong>
+				</p>
+
+				<ul style="color: rgb(3, 125, 76)">
+
+
+
+
+					<li>1.Wedding Card/Nikah Nama(लग्नपत्रिका/निकाह नामा)<span class="text-danger"
+						style="color: red;">*</span>
+					</li>
+					<li>2.Husband Divorced Proof (If any) (वराचा घटस्फोटित पुरावा
+						(असल्यास))</li>
+					<li>3.Wife Divorced Proof (If any) (वधूचा घटस्फोटाचा पुरावा
+						(असल्यास))</li>
+					<!-- <li>4.Property Tax Paid Receipt (मालमत्ता कर भरल्याची पावती)</li>-->	
+					<li>4.Proof Of Residence(Ration card/MSEB Bills/Telephone
+						Bills/Passport) (निवासाचा पुरावा (रेशन कार्ड/एमएसईबी बिले/टेलिफोन
+						बिले/पासपोर्ट))<span class="text-danger" style="color: red;"
+						required>*</span>
+					</li>
+					<li>5.Rs.100/- Court Fee Stamps(Under provision court fee
+						Act.1859)Affixed (रु. 100/- कोर्ट फी स्टॅम्प (तरतुदी कोर्ट फी
+						कायदा 1859 अंतर्गत) चिकटवले)<span class="text-danger" style="color: red;"
+						required>*</span>
+						</li>
+					<li>6.Affidavit(If necessary In case of doubtful cases)
+						(प्रतिज्ञापत्र (संशयास्पद प्रकरणांमध्ये आवश्यक असल्यास))</li>
+								
+					<li>7.Photograph Of Husband and Wife(Combined) (वराचा आणि
+						वधूचे छायाचित्र (एकत्रित))</li>
+					<li>8.Death Certificate of deceased spouse(where applicable)
+						(मृत जोडीदाराचे मृत्यू प्रमाणपत्र (जेथे लागू असेल))</li>
+					<li>9.Rent Agreement Certificate (भाडे कराराचे प्रमाणपत्र) </li>
+
+				</ul>
+
+			</div>
+
+			<!-- dialog buttons -->
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary">OK</button>
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+<script type="text/javascript">
+    function CheckColors(value) {
+
+
+        var element = document.getElementById('color');
+        if (value == "Others (इतर)") {
+            element.style.display = 'block';
+        }
+        else
+            element.style.display = 'none';
+    }
+
+</script>
+
+
+
+<script type="text/javascript">
+    function CheckColors1(value) {
+
+
+        var element = document.getElementById('color1');
+        if (value=="Others (इतर)") {
+            element.style.display = 'block';
+        }
+        else
+            element.style.display = 'none';
+    }
+
+</script>
+
+
+<script type="text/javascript">
+    function CheckColors2(value) {
+
+
+        var element = document.getElementById('color2');
+        if (value == "Others (इतर)") {
+            element.style.display = 'block';
+        }
+        else
+            element.style.display = 'none';
+    }
+
+</script>
+
+<script type="text/javascript">
+    function CheckColors3(value) {
+
+
+        var element = document.getElementById('color3');
+        if (value == "Others (इतर)") {
+            element.style.display = 'block';
+        }
+        else
+            element.style.display = 'none';
+    }
+
+</script>
+
+<script type="text/javascript">
+    function Relation1(value) {
+
+
+        var element = document.getElementById('relation1');
+        if (value == "Other (इतर)") {
+            element.style.display = 'block';
+        }
+        else
+            element.style.display = 'none';
+    }
+
+</script>
+
+
+<script type="text/javascript">
+    function Relation2(value) {
+
+
+        var element = document.getElementById('relation2');
+        if (value == "Other (इतर)") {
+            element.style.display = 'block';
+        }
+        else
+            element.style.display = 'none';
+    }
+
+</script>
+
+<script type="text/javascript">
+    function Relation3(value) {
+
+
+        var element = document.getElementById('relation3');
+        if (value == "Other (इतर)") {
+            element.style.display = 'block';
+        }
+        else
+            element.style.display = 'none';
+    }
+
+</script>
+<script type="text/javascript">
+    $('#numberbox').keyup(function () {
+        if ($(this).val() > 12) {
+            $(this).val('12');
+
+        }
+    });
+</script>
+<script type="text/javascript">
+    $('#numberbox1').keyup(function () {
+        if ($(this).val() > 12) {
+            $(this).val('12');
+
+        }
+    });
+</script>
+
+<script>
+    $.ajaxSetup({
+        beforeSend: function () {
+            $("#overlay").fadeIn();
+            $('body').css({
+                'cursor': 'progress'
+            });
+
+        },
+        complete: function () {
+            $("#overlay").fadeOut();
+            $('body').css({
+                'cursor': 'default'
+            });
+        }
+    });
+
+
+</script>
+</form>
+</div>
+<script>                    
+			var strArray = document.getElementsByTagName('textarea');
+			if(strArray){             
+				for(i=0;i<strArray.length;i++){
+					strArray[i].value = Trim(strArray[i].value);
+			}
+		}
+		</script>
+
+<script type="text/javascript">
+				if(parent.document.getElementById('divPopup'))
+				{
+					parent.hideDiv();
+					parent.document.location.href="<c:out value='${contextRoot}'/>/login.do";
+				}
+			</script>
+<script>
+ $('#others').live('change', function () {
+     if ((this.value) == 11) {
+         $(this).replaceWith($('<input/>', { 'class': 'form-control ','style':"background-image: none;", 'type': 'text' }));
+     }
+ });
+ </script>
+<script>
+    // Get the current date
+    var currentDate = new Date().toISOString().split("T")[0];
+
+    // Set the maximum attribute of the input field
+    document.getElementById("dw1").setAttribute("max", currentDate);
+    
+  
+</script>
+<script>
+    // Get the current date
+    var currentDate = new Date().toISOString().split("T")[0];
+
+    // Set the maximum attribute of the input field
+    document.getElementById("dw2").setAttribute("max", currentDate);
+    
+  
+</script>
+<script>
+    // Get the current date
+    var currentDate = new Date().toISOString().split("T")[0];
+
+    // Set the maximum attribute of the input field
+    document.getElementById("dw3").setAttribute("max", currentDate);
+    
+  
+</script>
+    <script>
+$(".rentdoc").hide();
+
+ $('input[type=radio][name=tenant]').change(function () {
+                if (this.value == 'Yes') {
+                    $(".rentdoc").show();
+                    $("#doc11").prop('required',true);
+                   
+                } else if (this.value == 'No') {
+                	  $(".rentdoc").hide();
+                      $("#doc11").prop('required',false);
+                }
+        });
+
+</script>
+</body>
+</html>

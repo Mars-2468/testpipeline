@@ -1,0 +1,1255 @@
+package com.mars.rti.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+@Entity
+
+@Table(name = "marriage_certificate", schema = "egovrti")
+public class MarriageCertificate {
+	
+	@Id
+	@Column(name = "marriage_certificate_id", nullable = false, unique = true)
+	@SequenceGenerator(name = "marriagecertificate_seq", sequenceName = "marriagecertificate_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "marriagecertificate_seq")
+	private long marriageCertificateID;
+
+	@Column(name = "title")
+	private String title;
+
+	@Column(name = "first_name")
+	private String firstName;
+
+	@Column(name = "middle_name")
+	private String middleName;
+
+	@Column(name = "last_name")
+	private String lastName;
+	
+	@Column(name = "full_name")
+	private String fullName;
+	
+	@Column(name="pincode")
+	private int  pinCode;
+
+	@Column(name="aadhaar_no")
+	private String aadhaarNo;
+	
+	@Column(name = "email")
+	private String email;
+	
+	@Column(name = "mobile_number")
+	private String mobileNumber;
+
+	@Column(name = "tenant")
+	private String tenant;
+
+	
+	@Column(name = "full_address")
+	private String fullAddress;
+	
+	@Column(name = "marriage_date")
+	private String marriageDate;
+
+	@Column(name = "marriage_place")
+	private String marriagePlace;
+
+	@Column(name = "marriage_law_religion")
+	private String marriageLawReligion;
+
+
+	/* Husband/Wife(Bride/Groom Details) */
+	@Column(name="title_of_husband")
+	private String husbandTitle;
+
+	@Column(name = "husband_last_name")
+	private String husbandLastName;
+	
+	@Column(name = "husband_first_name")
+	private String husbandFirstName;
+	
+	@Column(name="husband_father_name")
+	private String husbandFatherName;
+	
+	@Column(name="husband_aadhaar_no")
+	private String husbandAadhaarNo;
+	
+	@Column(name="husband_alt_name")
+	private String husbandAltName;
+
+	@Column(name = "husband_birth_religion")
+	private String husbandBirthReligion;
+
+	@Column(name = "husband_adopt_religion")
+	private String husbandAdoptReligion;
+	
+	@Column(name = "husband_full_addr")
+	private String husbandFullAddr;
+
+	@Column(name = "husband_solem_age_year")
+	private String husbandSolemAgeYear;
+	
+	@Column(name = "husband_solem_age_month")
+	private String husbandSolemAgeMonth;
+	
+	@Column(name="husband_proof_age")
+	private String husbanndAgeProof;
+
+	@Column(name = "husband_occupation")
+	private String husbandOccup;
+	
+	@Column(name = "husband_occupation_others")
+	private String husbandOccupOthers;
+
+	@Column(name = "husband_office_addr")
+	private String husbandOfficeAddr;
+
+	@Column(name = "husband_status")
+	private String husbandStatus;
+
+	@Column(name = "husband_sign_and_date")
+	private String husbandWitnSignAndDate;
+	
+	@Column(name="husband_photograph")
+	private String husbandPhotograph;
+	
+	@Column(name="title_of_wife")
+	private String wifeTitle;	
+	
+	@Column(name="wife_last_name")
+	private String wifeLastName;
+
+	@Column(name = "wife_first_name")
+	private String wifeFirstName;
+	
+	@Column(name="wife_father_name")
+	private String wifeFatherName;
+	
+	@Column(name="wife_aadhaar_no")
+	private String wifeAadhaarNo;
+
+	@Column(name = "wife_alt_name")
+	private String wifealtName;
+
+	@Column(name = "wife_birth_religion")
+	private String wifeBirthReligion;
+
+	@Column(name = "wife_adopt_religion")
+	private String wifeAdoptReligion;
+	
+	@Column(name = "wife_full_addr")
+	private String wifeFullAddress;
+
+	@Column(name = "wife_solem_age_year")
+	private String wifeSolemAgeYear;
+	
+	@Column(name = "wife_solem_age_month")
+	private String wifeSolemAgeMonth;
+	
+	@Column(name="wife_proof_age")
+	private String wifeAgeProof;
+
+	@Column(name = "wife_status")
+	private String wifeStatus;
+
+	@Column(name = "wife_sign_and_date")
+	private String wifeWitnSignAndDate;
+	
+	@Column(name="wife_photograph")
+	private String wifePhotograph;
+
+	/* Witness(3) Details */
+
+	@Column(name = "first_witn_full_name")
+	private String firstWitnFullName;
+
+	@Column(name = "first_witn_full_addr")
+	private String firstWitnFullAddr;
+
+	@Column(name = "first_witn_occup")
+	private String firstWitnOccup;
+
+	@Column(name = "first_witn_office_addr")
+	private String firstWitnOfficeAddr;
+
+	@Column(name = "first_witn_rel_mar_couple")
+	private String firstWitnRelMarCouple;
+	
+	@Column(name = "first_witn_sign_and_date")
+	private String firstWitnSignAndDate;
+
+	@Column(name = "first_witn_photograph")
+	private String firstWitnPhotograph;
+	
+	@Column(name = "second_witn_full_name")
+	private String secondWitnFullName;
+
+	@Column(name = "second_witn_full_addr")
+	private String secondWitnFullAddr;
+
+	@Column(name = "second_witn_occup")
+	private String secondWitnOccup;
+
+	@Column(name = "second_witn_office_addr")
+	private String secondWitnOfficeAddr;
+
+	@Column(name = "second_witn_rel_mar_couple")
+	private String secondWitnRelMarCouple;
+
+	@Column(name = "second_witn_sign_and_date")
+	private String secondWitnSignAndDate;
+	
+	@Column(name = "second_witn_photograph")
+	private String secondWitnPhotograph;
+
+	@Column(name = "third_witn_full_name")
+	private String thirdWitnFullName;
+
+	@Column(name = "third_witn_full_addr")
+	private String thirdWitnFullAddr;
+
+	@Column(name = "third_witn_occup")
+	private String thirdWitnOccup;
+	@Column(name = "zone_no")
+	private String zoneNo;
+	
+	@Column(name = "third_witn_office_addr")
+	private String thirdWitnOfficeAddr;
+
+	@Column(name = "third_witn_rel_mar_couple")
+	private String thirdWitnRelMarCouple;
+
+	@Column(name = "third_witn_sign_and_date")
+	private String thirdWitnSignAndDate;
+	
+	@Column(name = "third_witn_photograph")
+	private String thirdWitnPhotograph;
+
+
+	/* Priest Details */
+
+	@Column(name = "priest_name")
+	private String priestName;
+
+	@Column(name = "priest_full_addr")
+	private String priestFullAddr;
+
+	@Column(name = "priest_religion")
+	private String priestReligion;
+
+	@Column(name = "priest_age")
+	private String priestAge;
+
+	@Column(name = "priest_sign_and_date")
+	private String priestSignAndDate;
+	
+	@Column(name = "days_calculated_for_certificate")
+	private String daysCalculatedForCertificate;
+
+	@Column(name = "fee_applicable")
+	private double feeApplicable;
+	
+	@Column(name = "marriage_card")
+	private String marriageCard;
+
+	@Column(name = "husband_divorced_proof")
+	private String husbandDivorcedProof;
+
+	@Column(name = "wife_divorced_proof")
+	private String wifeDivorcedProof;
+
+	@Column(name = "property_tax_paid_age")
+	private String propertyTaxPaid;
+
+	@Column(name = "proof_of_residence")
+	private String proofOfResidence;
+	
+	@Column(name = "court_fee_stamps")
+	private String courtFeeStamps;
+
+	@Column(name = "affidavit")
+	private String affidavit;
+	
+	@Column(name = "photo_of_husbandwife")
+	private String photoOfHusbandAndWife;
+
+	@Column(name = "death_certificate_of_spouse")
+	private String deathCertificateOfSpouse;
+	
+	@Column(name = "first_occup_others")
+	private String firstOccupOthers;
+
+	@Column(name = "first_rel_others")
+	private String firstRelationOthers;
+	
+	@Column(name = "second_occup_others")
+	private String secondOccupOthers;
+
+	@Column(name = "second_rel_others")
+	private String secondRelationOthers;
+	
+	@Column(name = "third_occup_others")
+	private String thirdOccupOthers;
+
+	@Column(name = "third_rel_others")
+	private String thirdRelationOthers;
+	
+	@Column(name = "rti_appl_ref_no", nullable = true )
+	private String rtiapplrefno;
+	
+	@Column(name = "rti_ref_id", nullable = true )
+	private long rti_ref_id;
+	
+	@Column(name = "visit_date", nullable = true )
+	private String visitdate;
+	
+	@Column(name = "second_visit_date", nullable = true )
+	private String secondvisitdate;
+	
+	@Column(name = "sechedule", nullable = true )
+	private String sechedule;
+	
+	@Column(name = "reschedule", nullable = true )
+	private String reschedule;
+
+	
+	@Transient
+	private String filesPath;
+	
+	@Transient
+	private String marrgfs;
+	
+	@Column(name="images_path")
+	private String marriageImages;
+	
+	@Column(name="remarks")
+	private String remarks;
+	
+	@Column(name="visit_verification")
+	private String visitVerification;
+	
+	@Column(name="visit_time")
+	private String visitTime;
+	
+	@Column(name="second_visit_time")
+	private String secondVisitTime;
+
+
+	public long getMarriageCertificateID() {
+		return marriageCertificateID;
+	}
+
+	public void setMarriageCertificateID(long marriageCertificateID) {
+		this.marriageCertificateID = marriageCertificateID;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public int getPinCode() {
+		return pinCode;
+	}
+
+	public void setPinCode(int pinCode) {
+		this.pinCode = pinCode;
+	}
+
+	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+
+	public String getFullAddress() {
+		return fullAddress;
+	}
+
+	public void setFullAddress(String fullAddress) {
+		this.fullAddress = fullAddress;
+	}
+
+	public String getMarriageDate() {
+		return marriageDate;
+	}
+
+	public void setMarriageDate(String marriageDate) {
+		this.marriageDate = marriageDate;
+	}
+
+	public String getMarriagePlace() {
+		return marriagePlace;
+	}
+
+	public void setMarriagePlace(String marriagePlace) {
+		this.marriagePlace = marriagePlace;
+	}
+
+	public String getMarriageLawReligion() {
+		return marriageLawReligion;
+	}
+
+	public void setMarriageLawReligion(String marriageLawReligion) {
+		this.marriageLawReligion = marriageLawReligion;
+	}
+
+	public String getHusbandTitle() {
+		return husbandTitle;
+	}
+
+	public void setHusbandTitle(String husbandTitle) {
+		this.husbandTitle = husbandTitle;
+	}
+
+	public String getHusbandLastName() {
+		return husbandLastName;
+	}
+
+	public void setHusbandLastName(String husbandLastName) {
+		this.husbandLastName = husbandLastName;
+	}
+
+	public String getHusbandFirstName() {
+		return husbandFirstName;
+	}
+
+	public void setHusbandFirstName(String husbandFirstName) {
+		this.husbandFirstName = husbandFirstName;
+	}
+
+	public String getHusbandFatherName() {
+		return husbandFatherName;
+	}
+
+	public void setHusbandFatherName(String husbandFatherName) {
+		this.husbandFatherName = husbandFatherName;
+	}
+
+	public String getHusbandAadhaarNo() {
+		return husbandAadhaarNo;
+	}
+
+	public void setHusbandAadhaarNo(String husbandAadhaarNo) {
+		this.husbandAadhaarNo = husbandAadhaarNo;
+	}
+
+	public String getHusbandAltName() {
+		return husbandAltName;
+	}
+
+	public void setHusbandAltName(String husbandAltName) {
+		this.husbandAltName = husbandAltName;
+	}
+
+	public String getHusbandBirthReligion() {
+		return husbandBirthReligion;
+	}
+
+	public void setHusbandBirthReligion(String husbandBirthReligion) {
+		this.husbandBirthReligion = husbandBirthReligion;
+	}
+
+	public String getHusbandAdoptReligion() {
+		return husbandAdoptReligion;
+	}
+
+	public void setHusbandAdoptReligion(String husbandAdoptReligion) {
+		this.husbandAdoptReligion = husbandAdoptReligion;
+	}
+
+	public String getHusbandFullAddr() {
+		return husbandFullAddr;
+	}
+
+	public void setHusbandFullAddr(String husbandFullAddr) {
+		this.husbandFullAddr = husbandFullAddr;
+	}
+
+	public String getHusbandSolemAgeYear() {
+		return husbandSolemAgeYear;
+	}
+
+	public void setHusbandSolemAgeYear(String husbandSolemAgeYear) {
+		this.husbandSolemAgeYear = husbandSolemAgeYear;
+	}
+
+	public String getHusbandSolemAgeMonth() {
+		return husbandSolemAgeMonth;
+	}
+
+	public void setHusbandSolemAgeMonth(String husbandSolemAgeMonth) {
+		this.husbandSolemAgeMonth = husbandSolemAgeMonth;
+	}
+
+	public String getHusbanndAgeProof() {
+		return husbanndAgeProof;
+	}
+
+	public void setHusbanndAgeProof(String husbanndAgeProof) {
+		this.husbanndAgeProof = husbanndAgeProof;
+	}
+
+	public String getHusbandOccup() {
+		return husbandOccup;
+	}
+
+	public void setHusbandOccup(String husbandOccup) {
+		this.husbandOccup = husbandOccup;
+	}
+
+	public String getHusbandOccupOthers() {
+		return husbandOccupOthers;
+	}
+
+	public void setHusbandOccupOthers(String husbandOccupOthers) {
+		this.husbandOccupOthers = husbandOccupOthers;
+	}
+
+	public String getHusbandOfficeAddr() {
+		return husbandOfficeAddr;
+	}
+
+	public void setHusbandOfficeAddr(String husbandOfficeAddr) {
+		this.husbandOfficeAddr = husbandOfficeAddr;
+	}
+
+	public String getHusbandStatus() {
+		return husbandStatus;
+	}
+
+	public void setHusbandStatus(String husbandStatus) {
+		this.husbandStatus = husbandStatus;
+	}
+
+	public String getHusbandWitnSignAndDate() {
+		return husbandWitnSignAndDate;
+	}
+
+	public void setHusbandWitnSignAndDate(String husbandWitnSignAndDate) {
+		this.husbandWitnSignAndDate = husbandWitnSignAndDate;
+	}
+
+	public String getHusbandPhotograph() {
+		return husbandPhotograph;
+	}
+
+	public void setHusbandPhotograph(String husbandPhotograph) {
+		this.husbandPhotograph = husbandPhotograph;
+	}
+
+	public String getWifeTitle() {
+		return wifeTitle;
+	}
+
+	public void setWifeTitle(String wifeTitle) {
+		this.wifeTitle = wifeTitle;
+	}
+
+	public String getWifeLastName() {
+		return wifeLastName;
+	}
+
+	public void setWifeLastName(String wifeLastName) {
+		this.wifeLastName = wifeLastName;
+	}
+
+	public String getWifeFirstName() {
+		return wifeFirstName;
+	}
+
+	public void setWifeFirstName(String wifeFirstName) {
+		this.wifeFirstName = wifeFirstName;
+	}
+
+	public String getWifeFatherName() {
+		return wifeFatherName;
+	}
+
+	public void setWifeFatherName(String wifeFatherName) {
+		this.wifeFatherName = wifeFatherName;
+	}
+
+	
+	public String getWifealtName() {
+		return wifealtName;
+	}
+
+	public void setWifealtName(String wifealtName) {
+		this.wifealtName = wifealtName;
+	}
+
+	public String getWifeBirthReligion() {
+		return wifeBirthReligion;
+	}
+
+	public void setWifeBirthReligion(String wifeBirthReligion) {
+		this.wifeBirthReligion = wifeBirthReligion;
+	}
+
+	public String getWifeAdoptReligion() {
+		return wifeAdoptReligion;
+	}
+
+	public void setWifeAdoptReligion(String wifeAdoptReligion) {
+		this.wifeAdoptReligion = wifeAdoptReligion;
+	}
+
+	public String getWifeFullAddress() {
+		return wifeFullAddress;
+	}
+
+	public void setWifeFullAddress(String wifeFullAddress) {
+		this.wifeFullAddress = wifeFullAddress;
+	}
+
+	public String getWifeSolemAgeYear() {
+		return wifeSolemAgeYear;
+	}
+
+	public void setWifeSolemAgeYear(String wifeSolemAgeYear) {
+		this.wifeSolemAgeYear = wifeSolemAgeYear;
+	}
+
+	public String getWifeSolemAgeMonth() {
+		return wifeSolemAgeMonth;
+	}
+
+	public void setWifeSolemAgeMonth(String wifeSolemAgeMonth) {
+		this.wifeSolemAgeMonth = wifeSolemAgeMonth;
+	}
+
+	public String getWifeAgeProof() {
+		return wifeAgeProof;
+	}
+
+	public void setWifeAgeProof(String wifeAgeProof) {
+		this.wifeAgeProof = wifeAgeProof;
+	}
+
+	public String getWifeStatus() {
+		return wifeStatus;
+	}
+
+	public void setWifeStatus(String wifeStatus) {
+		this.wifeStatus = wifeStatus;
+	}
+
+	public String getWifeWitnSignAndDate() {
+		return wifeWitnSignAndDate;
+	}
+
+	public void setWifeWitnSignAndDate(String wifeWitnSignAndDate) {
+		this.wifeWitnSignAndDate = wifeWitnSignAndDate;
+	}
+
+	public String getWifePhotograph() {
+		return wifePhotograph;
+	}
+
+	public void setWifePhotograph(String wifePhotograph) {
+		this.wifePhotograph = wifePhotograph;
+	}
+
+	public String getFirstWitnFullName() {
+		return firstWitnFullName;
+	}
+
+	public void setFirstWitnFullName(String firstWitnFullName) {
+		this.firstWitnFullName = firstWitnFullName;
+	}
+
+	public String getFirstWitnFullAddr() {
+		return firstWitnFullAddr;
+	}
+
+	public void setFirstWitnFullAddr(String firstWitnFullAddr) {
+		this.firstWitnFullAddr = firstWitnFullAddr;
+	}
+
+	public String getFirstWitnOccup() {
+		return firstWitnOccup;
+	}
+
+	public void setFirstWitnOccup(String firstWitnOccup) {
+		this.firstWitnOccup = firstWitnOccup;
+	}
+
+	public String getFirstWitnOfficeAddr() {
+		return firstWitnOfficeAddr;
+	}
+
+	public void setFirstWitnOfficeAddr(String firstWitnOfficeAddr) {
+		this.firstWitnOfficeAddr = firstWitnOfficeAddr;
+	}
+
+	public String getFirstWitnRelMarCouple() {
+		return firstWitnRelMarCouple;
+	}
+
+	public void setFirstWitnRelMarCouple(String firstWitnRelMarCouple) {
+		this.firstWitnRelMarCouple = firstWitnRelMarCouple;
+	}
+
+	public String getFirstWitnSignAndDate() {
+		return firstWitnSignAndDate;
+	}
+
+	public void setFirstWitnSignAndDate(String firstWitnSignAndDate) {
+		this.firstWitnSignAndDate = firstWitnSignAndDate;
+	}
+
+	public String getFirstWitnPhotograph() {
+		return firstWitnPhotograph;
+	}
+
+	public void setFirstWitnPhotograph(String firstWitnPhotograph) {
+		this.firstWitnPhotograph = firstWitnPhotograph;
+	}
+
+	public String getSecondWitnFullName() {
+		return secondWitnFullName;
+	}
+
+	public void setSecondWitnFullName(String secondWitnFullName) {
+		this.secondWitnFullName = secondWitnFullName;
+	}
+
+	public String getSecondWitnFullAddr() {
+		return secondWitnFullAddr;
+	}
+
+	public void setSecondWitnFullAddr(String secondWitnFullAddr) {
+		this.secondWitnFullAddr = secondWitnFullAddr;
+	}
+
+	public String getSecondWitnOccup() {
+		return secondWitnOccup;
+	}
+
+	public void setSecondWitnOccup(String secondWitnOccup) {
+		this.secondWitnOccup = secondWitnOccup;
+	}
+
+	public String getSecondWitnOfficeAddr() {
+		return secondWitnOfficeAddr;
+	}
+
+	public void setSecondWitnOfficeAddr(String secondWitnOfficeAddr) {
+		this.secondWitnOfficeAddr = secondWitnOfficeAddr;
+	}
+
+	public String getSecondWitnRelMarCouple() {
+		return secondWitnRelMarCouple;
+	}
+
+	public void setSecondWitnRelMarCouple(String secondWitnRelMarCouple) {
+		this.secondWitnRelMarCouple = secondWitnRelMarCouple;
+	}
+
+	public String getSecondWitnSignAndDate() {
+		return secondWitnSignAndDate;
+	}
+
+	public void setSecondWitnSignAndDate(String secondWitnSignAndDate) {
+		this.secondWitnSignAndDate = secondWitnSignAndDate;
+	}
+
+	public String getSecondWitnPhotograph() {
+		return secondWitnPhotograph;
+	}
+
+	public void setSecondWitnPhotograph(String secondWitnPhotograph) {
+		this.secondWitnPhotograph = secondWitnPhotograph;
+	}
+
+	public String getThirdWitnFullName() {
+		return thirdWitnFullName;
+	}
+
+	public void setThirdWitnFullName(String thirdWitnFullName) {
+		this.thirdWitnFullName = thirdWitnFullName;
+	}
+
+	public String getThirdWitnFullAddr() {
+		return thirdWitnFullAddr;
+	}
+
+	public void setThirdWitnFullAddr(String thirdWitnFullAddr) {
+		this.thirdWitnFullAddr = thirdWitnFullAddr;
+	}
+
+	public String getThirdWitnOccup() {
+		return thirdWitnOccup;
+	}
+
+	public void setThirdWitnOccup(String thirdWitnOccup) {
+		this.thirdWitnOccup = thirdWitnOccup;
+	}
+
+	public String getThirdWitnOfficeAddr() {
+		return thirdWitnOfficeAddr;
+	}
+
+	public void setThirdWitnOfficeAddr(String thirdWitnOfficeAddr) {
+		this.thirdWitnOfficeAddr = thirdWitnOfficeAddr;
+	}
+
+	public String getThirdWitnRelMarCouple() {
+		return thirdWitnRelMarCouple;
+	}
+
+	public void setThirdWitnRelMarCouple(String thirdWitnRelMarCouple) {
+		this.thirdWitnRelMarCouple = thirdWitnRelMarCouple;
+	}
+
+	public String getThirdWitnSignAndDate() {
+		return thirdWitnSignAndDate;
+	}
+
+	public void setThirdWitnSignAndDate(String thirdWitnSignAndDate) {
+		this.thirdWitnSignAndDate = thirdWitnSignAndDate;
+	}
+
+	public String getThirdWitnPhotograph() {
+		return thirdWitnPhotograph;
+	}
+
+	public void setThirdWitnPhotograph(String thirdWitnPhotograph) {
+		this.thirdWitnPhotograph = thirdWitnPhotograph;
+	}
+
+	public String getPriestName() {
+		return priestName;
+	}
+
+	public void setPriestName(String priestName) {
+		this.priestName = priestName;
+	}
+
+	public String getPriestFullAddr() {
+		return priestFullAddr;
+	}
+
+	public void setPriestFullAddr(String priestFullAddr) {
+		this.priestFullAddr = priestFullAddr;
+	}
+
+	public String getPriestReligion() {
+		return priestReligion;
+	}
+
+	public void setPriestReligion(String priestReligion) {
+		this.priestReligion = priestReligion;
+	}
+
+	public String getPriestAge() {
+		return priestAge;
+	}
+
+	public void setPriestAge(String priestAge) {
+		this.priestAge = priestAge;
+	}
+
+	public String getPriestSignAndDate() {
+		return priestSignAndDate;
+	}
+
+	public void setPriestSignAndDate(String priestSignAndDate) {
+		this.priestSignAndDate = priestSignAndDate;
+	}
+
+	public String getDaysCalculatedForCertificate() {
+		return daysCalculatedForCertificate;
+	}
+
+	public void setDaysCalculatedForCertificate(String daysCalculatedForCertificate) {
+		this.daysCalculatedForCertificate = daysCalculatedForCertificate;
+	}
+
+	public double getFeeApplicable() {
+		return feeApplicable;
+	}
+
+	public void setFeeApplicable(double feeApplicable) {
+		this.feeApplicable = feeApplicable;
+	}
+
+	public String getMarriageCard() {
+		return marriageCard;
+	}
+
+	public void setMarriageCard(String marriageCard) {
+		this.marriageCard = marriageCard;
+	}
+
+	public String getHusbandDivorcedProof() {
+		return husbandDivorcedProof;
+	}
+
+	public void setHusbandDivorcedProof(String husbandDivorcedProof) {
+		this.husbandDivorcedProof = husbandDivorcedProof;
+	}
+
+	public String getWifeDivorcedProof() {
+		return wifeDivorcedProof;
+	}
+
+	public void setWifeDivorcedProof(String wifeDivorcedProof) {
+		this.wifeDivorcedProof = wifeDivorcedProof;
+	}
+
+	public String getPropertyTaxPaid() {
+		return propertyTaxPaid;
+	}
+
+	public void setPropertyTaxPaid(String propertyTaxPaid) {
+		this.propertyTaxPaid = propertyTaxPaid;
+	}
+
+	public String getProofOfResidence() {
+		return proofOfResidence;
+	}
+
+	public void setProofOfResidence(String proofOfResidence) {
+		this.proofOfResidence = proofOfResidence;
+	}
+
+	public String getCourtFeeStamps() {
+		return courtFeeStamps;
+	}
+
+	public void setCourtFeeStamps(String courtFeeStamps) {
+		this.courtFeeStamps = courtFeeStamps;
+	}
+
+	public String getAffidavit() {
+		return affidavit;
+	}
+
+	public void setAffidavit(String affidavit) {
+		this.affidavit = affidavit;
+	}
+
+	public String getPhotoOfHusbandAndWife() {
+		return photoOfHusbandAndWife;
+	}
+
+	public void setPhotoOfHusbandAndWife(String photoOfHusbandAndWife) {
+		this.photoOfHusbandAndWife = photoOfHusbandAndWife;
+	}
+
+	public String getDeathCertificateOfSpouse() {
+		return deathCertificateOfSpouse;
+	}
+
+	public void setDeathCertificateOfSpouse(String deathCertificateOfSpouse) {
+		this.deathCertificateOfSpouse = deathCertificateOfSpouse;
+	}
+
+	public String getFirstOccupOthers() {
+		return firstOccupOthers;
+	}
+
+	public void setFirstOccupOthers(String firstOccupOthers) {
+		this.firstOccupOthers = firstOccupOthers;
+	}
+
+	public String getFirstRelationOthers() {
+		return firstRelationOthers;
+	}
+
+	public void setFirstRelationOthers(String firstRelationOthers) {
+		this.firstRelationOthers = firstRelationOthers;
+	}
+
+	public String getSecondOccupOthers() {
+		return secondOccupOthers;
+	}
+
+	public void setSecondOccupOthers(String secondOccupOthers) {
+		this.secondOccupOthers = secondOccupOthers;
+	}
+
+	public String getSecondRelationOthers() {
+		return secondRelationOthers;
+	}
+
+	public void setSecondRelationOthers(String secondRelationOthers) {
+		this.secondRelationOthers = secondRelationOthers;
+	}
+
+	public String getThirdOccupOthers() {
+		return thirdOccupOthers;
+	}
+
+	public void setThirdOccupOthers(String thirdOccupOthers) {
+		this.thirdOccupOthers = thirdOccupOthers;
+	}
+
+	public String getThirdRelationOthers() {
+		return thirdRelationOthers;
+	}
+
+	public void setThirdRelationOthers(String thirdRelationOthers) {
+		this.thirdRelationOthers = thirdRelationOthers;
+	}
+
+	public String getRtiapplrefno() {
+		return rtiapplrefno;
+	}
+
+	public void setRtiapplrefno(String rtiapplrefno) {
+		this.rtiapplrefno = rtiapplrefno;
+	}
+
+	public long getRti_ref_id() {
+		return rti_ref_id;
+	}
+
+	public void setRti_ref_id(long rti_ref_id) {
+		this.rti_ref_id = rti_ref_id;
+	}
+
+	public String getFilesPath() {
+		return filesPath;
+	}
+
+	public void setFilesPath(String filesPath) {
+		this.filesPath = filesPath;
+	}
+
+	public String getZoneNo() {
+		return zoneNo;
+	}
+
+	public void setZoneNo(String zoneNo) {
+		this.zoneNo = zoneNo;
+	}
+	
+	@Column(name = "first_witn_date")
+	private String firstWitndate;
+	
+	@Column(name = "first_aadhaar_no")
+	private String firstAadhaarNo;
+
+	@Column(name = "second_witn_date")
+	private String secondWitndate;
+	
+	@Column(name = "second_aadhaar_no")
+	private String secondAadhaarNo;
+
+	@Column(name = "third_witn_date")
+	private String thirdWitndate;
+	
+	@Column(name = "third_aadhaar_no")
+	private String thirdAadhaarNo;
+
+	public String getFirstWitndate() {
+		return firstWitndate;
+	}
+
+	public String getFirstAadhaarNo() {
+		return firstAadhaarNo;
+	}
+
+	public String getSecondWitndate() {
+		return secondWitndate;
+	}
+
+	public String getSecondAadhaarNo() {
+		return secondAadhaarNo;
+	}
+
+	public String getThirdWitndate() {
+		return thirdWitndate;
+	}
+
+	public String getThirdAadhaarNo() {
+		return thirdAadhaarNo;
+	}
+
+	public void setFirstWitndate(String firstWitndate) {
+		this.firstWitndate = firstWitndate;
+	}
+
+	public void setFirstAadhaarNo(String firstAadhaarNo) {
+		this.firstAadhaarNo = firstAadhaarNo;
+	}
+
+	public void setSecondWitndate(String secondWitndate) {
+		this.secondWitndate = secondWitndate;
+	}
+
+	public void setSecondAadhaarNo(String secondAadhaarNo) {
+		this.secondAadhaarNo = secondAadhaarNo;
+	}
+
+	public void setThirdWitndate(String thirdWitndate) {
+		this.thirdWitndate = thirdWitndate;
+	}
+
+	public void setThirdAadhaarNo(String thirdAadhaarNo) {
+		this.thirdAadhaarNo = thirdAadhaarNo;
+	}
+
+	public String getVisitdate() {
+		return visitdate;
+	}
+
+	public void setVisitdate(String visitdate) {
+		this.visitdate = visitdate;
+	}
+
+	public String getSecondvisitdate() {
+		return secondvisitdate;
+	}
+
+	public void setSecondvisitdate(String secondvisitdate) {
+		this.secondvisitdate = secondvisitdate;
+	}
+
+	public String getSechedule() {
+		return sechedule;
+	}
+
+	public void setSechedule(String sechedule) {
+		this.sechedule = sechedule;
+	}
+
+	public String getReschedule() {
+		return reschedule;
+	}
+
+	public void setReschedule(String reschedule) {
+		this.reschedule = reschedule;
+	}
+
+	public String getMarriageImages() {
+		return marriageImages;
+	}
+
+	public void setMarriageImages(String marriageImages) {
+		this.marriageImages = marriageImages;
+	}
+
+	public String getAadhaarNo() {
+		return aadhaarNo;
+	}
+
+	public void setAadhaarNo(String aadhaarNo) {
+		this.aadhaarNo = aadhaarNo;
+	}
+
+	public String getWifeAadhaarNo() {
+		return wifeAadhaarNo;
+	}
+
+	public void setWifeAadhaarNo(String wifeAadhaarNo) {
+		this.wifeAadhaarNo = wifeAadhaarNo;
+	}
+
+	public String getTenant() {
+		return tenant;
+	}
+
+	public void setTenant(String tenant) {
+		this.tenant = tenant;
+	}
+
+	public String getMarrgfs() {
+		return marrgfs;
+	}
+
+	public void setMarrgfs(String marrgfs) {
+		this.marrgfs = marrgfs;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public String getVisitVerification() {
+		return visitVerification;
+	}
+
+	public void setVisitVerification(String visitVerification) {
+		this.visitVerification = visitVerification;
+	}
+
+	public String getVisitTime() {
+		return visitTime;
+	}
+
+	public void setVisitTime(String visitTime) {
+		this.visitTime = visitTime;
+	}
+
+	public String getSecondVisitTime() {
+		return secondVisitTime;
+	}
+
+	public void setSecondVisitTime(String secondVisitTime) {
+		this.secondVisitTime = secondVisitTime;
+	}
+
+	
+	
+}
+	

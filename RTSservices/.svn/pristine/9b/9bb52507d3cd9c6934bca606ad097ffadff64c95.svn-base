@@ -1,0 +1,746 @@
+#Messages for Language selection
+lang.english=English
+lang.hindi=Hindi
+
+top.heading=Government of Rajasthan
+dept.name= RTI Online
+
+#Messages for Left Nav start  (Comon Menus)
+Menu.Reports.AuditReports=Audit Reports
+Menu.Reports.RecentlyGeneratedReports=Recently Generated Reports
+
+Menu.common.masters.heading=Common Masters
+Menu.common.masters.Bank=Bank
+Menu.common.masters.BankBranch=Bank Branch
+Menu.common.masters.Challan=Challan
+Menu.common.masters.CollectionCenter=Collection Center
+Menu.common.masters.Stage=Stage
+Menu.common.masters.DocumentMaster=Document Master
+Menu.common.masters.FinancialYear=Financial Year
+Menu.common.masters.DPC=DPC
+Menu.common.masters.fassynch=FAS Consolidation
+
+Menu.location.masters.heading=Location Masters
+
+
+Menu.GIS.masters.heading=GIS Masters
+Menu.GIS.masters.State=State
+Menu.GIS.masters.District=District
+Menu.GIS.masters.Taluka=Taluka
+Menu.GIS.masters.City=City
+Menu.GIS.masters.Ward=Ward
+Menu.GIS.masters.Node=Node
+Menu.GIS.masters.Sector=Sector
+Menu.GIS.masters.PlotType=Plot Type
+Menu.GIS.masters.Plot=Plot
+Menu.GIS.masters.Area=Area
+
+Menu.User.masters.heading=User Administration
+Menu.User.Application=Application
+Menu.User.user=User
+Menu.User.Role=Role
+Menu.User.Permission=Permission
+Menu.User.PermissionGroup=Permission Group
+Menu.User.Employee=Employee
+Menu.User.Department=Department
+Menu.User.Designation=Designation
+Menu.User.Salutation=Salutation
+Menu.User.tenant = Tenant
+
+#Messages for Left Nav End  (Comon Menus)
+
+#Messages for buttons
+list.link.EditOrViewLink=Please click the link to modify/view details
+
+common.button.save=Save
+common.button.clear=Clear
+common.button.delete=Delete
+common.button.search=Search
+common.button.action=Action
+
+#Messages for common labels
+common.label.min=Min
+common.label.hr=Hr
+
+common.label.percentageSymbol = %
+common.label.code=Code
+
+common.label.districtCode = Code
+common.label.talukaCode = Code
+common.label.regReligionCode = Code
+common.label.qualificationCode = Code
+common.label.defaultOption = <--- Select --->
+common.label.fullName= (Full Name)
+common.label.ifany= (if any)
+common.label.99notStarted= 99 - Not Stated
+common.label.9notStarted= 9 - Not Stated
+common.label.inweaks=(in weeks)
+common.label.ifknown=(if known)
+common.label.inkgs=(in Kgs)
+common.label.name=Name
+common.label.Uid=UID
+common.label.altenativeName= Alternative Name
+common.label.address=Address
+common.label.religion=Religion
+common.label.age=Age
+common.label.amount=Amount
+common.label.delayAmount=Delay Amount
+common.label.total=Total
+common.label.yes=Yes
+common.label.no=No
+common.label.remarks=Remarks
+
+#Messages for common labels in Marathi
+common.label.fullName_mr=(फुल नामे )
+common.label.ifany_mr= (इफ अन्य)
+common.label.99notStarted_mr= ९९  - नोट स्ततेद
+common.label.9notStarted_mr= ९ - नोट स्ततेद
+common.label.inweaks_mr=(इन विकस)
+common.label.ifknown_mr=(इफ क्नोव्न)
+common.label.inkgs_mr=(इन क्ग्स)
+common.label.name_mr=नामे
+common.label.Uid_mr=उईद
+common.label.altenativeName_mr=अल्तेर्नातीवे नामे
+common.label.address_mr=अद्द्रेस
+common.label.religion_mr=रेलीगीओन
+common.label.age_mr=आगे
+common.label.amount_mr=अमौंत
+common.label.yes_mr=एस
+common.label.no_mr=नो
+common.label.remarks_mr=रेमार्क्स
+common.label.defaultOption_mr = <---सेलेच्त --->
+
+#Messages for common labels for Search
+search.label.from=From
+search.label.to=To
+search.label.start=Start
+search.label.end=End
+search.label.between=Between
+search.label.and=And
+search.label.heading=Search Options
+
+#Common Messages for all UseCases.
+list.label.norecords=No Records Available.
+label.mandatory.fields= Fields are Mandatory.
+label.current.date=Current Date
+label.search.heading=Search Options
+label.search.from=From
+label.search.to=To
+label.search.fromDate=From Date
+label.search.toDate=To Date
+label.search.collegeEmployee=Employee Name
+label.search.applicantName=Applicant Name
+label.search.commonEmployee=Employee Name
+
+#Message for Manage File Upload pages
+dms.manage.label.FilePrivacy = File Privacy
+dms.manage.label.Keyword = File Keyword
+dms.manage.label.DocumentType = Document Type
+dms.manage.label.Comments = Comments
+dms.manage.label.FileUpload = Upload File
+
+#DMS Attachments Pages
+dmsattachment.manage.label.checklist.heading=Document Check List
+dmsattachment.manage.label.heading=Attachments
+dmsattachment.manage.label.sno=#
+dmsattachment.manage.label.fileName=File Name
+dmsattachment.manage.label.operations=Operations
+dmsattachment.manage.label.uploaddate=Uploaded Date
+dmsattachment.manage.label.document=Document Description
+dmsattachment.manage.label.status=Status
+dmsattachment.manage.label.dmsdoctype=DMS Document Type
+
+#Message for DemandNo
+common.manage.label.deptName = Water
+common.manage.label.sNo=#
+common.manage.label.status=This Master Data cannot be edited or deleted as it is being used in Further Transactions.
+
+#changepassword
+changepassword.label.oldPassword=Old Password
+changepassword.label.pageheader=Change Password
+changepassword.label.enterpassword=Please enter your new password
+changepassword.label.newpassword=New password
+changepassword.label.retypenewpassword=Retype Password
+
+changepassword.success.message=Password changed successfully
+changepassword.error.passwordNotIdentical=The new password strings aren't identical. Your password has not been changed. Please enter your new password again.
+changepassword.error.empty=You have to specify a password, no empty password strings allowed
+
+#Message for Permission manage pages
+permission.manage.pagetitle.new=New Permission
+permission.manage.pagetitle.edit=Edit Permission
+
+#Message for Permission.hbm.xml List pages
+permission.list.pagetitle.list=Permissions List
+permission.list.label.create=Create Permission
+
+#Message for Permission
+permission.label.linkName=Name
+permission.label.linkUrl=Link Url
+permission.label.permissionGroup=Group
+
+#Message for PermissionGroup manage pages
+permissionGroup.manage.pagetitle.new=New Permission Group
+permissionGroup.manage.pagetitle.edit=Edit Permission Group
+
+permissionGroup.manage.label.name=Name
+
+#Message for PermissionGroup.hbm.xml List pages
+permissionGroup.list.pagetitle.list=Permission Groups List
+permissionGroup.list.label.permissionGroupId=Permission Group Id
+permissionGroup.list.label.name=Name
+permissionGroup.list.label.create=Create Permission Group
+
+#Message for Role manage pages
+role.manage.pagetitle.new=New Role
+role.manage.pagetitle.edit=Edit Role
+
+role.manage.label.permissions=Permissions
+role.manage.label.sno=#
+role.manage.label.permission=Permission Name
+role.manage.label.delete=Delete
+
+#Message for Role.hbm.xml List pages
+role.list.pagetitle.list =Roles List
+role.list.label.create=Create Role
+
+#Message for Role
+role.label.role_name=Role Name
+
+
+#Message for Application manage pages
+application.manage.pagetitle.new=New Application
+application.manage.pagetitle.edit=Edit Application
+
+application.manage.label.name=Name
+application.manage.label.description=Description
+application.manage.label.status=Status
+application.manage.label.application=Application
+application.manage.label.description=Description
+application.manage.label.imageUrl=Image URL
+application.manage.label.applicationUrl=Application URL
+application.manage.label.assigned= Assigned
+
+#Message for Application List pages
+application.list.pagetitle.list=List Application
+application.list.label.applicationId=Application Id
+application.list.label.name=Name
+
+#Message for User manage pages
+user.manage.pagetitle.new=New User
+user.manage.pagetitle.edit=Edit User
+
+#Message for User
+user.label.userName=Username
+user.label.password=Password
+user.label.employee=Employee
+user.label.firstName=First Name
+user.label.middleName=Middle Name
+user.label.lastName=Last Name
+user.label.department=Department
+user.label.designation=Designation
+user.label.email = Email
+
+#Message for User manage pages
+user.manage.label.roles=Roles
+user.manage.label.sno=#
+user.manage.label.rolename=Role Name
+user.manage.label.startdate=Start Date
+user.manage.label.enddate=End Date
+user.manage.label.isdefault=Default
+user.manage.label.delete=Delete
+user.manage.default.error=At least one Role has to be default and only One Role can be default
+user.manage.label.myapps=My Applications
+
+#Message for User.hbm.xml List pages
+user.list.pagetitle.list=Users List
+user.list.label.create=Create User
+
+#Messages for Login Page
+login.heading=Login
+login.username=Username
+login.password=Password
+
+#Messages for logout screen
+logout.label.pageheader=You have been successfully logged out of DHE System.
+logout.label.thanku=Thank you for using the DHE system.
+logout.label.relogin=Login Again.
+
+#Message for UserRole manage pages
+userRole.manage.pagetitle.new=New User Role
+userRole.manage.pagetitle.edit=Edit User Role
+
+userRole.manage.label.userRoleStDate=User Role St Date
+userRole.manage.label.userRoleEndDate=User Role End Date
+userRole.manage.label.isDefault=Is Default
+userRole.manage.label.user=User
+userRole.manage.label.role=Role
+
+#Message for UserRole.hbm.xml List pages
+userRole.list.label.userRoleId=User Role Id
+userRole.list.label.userRoleStDate=User Role St Date
+userRole.list.label.userRoleEndDate=User Role End Date
+userRole.list.label.isDefault=Is Default
+userRole.list.label.user=User
+userRole.list.label.role=Role
+
+#Message for delete checkbox in +/- screen
+label.record.deleteAll = Delete All
+label.record.delete = Delete
+label.current.date=Current Date
+
+# NMC Common Message Resources
+
+
+#Message for AddressDetails manage pages
+
+addressDetails.manage.label.details=Address Details
+addressDetails.manage.label.diseaseddetails=Deceased Address Details
+addressDetails.manage.label.iswithinnmmc=Is Within NMC
+addressDetails.manage.label.email=Email Address
+addressDetails.manage.label.phonenumber=Phone Number
+addressDetails.manage.label.mobilenumber=Mobile Number
+addressDetails.manage.label.pincode=Pincode
+addressDetails.manage.label.locality=Locality
+addressDetails.manage.label.area=City/Town/Village
+addressDetails.manage.label.houseno=House Number
+addressDetails.manage.label.sector=Sector
+addressDetails.manage.label.ward=Ward
+addressDetails.manage.label.plot=Plot
+addressDetails.manage.label.building=Building Number
+addressDetails.manage.label.addressLine1=Address Line1
+addressDetails.manage.label.addressLine2=Address Line2
+addressDetails.manage.label.state=State
+addressDetails.manage.label.country=Country
+
+#Message for Bank manage pages
+bank.manage.pagetitle.new=New Bank
+bank.manage.pagetitle.edit=Edit Bank
+
+bank.manage.label.bankName=Bank Name
+bank.manage.label.status=Status
+bank.manage.label.bankNameMar=बँक नाम
+bank.manage.label.website=Website
+bank.manage.label.valid=Status
+
+#Message for Bank List pages
+bank.list.pagetitle.list=List Bank
+bank.list.label.bankId=Bank Id
+bank.list.label.bankName=Bank Name
+
+#Message for BankBranch manage pages
+bankBranch.manage.pagetitle.new=New Bank Branch
+bankBranch.manage.pagetitle.edit=Edit Bank Branch
+
+bankBranch.manage.label.branchName=Branch Name
+bankBranch.manage.label.branchCode=Branch Code
+bankBranch.manage.label.status=Status
+bankBranch.manage.label.bank=Bank
+
+bankBranch.manage.label.branchNameMar=ब्रांच नाम
+bankBranch.manage.label.address1=Address1
+bankBranch.manage.label.address2=Address2
+bankBranch.manage.label.address3=Address3
+bankBranch.manage.label.pin=Pin
+bankBranch.manage.label.phone=Phone
+bankBranch.manage.label.fax=Fax
+bankBranch.manage.label.eMail=E Mail
+bankBranch.manage.label.contactPerson=Contact Person
+bankBranch.manage.label.city=City
+bankBranch.manage.label.valid=Valid
+
+
+#Message for BankBranch List pages
+bankBranch.list.pagetitle.list=List Bank Branch
+bankBranch.list.label.bankBranchId=Bank Branch Id
+bankBranch.list.label.branchName=Branch Name
+bankBranch.list.label.bank=Bank
+
+#Message for Challan manage pages
+challan.manage.pagetitle.new=New Challan
+challan.manage.pagetitle.edit=Edit Challan
+
+challan.manage.label.challanDate=Challan Date
+challan.manage.label.applicationNumber=Application Number
+challan.manage.label.totalAmount=Total Amount
+challan.manage.label.dueDate=Due Date
+challan.manage.label.status=Status
+challan.manage.label.allowPartPayment=Allow Part Payment
+challan.manage.label.amountAfterDueDate=Amount After Due Date
+challan.manage.label.sno=#
+challan.manage.label.challanDetails=Challan Details
+challan.manage.label.installmentAmount=Installment Amount
+challan.manage.label.installmentDueDate=Installment DueDate
+challan.manage.label.delete=Delete
+
+#Message for Challan List pages
+challan.list.pagetitle.list=List Challan
+challan.list.label.challanId=Challan Id
+challan.list.label.challanDate=Challan Date
+challan.list.label.applicationNumber=Application Number
+challan.list.label.totalAmount=Total Amount
+
+#Message for City manage pages
+city.manage.pagetitle.new=New City
+city.manage.pagetitle.edit=Edit City
+
+city.manage.label.name=Name
+city.manage.label.code=Code
+city.manage.label.status=Status
+city.manage.label.taluka=Taluka
+
+
+city.manage.label.category=City Category
+city.manage.label.isTribal=Tribal Area
+city.manage.label.isHill=Hill Area
+city.manage.label.isRemote=Remote Area
+city.manage.label.isBorder=Border Area
+city.manage.label.isIsland=Island Area
+city.manage.label.isBadclimate=Bad Climate Area
+
+
+#Message for City List pages
+city.list.pagetitle.list=List City
+city.list.label.cityId=City Id
+city.list.label.name=Name
+city.list.label.code=Code
+city.list.label.taluka=Taluka
+
+#Message for CollectionCenter manage pages
+collectionCenter.manage.pagetitle.new=New Collection Center
+collectionCenter.manage.pagetitle.edit=Edit Collection Center
+
+collectionCenter.manage.label.description=Description
+collectionCenter.manage.label.status=Status
+
+#Message for CollectionCenter List pages
+collectionCenter.list.pagetitle.list=List Collection Center
+collectionCenter.list.label.collectionCenterId=Collection Center Id
+collectionCenter.list.label.description=Description
+
+#Message for Department manage pages
+department.manage.pagetitle.new=New Department
+department.manage.pagetitle.edit=Edit Department
+
+department.manage.label.name=Name
+department.manage.label.code=Code
+department.manage.label.description=Description
+department.manage.label.status=Status
+
+#Message for Department List pages
+department.list.pagetitle.list=List Department
+department.list.label.departmentId=Department Id
+department.list.label.name=Name
+
+#Message for Designation manage pages
+designation.manage.pagetitle.new=New Designation
+designation.manage.pagetitle.edit=Edit Designation
+
+designation.manage.label.name=Name
+designation.manage.label.description=Description
+designation.manage.label.status=Status
+
+#Message for Designation List pages
+designation.list.pagetitle.list=List Designation
+designation.list.label.designationId=Designation Id
+designation.list.label.name=Name
+
+#Message for District manage pages
+district.manage.pagetitle.new=New District
+district.manage.pagetitle.edit=Edit District
+
+district.manage.label.name=Name
+district.manage.label.code=Code
+district.manage.label.status=Status
+district.manage.label.state=State
+
+#Message for District List pages
+district.list.pagetitle.list=List District
+district.list.label.districtId=District Id
+district.list.label.name=Name
+district.list.label.code=Code
+district.list.label.state=State
+
+#Message for DocumentMaster manage pages
+documentMaster.manage.pagetitle.new=New Document Master
+documentMaster.manage.pagetitle.edit=Edit Document Master
+
+documentMaster.manage.label.stage=Stage
+documentMaster.manage.label.description=Description
+documentMaster.manage.label.mandatory=Mandatory
+documentMaster.manage.label.status=Status
+documentMaster.manage.label.documentType=Document Type
+documentMaster.manage.label.inputType=Input Type
+
+#Message for DocumentMaster List pages
+documentMaster.list.pagetitle.list=List Document Master
+documentMaster.list.label.documentMasterId=Document Master Id
+documentMaster.list.label.stage=Stage
+documentMaster.list.label.description=Description
+
+#Message for DPC manage pages
+dPC.manage.pagetitle.new=New DPC
+dPC.manage.pagetitle.edit=Edit DPC
+
+dPC.manage.label.percent=Percentage
+dPC.manage.label.status=Status
+dPC.manage.label.effectiveDate=Effective Date
+dPC.manage.label.note=Note:The Percentage mentioned here should be on Monthly basis.
+
+#Message for DPC List pages
+dPC.list.pagetitle.list=List DPC
+dPC.list.label.dpcId=Dpc Id
+dPC.list.label.percent=Percentage
+
+
+#Message for Employee manage pages
+employee.manage.pagetitle.new=New Employee
+employee.manage.pagetitle.edit=Edit Employee
+
+employee.manage.label.firstName=First Name
+employee.manage.label.middleName=Middle Name
+employee.manage.label.lastName=Last Name
+employee.manage.label.status=Status
+employee.manage.label.designation=Designation
+employee.manage.label.department=Department
+employee.manage.label.superior=Superior
+
+#Message for Employee List pages
+employee.list.pagetitle.list=List Employee
+employee.list.label.employeeId=Employee Id
+employee.list.label.firstName=First Name
+employee.list.label.lastName=Last Name
+employee.list.label.designation=Designation
+employee.list.label.department=Department
+
+#Message for FinancialYear manage pages
+financialYear.manage.pagetitle.new=New Financial Year
+financialYear.manage.pagetitle.edit=Edit Financial Year
+
+financialYear.manage.label.startYear=Start Year
+financialYear.manage.label.endYear=End Year
+financialYear.manage.label.displayYear=Display Year
+financialYear.manage.label.status=Status
+
+#Message for FinancialYear List pages
+financialYear.list.pagetitle.list=List Financial Year
+financialYear.list.label.financialYearId=Financial Year Id
+financialYear.list.label.startYear=Start Year
+financialYear.list.label.endYear=End Year
+financialYear.list.label.displayYear=Display Year
+financialYear.list.label.status=Status
+
+#Message for Node manage pages
+node.manage.pagetitle.new=New Node
+node.manage.pagetitle.edit=Edit Node
+
+node.manage.label.name=Name
+node.manage.label.code=Code
+node.manage.label.status=Status
+node.manage.label.ward=Ward
+
+#Message for Node List pages
+node.list.pagetitle.list=List Node
+node.list.label.nodeId=Node Id
+node.list.label.name=Name
+node.list.label.code=Code
+node.list.label.ward=Ward
+
+#Message for Plot manage pages
+plot.manage.pagetitle.new=New Plot
+plot.manage.pagetitle.edit=Edit Plot
+
+plot.manage.label.number=Number
+plot.manage.label.shortName=Short Name
+plot.manage.label.status=Status
+plot.manage.label.plotType=Plot Type
+plot.manage.label.sector=Sector
+
+#Message for Plot List pages
+plot.list.pagetitle.list=List Plot
+plot.list.label.plotId=Plot Id
+
+plot.list.label.number=Number
+plot.list.label.plotType=PlotType
+plot.list.label.sector=Sector
+
+#Message for PlotType manage pages
+plotType.manage.pagetitle.new=New Plot Type
+plotType.manage.pagetitle.edit=Edit Plot Type
+
+plotType.manage.label.plotTypeId=Plot Type Id
+plotType.manage.label.description=Description
+plotType.manage.label.status=Status
+
+#Message for PlotType List pages
+plotType.list.pagetitle.list=List Plot Type
+plotType.list.label.plotTypeId=Plot Type Id
+plotType.list.label.description=Description
+
+#Message for Salutation manage pages
+salutation.manage.pagetitle.new=New Salutation
+salutation.manage.pagetitle.edit=Edit Salutation
+
+salutation.manage.label.SalutationName=Salutation Name
+salutation.manage.label.status=Status
+
+#Message for Salutation List pages
+salutation.list.pagetitle.list=List Salutation
+salutation.list.label.SalutationId=Salutation Id
+salutation.list.label.SalutationName=Salutation Name
+
+#Message for Sector manage pages
+sector.manage.pagetitle.new=New Sector
+sector.manage.pagetitle.edit=Edit Sector
+
+sector.manage.label.name=Name
+sector.manage.label.status=Status
+sector.manage.label.Node=Node
+
+#Message for Sector List pages
+sector.list.pagetitle.list=List Sector
+sector.list.label.sectorId=Sector Id
+sector.list.label.name=Name
+sector.list.label.Node=Node
+
+#Message for Stage manage pages
+stage.manage.pagetitle.new=New Stage
+stage.manage.pagetitle.edit=Edit Stage
+
+stage.manage.label.description=Description
+stage.manage.label.status=Status
+
+#Message for Stage List pages
+stage.list.pagetitle.list=List Stage
+stage.list.label.stageId=Stage Id
+stage.list.label.description = Description
+
+#Message for State manage pages
+state.manage.pagetitle.new=New State
+state.manage.pagetitle.edit=Edit State
+
+state.manage.label.name=Name
+state.manage.label.code=Code
+state.manage.label.status=Status
+state.manage.label.region=Region
+
+#Message for State List pages
+state.list.pagetitle.list=List State
+state.list.label.stateId=State Id
+state.list.label.name=Name
+state.list.label.code=Code
+
+#Message for Taluka manage pages
+taluka.manage.pagetitle.new=New Taluka
+taluka.manage.pagetitle.edit=Edit Taluka
+
+taluka.manage.label.name=Name
+taluka.manage.label.code=Code
+taluka.manage.label.status=Status
+taluka.manage.label.district=District
+
+#Message for Taluka List pages
+taluka.list.pagetitle.list=List Taluka
+taluka.list.label.talukaId=Taluka Id
+taluka.list.label.name=Name
+taluka.list.label.code=Code
+taluka.list.label.district=District
+
+#Message for Ward manage pages
+ward.manage.pagetitle.new=New Ward
+ward.manage.pagetitle.edit=Edit Ward
+
+ward.manage.label.name=Name
+ward.manage.label.code=Code
+ward.manage.label.addressLine1=Address Line1
+ward.manage.label.addressLine2=Address Line2
+ward.manage.label.addressLine3=Address Line3
+ward.manage.label.status=Status
+ward.manage.label.city=City
+
+#Message for Ward List pages
+ward.list.pagetitle.list=List Ward
+ward.list.label.wardId=Ward Id
+ward.list.label.name=Name
+ward.list.label.code=Code
+ward.list.label.city=City
+
+#Message for Reports manage pages
+reports.manage.pagetitle.new=New Reports Details
+reports.manage.pagetitle.edit=Edit Reports Details
+
+reports.manage.label.reportDisplayName=Report Display Name
+reports.manage.label.reportName=Report Name
+reports.manage.label.reportPath=Report Path
+reports.manage.label.reportType=Report Type
+
+#Message for Reports.hbm.xml List pages
+reports.list.label.reportsId=Report Id
+reports.list.label.reportDisplayName=Report Display Name
+reports.list.label.reportName=Report Name
+reports.list.label.reportPath=Report Path
+reports.list.label.reportType=Report Type
+
+reports.reportParameters.manage.label.name=Report Name
+reports.reportParameters.manage.label.displayname=Report Display Name
+reports.reportParameters.manage.label.dataType=Data Type
+reports.reportParameters.manage.label.defaultValue=Default Value
+reports.reportParameters.manage.label.entityname=Entity Name
+reports.reportParameters.manage.label.size=Size
+reports.reportParameters.manage.label.reportParameterRequired=Is Parameter Required
+
+#Message for RegNumGenaration manage pages
+regNumGenaration.manage.pagetitle.new=New Reg Num Genaration Details
+regNumGenaration.manage.pagetitle.edit=Edit Reg Num Genaration Details
+
+regNumGenaration.manage.label.entityName=Entity Name
+regNumGenaration.manage.label.resetParam=Reset Param
+regNumGenaration.manage.label.prefixStr=Prefix Str
+regNumGenaration.manage.label.postfixStr=Postfix Str
+regNumGenaration.manage.label.currentNo=Current No
+
+#Message for RegNumGenaration List pages
+regnumgenaration.list.pagetitle.list=List Reg Num Genaration Details
+regNumGenaration.list.label.regNumGenarationId=Reg Num Genaration Id
+regNumGenaration.list.label.entityName=Entity Name
+regNumGenaration.list.label.currentNo=Current No
+
+#Message for Area manage pages
+area.manage.pagetitle.new=New Area
+area.manage.pagetitle.edit=Edit Area
+
+area.manage.label.name=Name
+area.manage.label.sectors=Sectors
+
+#Message for Area List pages
+area.list.pagetitle.list=List Area
+area.list.label.areaId=Area Id
+area.list.label.name=Name
+
+# Message for FAS Synch Page
+fassybch.list.pagetitle.list=List of FAS Consolidated Entries
+fassybch.list.acountNumber=Account Number
+fassybch.list.bookCode=Book Code
+fassybch.list.voucheramt=Voucher Amount
+fassybch.list.transactionType=Transaction Type
+fassybch.list.tranDate=Transaction Date
+fassybch.list.consolidateDate=Consolidate Date
+fassybch.list.synchstatus=FAS Synch Status
+fassybch.list.particulars=Particulars
+fassybch.list.ward=Ward
+fassybch.list.fasack=FAS ACK
+
+# Message for Tenant Page
+
+tenant.manage.pagetitle.new=New Tenant
+tenant.manage.pagetitle.edit=Edit Tenant
+tenant.manage.label.tenantName=Tenant Name
+tenant.manage.label.address=Address
+tenant.manage.label.website=Website
+
+
+tenant.list.pagetitle.list=List Tenant
+tenant.list.label.tenantId=Tenant Id
+tenant.list.label.tenantName=Tenant Name
+
+

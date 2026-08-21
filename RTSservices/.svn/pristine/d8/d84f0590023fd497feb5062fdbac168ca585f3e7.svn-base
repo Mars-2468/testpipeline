@@ -1,0 +1,759 @@
+package com.mars.rti.controller;
+import java.math.BigInteger;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.time.Year;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+
+import com.mars.common.model.User;
+import com.mars.common.service.UserService;
+import com.mars.common.utils.CommonUtils;
+import com.mars.common.utils.Constants;
+import com.mars.common.utils.SessionUser;
+import com.mars.rti.model.DashboardDTO;
+import com.mars.rti.model.RTIApplication;
+import com.mars.rti.search.DashBoardLabelSearch;
+import com.mars.rti.service.DashBoardService;
+
+
+@Controller
+public class DashBoardController extends MultiActionController implements InitializingBean {
+
+    private static String const_OrderBy = "OrderBy";
+    private static String const_SortBy = "SortBy";
+    private static Log log = LogFactory.getLog(DashBoardController.class);
+    
+    String departmentValues;
+    String serviceValues;
+    String registrationFromDateStr;
+    String registrationToDateStr;
+    
+    
+ 
+    @Autowired
+    private DashBoardService dashBoardService;
+
+    @Autowired
+    private UserService userService;
+
+    public void afterPropertiesSet() throws Exception {
+
+    }
+
+    @InitBinder
+    protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+        SimpleDateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT);
+        df.setLenient(true);
+        binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(df, true));
+    }
+
+    private void commonDashBoardLogic(HttpServletRequest request, ModelAndView modelAndView) {
+
+        long newReciepts = 0l;
+        long rejectedCount = 0l;
+        long closedReciepts = 0l;
+        long approvedReiepts = 0l;
+        long pendingReiepts = 0l;
+        long allReciepts = 0l;
+        double Totalfees = 0l;
+        long policeNoc=0;
+        long trafficNoc=0;
+        long fireNoc=0;
+        
+        HttpSession session = request.getSession();
+    	SessionUser sessionUser = (SessionUser) session.getAttribute("SessionUser");
+    	User user = userService.get(sessionUser.getUserId());
+    	String userZone = user.getZone();
+    	
+        String formattedTotalfees="";
+        
+        
+         
+        String departments = "";
+        String services = "";
+
+        String currentYear =request.getParameter("year") ;       
+    
+        
+        if (currentYear != null && !currentYear.isEmpty()) {
+            currentYear = currentYear;
+        } else {
+            currentYear = String.valueOf(Year.now().getValue());
+        }
+        
+
+        // Check if the values are not null and not empty
+        if (departmentValues != null && !departmentValues.isEmpty()) {
+        	departments=departmentValues;
+        }
+
+        if (serviceValues != null && !serviceValues.isEmpty()) {
+        	services=serviceValues;
+        }
+
+        
+       
+        // checking for search result
+        if ((((registrationFromDateStr != null && registrationFromDateStr.length() > 0)
+                && (registrationToDateStr != null && registrationToDateStr.length() > 0))
+                || (departments != null && !departments.isEmpty())
+                || (services != null && !services.isEmpty()))
+                && (currentYear != null && !currentYear.isEmpty())) {
+        	
+            List<BigInteger> receiptsCountList = dashBoardService.getPieChartOrBarChartBasedOnSearch(registrationFromDateStr, registrationToDateStr, departments, services,userZone,getServiceId(request),currentYear);
+
+            if (receiptsCountList != null && !receiptsCountList.isEmpty()) {
+            	allReciepts = receiptsCountList.get(0).longValue();
+            	newReciepts = receiptsCountList.get(1).longValue();
+            	rejectedCount = receiptsCountList.get(2).longValue();
+				closedReciepts = receiptsCountList.get(3).longValue();
+				approvedReiepts = receiptsCountList.get(4).longValue();
+				pendingReiepts = receiptsCountList.get(5).longValue();
+				Totalfees = receiptsCountList.get(6).doubleValue();
+				NumberFormat currencyFormatter = new DecimalFormat("#,###,##0", DecimalFormatSymbols.getInstance(new Locale("en", "IN")));
+				formattedTotalfees = currencyFormatter.format(Totalfees);
+	            policeNoc = receiptsCountList.get(7).longValue();
+	            trafficNoc=receiptsCountList.get(8).longValue();
+	            fireNoc=receiptsCountList.get(9).longValue();
+	            
+	         
+			}
+
+
+        } else {
+        	allReciepts = dashBoardService.getPieChartOrBarChartData(userZone,getServiceId(request),currentYear );
+            newReciepts = dashBoardService.getPieChartOrBarChartData("0",userZone,getServiceId(request),currentYear);
+            closedReciepts = dashBoardService.getPieChartOrBarChartData("1",userZone,getServiceId(request),currentYear);
+            approvedReiepts = dashBoardService.getPieChartOrBarChartData("2",userZone,getServiceId(request),currentYear);
+            rejectedCount = dashBoardService.getPieChartOrBarChartData("5",userZone,getServiceId(request),currentYear);
+            Totalfees = dashBoardService.getPieChartOrBarChartDatas(userZone,getServiceId(request),currentYear );
+            NumberFormat currencyFormatter = new DecimalFormat("#,###,##0", DecimalFormatSymbols.getInstance(new Locale("en", "IN")));
+			formattedTotalfees = currencyFormatter.format(Totalfees);
+            pendingReiepts = dashBoardService.getPieChartOrBarChartData("2","1","5",userZone,getServiceId(request) ,currentYear);
+            policeNoc = dashBoardService.getPieChartOrBarChartDataForPoliceNoc(userZone,getServiceId(request),currentYear );
+            trafficNoc=dashBoardService.getPieChartOrBarChartDataForTrafficNoc(userZone,getServiceId(request),currentYear );
+            fireNoc=dashBoardService.getPieChartOrBarChartDataForFireNoc(userZone,getServiceId(request),currentYear );
+
+         }
+
+        // Pie chart Series and data template
+        String str = "[['In-Process', " + newReciepts + "],['Completed'," + closedReciepts + " ],['Pending for payment', " + pendingReiepts + "],['Payment Completed',"+ approvedReiepts + "],['Rejected', " + rejectedCount
+                + " ]]";
+//        String str = "[['All', " + allReciepts + "],['Pending', " + pendingReiepts + "],['Approved',"+ approvedReiepts + "],['Completed', " + closedReciepts + " ],['Rejected', " + rejectedCount
+//                + " ]]";
+
+
+        // Bar chart series and data
+        Map<String, Long> map = new HashMap<String, Long>();
+        map.put("'Pending for Payment'", pendingReiepts);
+        //map.put("'Applications Received'", allReciepts);
+       map.put("'Applications In-Process'", newReciepts);
+        map.put("'Payment Completed '", approvedReiepts);
+        map.put("'Completed'", closedReciepts);
+        map.put("'Rejected'", rejectedCount);
+       // map.put("'Totalfees'", (long) Totalfees);
+
+        modelAndView.addObject("newReciepts", newReciepts);
+        modelAndView.addObject("closedReciepts", closedReciepts);
+        modelAndView.addObject("approvedReiepts", approvedReiepts);
+        modelAndView.addObject("pendingReiepts", pendingReiepts);
+        modelAndView.addObject("rejectedCount", rejectedCount);
+        modelAndView.addObject("Totalfees", formattedTotalfees);
+        modelAndView.addObject("allReciepts", allReciepts);
+        modelAndView.addObject("data", str);
+        modelAndView.addObject("map", map);
+        modelAndView.addObject("registrationFromDate", registrationFromDateStr);
+        modelAndView.addObject("registrationToDate", registrationToDateStr);
+        modelAndView.addObject("departments", departments);
+        modelAndView.addObject("services", services);
+        modelAndView.addObject("currentYear", currentYear);
+
+        modelAndView.addObject("policenoc", policeNoc);
+        modelAndView.addObject("trafficnoc", trafficNoc);
+        modelAndView.addObject("firenoc", fireNoc);
+
+        
+        modelAndView.setViewName("dashboard");
+    }
+
+    @RequestMapping("/dashBoard/openDashBoard.do")
+    public ModelAndView openDashBoard(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        // Retrieve the selected year from the request parameters
+        //String selectedYear = request.getParameter("year");
+
+        // Print the selected year value
+       
+    	HttpSession session = request.getSession();
+    	SessionUser sessionUser = (SessionUser) session.getAttribute("SessionUser");
+
+    	if(sessionUser!=null){
+    	 departmentValues = request.getParameter("departments");
+         serviceValues = request.getParameter("services");
+         registrationFromDateStr = request.getParameter("registrationFromDate");
+         registrationToDateStr = request.getParameter("registrationToDate");
+         String inputFormat = "yyyy-MM-dd";
+         String outputFormat = "dd/MM/yyyy";
+         SimpleDateFormat inputDateFormat = new SimpleDateFormat(inputFormat);
+         SimpleDateFormat outputDateFormat = new SimpleDateFormat(outputFormat);
+
+         java.util.Date registrationFromDate = null;
+         java.util.Date registrationToDate = null;
+         String currentYear = request.getParameter("year");
+         System.out.println("Selected year: " + currentYear);
+         if ((registrationFromDateStr != null && registrationFromDateStr.length() > 0) &&(registrationToDateStr != null && registrationToDateStr.length() > 0)) {
+             try {
+                 // Parse the input date strings
+                 registrationFromDate = inputDateFormat.parse(registrationFromDateStr);
+                 registrationFromDateStr = outputDateFormat.format(registrationFromDate);
+
+                 registrationToDate = inputDateFormat.parse(registrationToDateStr);
+                 registrationToDateStr = outputDateFormat.format(registrationToDate);
+             } catch (java.text.ParseException e) {
+                 e.printStackTrace();
+             }
+         }
+        
+      
+    	
+        	User user = userService.get(sessionUser.getUserId());
+        ModelAndView modelAndView = new ModelAndView();
+        commonDashBoardLogic(request, modelAndView);
+        return modelAndView;
+    	}else {
+    		return new ModelAndView("redirect:/login.do");
+    	}
+    }
+    private List<RTIApplication> rtiList1 = new ArrayList<>(); 
+
+    @RequestMapping("/dashBoard/getListOnCategory.do")
+    public ModelAndView getListOnCategory(HttpServletRequest request, HttpServletResponse response){
+        String receiptSatus = request.getParameter("receiptSatus");
+        String searchrtiApplnNumber =request.getParameter("searchrtiApplnNumber");
+        if(searchrtiApplnNumber!=null && !searchrtiApplnNumber.isEmpty()) {
+        	searchrtiApplnNumber=searchrtiApplnNumber;
+        }else {
+        	searchrtiApplnNumber="";
+        }
+       // String departmentValues = request.getParameter("departments");
+       // String serviceValues = request.getParameter("services");
+
+//        // Split the comma-separated values into arrays if needed
+//        String[] dd =departmentsParam.split(",");
+//        String[] departmentValues = Arrays.stream(dd)
+//        	    .map(String::trim) // Remove leading and trailing whitespace
+//        	    .filter(value -> !value.isEmpty())
+//        	    .toArray(String[]::new);
+//       
+//        String[] ss = servicesParam.split(",");
+//        String[] serviceValues = Arrays.stream(ss)
+//        	    .map(String::trim) // Remove leading and trailing whitespace
+//        	    .filter(value -> !value.isEmpty())
+//        	    .toArray(String[]::new);
+//        String registrationFromDateStr = request.getParameter("registrationFromDate");
+//        String registrationToDateStr = request.getParameter("registrationToDate");
+//   
+        ModelAndView modelAndView = new ModelAndView();
+        commonDashBoardLogic(request, modelAndView);
+        HttpSession session = request.getSession();
+    	SessionUser sessionUser = (SessionUser) session.getAttribute("SessionUser");
+    	User user = userService.get(sessionUser.getUserId());
+    	String userZone = user.getZone();
+    	
+        String currentYear =request.getParameter("year") ;       
+        if (currentYear != null && !currentYear.isEmpty()) {
+            currentYear = currentYear;
+        } else {
+            currentYear = String.valueOf(Year.now().getValue());
+        }
+        
+        DashBoardLabelSearch dashBoardLabelSearch = new DashBoardLabelSearch();
+        setSearchParameters(dashBoardLabelSearch, request);
+	
+	  List<RTIApplication> rtiList = dashBoardService.getRTIApplicationListByLabel(dashBoardLabelSearch,userZone,getServiceId(request),currentYear,searchrtiApplnNumber);
+        try {
+	            long totalCount = dashBoardService.getRTIApplicationCountByLabel(dashBoardLabelSearch,userZone,getServiceId(request),currentYear,searchrtiApplnNumber);
+		    
+		           request.setAttribute("maximumPages", new Long(CommonUtils.getMaxPage(totalCount)));
+            request.setAttribute("totalCount", totalCount);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
+        // Check if the FeeMasterList is null
+        //if (rtiList == null) {    
+        	if (rtiList == null || rtiList.isEmpty()) {    
+        	    request.setAttribute("noRecordFound", rtiList);
+        	    rtiList = new ArrayList<RTIApplication>(); // Ensure rtiList is initialized
+        	}
+
+                   // rtiList = new ArrayList<RTIApplication>();
+        
+        request.setAttribute("currentPage", dashBoardLabelSearch.getCurrentPage());
+        request.setAttribute(const_OrderBy, dashBoardLabelSearch.getOrderBy());
+        request.setAttribute(const_SortBy, dashBoardLabelSearch.getSortBy());
+        request.setAttribute("rtiList", rtiList);
+        modelAndView.addObject("receiptSatus", receiptSatus);
+
+        
+        rtiList1 = dashBoardService.getRTIApplicationListByLabelAll(dashBoardLabelSearch,userZone,getServiceId(request) ,currentYear,searchrtiApplnNumber);
+  	  List<DashboardDTO> dto1 = new ArrayList<>();
+
+        for(RTIApplication rs:rtiList1) {
+  		 DashboardDTO ds = new DashboardDTO();
+  		  
+//  		  ds.setRtiApplicationId(rs.getRtiApplicationId());
+//  		  ds.setRtiApplicationRefId(rs.getRtiApplicationRefId());
+//  		  ds.setRtiApplnNumber(rs.getRtiApplnNumber());
+//  		  ds.setCreatedDate(rs.getCreatedDate());
+//  		  ds.setApplicantName(rs.getApplicantName());
+//  		  ds.setSubject(rs.getSubject());
+//  		  ds.setDepartment(rs.getDepartment());
+//  		  ds.setMobileNumber(rs.getMobileNumber());
+//  		  
+//  		  dto1.add(ds);
+//  		   ds.setRtiApplicationId(rs.getRtiApplicationId());
+		  ds.setRtiApplnNumber(rs.getRtiApplnNumber());
+		  ds.setCreatedDate(rs.getCreatedDate());
+		  ds.setApplicantName(rs.getApplicantName());
+		  ds.setApplicantName(rs.getSubject());
+		  ds.setMobileNumber(rs.getMobileNumber());
+		  ds.setZone(rs.getZone());
+//		  ds.setInWardNumber(rs.getInWardNumber());
+		  ds.setWorkFlowStatus(rs.getWorkFlowStatus());
+		  ds.setApplicationCost(rs.getApplicationCost());
+		  ds.setPdfFilesSavedPath(rs.getPdfFilesSavedPath());
+	   		ds.setWorkflowComments(rs.getWorkflowComments());
+
+		  ds.setRtiApplicationRefId(rs.getRtiApplicationRefId());
+		  ds.setPoliceNoc(rs.getPoliceNoc());
+		  ds.setTrafficNoc(rs.getTrafficNoc());
+		  ds.setFireNoc(rs.getFireNoc());
+		  
+		  dto1.add(ds);
+		  
+  		  
+  		  
+  	  }
+         request.setAttribute("rtiList1", dto1);
+        return modelAndView;
+    }
+
+    private void setSearchParameters(DashBoardLabelSearch dashBoardLabelSearch,
+            HttpServletRequest request) {
+        if (log.isDebugEnabled()) {
+            log.debug("setSearchParameters Method is called");
+        }
+
+        try {
+            long longCurrentPage = CommonUtils.checkPaginationAttributes(request);
+            String orderBy = request.getParameter(const_OrderBy);
+            String sortBy = request.getParameter(const_SortBy);
+
+            // setting default order by on feeMasterId
+            if (orderBy == null || orderBy.length() < 1) {
+                orderBy = "date(r.createdDate)";
+                sortBy = "desc";
+            }
+
+            dashBoardLabelSearch.setCurrentPage(longCurrentPage);
+            dashBoardLabelSearch.setOrderBy(orderBy);
+            dashBoardLabelSearch.setSortBy(sortBy);
+
+//            String[] departmentValues = request.getParameterValues("departments");
+//            List<String> departments = new ArrayList<>();
+//
+//            if (departmentValues != null) {
+//                departments = Arrays.asList(departmentValues);
+//            }
+//
+//            String[] serviceValues = request.getParameterValues("services");
+//            List<String> services = new ArrayList<>();
+//
+//            if (serviceValues != null) {
+//                services = Arrays.asList(serviceValues);
+//            }
+            //old
+            
+//            String[] departmentValues = request.getParameterValues("departments");
+//            List<String> departments = new ArrayList<>();
+//
+//            if (departmentValues != null) {
+//                departments = new ArrayList<>(Arrays.asList(departmentValues));
+//                
+//            }
+//
+//            String[] serviceValues = request.getParameterValues("services");
+//            List<String> services = new ArrayList<>();
+//
+//            if (serviceValues != null) {
+//                services = new ArrayList<>(Arrays.asList(serviceValues));
+//            }
+//
+//
+//            if (!departments.isEmpty() || !services.isEmpty()) {
+//                if (!departments.isEmpty()) {
+//                    String departmentSequence = String.join(",", departments);
+//                    dashBoardLabelSearch.setDepartments(departmentSequence);
+//                }
+//                if (!services.isEmpty()) {
+//                	String serviceSequence = String.join(",", services);
+//                    dashBoardLabelSearch.setServices(serviceSequence);
+//                }
+//            }
+//            String departments = "";
+//            String services = "";
+//
+//            
+//            String departmentValues = request.getParameter("departments");
+//            String serviceValues = request.getParameter("services");
+//
+//            // Check if the values are not null and not empty
+//            if (departmentValues != null && !departmentValues.isEmpty()) {
+//            	departments=departmentValues;
+//            }
+//
+//            if (serviceValues != null && !serviceValues.isEmpty()) {
+//            	services=serviceValues;
+//            }
+////
+//            String[] departmentValues = request.getParameterValues("departments");
+//            List<String> departments = new ArrayList<>();
+//
+//            if (departmentValues != null) {
+//                departments = Arrays.asList(departmentValues);
+//            }
+//
+//            String[] serviceValues = request.getParameterValues("services");
+//            List<String> services = new ArrayList<>();
+//
+//            if (serviceValues != null) {
+//                services = Arrays.asList(serviceValues);
+//            }
+//
+//            // Create comma-separated strings from the lists
+//            String departmentSequence = String.join(",", departments);
+//            String serviceSequence = String.join(",", services);
+//
+            // Set the comma-separated strings in dashBoardLabelSearch
+            dashBoardLabelSearch.setDepartments(departmentValues);
+            dashBoardLabelSearch.setServices(serviceValues);
+         dashBoardLabelSearch.setRegistrationFromDate(registrationFromDateStr);
+          dashBoardLabelSearch.setRegistrationToDate(registrationToDateStr);
+          //dashBoardLabelSearch.setCurrentYear(currentYear);
+            // Now 'departmentSequence' and 'serviceSequence' contain the concatenated values
+
+
+            String receiptSatus = request.getParameter("receiptSatus");
+            if (StringUtils.isNotEmpty(receiptSatus)) {
+				dashBoardLabelSearch.setReceiptSatus(receiptSatus);
+
+            }
+            
+            
+
+
+//            String fromDate = CommonRequestUtils.getStringParameter(request, "registrationFromDate");
+//            String toDate = CommonRequestUtils.getStringParameter(request, "registrationToDate");
+//            String inputFormat = "yyyy-MM-dd";
+//            String outputFormat = "dd/MM/yyyy";
+//            SimpleDateFormat inputDateFormat = new SimpleDateFormat(inputFormat);
+//            SimpleDateFormat outputDateFormat = new SimpleDateFormat(outputFormat);
+//            java.util.Date registrationFromDate = null;
+//            java.util.Date registrationToDate = null;
+//            String formattedFromDate = "";
+//            String formattedToDate = "";
+//            if ((fromDate != null && fromDate.length() > 0)) {
+//            	registrationFromDate = inputDateFormat.parse(fromDate);
+//                formattedFromDate = outputDateFormat.format(registrationFromDate);
+//
+//                dashBoardLabelSearch.setRegistrationFromDate(formattedFromDate);
+//            }
+//
+//            if ((toDate != null && toDate.length() > 0)) {
+//            	 registrationToDate = inputDateFormat.parse(toDate);
+//                 formattedToDate = outputDateFormat.format(registrationToDate);
+//          
+//                dashBoardLabelSearch.setRegistrationToDate(formattedToDate);
+//            }
+
+        } catch (Exception err) {
+            log.error(err.getMessage());
+        }
+        
+        
+    }
+    @RequestMapping("/exportToExcel")
+    public void exportToExcel(HttpServletRequest request, HttpServletResponse response) {
+        try {
+                 
+            
+            Workbook workbook = createExcelWorkbook(rtiList1);
+
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.setHeader("Content-Disposition", "attachment; filename=RTSApplications.xlsx");
+
+            workbook.write(response.getOutputStream());
+
+            workbook.close();
+        } catch (Exception e) {
+            log.error("Error exporting to Excel: " + e.getMessage(), e);
+        }
+    }
+    private Workbook createExcelWorkbook(List<RTIApplication> rtiList1) {
+        Workbook workbook = new XSSFWorkbook();
+
+        Sheet sheet = workbook.createSheet("RTS_Applications");
+
+        
+        Row headerRow = sheet.createRow(0);
+        headerRow.createCell(0).setCellValue("Sr.No.");
+        headerRow.createCell(1).setCellValue("Application Number");
+        headerRow.createCell(2).setCellValue("Registration Date");
+        headerRow.createCell(3).setCellValue("Applicant Name");
+        headerRow.createCell(4).setCellValue("Service Name");
+
+        headerRow.createCell(5).setCellValue("Mobile No.");
+        headerRow.createCell(6).setCellValue("Zone No.");
+//        headerRow.createCell(7).setCellValue("Ward No.");
+        headerRow.createCell(7).setCellValue("Payment Status");
+        headerRow.createCell(8).setCellValue("Amount");
+        headerRow.createCell(9).setCellValue("Application Status");
+        headerRow.createCell(10).setCellValue("Remark");
+
+        headerRow.createCell(11).setCellValue("Final Certificate");
+
+        if (departmentValues != null && departmentValues.equals("ESTATE-DEPARTMENT")) {
+
+        headerRow.createCell(12).setCellValue("Police NOC");
+        headerRow.createCell(13).setCellValue("Traffic NOC");
+        headerRow.createCell(14).setCellValue("Fire NOC");
+        }
+   
+        int rowNum = 1;
+
+        for (RTIApplication rs : rtiList1) {
+        	
+            DashboardDTO ds = new DashboardDTO();
+   		  
+            ds.setRtiApplnNumber(rs.getRtiApplnNumber());
+   		  ds.setCreatedDate(rs.getCreatedDate());
+   		  ds.setApplicantName(rs.getApplicantName());
+   		  ds.setSubject(rs.getSubject());
+
+   		  ds.setMobileNumber(rs.getMobileNumber());
+   		  ds.setZone(rs.getZone());
+//   		  ds.setInWardNumber(rs.getInWardNumber());
+   		  ds.setWorkFlowStatus(rs.getWorkFlowStatus());
+   		  ds.setApplicationCost(rs.getApplicationCost());
+   		  ds.setRtiApplicationRefId(rs.getRtiApplicationRefId());
+   		  ds.setPdfFilesSavedPath(rs.getPdfFilesSavedPath());
+     		ds.setWorkflowComments(rs.getWorkflowComments());
+
+
+          if (departmentValues != null && departmentValues.equals("ESTATE-DEPARTMENT")) {
+
+   		  ds.setPoliceNoc(rs.getPoliceNoc());
+   		  ds.setTrafficNoc(rs.getTrafficNoc());
+   		  ds.setFireNoc(rs.getFireNoc()); 	
+          }
+   		       Row row = sheet.createRow(rowNum++);
+              // Set cell values for each column (replace with actual data)
+   		    row.createCell(0).setCellValue(rowNum - 1);
+            row.createCell(1).setCellValue(ds.getRtiApplnNumber());
+            row.createCell(2).setCellValue(ds.getCreatedDate());
+            row.createCell(3).setCellValue(ds.getApplicantName());
+            row.createCell(4).setCellValue(ds.getSubject());
+
+            row.createCell(5).setCellValue(ds.getMobileNumber());
+            row.createCell(6).setCellValue(ds.getZone());
+//            row.createCell(7).setCellValue(ds.getInWardNumber());
+            
+            int workFlowStatus = rs.getWorkFlowStatus();
+            String statusString;
+
+            if (workFlowStatus == 0 || workFlowStatus == 3 || workFlowStatus == 5 || workFlowStatus == 9 || workFlowStatus == 10 || workFlowStatus == 11) {
+                statusString = "Pending";
+            } else if (workFlowStatus == 1 || workFlowStatus == 2) {
+                statusString = "Completed";
+            } else {
+                statusString = "Pending"; 
+            }
+           row.createCell(7).setCellValue(statusString);
+            row.createCell(8).setCellValue(ds.getApplicationCost());
+            int workFlowStatus1 = ds.getWorkFlowStatus();
+            String statusString1;
+
+            if (workFlowStatus == 0) {
+            	statusString1 = "Citizen Form Submitted.";
+            } else if (workFlowStatus == 3) {
+            	statusString1 = "Pending.";
+            } else if (workFlowStatus == 2) {
+            	statusString1 = "Approved.";
+            } else if (workFlowStatus == 1) {
+            	statusString1 = "Completed.";
+            } else if (workFlowStatus == 5) {
+            	statusString1 = "Rejected.";
+            } else if (workFlowStatus == 9) {
+            	statusString1 = "Under Approval Authority";
+            } else if (workFlowStatus == 10) {
+            	statusString1 = "Under Higher Approval Authority";
+            } else if (workFlowStatus == 11) {
+            	statusString1 = "MTP Inspection completed";
+            } else {
+            	statusString1 = "Unknown"; // or any other default value
+            }
+
+            row.createCell(9).setCellValue(statusString1);
+            
+            row.createCell(10).setCellValue(ds.getWorkflowComments());
+
+
+            if(ds.getPdfFilesSavedPath()!=null && !ds.getPdfFilesSavedPath().isEmpty()) {
+                row.createCell(11).setCellValue("Yes");
+                }else {
+                    row.createCell(11).setCellValue("No");
+                }
+            
+            if (departmentValues != null && departmentValues.equals("ESTATE-DEPARTMENT")) {
+
+ 
+            if(ds.getPoliceNoc()!=null && !ds.getPoliceNoc().isEmpty()) {
+            row.createCell(12).setCellValue("Yes");
+            }else {
+                row.createCell(12).setCellValue("No");
+            }
+            
+            if(ds.getTrafficNoc()!=null && !ds.getTrafficNoc().isEmpty()) {
+                row.createCell(13).setCellValue("Yes");
+                }else {
+                    row.createCell(13).setCellValue("No");
+                }
+            
+            if(ds.getFireNoc()!=null && !ds.getFireNoc().isEmpty()) {
+                row.createCell(14).setCellValue("Yes");
+                }else {
+                    row.createCell(14).setCellValue("No");
+                }
+            }
+            
+           
+                       
+          }
+
+          for (int i = 0; i < headerRow.getLastCellNum(); i++) {
+              sheet.autoSizeColumn(i);
+          }
+
+          return workbook;
+          }
+    
+    
+public String getServiceId(HttpServletRequest request) {
+    	
+    	HttpSession session = request.getSession();
+		SessionUser sessionUser = (SessionUser) session.getAttribute("SessionUser");
+		User user = userService.get(sessionUser.getUserId());
+		String userZone = user.getZone();
+		//String userDept = user.getDepartment();
+		long userDept = sessionUser.getDepartmentId();
+
+		String username = user.getUserName();
+		String hqlQuery=null;
+			if (userZone != null && userZone.length() > 0 && userDept != 1) {
+			  
+			 hqlQuery = "SELECT DISTINCT ra2.rti_service_id " +
+				    "FROM ( " +
+				    "    SELECT DISTINCT ra.* " +
+				    "    FROM egovrti.rti_application ra " +
+				    "    JOIN egovrti.workflow_template wt ON ra.template_name = wt.workflow_template_name " +
+				    "    JOIN egovrti.workflow_template_task wtt ON wtt.workflow_template_id = wt.workflow_template_id " +
+				    "    JOIN egovrti.workflow_tmplt_usr_mapping wtum ON wtum.workflow_template_id = wt.workflow_template_id " +
+				    "    JOIN egovrti.workflow_tmplt_usr_mapping_dtls wtumd ON wtumd.workflow_tmplt_usr_mapping_id = wtum.workflow_tmplt_usr_mapping_id " +
+				    "        AND wtumd.workflow_template_task_id = wtt.workflow_template_task_id " +
+				    "    WHERE wtumd.user_name = '" + username + "' " +
+				    "      AND ra.zone = '" + userZone + "' " +
+				    "      AND ra.rti_application_number IS NOT NULL AND ra.rti_application_number != ''  " +
+				    ") AS temp " +
+				    "JOIN egovrti.rti_application ra2 ON ra2.rti_application_id = temp.rti_application_id;";
+
+			
+		} else if ((userZone == null || userZone.length() <= 0) && userDept != 1) {	   
+
+			  
+			 hqlQuery = "SELECT DISTINCT ra2.rti_service_id " +
+				    "FROM ( " +
+				    "    SELECT DISTINCT ra.* " +
+				    "    FROM egovrti.rti_application ra " +
+				    "    JOIN egovrti.workflow_template wt ON ra.template_name = wt.workflow_template_name " +
+				    "    JOIN egovrti.workflow_template_task wtt ON wtt.workflow_template_id = wt.workflow_template_id " +
+				    "    JOIN egovrti.workflow_tmplt_usr_mapping wtum ON wtum.workflow_template_id = wt.workflow_template_id " +
+				    "    JOIN egovrti.workflow_tmplt_usr_mapping_dtls wtumd ON wtumd.workflow_tmplt_usr_mapping_id = wtum.workflow_tmplt_usr_mapping_id " +
+				    "        AND wtumd.workflow_template_task_id = wtt.workflow_template_task_id " +
+				    "    WHERE wtumd.user_name = '" + username + "' " +
+				    "      AND ra.rti_application_number IS NOT NULL AND ra.rti_application_number != ''  " +
+				    ") AS temp " +
+				    "JOIN egovrti.rti_application ra2 ON ra2.rti_application_id = temp.rti_application_id;";
+
+			
+		}
+			else {
+			hqlQuery = "SELECT DISTINCT ra2.rti_service_id " +
+				    "FROM ( " +
+				    "    SELECT DISTINCT ra.* " +
+				    "    FROM egovrti.rti_application ra " +
+				    "    WHERE ra.rti_application_number IS NOT NULL AND ra.rti_application_number != '' " +
+				    ") AS temp " +
+				    "JOIN egovrti.rti_application ra2 ON ra2.rti_application_id = temp.rti_application_id;";
+		}
+
+			List<Object> serviceIdList = dashBoardService.getServiceId(hqlQuery);
+
+			StringBuilder commaSeparatedServiceIds = new StringBuilder();
+ if(serviceIdList!=null && serviceIdList.size()>0) {
+			for (Object serviceId : serviceIdList) {
+			    commaSeparatedServiceIds.append(serviceId.toString()).append(",");
+			}
+
+			if (commaSeparatedServiceIds.length() > 0) {
+			    commaSeparatedServiceIds.deleteCharAt(commaSeparatedServiceIds.length() - 1);
+			}
+
+			String result = commaSeparatedServiceIds.toString();
+			
+		       
+ 
+    	return result;
+ }
+ return "0";
+    }
+}
+ 
+

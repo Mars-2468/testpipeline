@@ -1,0 +1,66 @@
+package com.mars.rti.service.impl;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.mars.rti.dao.TreeCutingDAO;
+import com.mars.rti.model.TreeCuting;
+import com.mars.rti.model.TreesType;
+import com.mars.rti.service.TreeCutingService;
+
+@Service
+public class TreeCutingServiceImpl implements TreeCutingService{
+
+	@Autowired
+	private TreeCutingDAO treeCutingDAO;
+
+	@Override
+	public void saveTreeCutingForm(TreeCuting treeCuting) {
+		treeCutingDAO.saveTreeCuting(treeCuting);
+	}
+
+	@Override
+	public TreeCuting get(long rtiApplicationRefId) {
+		// TODO Auto-generated method stub
+		return treeCutingDAO.get(rtiApplicationRefId);
+	}
+		@Override
+		public long treeCuting(TreeCuting treeCuting) {
+			// TODO Auto-generated method stub
+			return treeCutingDAO.treeCutingSave(treeCuting);
+		}
+
+		@Override
+		public TreeCuting merge(TreeCuting treeCuting) {
+			// TODO Auto-generated method stub
+			return treeCutingDAO.merge(treeCuting);
+		}
+		@Override
+		public TreeCuting getDetails(long rtiApplicationId) {
+			// TODO Auto-generated method stub
+			return treeCutingDAO.getDetails(rtiApplicationId);
+		}
+
+		@Override
+		public void savetreeTypeList(List<TreesType> ttList) {
+			// TODO Auto-generated method stub
+			 treeCutingDAO.savetreeTypeList(ttList);
+		}
+
+		@Override
+		public List<TreesType> getTreeTypeList(long id) {
+			// TODO Auto-generated method stub
+			return treeCutingDAO.getTreeTypeList(id);
+		}
+
+		
+		@Override
+		public String getfees(String nameOfTree) {
+			return treeCutingDAO.getfees(nameOfTree);
+
+		}
+
+	
+
+}

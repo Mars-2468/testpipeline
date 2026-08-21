@@ -1,0 +1,17 @@
+package com.mars.rti.dao;
+
+import com.mars.rti.model.DogDetails;
+import com.mars.rti.model.DogLicenseCertificate;
+
+public interface DogLicenceCertificateDAO {
+	
+	public long saveDogCertificateLicence(DogLicenseCertificate dogLicenseCertificate);
+	
+	public DogLicenseCertificate get(long id);
+	
+	public DogDetails merge(DogDetails entity);
+	
+	public DogLicenseCertificate getDetails(long rtiApplicationId);
+
+
+}

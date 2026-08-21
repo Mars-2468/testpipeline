@@ -1,0 +1,1566 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2026-08-14T12:43:14 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FireRecommendationLetter" pageWidth="842" pageHeight="1191" orientation="Landscape" columnWidth="782" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="bd8d2e58-9a51-4310-b326-4bd215d70e3d">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="EGOVNMC_RTS"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="DefaultStyle" isDefault="true" forecolor="#26323D" fontName="DejaVu Sans" fontSize="8"/>
+	<style name="CardTitle" forecolor="#FFFFFF" fontName="DejaVu Sans" fontSize="9" isBold="true"/>
+	<style name="FieldLabel" forecolor="#6B7785" fontName="DejaVu Sans" fontSize="6.5" isBold="false"/>
+	<style name="FieldValue" forecolor="#1B2733" fontName="DejaVu Sans" fontSize="8.5" isBold="false"/>
+	<style name="TableHeaderTxt" forecolor="#FFFFFF" fontName="DejaVu Sans" fontSize="7" isBold="true"/>
+	<style name="TableCellTxt" forecolor="#1B2733" fontName="DejaVu Sans" fontSize="7.5"/>
+	<style name="NoteStyle" forecolor="#8A6D00" fontName="DejaVu Sans" fontSize="6.5" isItalic="true"/>
+	<style name="TotalsLabel" forecolor="#1B2733" fontName="DejaVu Sans" fontSize="8" isBold="true"/>
+	<style name="TotalsValue" forecolor="#0B5FA5" fontName="DejaVu Sans" fontSize="9" isBold="true"/>
+	<style name="RowOdd" mode="Opaque" backcolor="#FFFFFF"/>
+	<style name="RowEven" mode="Opaque" backcolor="#F4F8FC"/>
+	<subDataset name="FeeRowsDataset" uuid="c1455b7b-a9ee-4dfd-9f47-2b956139f876">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="EGOVNMC_RTS"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="srNo" class="java.lang.String"/>
+		<field name="floorName" class="java.lang.String"/>
+		<field name="floorType" class="java.lang.String"/>
+		<field name="residential" class="java.lang.String"/>
+		<field name="institutional" class="java.lang.String"/>
+		<field name="commercial" class="java.lang.String"/>
+		<field name="industrial" class="java.lang.String"/>
+		<field name="totalFees" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="rtiapplrefid" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{rtiapplrefid}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ctx" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{ctx}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="serverHost" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{serverHost}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+
+    /* =========================
+       FIRE RECOMMENDATION MAIN
+       ========================= */
+
+    frm.fire_recommendation_id,
+    frm.catagory,
+    frm.title,
+    frm.first_name,
+    frm.middle_name,
+    frm.last_name,
+    frm.full_name,
+    frm.flat_no,
+    frm.survey_no,
+    frm.street_name,
+    frm.house_no,
+    frm.pin_code,
+    frm.landmark,
+    frm.mobile_no,
+    frm.app_email,
+    frm.nameofpower_attorney,
+    frm.no_standby,
+    frm.address_of_power_attorney,
+    frm.hight_of_building,
+    frm.floors,
+    frm.type_of_building,
+    frm.subtype_of_building,
+    frm.type_of_height,
+    frm.type_of_construction,
+
+    frm.total_plot_area,
+    frm.build_up_area,
+    frm.super_build_area,
+    frm.number_of_building,
+    frm.num_of_wings,
+    frm.present_position,
+
+    frm.front_margin_width,
+    frm.real_margin,
+    frm.side_margine,
+    frm.side_margine_two,
+
+    frm.width_of_entrance,
+    frm.height_of_entrance,
+
+    frm.number_of_external,
+    frm.width_of_external,
+
+    frm.from_internal_staricase,
+    frm.from_external_staricase,
+
+    frm.num_internal_staircase_provided,
+    frm.width_internal_staircase_provided,
+
+    frm.no_lift,
+    frm.type_of_lift,
+
+    frm.area_of_basement,
+
+    frm.capacity_of_undergroundank,
+    frm.capacity_ofover_headtank,
+
+    frm.fire_fighting_systemnbc,
+    frm.location_of_transferroom,
+
+    frm.electric_pump,
+    frm.electric_pump_capacity,
+
+    frm.diesel_pump,
+    frm.diesel_pump_capacity,
+
+    frm.jocky_pump,
+    frm.jocky_pump_capacity,
+
+    frm.booster_pump,
+    frm.booster_pump_capacity,
+
+    frm.num_stand_by,
+    frm.ac_plant,
+
+    frm.zone_no,
+    frm.nooffloors,
+    frm.super_build_up_area,
+
+    frm.scrutiny_fees_on_above_total,
+
+    frm.rti_application_ref_id,
+    frm.rti_ref_id,
+
+    frm.title_architecture,
+    frm.first_name_architecture,
+    frm.middle_name_architecture,
+    frm.last_name_architecture,
+    frm.full_name_architecture,
+
+    frm.mobile_no_architecture,
+    frm.app_email_architecture,
+    frm.architect_licence_number,
+
+    frm.name_of_building_owner,
+    frm.address_of_building,
+
+    frm.sheet_no,
+    frm.khasara_no,
+    frm.ward_no,
+
+    frm.east,
+    frm.west,
+    frm.north,
+    frm.south,
+
+    frm.total_fees,
+
+    frm.scrutiny_report,
+    frm.inspection_report,
+    frm.cfo_noc,
+    frm.fire_noc,
+    frm.building_plan_map,
+
+    frm.remarkfor_citizen,
+    frm.remarkfor_l2,
+    frm.sent_to_citizen,
+
+    frm.fees_remarks,
+    frm.updated_scrutinyfees,
+    frm.updated_totalfees,
+
+    frm.fire_department_wise_login,
+    frm.fire_sub_department_wise_login,
+
+    frm.first_payment_fees,
+
+    /* =========================
+       FIRE DETAILS
+       ========================= */
+
+    fd.fire_details_id,
+    fd.floor_name AS detail_floor_name,
+    fd.firefloortypes,
+    fd.comm_area AS detail_comm_area,
+    fd.resid_area AS detail_resid_area,
+    fd.primumar AS detail_primumar,
+    fd.other_use AS detail_other_use,
+    fd.total_table,
+    fd.row_wise_total,
+
+    /* =========================
+       RTI APPLICATION
+       ========================= */
+
+    ra.rti_application_id,
+    ra.rti_application_number,
+    ra.inward_number,
+    ra.registration_date,
+    ra.received_date,
+    ra.closed_date,
+    ra.subject,
+    ra.department,
+    ra.information_required,
+
+    ra.number_of_copies,
+    ra.amount_per_copy,
+    ra.application_cost,
+
+    ra.workflow_status,
+    ra.final_status,
+
+    ra.created_date,
+    ra.template_name,
+
+    ra.zone,
+
+    ra.applicant_name,
+    ra.gender,
+    ra.state,
+    ra.phone_number,
+    ra.mobile_number,
+    ra.email,
+
+    ra.pincode,
+    ra.bpl,
+    ra.bpl_card_number,
+
+    ra.address_line1,
+    ra.address_line2,
+    ra.district,
+
+    ra.postal_charges,
+
+    ra.rti_application_ref_number,
+    ra.rti_application_ref_id,
+
+    ra.pdf_files_saved_path,
+    ra.pdf_upload_from_portal,
+
+    ra.police_noc,
+    ra.fire_noc AS rti_fire_noc,
+    ra.traffic_noc,
+    ra.zone_map,
+
+    ra.property_payment_receipt,
+    ra.rejectionletter,
+    ra.property_tax_certificate,
+
+    ra.demandletter,
+    ra.noc,
+
+    ra.first_payment_fees AS rti_first_payment_fees,
+
+    ra.tax_other_citizen_document_upload,
+    ra.citizennoc,
+    ra.plantationletter,
+
+    ra.workflow_comments,
+
+    /* =========================
+       UPLOADED DOCUMENT URLs
+       ========================= */
+
+    SPLIT_PART(
+        ra.pdf_upload_from_portal,
+        ',',
+        1
+    ) AS first_url,
+
+    SPLIT_PART(
+        ra.pdf_upload_from_portal,
+        ',',
+        2
+    ) AS second_url,
+
+    SPLIT_PART(
+        ra.pdf_upload_from_portal,
+        ',',
+        3
+    ) AS third_url,
+
+    SPLIT_PART(
+        ra.pdf_upload_from_portal,
+        ',',
+        4
+    ) AS fourth_url,
+
+    SPLIT_PART(
+        ra.pdf_upload_from_portal,
+        ',',
+        5
+    ) AS fifth_url
+
+FROM egovrti.fire_recommendation_main frm
+
+JOIN egovrti.fire_details fd
+    ON fd.fire_recommendation_id = frm.fire_recommendation_id
+
+JOIN egovrti.rti_application ra
+    ON frm.rti_ref_id = ra.rti_application_id
+
+WHERE frm.rti_ref_id = $P{rtiapplrefid}
+
+ORDER BY fd.fire_details_id;]]>
+	</queryString>
+	<field name="fire_recommendation_id" class="java.lang.Integer"/>
+	<field name="catagory" class="java.lang.String"/>
+	<field name="title" class="java.lang.String"/>
+	<field name="first_name" class="java.lang.String"/>
+	<field name="middle_name" class="java.lang.String"/>
+	<field name="last_name" class="java.lang.String"/>
+	<field name="full_name" class="java.lang.String"/>
+	<field name="flat_no" class="java.lang.String"/>
+	<field name="survey_no" class="java.lang.String"/>
+	<field name="street_name" class="java.lang.String"/>
+	<field name="house_no" class="java.lang.String"/>
+	<field name="pin_code" class="java.lang.String"/>
+	<field name="landmark" class="java.lang.String"/>
+	<field name="mobile_no" class="java.lang.String"/>
+	<field name="app_email" class="java.lang.String"/>
+	<field name="nameofpower_attorney" class="java.lang.String"/>
+	<field name="no_standby" class="java.lang.String"/>
+	<field name="address_of_power_attorney" class="java.lang.String"/>
+	<field name="hight_of_building" class="java.lang.String"/>
+	<field name="floors" class="java.lang.String"/>
+	<field name="type_of_building" class="java.lang.String"/>
+	<field name="subtype_of_building" class="java.lang.String"/>
+	<field name="type_of_height" class="java.lang.String"/>
+	<field name="type_of_construction" class="java.lang.String"/>
+	<field name="total_plot_area" class="java.lang.String"/>
+	<field name="build_up_area" class="java.lang.String"/>
+	<field name="super_build_area" class="java.lang.String"/>
+	<field name="number_of_building" class="java.lang.String"/>
+	<field name="num_of_wings" class="java.lang.String"/>
+	<field name="present_position" class="java.lang.String"/>
+	<field name="front_margin_width" class="java.lang.String"/>
+	<field name="real_margin" class="java.lang.String"/>
+	<field name="side_margine" class="java.lang.String"/>
+	<field name="side_margine_two" class="java.lang.String"/>
+	<field name="width_of_entrance" class="java.lang.String"/>
+	<field name="height_of_entrance" class="java.lang.String"/>
+	<field name="number_of_external" class="java.lang.String"/>
+	<field name="width_of_external" class="java.lang.String"/>
+	<field name="from_internal_staricase" class="java.lang.String"/>
+	<field name="from_external_staricase" class="java.lang.String"/>
+	<field name="num_internal_staircase_provided" class="java.lang.String"/>
+	<field name="width_internal_staircase_provided" class="java.lang.String"/>
+	<field name="no_lift" class="java.lang.String"/>
+	<field name="type_of_lift" class="java.lang.String"/>
+	<field name="area_of_basement" class="java.lang.String"/>
+	<field name="capacity_of_undergroundank" class="java.lang.String"/>
+	<field name="capacity_ofover_headtank" class="java.lang.String"/>
+	<field name="fire_fighting_systemnbc" class="java.lang.String"/>
+	<field name="location_of_transferroom" class="java.lang.String"/>
+	<field name="electric_pump" class="java.lang.String"/>
+	<field name="electric_pump_capacity" class="java.lang.String"/>
+	<field name="diesel_pump" class="java.lang.String"/>
+	<field name="diesel_pump_capacity" class="java.lang.String"/>
+	<field name="jocky_pump" class="java.lang.String"/>
+	<field name="jocky_pump_capacity" class="java.lang.String"/>
+	<field name="booster_pump" class="java.lang.String"/>
+	<field name="booster_pump_capacity" class="java.lang.String"/>
+	<field name="num_stand_by" class="java.lang.String"/>
+	<field name="ac_plant" class="java.lang.String"/>
+	<field name="zone_no" class="java.lang.String"/>
+	<field name="nooffloors" class="java.lang.String"/>
+	<field name="super_build_up_area" class="java.lang.String"/>
+	<field name="scrutiny_fees_on_above_total" class="java.lang.String"/>
+	<field name="rti_application_ref_id" class="java.lang.String"/>
+	<field name="rti_ref_id" class="java.lang.Long"/>
+	<field name="title_architecture" class="java.lang.String"/>
+	<field name="first_name_architecture" class="java.lang.String"/>
+	<field name="middle_name_architecture" class="java.lang.String"/>
+	<field name="last_name_architecture" class="java.lang.String"/>
+	<field name="full_name_architecture" class="java.lang.String"/>
+	<field name="mobile_no_architecture" class="java.lang.String"/>
+	<field name="app_email_architecture" class="java.lang.String"/>
+	<field name="architect_licence_number" class="java.lang.String"/>
+	<field name="name_of_building_owner" class="java.lang.String"/>
+	<field name="address_of_building" class="java.lang.String"/>
+	<field name="sheet_no" class="java.lang.String"/>
+	<field name="khasara_no" class="java.lang.String"/>
+	<field name="ward_no" class="java.lang.String"/>
+	<field name="east" class="java.lang.String"/>
+	<field name="west" class="java.lang.String"/>
+	<field name="north" class="java.lang.String"/>
+	<field name="south" class="java.lang.String"/>
+	<field name="total_fees" class="java.lang.String"/>
+	<field name="scrutiny_report" class="java.lang.String"/>
+	<field name="inspection_report" class="java.lang.String"/>
+	<field name="cfo_noc" class="java.lang.String"/>
+	<field name="fire_noc" class="java.lang.String"/>
+	<field name="building_plan_map" class="java.lang.String"/>
+	<field name="remarkfor_citizen" class="java.lang.String"/>
+	<field name="remarkfor_l2" class="java.lang.String"/>
+	<field name="sent_to_citizen" class="java.lang.Integer"/>
+	<field name="fees_remarks" class="java.lang.String"/>
+	<field name="updated_scrutinyfees" class="java.lang.String"/>
+	<field name="updated_totalfees" class="java.lang.String"/>
+	<field name="fire_department_wise_login" class="java.lang.String"/>
+	<field name="fire_sub_department_wise_login" class="java.lang.String"/>
+	<field name="first_payment_fees" class="java.lang.String"/>
+	<field name="fire_details_id" class="java.lang.Long"/>
+	<field name="detail_floor_name" class="java.lang.String"/>
+	<field name="firefloortypes" class="java.lang.String"/>
+	<field name="detail_comm_area" class="java.math.BigDecimal"/>
+	<field name="detail_resid_area" class="java.math.BigDecimal"/>
+	<field name="detail_primumar" class="java.math.BigDecimal"/>
+	<field name="detail_other_use" class="java.math.BigDecimal"/>
+	<field name="total_table" class="java.math.BigDecimal"/>
+	<field name="row_wise_total" class="java.math.BigDecimal"/>
+	<field name="rti_application_id" class="java.lang.Long"/>
+	<field name="rti_application_number" class="java.lang.String"/>
+	<field name="inward_number" class="java.lang.String"/>
+	<field name="registration_date" class="java.lang.String"/>
+	<field name="received_date" class="java.lang.String"/>
+	<field name="closed_date" class="java.lang.String"/>
+	<field name="subject" class="java.lang.String"/>
+	<field name="department" class="java.lang.String"/>
+	<field name="information_required" class="java.lang.String"/>
+	<field name="number_of_copies" class="java.lang.Integer"/>
+	<field name="amount_per_copy" class="java.lang.Double"/>
+	<field name="application_cost" class="java.lang.Double"/>
+	<field name="workflow_status" class="java.lang.Integer"/>
+	<field name="final_status" class="java.lang.String"/>
+	<field name="created_date" class="java.lang.String"/>
+	<field name="template_name" class="java.lang.String"/>
+	<field name="zone" class="java.lang.String"/>
+	<field name="applicant_name" class="java.lang.String"/>
+	<field name="gender" class="java.lang.Integer"/>
+	<field name="state" class="java.lang.String"/>
+	<field name="phone_number" class="java.lang.String"/>
+	<field name="mobile_number" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="pincode" class="java.lang.Integer"/>
+	<field name="bpl" class="java.lang.Integer"/>
+	<field name="bpl_card_number" class="java.lang.String"/>
+	<field name="address_line1" class="java.lang.String"/>
+	<field name="address_line2" class="java.lang.String"/>
+	<field name="district" class="java.lang.String"/>
+	<field name="postal_charges" class="java.lang.Double"/>
+	<field name="rti_application_ref_number" class="java.lang.String"/>
+	<field name="COLUMN_138" class="java.lang.Long"/>
+	<field name="pdf_files_saved_path" class="java.lang.String"/>
+	<field name="pdf_upload_from_portal" class="java.lang.String"/>
+	<field name="police_noc" class="java.lang.String"/>
+	<field name="rti_fire_noc" class="java.lang.String"/>
+	<field name="traffic_noc" class="java.lang.String"/>
+	<field name="zone_map" class="java.lang.String"/>
+	<field name="property_payment_receipt" class="java.lang.String"/>
+	<field name="rejectionletter" class="java.lang.String"/>
+	<field name="property_tax_certificate" class="java.lang.String"/>
+	<field name="demandletter" class="java.lang.String"/>
+	<field name="noc" class="java.lang.String"/>
+	<field name="rti_first_payment_fees" class="java.lang.String"/>
+	<field name="tax_other_citizen_document_upload" class="java.lang.String"/>
+	<field name="citizennoc" class="java.lang.String"/>
+	<field name="plantationletter" class="java.lang.String"/>
+	<field name="workflow_comments" class="java.lang.String"/>
+	<field name="first_url" class="java.lang.String"/>
+	<field name="second_url" class="java.lang.String"/>
+	<field name="third_url" class="java.lang.String"/>
+	<field name="fourth_url" class="java.lang.String"/>
+	<field name="fifth_url" class="java.lang.String"/>
+	<title>
+		<band height="64" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="782" height="64" backcolor="#0B3D66" uuid="07ce3e53-ddd4-42c9-ac43-53dd029a7fae"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="60" width="782" height="4" backcolor="#1F8A5C" uuid="69b6039c-1426-4cfc-8dcf-239304c20c4c"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="70" y="8" width="600" height="18" forecolor="#FFFFFF" uuid="2fe3473d-b9d3-490a-a837-af066d145b07"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nagpur Municipal Corporation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="26" width="600" height="14" forecolor="#D7E7F5" uuid="6c3717e6-07d4-4f76-831b-711663fc5cf0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[अग्निशमन ना-हरकत दाखला देणे (तात्पुरते)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="40" width="600" height="13" forecolor="#D7E7F5" uuid="d87f510a-e3af-4fb9-820e-fa6e68134c59"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="8.5" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Temporary Fire NOC]]></text>
+			</staticText>
+			<rectangle radius="4">
+				<reportElement mode="Opaque" x="584" y="10" width="112" height="44" backcolor="#0E4E80" uuid="b4e7a24b-7948-453c-9b6b-ee187d6a1170"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="590" y="12" width="100" height="9" forecolor="#9FC6E8" uuid="6fbc8a11-a2c1-43a7-9907-049ffe4d7981"/>
+				<textElement>
+					<font size="5.5" isBold="true"/>
+				</textElement>
+				<text><![CDATA[APPLICATION NO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="590" y="21" width="100" height="11" forecolor="#FFFFFF" uuid="08715491-c384-4930-8809-8536256a6f46"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rti_application_number}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="590" y="33" width="100" height="9" forecolor="#9FC6E8" uuid="1bbe2128-d92d-4cf2-9a89-f39310486437"/>
+				<textElement>
+					<font size="5.5" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATE]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="590" y="42" width="100" height="11" forecolor="#FFFFFF" uuid="33bb50ed-e655-4152-98f1-b3d9b4e8cf27"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{created_date}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement stretchType="RelativeToBandHeight" x="13" y="8" width="50" height="45" uuid="1ed15888-e3b6-4d6a-a881-becc0c7c5228">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA["../../images/AMC_Logo.jpeg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="718" y="8" width="50" height="46" uuid="1f29499f-060f-4761-9a20-afa045eb0534">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA["../../images/g21.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="11" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="580" height="10" forecolor="#9AA6B2" uuid="4919aaaa-3249-4747-bf7c-b1e67001834f"/>
+				<textElement>
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Nagpur Municipal Corporation – Temporary Fire NOC]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="980" splitType="Stretch">
+			<rectangle radius="6">
+				<reportElement mode="Opaque" x="0" y="0" width="782" height="100" backcolor="#FFFFFF" uuid="2f089e63-82fb-4c1d-9156-0f17372bb171"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineColor="#D6DEE6"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="6" height="100" backcolor="#0B5FA5" uuid="49683ad5-7203-4d16-ba35-9a5014f5d0da"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="6" y="0" width="776" height="18" backcolor="#0B5FA5" uuid="7a530815-5013-4afd-adae-307d386fc43d"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="CardTitle" x="16" y="0" width="760" height="18" uuid="ac4eae09-bd13-4113-baf6-d9ee968f442c"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[1.  APPLICANT DETAILS FOR BUILDING CONSTRUCTION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FieldLabel" x="16" y="24" width="120" height="8" uuid="2b2f413a-7a94-446d-acac-6e826b95be7b"/>
+				<text><![CDATA[TITLE]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="16" y="32" width="120" height="11" uuid="0cb1c77e-77ce-44af-80d6-5eda69a52193"/>
+				<textFieldExpression><![CDATA[$F{title} == null ? "-" :
+    $F{title}.equals("1") ? "Mr." :
+    $F{title}.equals("2") ? "Mrs." :
+    $F{title}.equals("3") ? "Ms." :
+    "-"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="142" y="24" width="160" height="8" uuid="654f8899-d9d0-499a-b3d3-78553e1a8075"/>
+				<text><![CDATA[FULL NAME ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="142" y="32" width="160" height="11" uuid="05c2f254-c791-4605-8c90-226c4300c4a0"/>
+				<textFieldExpression><![CDATA[$F{full_name} == null || $F{full_name}.isEmpty() ? "-" : $F{full_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="308" y="24" width="120" height="8" uuid="c36472f5-f273-4f2d-93d7-e0c8d9854b8c"/>
+				<text><![CDATA[PLOT / FLAT NO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="308" y="32" width="120" height="11" uuid="080e2054-f947-4394-aa7e-6092942597cf"/>
+				<textFieldExpression><![CDATA[$F{flat_no} == null || $F{flat_no}.isEmpty() ? "-" : $F{flat_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="434" y="24" width="120" height="8" uuid="9169e5fc-98ea-4bb7-9250-a0d720e6768b"/>
+				<text><![CDATA[CITY SURVEY NO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="434" y="32" width="120" height="11" uuid="87833aac-c5cd-48ab-a7e6-24b76e86f60d"/>
+				<textFieldExpression><![CDATA[$F{survey_no} == null || $F{survey_no}.isEmpty() ? "-" : $F{survey_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="560" y="24" width="100" height="8" uuid="6b484615-ca9c-4921-8656-f9fb5c13127f"/>
+				<text><![CDATA[SHEET NO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="560" y="32" width="100" height="11" uuid="27b0e33b-e25b-4062-9eab-212be382884d"/>
+				<textFieldExpression><![CDATA[$F{sheet_no} == null || $F{sheet_no}.isEmpty() ? "-" : $F{sheet_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="666" y="24" width="100" height="8" uuid="3321f187-d9c2-49a4-914f-f70e024de0b3"/>
+				<text><![CDATA[KHASARA NO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="666" y="32" width="100" height="11" uuid="e81a0600-9281-4e42-8267-027be55e998e"/>
+				<textFieldExpression><![CDATA[$F{khasara_no} == null || $F{khasara_no}.isEmpty() ? "-" : $F{khasara_no}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="16" y="50" width="750" height="1" forecolor="#EAEEF2" uuid="e257ae50-e029-4a06-9ce7-57cf843b1a25"/>
+			</line>
+			<staticText>
+				<reportElement style="FieldLabel" x="16" y="56" width="160" height="8" uuid="5b4be1a6-f365-4443-a056-a16f1430b56f"/>
+				<text><![CDATA[STREET / HOUSE MOUZA]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="16" y="64" width="160" height="11" uuid="dd8a2580-512d-4922-9d41-9381cb7a36e7"/>
+				<textFieldExpression><![CDATA[$F{street_name} == null || $F{street_name}.isEmpty() ? "-" : $F{street_name}+"/"+$F{house_no} == null || $F{house_no}.isEmpty() ? "-" : $F{house_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="182" y="56" width="80" height="8" uuid="347a32a6-8f5a-4d28-bb2d-f0fc33c31027"/>
+				<text><![CDATA[PIN CODE]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="182" y="64" width="80" height="11" uuid="700f8c53-8b90-4336-8ef3-98ff6657162c"/>
+				<textFieldExpression><![CDATA[$F{pin_code} == null || $F{pin_code}.isEmpty() ? "-" : $F{pin_code}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="268" y="56" width="160" height="8" uuid="995287fd-5e68-4bdf-b7ac-059eb5a4eff3"/>
+				<text><![CDATA[LANDMARK]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="268" y="64" width="160" height="11" uuid="11321d64-a19e-4de9-b221-479c86c370b1"/>
+				<textFieldExpression><![CDATA[$F{landmark} == null || $F{landmark}.isEmpty() ? "-" : $F{landmark}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="434" y="56" width="130" height="8" uuid="0815005a-1f7f-4fb0-87e5-641863b71d55"/>
+				<text><![CDATA[MOBILE NO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="434" y="64" width="130" height="11" uuid="5ecd1e86-c0b3-411b-ab13-7f56ada2bbdb"/>
+				<textFieldExpression><![CDATA[$F{mobile_no} == null || $F{mobile_no}.isEmpty() ? "-" : $F{mobile_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="570" y="56" width="196" height="8" uuid="ab39c7e1-244b-4345-baf2-e790ba92f245"/>
+				<text><![CDATA[EMAIL]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="570" y="64" width="196" height="11" uuid="babd8738-f1c4-463d-8137-3871402d853a"/>
+				<textFieldExpression><![CDATA[$F{app_email} == null || $F{app_email}.isEmpty() ? "-" : $F{app_email}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="16" y="80" width="120" height="8" uuid="ba0ce4bd-6ebd-4c65-8b0c-00b9a9356b28"/>
+				<text><![CDATA[ADDRESS OF OWNER]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="16" y="88" width="750" height="11" uuid="d0dcd7e7-889e-4426-a454-e77c0df458c6"/>
+				<textFieldExpression><![CDATA[$F{address_of_power_attorney} == null || $F{address_of_power_attorney}.isEmpty() ? "-" : $F{address_of_power_attorney}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="6">
+				<reportElement mode="Opaque" x="0" y="110" width="782" height="56" backcolor="#FFFFFF" uuid="0d961bc6-566b-4964-b6de-03abe2926bac"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineColor="#D6DEE6"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="110" width="6" height="56" backcolor="#1F8A5C" uuid="57c3dcb0-ee72-47cf-acaf-07a4e7daebbf"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="6" y="110" width="776" height="18" backcolor="#1F8A5C" uuid="1d752836-953c-4a27-9caa-17fcade0333e"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="CardTitle" x="16" y="110" width="760" height="18" uuid="7eaf1ef0-0225-45bd-92d1-402036112ee0"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[2.  ARCHITECTURE DETAILS FOR BUILDING CONSTRUCTION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FieldLabel" x="16" y="134" width="160" height="8" uuid="1a23c51c-fd1b-44fc-bf4f-e68be5a158ef"/>
+				<text><![CDATA[ARCHITECT NAME]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="16" y="142" width="160" height="11" uuid="6bdf9da5-be5b-4465-a5fc-7683584920b4"/>
+				<textFieldExpression><![CDATA[$F{full_name_architecture} == null || $F{full_name_architecture}.isEmpty() ? "-" : $F{full_name_architecture}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="182" y="134" width="150" height="8" uuid="b226bf18-474f-4be9-a826-8a502f9b784a"/>
+				<text><![CDATA[MOBILE NO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="182" y="142" width="150" height="11" uuid="b007e4b6-47e8-4082-9d38-207a45f47f6f"/>
+				<textFieldExpression><![CDATA[$F{mobile_no_architecture} == null || $F{mobile_no_architecture}.isEmpty() ? "-" : $F{mobile_no_architecture}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="338" y="134" width="200" height="8" uuid="b4cc051f-027d-432d-89a0-1b5d24aa7699"/>
+				<text><![CDATA[EMAIL]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="338" y="142" width="200" height="11" uuid="d20e9be5-a42b-4450-84c3-f7f1b57edeb0"/>
+				<textFieldExpression><![CDATA[$F{app_email_architecture} == null || $F{app_email_architecture}.isEmpty() ? "-" : $F{app_email_architecture}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="544" y="134" width="222" height="8" uuid="5fadee25-17af-43fb-9993-9059fa7d90d7"/>
+				<text><![CDATA[ARCHITECT LICENCE NUMBER]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="544" y="142" width="222" height="11" uuid="a2527391-5d9a-4450-9c82-6c239b98bf25"/>
+				<textFieldExpression><![CDATA[$F{architect_licence_number} == null || $F{architect_licence_number}.isEmpty() ? "-" : $F{architect_licence_number}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="6">
+				<reportElement mode="Opaque" x="0" y="176" width="782" height="208" backcolor="#FFFFFF" uuid="013ce9f0-96a3-4cbf-94b2-4bff19c1c842"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineColor="#D6DEE6"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="176" width="6" height="208" backcolor="#0B5FA5" uuid="a130e818-5cc0-4ff9-8ed8-09a27bdefdbb"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="6" y="176" width="776" height="18" backcolor="#0B5FA5" uuid="73f25207-f062-4102-98d4-15045300a003"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="CardTitle" x="16" y="176" width="760" height="18" uuid="e59d1856-a2fc-4600-bb92-3a053c76bb9b"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[3.  BUILDING & APPLICATION DETAILS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FieldLabel" x="16" y="200" width="130" height="8" uuid="de400696-1a01-47ef-98d6-1bd255f3f481"/>
+				<text><![CDATA[BUILDING OWNER]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="16" y="208" width="130" height="11" uuid="6ee5591a-884b-444f-ae1a-2e8b51708a53"/>
+				<textFieldExpression><![CDATA[$F{name_of_building_owner} == null || $F{name_of_building_owner}.isEmpty() ? "-" : $F{name_of_building_owner}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="152" y="200" width="130" height="8" uuid="6aaf6e46-a35b-4440-8926-6dfea7b54ff6"/>
+				<text><![CDATA[TYPE OF BUILDING]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="152" y="208" width="130" height="11" uuid="8d2bffa0-216b-4888-be91-8d2e189fc1c7"/>
+				<textFieldExpression><![CDATA[ $F{type_of_building} == null || $F{type_of_building}.isEmpty()
+    ? "-"
+    : ($F{type_of_building}.equals("1") ? "Residential Building"
+    : ($F{type_of_building}.equals("2") ? "Institutional Building"
+    : ($F{type_of_building}.equals("3") ? "Commercial Building"
+    : ($F{type_of_building}.equals("4") ? "Industrial Building"
+    : ($F{type_of_building}.equals("5") ? "Mix Occupancy"
+    : "-")))))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="288" y="200" width="130" height="8" uuid="7aa528da-fa56-40e8-9df8-9bb2c5a3cf8c"/>
+				<text><![CDATA[SUB TYPE]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="288" y="208" width="130" height="11" uuid="11a70e13-2472-476f-a04e-124156b7c6bf"/>
+				<textFieldExpression><![CDATA[ $F{subtype_of_building} == null || $F{subtype_of_building}.isEmpty()
+    ? "-"
+    : ($F{subtype_of_building}.equals("1") ? "Lodging Boarding"
+    : ($F{subtype_of_building}.equals("2") ? "Dormitories"
+    : ($F{subtype_of_building}.equals("3") ? "Multi-level Car Parking"
+    : ($F{subtype_of_building}.equals("4") ? "Apartment / Multifamily Dwelling"
+    : ($F{subtype_of_building}.equals("5") ? "Mechanized Automated Car Parking"
+    : ($F{subtype_of_building}.equals("6") ? "School, College"
+    : ($F{subtype_of_building}.equals("7") ? "University"
+    : ($F{subtype_of_building}.equals("8") ? "Hospital"
+    : ($F{subtype_of_building}.equals("9") ? "Nursing Home"
+    : ($F{subtype_of_building}.equals("10") ? "Assembly (Marriage Hall, Theatre, etc)"
+    : ($F{subtype_of_building}.equals("11") ? "Business (Office, IT, Library)"
+    : ($F{subtype_of_building}.equals("12") ? "Mercantile (Shops, Mall)"
+    : ($F{subtype_of_building}.equals("13") ? "Hotels (Starred)"
+    : ($F{subtype_of_building}.equals("14") ? "Storage (Warehouse, Cold Storage)"
+    : ($F{subtype_of_building}.equals("15") ? "Industrial (Hazard)"
+    : ($F{subtype_of_building}.equals("16") ? "Hazardous (Petrol Pump, LPG)"
+    : "-"))))))))))))))))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="424" y="200" width="110" height="8" uuid="997c0f1b-e3ac-4746-998e-75e42eeb4f8c"/>
+				<text><![CDATA[HEIGHT CATEGORY]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="424" y="208" width="110" height="11" uuid="1ca4ca18-fc4d-4337-b537-3a30cb6fcab7"/>
+				<textFieldExpression><![CDATA[ $F{type_of_height} == null || $F{type_of_height}.isEmpty()
+    ? "-"
+    : ($F{type_of_height}.equals("1") ? "Building up to 45 m"
+    : ($F{type_of_height}.equals("2") ? "Building above 45 m"
+    : "-"))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="540" y="200" width="110" height="8" uuid="27c2b45e-12ff-47cb-b41d-21a8d4091b23"/>
+				<text><![CDATA[CONSTRUCTION TYPE]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="540" y="208" width="110" height="11" uuid="119457ab-0f79-405e-9148-0cabe417f95b"/>
+				<textFieldExpression><![CDATA[$F{type_of_construction} == null || $F{type_of_construction}.isEmpty()
+? "-"
+: ($F{type_of_construction}.equals("1") ? "RCC"
+: ($F{type_of_construction}.equals("2") ? "Other Constructed"
+: ($F{type_of_construction}.equals("3") ? "Partially Constructed"
+: ($F{type_of_construction}.equals("4") ? "Temporary"
+: "-"))))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="656" y="200" width="55" height="8" uuid="185f26c2-0c20-4e33-ac69-0944f8d1d91e"/>
+				<text><![CDATA[ZONE]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="656" y="208" width="55" height="11" uuid="6c4a1dd8-ff4f-4859-b7ba-d769915bc8f5"/>
+				<textFieldExpression><![CDATA[$F{zone_no} == null || $F{zone_no}.isEmpty() ? "-" : $F{zone_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="712" y="200" width="56" height="8" uuid="4d8129f8-9d94-440b-ab0d-5594baf0beab"/>
+				<text><![CDATA[WARD]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="712" y="208" width="56" height="11" uuid="bb14b3a1-9dc0-413f-b74a-289b1900de75"/>
+				<textFieldExpression><![CDATA[$F{ward_no} == null || $F{ward_no}.isEmpty() ? "-" : $F{ward_no}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="16" y="224" width="750" height="1" forecolor="#EAEEF2" uuid="2b4be504-5038-4472-be6b-f91a2dd06794"/>
+			</line>
+			<staticText>
+				<reportElement style="FieldLabel" x="16" y="230" width="95" height="8" uuid="cd4e6682-614f-4ef8-bf49-971880da247a"/>
+				<text><![CDATA[HEIGHT (mtr)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="16" y="238" width="95" height="11" uuid="ee48b800-b3a2-4768-9939-b6706866fa0c"/>
+				<textFieldExpression><![CDATA[$F{hight_of_building} == null || $F{hight_of_building}.isEmpty() ? "-" : $F{hight_of_building}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="116" y="230" width="80" height="8" uuid="591c17bc-4534-4d3f-8b4d-48c1d6b2bad1"/>
+				<text><![CDATA[FLOORS]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="116" y="238" width="80" height="11" uuid="b45c69a3-d77f-4b24-b11a-877038f15308"/>
+				<textFieldExpression><![CDATA[$F{floors} == null || $F{floors}.isEmpty() ? "-" : $F{floors}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="201" y="230" width="110" height="8" uuid="b2c8ab11-eb69-442a-8751-12b87124672d"/>
+				<text><![CDATA[PLOT AREA (sqm)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="201" y="238" width="110" height="11" uuid="3985b712-b79a-499f-90aa-58e662a8d535"/>
+				<textFieldExpression><![CDATA[$F{total_plot_area} == null || $F{total_plot_area}.isEmpty() ? "-" : $F{total_plot_area}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="316" y="230" width="110" height="8" uuid="6b6b76ce-6357-477e-9262-375c93b759ea"/>
+				<text><![CDATA[BUILT-UP (sqm)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="316" y="238" width="110" height="11" uuid="157a243d-dcc5-4a77-b052-2ea943c47091"/>
+				<textFieldExpression><![CDATA[$F{build_up_area} == null || $F{build_up_area}.isEmpty() ? "-" : $F{build_up_area}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="431" y="230" width="120" height="8" uuid="1870e1c3-4b7a-4567-a4b4-35808be73879"/>
+				<text><![CDATA[SUPER BUILT-UP (sqm)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="431" y="238" width="120" height="11" uuid="9b117cf5-55b4-4031-b817-40b87c186044"/>
+				<textFieldExpression><![CDATA[$F{super_build_area} == null || $F{super_build_area}.isEmpty() ? "-" : $F{super_build_area}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="556" y="230" width="100" height="8" uuid="eb071f9b-fecc-4b0d-a40e-0982ebed5a99"/>
+				<text><![CDATA[NO. OF BUILDINGS]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="556" y="238" width="100" height="11" uuid="0358df5a-e87f-4fc2-8fa6-343ec8c5646f"/>
+				<textFieldExpression><![CDATA[$F{number_of_building} == null || $F{number_of_building}.isEmpty() ? "-" : $F{number_of_building}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="661" y="230" width="105" height="8" uuid="4a42f7f2-b410-48af-ba98-4bd6e0c47506"/>
+				<text><![CDATA[NO. OF WINGS]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="661" y="238" width="105" height="11" uuid="7dddeb77-1168-452f-8cfc-41131930d407"/>
+				<textFieldExpression><![CDATA[$F{num_of_wings} == null || $F{num_of_wings}.isEmpty() ? "-" : $F{num_of_wings}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="16" y="254" width="750" height="1" forecolor="#EAEEF2" uuid="632d0a0d-699b-4a4a-915d-79f3c44eb43b"/>
+			</line>
+			<staticText>
+				<reportElement style="FieldLabel" x="16" y="260" width="100" height="8" uuid="e1ecb70e-7aa6-4635-8d4d-f522d1dc9b63"/>
+				<text><![CDATA[PRESENT POSITION]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="16" y="268" width="100" height="11" uuid="5d556e0c-43ff-4728-86f4-f6d2c8e238fe"/>
+				<textFieldExpression><![CDATA[ $F{present_position} == null || $F{present_position}.isEmpty()
+    ? "-"
+    : ($F{present_position}.equals("1") ? "Proposed"
+    : ($F{present_position}.equals("2") ? "Existing"
+    : "-"))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="121" y="260" width="100" height="8" uuid="e9da026b-2c90-4291-b526-7381ede1a2a1"/>
+				<text><![CDATA[FRONT MARGIN (mtr)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="121" y="268" width="100" height="11" uuid="59f9d223-57f9-47ce-b21d-440b0aa891e6"/>
+				<textFieldExpression><![CDATA[$F{front_margin_width} == null || $F{front_margin_width}.isEmpty() ? "-" : $F{front_margin_width}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="226" y="260" width="95" height="8" uuid="89460413-f357-404b-8e38-866fb39eeb4c"/>
+				<text><![CDATA[REAR MARGIN]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="226" y="268" width="95" height="11" uuid="cfe95f85-36a9-4960-aa8c-099b6642eb0b"/>
+				<textFieldExpression><![CDATA[$F{real_margin} == null || $F{real_margin}.isEmpty() ? "-" : $F{real_margin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="326" y="260" width="95" height="8" uuid="cdefa7d1-8694-4134-88cb-d7d3450404fb"/>
+				<text><![CDATA[SIDE MARGIN 1]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="326" y="268" width="95" height="11" uuid="61e4045a-0448-4135-892d-c29d660268e4"/>
+				<textFieldExpression><![CDATA[$F{side_margine} == null || $F{side_margine}.isEmpty() ? "-" : $F{side_margine}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="426" y="260" width="95" height="8" uuid="000c429d-f99f-4589-a0a8-2c292180af38"/>
+				<text><![CDATA[SIDE MARGIN 2]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="426" y="268" width="95" height="11" uuid="7466699a-828f-4097-a477-770234d99c1a"/>
+				<textFieldExpression><![CDATA[$F{side_margine_two} == null || $F{side_margine_two}.isEmpty() ? "-" : $F{side_margine_two}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="526" y="260" width="120" height="8" uuid="809e8838-4e28-4bf5-aa80-dad9981c00ac"/>
+				<text><![CDATA[ENTRANCE WIDTH (mtr)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="526" y="268" width="120" height="11" uuid="ca9621e3-1245-4d9e-84cd-93a4e10aec68"/>
+				<textFieldExpression><![CDATA[$F{width_of_entrance} == null || $F{width_of_entrance}.isEmpty() ? "-" : $F{width_of_entrance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="651" y="260" width="115" height="8" uuid="45482570-18bd-4db9-a3ed-4aaf2e73a8e6"/>
+				<text><![CDATA[BASEMENT AREA (sqm)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="651" y="268" width="115" height="11" uuid="ba4ce912-b7c6-4820-ba76-0e512ab3a4c7"/>
+				<textFieldExpression><![CDATA[$F{area_of_basement} == null || $F{area_of_basement}.isEmpty() ? "-" : $F{area_of_basement}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="16" y="284" width="750" height="1" forecolor="#EAEEF2" uuid="24c4778e-92d9-4899-b751-5b6695eb2d96"/>
+			</line>
+			<staticText>
+				<reportElement style="FieldLabel" x="16" y="290" width="170" height="8" uuid="e512c629-a917-4827-812b-fa66ed7c6425"/>
+				<text><![CDATA[UNDERGROUND TANK (ltr)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="16" y="298" width="170" height="11" uuid="4ff245f7-cb54-4b65-aa16-2006ba71ada6"/>
+				<textFieldExpression><![CDATA[$F{capacity_of_undergroundank} == null || $F{capacity_of_undergroundank}.isEmpty() ? "-" : $F{capacity_of_undergroundank}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="192" y="290" width="170" height="8" uuid="a9399d25-1c7e-4149-9589-3107af93ed2d"/>
+				<text><![CDATA[OVERHEAD TANK (ltr)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="192" y="298" width="170" height="11" uuid="48668836-9b26-4f12-b8e6-4874cbd236bf"/>
+				<textFieldExpression><![CDATA[$F{capacity_ofover_headtank} == null || $F{capacity_ofover_headtank}.isEmpty() ? "-" : $F{capacity_ofover_headtank}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="368" y="290" width="200" height="8" uuid="36bea113-318d-4053-9967-18cf1e12ebfd"/>
+				<text><![CDATA[TRANSFORMER ROOM LOCATION]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="368" y="298" width="200" height="11" uuid="c7f92d5a-148a-480a-aacc-23f7eb2bfe8d"/>
+				<textFieldExpression><![CDATA[$F{location_of_transferroom} == null || $F{location_of_transferroom}.isEmpty() ? "-" : $F{location_of_transferroom}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="574" y="290" width="192" height="8" uuid="3078bcef-6ac0-44dc-b2cd-8ddfecc9721d"/>
+				<text><![CDATA[A.C. PLANT SITE]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="574" y="298" width="192" height="11" uuid="cf27e26c-7502-4fcb-8232-a238731f81fb"/>
+				<textFieldExpression><![CDATA[$F{ac_plant} == null || $F{ac_plant}.isEmpty() ? "-" : $F{ac_plant}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="16" y="314" width="750" height="1" forecolor="#EAEEF2" uuid="6343bba7-d6a4-46b5-a0b7-70d00caa9ea1"/>
+			</line>
+			<staticText>
+				<reportElement style="FieldLabel" x="16" y="320" width="750" height="8" uuid="1ab1deb1-81a1-4108-bc7d-8bf48da26a5b"/>
+				<text><![CDATA[FIRE FIGHTING SYSTEM AS PER N.B.C.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="16" y="328" width="750" height="11" uuid="d1a8093e-adff-4126-b8e5-5c175a7ebbb8"/>
+				<textFieldExpression><![CDATA[$F{fire_fighting_systemnbc} == null || $F{fire_fighting_systemnbc}.isEmpty() ? "-" : $F{fire_fighting_systemnbc}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="16" y="344" width="750" height="1" forecolor="#EAEEF2" uuid="237152a2-b376-4ec8-993f-8067b8d1f6f2"/>
+			</line>
+			<staticText>
+				<reportElement style="FieldLabel" x="16" y="350" width="160" height="8" uuid="48702393-7f29-4071-aa8e-baec333417f3"/>
+				<text><![CDATA[FIRE STATION]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="16" y="358" width="160" height="11" uuid="494a1293-ab66-4a7d-a5f8-c50bc5e5d8fb"/>
+				<textFieldExpression><![CDATA[   $F{fire_department_wise_login} == null || $F{fire_department_wise_login}.isEmpty()
+    ? "-"
+    : ($F{fire_department_wise_login}.equals("1") ? "Civil Fire Station"
+    : ($F{fire_department_wise_login}.equals("2") ? "Cotton Market"
+    : ($F{fire_department_wise_login}.equals("3") ? "Ganjipeth"
+    : ($F{fire_department_wise_login}.equals("4") ? "Lakadganj"
+    : ($F{fire_department_wise_login}.equals("5") ? "Sakkadara"
+    : ($F{fire_department_wise_login}.equals("6") ? "Kalamna"
+    : ($F{fire_department_wise_login}.equals("7") ? "Surat Nagar"
+    : ($F{fire_department_wise_login}.equals("8") ? "Narendra Nagar"
+    : ($F{fire_department_wise_login}.equals("9") ? "Trimurti Nagar"
+    : ($F{fire_department_wise_login}.equals("10") ? "Wathoda Fire Station"
+    : "-"))))))))))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="182" y="350" width="160" height="8" uuid="96c11266-5def-4383-9098-a60a3d54f7bc"/>
+				<text><![CDATA[CATEGORY]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="182" y="358" width="160" height="11" uuid="49dd8cea-b28e-4f37-ad3d-55177039c138"/>
+				<textFieldExpression><![CDATA[   $F{fire_sub_department_wise_login} == null
+    || $F{fire_sub_department_wise_login}.isEmpty()
+    ? "-"
+    : ($F{fire_sub_department_wise_login}.equals("1")
+        ? "Below 24m in height and built up area less than 500sqm at any floor"
+        : ($F{fire_sub_department_wise_login}.equals("2")
+            ? "Below 24m in height and built up area above 500sqm at any floor"
+            : ($F{fire_sub_department_wise_login}.equals("3")
+                ? "All Special Buildings above 24m in height"
+                : "-")))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="348" y="350" width="130" height="8" uuid="b7efbb58-fb6a-4af2-a3e9-b3a888a2a314"/>
+				<text><![CDATA[INTERNAL STAIRCASES]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="348" y="358" width="130" height="11" uuid="8f16dd7a-6893-439f-bf63-adbd1a9b1cbf"/>
+				<textFieldExpression><![CDATA[$F{num_internal_staircase_provided} == null || $F{num_internal_staircase_provided}.isEmpty() ? "-" : $F{num_internal_staircase_provided}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="484" y="350" width="130" height="8" uuid="a442ee1c-a1cc-4cef-b83d-ee83604988a9"/>
+				<text><![CDATA[EXTERNAL STAIRCASES]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="484" y="358" width="130" height="11" uuid="fd390b93-70bb-4745-ac2e-61a475023fd6"/>
+				<textFieldExpression><![CDATA[$F{number_of_external} == null || $F{number_of_external}.isEmpty() ? "-" : $F{number_of_external}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FieldLabel" x="620" y="350" width="146" height="8" uuid="8f707c97-060a-4b81-a0a3-61356902d6c4"/>
+				<text><![CDATA[LIFTS PROVIDED]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="FieldValue" x="620" y="358" width="146" height="11" uuid="3469d128-7389-4f1e-8f5b-412cbc844c90"/>
+				<textFieldExpression><![CDATA[$F{no_lift} == null || $F{no_lift}.isEmpty() ? "-" : $F{no_lift}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="6">
+				<reportElement mode="Opaque" x="0" y="392" width="782" height="111" backcolor="#FFFFFF" uuid="9a21922b-d71a-4498-963b-9e565e61cb7c"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineColor="#D6DEE6"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="392" width="6" height="111" backcolor="#C2410C" uuid="4b1705c7-a884-4099-8969-7d41030cf963"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="6" y="392" width="776" height="18" backcolor="#C2410C" uuid="6095d0df-e856-45d5-ac00-b278c387d616"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="CardTitle" x="16" y="392" width="760" height="18" uuid="6b76423f-5a6d-4544-ba6e-9840e298ba1c"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[4.  EXPOSURE HAZARDS  &  FIRE PUMP SYSTEM]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="16" y="416" width="240" height="75" forecolor="#D6DEE6" uuid="e48eca4a-44cf-4d68-995d-009e4723bc3d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.6"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="16" y="416" width="120" height="14" backcolor="#EDF2F7" uuid="a750c04f-f260-4385-a07a-9ba0796502dd"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="136" y="416" width="120" height="14" backcolor="#EDF2F7" uuid="9af79ab1-4f83-4cdd-b03f-171cbd1a4c82"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="20" y="418" width="112" height="10" forecolor="#1B2733" uuid="23f1d3a4-7fc1-4edb-aedc-65b549ab0e1c"/>
+				<text><![CDATA[Direction]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="140" y="418" width="112" height="10" forecolor="#1B2733" uuid="94fb8316-0f5d-4327-a486-411b72c43768"/>
+				<text><![CDATA[Hazard Detail]]></text>
+			</staticText>
+			<line>
+				<reportElement x="136" y="416" width="1" height="75" forecolor="#D6DEE6" uuid="a925f775-23d6-49ba-9e7f-be64da1acf78">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="16" y="430" width="240" height="1" forecolor="#EAEEF2" uuid="ba759b5b-2a4e-4be7-83bd-23d61606c5d1"/>
+			</line>
+			<line>
+				<reportElement x="16" y="444" width="240" height="1" forecolor="#EAEEF2" uuid="686a5d7e-664b-4c7e-8441-a2bf422e2edd"/>
+			</line>
+			<line>
+				<reportElement x="16" y="458" width="240" height="1" forecolor="#EAEEF2" uuid="c9fc8edd-a3c6-4180-9583-489af8fe214d"/>
+			</line>
+			<staticText>
+				<reportElement style="TableCellTxt" x="20" y="432" width="112" height="11" uuid="81042ffe-6043-4ee8-9c0b-800e12bf68b1"/>
+				<text><![CDATA[East]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="TableCellTxt" x="140" y="432" width="112" height="11" uuid="60136a68-5cca-4db4-b1b1-256e83698df5"/>
+				<textFieldExpression><![CDATA[$F{east} == null || $F{east}.isEmpty() ? "-" : $F{east}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="TableCellTxt" x="20" y="446" width="112" height="11" uuid="92d36c65-9a5d-41fe-a154-681e51cf13ee"/>
+				<text><![CDATA[West]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="TableCellTxt" x="140" y="446" width="112" height="11" uuid="584fc27b-fe0e-4513-b11c-a7fccfda2fcd"/>
+				<textFieldExpression><![CDATA[$F{west} == null || $F{west}.isEmpty() ? "-" : $F{west}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="TableCellTxt" x="20" y="461" width="112" height="11" uuid="257f6dc8-0023-48e8-959a-dfa395386f50"/>
+				<text><![CDATA[North]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="TableCellTxt" x="140" y="461" width="112" height="11" uuid="617c0e5a-b6d3-4ada-9354-22b9fa3ac6a6"/>
+				<textFieldExpression><![CDATA[$F{north} == null || $F{north}.isEmpty() ? "-" : $F{north}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="270" y="416" width="496" height="75" forecolor="#D6DEE6" uuid="a5cd1024-2a3b-46bf-bfc6-bbfe3df61ba8">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.6"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="270" y="416" width="174" height="14" backcolor="#EDF2F7" uuid="f10878d7-ad37-4e5e-96bb-5324d6cde7dd"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="444" y="416" width="90" height="14" backcolor="#EDF2F7" uuid="13183802-d2b3-4433-82e3-2e9162ae1fd3"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="534" y="416" width="232" height="14" backcolor="#EDF2F7" uuid="0d024de7-dff7-42f4-ae3f-dfc755c01453"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="274" y="418" width="166" height="10" forecolor="#1B2733" uuid="86db3836-f050-4626-817a-573f6ab138f2"/>
+				<text><![CDATA[Pump Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="448" y="418" width="82" height="10" forecolor="#1B2733" uuid="61860bdb-3c9a-4064-9506-dc38232515dd"/>
+				<text><![CDATA[Provided]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableHeaderTxt" x="538" y="418" width="224" height="10" forecolor="#1B2733" uuid="cf9b0d77-a125-4560-9a35-94973a89599d"/>
+				<text><![CDATA[Capacity (lpm)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="444" y="416" width="1" height="75" forecolor="#D6DEE6" uuid="39ee01bd-edb3-44a3-b96f-454f0546a3ed"/>
+			</line>
+			<line>
+				<reportElement x="534" y="416" width="1" height="75" forecolor="#D6DEE6" uuid="663ce9d4-9342-4763-b29a-8b9fde4cd708"/>
+			</line>
+			<line>
+				<reportElement x="270" y="430" width="496" height="1" forecolor="#EAEEF2" uuid="ec987799-e1a9-4562-aa7b-e71cae486c4e"/>
+			</line>
+			<line>
+				<reportElement x="270" y="444" width="496" height="1" forecolor="#EAEEF2" uuid="25d08f1a-a79e-4268-b701-8bf9ad5deb9f"/>
+			</line>
+			<line>
+				<reportElement x="270" y="476" width="496" height="1" forecolor="#EAEEF2" uuid="e7f06e33-bda9-4f7d-b8a6-b235a00bf457"/>
+			</line>
+			<staticText>
+				<reportElement style="TableCellTxt" x="274" y="432" width="166" height="11" uuid="7680f482-dc32-4bd7-8208-e25b9a5d6e34"/>
+				<text><![CDATA[Electric Pump]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="TableCellTxt" x="448" y="432" width="82" height="11" uuid="b3958b65-5a27-4441-9072-47bf70665ed9"/>
+				<textFieldExpression><![CDATA[("1".equals($F{electric_pump})) ? "Yes" : "No"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="TableCellTxt" x="538" y="432" width="224" height="11" uuid="b73622ac-8b08-412c-b163-9a8fb38aff54"/>
+				<textFieldExpression><![CDATA[$F{electric_pump_capacity} == null || $F{electric_pump_capacity}.isEmpty() ? "-" : $F{electric_pump_capacity}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="TableCellTxt" x="274" y="446" width="166" height="11" uuid="97a08078-c52f-4668-9847-7a320eccdf31"/>
+				<text><![CDATA[Diesel Pump]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="TableCellTxt" x="448" y="446" width="82" height="11" uuid="7c2ba29d-80df-4dc0-af9d-f4266145baf0"/>
+				<textFieldExpression><![CDATA[("1".equals($F{diesel_pump})) ? "Yes" : "No"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="TableCellTxt" x="538" y="446" width="224" height="11" uuid="92f7f7f4-228d-4877-a6b3-d666d0664942"/>
+				<textFieldExpression><![CDATA[$F{diesel_pump_capacity} == null || $F{diesel_pump_capacity}.isEmpty() ? "-" : $F{diesel_pump_capacity}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="TableCellTxt" x="274" y="462" width="166" height="11" uuid="780a38fd-1a21-47c1-83b3-07a3f8b600df"/>
+				<text><![CDATA[Jockey Pump ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="TableCellTxt" x="448" y="462" width="82" height="11" uuid="f6283901-22a3-4f51-a087-c186270708a2"/>
+				<textFieldExpression><![CDATA[("1".equals($F{jocky_pump}) ) ? "Yes" : "No"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="TableCellTxt" x="538" y="462" width="224" height="11" uuid="20741f6a-be7c-4efe-8554-2d6bd17387af"/>
+				<textFieldExpression><![CDATA[$F{jocky_pump_capacity} == null || $F{jocky_pump_capacity}.isEmpty() ? "-" : $F{jocky_pump_capacity}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement positionType="Float" x="0" y="503" width="782" height="160" isPrintWhenDetailOverflows="true" uuid="1859fc68-1313-4e20-954a-4020e05e9fbf">
+					<printWhenExpression><![CDATA[Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.75" lineColor="#D6DEE6"/>
+				</box>
+				<rectangle radius="6">
+					<reportElement mode="Opaque" x="0" y="9" width="782" height="160" backcolor="#FFFFFF" uuid="cf8ad871-a620-403b-b34f-ef924d81186d"/>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Opaque" x="0" y="9" width="6" height="160" backcolor="#7C3AED" uuid="7932ce9b-a5ef-46bb-9ee1-1f09941e5371"/>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Opaque" x="6" y="9" width="776" height="18" backcolor="#7C3AED" uuid="fde3afea-67d4-4747-9867-d104bf8010f8"/>
+				</rectangle>
+				<staticText>
+					<reportElement style="CardTitle" x="16" y="9" width="760" height="18" uuid="03b534e6-c7d1-4012-9362-d692ebb47887"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[5.  CONSTRUCTION AREA & FEE CALCULATION (For any non-applicable area category, please enter 0 or 0.0 to ensure accurate fee calculation and successful form submission.)]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement mode="Opaque" x="16" y="31" width="750" height="16" backcolor="#EDE9FE" uuid="09a52cd1-122e-46bc-a52d-0615fded3492"/>
+				</rectangle>
+				<staticText>
+					<reportElement style="TableHeaderTxt" x="22" y="33" width="130" height="12" forecolor="#3B1E78" uuid="77addeed-8f0f-4db8-93c3-3e2e46d3b5d4"/>
+					<text><![CDATA[Categories]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TableHeaderTxt" x="152" y="33" width="141" height="12" forecolor="#3B1E78" uuid="c89b3225-dcf8-4be4-9561-3dfe2e8bf79e"/>
+					<text><![CDATA[Floor Type]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TableHeaderTxt" x="294" y="33" width="92" height="12" forecolor="#3B1E78" uuid="b533d9a8-330a-4361-9dbc-bf3e432b955e"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Residential]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TableHeaderTxt" x="386" y="33" width="92" height="12" forecolor="#3B1E78" uuid="499f368c-24cf-4ba3-aae5-9f9dfcbfde5e"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Institutional]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TableHeaderTxt" x="478" y="33" width="92" height="12" forecolor="#3B1E78" uuid="24cca5b9-97be-41a3-8f33-74ba87e91a46"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Commercial]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TableHeaderTxt" x="570" y="33" width="92" height="12" forecolor="#3B1E78" uuid="1f74203b-5fb6-4352-84b9-233db3d8b983"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Industrial]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TableHeaderTxt" x="662" y="33" width="104" height="12" forecolor="#3B1E78" uuid="5f9b60e2-00e4-4738-bcce-3ca352090ed1"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Total Fees]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement style="TableCellTxt" x="22" y="51" width="130" height="12" uuid="d1310046-fd2d-45ad-970e-1c42756ad705">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[  $F{detail_floor_name} == null || $F{detail_floor_name}.isEmpty()
+    ? "-"
+    : ($F{detail_floor_name}.equals("1") ? "Total Parking Area"
+    : ($F{detail_floor_name}.equals("2") ? "Basement Built-up Area"
+    : ($F{detail_floor_name}.equals("3") ? "Floor-wise Built-up Area"
+    : "-")))]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="TableCellTxt" x="152" y="51" width="141" height="12" uuid="89865413-b12f-4617-8179-dbb4b66e2dcd">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[ $F{firefloortypes} == null || $F{firefloortypes}.isEmpty()
+    ? "-"
+    : ($F{firefloortypes}.equals("1") ? "Basement"
+    : $F{firefloortypes}.equals("2") ? "Stilt level"
+    : $F{firefloortypes}.equals("3") ? "Basement 1"
+    : $F{firefloortypes}.equals("4") ? "Basement 2"
+    : $F{firefloortypes}.equals("5") ? "Basement 3"
+    : $F{firefloortypes}.equals("6") ? "Ground Floor"
+    : $F{firefloortypes}.equals("7") ? "1st Floor"
+    : $F{firefloortypes}.equals("8") ? "2nd Floor"
+    : $F{firefloortypes}.equals("9") ? "3rd Floor"
+    : $F{firefloortypes}.equals("10") ? "4th Floor"
+    : $F{firefloortypes}.equals("11") ? "5th Floor"
+    : $F{firefloortypes}.equals("12") ? "6th Floor"
+    : $F{firefloortypes}.equals("13") ? "7th Floor"
+    : $F{firefloortypes}.equals("14") ? "8th Floor"
+    : $F{firefloortypes}.equals("15") ? "9th Floor"
+    : $F{firefloortypes}.equals("16") ? "10th Floor"
+    : $F{firefloortypes}.equals("17") ? "11th Floor"
+    : $F{firefloortypes}.equals("18") ? "12th Floor"
+    : $F{firefloortypes}.equals("19") ? "13th Floor"
+    : $F{firefloortypes}.equals("20") ? "14th Floor"
+    : $F{firefloortypes}.equals("21") ? "15th Floor"
+    : $F{firefloortypes}.equals("22") ? "16th Floor"
+    : $F{firefloortypes}.equals("23") ? "17th Floor"
+    : $F{firefloortypes}.equals("24") ? "18th Floor"
+    : $F{firefloortypes}.equals("25") ? "19th Floor"
+    : $F{firefloortypes}.equals("26") ? "20th Floor"
+    : $F{firefloortypes}.equals("27") ? "21st Floor"
+    : $F{firefloortypes}.equals("28") ? "22nd Floor"
+    : $F{firefloortypes}.equals("29") ? "23rd Floor"
+    : $F{firefloortypes}.equals("30") ? "24th Floor"
+    : $F{firefloortypes}.equals("31") ? "25th Floor"
+    : $F{firefloortypes}.equals("32") ? "26th Floor"
+    : $F{firefloortypes}.equals("33") ? "27th Floor"
+    : $F{firefloortypes}.equals("34") ? "28th Floor"
+    : $F{firefloortypes}.equals("35") ? "29th Floor"
+    : $F{firefloortypes}.equals("36") ? "30th Floor"
+    : $F{firefloortypes}.equals("37") ? "Basement"
+    : $F{firefloortypes}.equals("38") ? "Stilt level"
+    : $F{firefloortypes}.equals("39") ? "Basement 1"
+    : $F{firefloortypes}.equals("40") ? "Basement 2"
+    : $F{firefloortypes}.equals("41") ? "Basement 3"
+    : $F{firefloortypes}.equals("42") ? "31th Floor"
+    : $F{firefloortypes}.equals("43") ? "32th Floor"
+    : $F{firefloortypes}.equals("44") ? "33th Floor"
+    : $F{firefloortypes}.equals("45") ? "34th Floor"
+    : $F{firefloortypes}.equals("46") ? "35th Floor"
+    : $F{firefloortypes}.equals("47") ? "Terrace"
+    : "-")]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="TableCellTxt" x="294" y="51" width="92" height="12" uuid="320feb77-8022-4a76-b231-47954b8fa155"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{detail_resid_area}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="TableCellTxt" x="386" y="51" width="92" height="12" uuid="4a34887f-07ef-4f5a-b867-e8d2e09f0ca6"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{detail_primumar}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="TableCellTxt" x="478" y="51" width="92" height="12" uuid="3513face-098e-4c0d-8c37-be5ef4d94cc7"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{detail_comm_area}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="TableCellTxt" x="570" y="51" width="92" height="12" uuid="6980a054-83ed-47ff-aaae-94c83204b7b8"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{detail_other_use}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="662" y="51" width="104" height="12" forecolor="#7C3AED" uuid="35d8eab3-8c68-441a-bbf5-351b1128dbe9"/>
+					<textElement textAlignment="Right">
+						<font size="7.5" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{row_wise_total}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="16" y="64" width="750" height="1" forecolor="#EAEEF2" uuid="05fc9084-a552-4531-aa04-61272ddb2a5e"/>
+				</line>
+				<line>
+					<reportElement positionType="FixRelativeToBottom" x="16" y="133" width="750" height="1" forecolor="#D6DEE6" uuid="834df4ec-d068-46e9-9d6b-808992d83143"/>
+				</line>
+				<staticText>
+					<reportElement style="TotalsLabel" positionType="FixRelativeToBottom" x="450" y="139" width="180" height="14" uuid="5d2c5556-28d7-4bad-9d6b-7f633fc82c22"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<text><![CDATA[GRAND TOTAL]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement style="TotalsValue" positionType="FixRelativeToBottom" x="638" y="139" width="128" height="14" uuid="219e80e6-7a59-46b5-8f9d-e3c247c71d47"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{total_fees}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="TotalsLabel" positionType="FixRelativeToBottom" x="450" y="153" width="180" height="12" forecolor="#6B7785" uuid="fc64da57-40d7-4636-bd60-784675970913"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="7" isBold="false"/>
+					</textElement>
+					<text><![CDATA[2% Scrutiny Fees]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="FixRelativeToBottom" x="638" y="153" width="128" height="12" forecolor="#6B7785" uuid="2ae51c38-0f66-4e72-ada1-fbeecf14ecd1"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="7.5" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{scrutiny_fees_on_above_total}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<rectangle radius="4">
+				<reportElement mode="Opaque" x="0" y="673" width="782" height="40" backcolor="#FFF8E1" uuid="f995c220-842f-47a3-8f20-3027722c30a3"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineColor="#F0D080"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement style="NoteStyle" x="10" y="677" width="762" height="32" uuid="3deec90d-e68a-4e58-b063-73a56bf2fe64"/>
+				<text><![CDATA[
+(Note :- As per Maharashtra fire prevention and life safety measures Amendment Act 2023, schedule-II clause no 2(2) :- For the purpose of assessment of fee, the built-up area shall be gross built-up area, which includes area of basement, easements, stilts, podium, staircase, lifts, lobbies, passages, balconies, cantilever portions, service floors, refuge areas, etc., as shown in the building plan certified by the Architect and submitted to the Authority along with the application for permission for construction of a building. The built-up area to be calculated for this purpose will have no relation with the floor space index or the built-up area calculated in any other manner.)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="836" width="782" height="16" uuid="932854fb-b9e9-4281-b9ad-95cc2946fa66"/>
+				<textElement>
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Declaration *:- I hereby declare that, all the information provided by me in the above application is true.If it found wrong or not related, I permit to reject the application.]]></text>
+			</staticText>
+			<rectangle radius="6">
+				<reportElement mode="Opaque" x="0" y="731" width="782" height="92" backcolor="#FFFFFF" uuid="a6004b39-9425-4e9e-9487-bf8bc9c466e2"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineColor="#D6DEE6"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="731" width="6" height="92" backcolor="#0F766E" uuid="0d085aca-35a1-4448-81f5-120a3faf8c0b"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="6" y="731" width="776" height="18" backcolor="#0F766E" uuid="60eb9b0b-c09b-41cb-81fd-da3d2c1b6e42"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="CardTitle" x="16" y="731" width="760" height="18" uuid="9bb14fe2-9c12-407d-a4b0-d7b540e3ce8f"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[6.  LIST OF DOCUMENTS(ATTACHMENTS)  
+Note: Upload Below Files only pdf, etc.. (File Size Max upto 5MB)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableCellTxt" x="16" y="753" width="20" height="10" uuid="013b19eb-9c1e-43bd-a77e-ee72d950a219"/>
+				<text><![CDATA[1.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableCellTxt" x="36" y="753" width="420" height="10" uuid="66247727-e3a4-4d3b-a3ff-10ac567f56ed">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Form P Certificate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableCellTxt" x="16" y="767" width="20" height="10" uuid="b2c8f105-acf3-4c15-b8ab-c7366946b49c"/>
+				<text><![CDATA[2.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableCellTxt" x="36" y="767" width="420" height="10" uuid="ee946c74-39a1-442c-8ed7-53b4baf27d55"/>
+				<text><![CDATA[NMC Tax Receipt – Current Year]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableCellTxt" x="16" y="781" width="20" height="10" uuid="9c58bf00-9a83-4434-a8b9-b2e532a8f39d"/>
+				<text><![CDATA[3.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableCellTxt" x="36" y="781" width="420" height="10" uuid="5cc88e78-0158-4f6f-9dab-851912e6aa36"/>
+				<text><![CDATA[Covering Letter of Sanctioning Authority]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableCellTxt" x="16" y="795" width="20" height="10" uuid="7c6e075b-7f26-4dbb-a0c1-d75e89269c2f"/>
+				<text><![CDATA[4.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TableCellTxt" x="36" y="795" width="420" height="10" uuid="065b717e-1282-4d34-89a2-576651728675"/>
+				<text><![CDATA[Tentative Approval Fire Designing – Proposed/Existing Building Plan]]></text>
+			</staticText>
+			<textField hyperlinkType="Reference">
+				<reportElement x="470" y="754" width="90" height="10" uuid="38785ec6-d2a2-426e-9450-ab7161d538ca">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{first_url} == null ? "No file" : "Download PDF"]]></textFieldExpression>
+				<hyperlinkReferenceExpression><![CDATA[$F{first_url} == null ? null : $P{serverHost} + "/" + $P{ctx} + "/rtsApplication/getPdf.do?fp=" +    URLEncoder.encode(java.util.Base64.getEncoder().encodeToString($F{first_url}.getBytes("UTF-8")), "UTF-8")]]></hyperlinkReferenceExpression>
+			</textField>
+			<textField hyperlinkType="Reference">
+				<reportElement x="470" y="768" width="90" height="10" uuid="18b36f91-481c-41f9-9ac2-28053cd50c79"/>
+				<textFieldExpression><![CDATA[$F{second_url} == null ? "No file" : "Download PDF"]]></textFieldExpression>
+				<hyperlinkReferenceExpression><![CDATA[$F{second_url} == null ? null : $P{serverHost} + "/" + $P{ctx} + "/rtsApplication/getPdf.do?fp=" +    URLEncoder.encode(java.util.Base64.getEncoder().encodeToString($F{second_url}.getBytes("UTF-8")), "UTF-8")]]></hyperlinkReferenceExpression>
+			</textField>
+			<textField hyperlinkType="Reference">
+				<reportElement x="470" y="782" width="90" height="10" uuid="86a68469-154b-41e3-bef5-2af40a29b268"/>
+				<textFieldExpression><![CDATA[$F{third_url} == null ? "No file" : "Download PDF"]]></textFieldExpression>
+				<hyperlinkReferenceExpression><![CDATA[$F{third_url} == null ? null : $P{serverHost} + "/" + $P{ctx} + "/rtsApplication/getPdf.do?fp=" +    URLEncoder.encode(java.util.Base64.getEncoder().encodeToString($F{third_url}.getBytes("UTF-8")), "UTF-8")]]></hyperlinkReferenceExpression>
+			</textField>
+			<textField hyperlinkType="Reference">
+				<reportElement x="470" y="796" width="90" height="10" uuid="f205d985-c282-4245-b411-d07e82850a5e"/>
+				<textFieldExpression><![CDATA[$F{fourth_url} == null ? "No file" : "Download PDF"]]></textFieldExpression>
+				<hyperlinkReferenceExpression><![CDATA[$F{fourth_url} == null ? null : $P{serverHost} + "/" + $P{ctx} + "/rtsApplication/getPdf.do?fp=" +    URLEncoder.encode(java.util.Base64.getEncoder().encodeToString($F{fourth_url}.getBytes("UTF-8")), "UTF-8")]]></hyperlinkReferenceExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="474" width="112" height="11" uuid="d2ae9075-e0d1-451f-a706-bfd96ec35738">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["South"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="474" width="112" height="11" uuid="79955dc4-bf4e-4553-8c8d-4876e034a8cb">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{south} == null || $F{south}.isEmpty() ? "-" : $F{south}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="274" y="476" width="166" height="11" uuid="32241831-609f-4010-b5ae-28c70ed3de8b">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Booster Pump"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="448" y="476" width="82" height="11" uuid="75726341-6928-466f-93d8-447164dc4588">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[("1".equals($F{booster_pump})) ? "Yes" : "No"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="538" y="476" width="224" height="11" uuid="aa425850-319c-4c2b-882b-3b04662a4ad7">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{booster_pump_capacity} == null || $F{booster_pump_capacity}.isEmpty() ? "-" : $F{booster_pump_capacity}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="16" y="473" width="240" height="1" forecolor="#EAEEF2" uuid="65760292-550e-44c4-a623-d04eac3e42e9"/>
+			</line>
+			<line>
+				<reportElement x="270" y="459" width="496" height="1" forecolor="#EAEEF2" uuid="e7ade0a3-af06-459e-b806-d606c627e87c"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="14" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="782" height="1" forecolor="#D6DEE6" uuid="cb98dd3d-0a54-4c0e-97e6-50230180d901"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="2" width="400" height="10" forecolor="#9AA6B2" uuid="9868b8ef-d27f-4d6b-b477-f24afb5ea64e"/>
+				<textElement>
+					<font size="5.5"/>
+				</textElement>
+				<text><![CDATA[NMC Fire Department – Online Services  |  nagpurmunicipal.gov.in]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="650" y="2" width="132" height="10" forecolor="#9AA6B2" uuid="88131b7e-ab5b-49a8-8ee8-2a4619a3baee"/>
+				<textElement textAlignment="Right">
+					<font size="5.5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of " + $V{PAGE_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

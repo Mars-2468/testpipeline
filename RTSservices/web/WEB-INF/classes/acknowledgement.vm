@@ -1,0 +1,16 @@
+<h3>
+	Dear ${name} ,
+</h3>	
+<br/>
+<p> 
+	
+        Application created successfully with application number ${applicationNum} on ${createdDate} by ${fromname} for ${dept}.
+<p>
+<br/>
+<h4>
+ Regards , 
+</h4> 
+<br/>
+<h4>
+	${sender}.
+</h4>

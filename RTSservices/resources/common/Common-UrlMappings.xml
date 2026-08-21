@@ -1,0 +1,43 @@
+<!-- <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="urlMappingCommon"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="order" value="2"></property>
+		<property name="interceptors">
+			<list>
+				<ref bean="openSessionInViewInterceptor" />
+				<ref bean="loggerInterceptor"/>
+				<ref bean="localeChangeInterceptor"/>
+			</list>
+		</property> -->
+		<!-- <property name="mappings">
+			<props>
+				<prop key="/login.do">authenticationController</prop>
+				<prop key="/logout.do">authenticationController</prop>
+				<prop key="/changePassword.do">authenticationController</prop>
+				<prop key="/user/*.do">userController</prop>
+				<prop key="/role/*.do">roleController</prop>
+				<prop key="/permission/*.do">permissionController</prop>
+				<prop key="/permissiongroup/*.do">permissionGroupController</prop>
+				<prop key="/department/*.do">departmentController</prop>
+				<prop key="/designation/*.do">designationController</prop>
+				<prop key="/employee/*.do">employeeController</prop>
+				<prop key="/salutation/*.do">salutationController</prop>			
+				<prop key="/application/*.do">applicationController</prop>
+								
+				<prop key="/city/*.do">cityController</prop>
+				<prop key="/nodemaster/*.do">nodeMasterController</prop>
+				<prop key="/plot/*.do">plotController</prop>
+				<prop key="/plottype/*.do">plotTypeController</prop>
+				<prop key="/sector/*.do">sectorController</prop>
+				<prop key="/district/*.do">districtController</prop>
+				<prop key="/state/*.do">stateController</prop>
+				<prop key="/taluka/*.do">talukaController</prop>
+				<prop key="/ward/*.do">wardController</prop>
+				<prop key="/bank/*.do">bankController</prop>
+				<prop key="/bankbranch/*.do">bankBranchController</prop>
+			</props>
+		</property> -->
+<!-- 	</bean>
+</beans> -->

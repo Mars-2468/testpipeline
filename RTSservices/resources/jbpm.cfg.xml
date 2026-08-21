@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jbpm-configuration>
+
+	<!-- jBPM Configuration Files -->
+	<import resource="jbpm.default.cfg.xml" />
+	<import resource="jbpm.tx.hibernate.cfg.xml" />
+	<import resource="jbpm.jpdl.cfg.xml" />
+	<import resource="jbpm.identity.cfg.xml" />
+	<!-- import resource="jbpm.jobexecutor.cfg.xml" /-->
+
+	<string name="resource.mail.templates"
+		value="jbpm.mail.templates.xml" />
+
+	<!-- Spring Specific Configuration -->
+	<process-engine-context>
+
+		<business-calendar>
+			<monday hours="10:00-13:00 and 14:00-18:00" />
+			<tuesday hours="10:00-13:00 and 14:00-18:00" />
+			<wednesday hours="10:00-13:00 and 14:00-18:00" />
+			<thursday hours="10:00-13:00 and 14:00-18:00" />
+			<friday hours="10:00-13:00 and 14:00-18:00" />
+		</business-calendar>
+
+		<command-service name="newTxRequiredCommandService">
+			<retry-interceptor />
+			<environment-interceptor policy="requiresNew" />
+			<spring-transaction-interceptor policy="requiresNew" />
+		</command-service>
+
+		<command-service name="txRequiredCommandService">
+			<retry-interceptor />
+			<environment-interceptor />
+			<spring-transaction-interceptor />
+		</command-service>
+	</process-engine-context>
+
+	<transaction-context>
+		<transaction type="spring" />
+		<hibernate-session current="true" />
+
+		<mail-session>
+			<mail-server>
+				<session-properties resource="jbpm.mail.properties" />
+				<authenticator
+					class="com.mars.workflow.utils.EmailAuthenticator" />
+			</mail-server>
+		</mail-session>
+	</transaction-context>
+
+</jbpm-configuration>

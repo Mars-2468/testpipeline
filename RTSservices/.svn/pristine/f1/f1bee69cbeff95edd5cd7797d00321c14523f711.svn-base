@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2024-02-20T18:14:16 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="17662785-1575-4db2-b11c-5ef61643b2ad">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Egov_Nmc"/>
+	<parameter name="rtiapplrefid" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT *
+FROM egovrti.property_tax_no_dues wcc
+WHERE 
+	 wcc.rti_ref_id = $P{rtiapplrefid}]]>
+	</queryString>
+	<field name="property_tax_no_dues_id" class="java.lang.Long"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="email_id" class="java.lang.String"/>
+	<field name="mobile_no" class="java.lang.String"/>
+	<field name="property_holder_name" class="java.lang.String"/>
+	<field name="zone_no" class="java.lang.String"/>
+	<field name="ward_no" class="java.lang.String"/>
+	<field name="upin_no" class="java.lang.String"/>
+	<field name="index_no" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="ward_number" class="java.lang.String"/>
+	<field name="ward_name" class="java.lang.String"/>
+	<field name="owner_name" class="java.lang.String"/>
+	<field name="areas_pending" class="java.lang.Double"/>
+	<field name="areas_pending_status" class="java.lang.String"/>
+	<field name="rti_application_ref_id" class="java.lang.String"/>
+	<field name="rti_ref_id" class="java.lang.Long"/>
+	<field name="total_demand" class="java.lang.String"/>
+	<field name="tax_mobile_no" class="java.lang.String"/>
+	<field name="tax_pincode" class="java.lang.String"/>
+	<field name="fees" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="129" splitType="Stretch">
+			<staticText>
+				<reportElement x="125" y="2" width="400" height="25" uuid="b3103e8b-28db-4b35-85b5-4fa9dc61b994">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="18" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[नागपूर महानगरपालिका, नागपूर]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="27" width="400" height="25" uuid="a0bcabcb-fccb-47b7-995c-56b3aa8145e0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="18" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Nagpur Municipal Corporation,Nagpur]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="52" width="399" height="25" uuid="fc1d3adb-a194-44ba-b031-581e575db860">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="18" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[मालमत्ता कर विभाग (Property Tax Department)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="125" y="79" width="400" height="25" uuid="8bdf4ed8-1bf4-4996-ad2c-d1ece128725c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="18" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[ना देयक प्रमाणपत्र (No Dues Certificate)]]></text>
+			</staticText>
+			<image>
+				<reportElement x="3" y="5" width="77" height="75" uuid="aabc93a4-89b0-46ba-8e05-ab88f90d131b"/>
+				<imageExpression><![CDATA["../../images/AMC_Logo.jpeg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch">
+			<line>
+				<reportElement x="-18" y="-4" width="590" height="1" uuid="87ea9de4-e514-457d-9bba-81fb2e786d8d"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="9" width="40" height="20" uuid="1289fd4a-5d94-473f-b53c-003e3a9d2963"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[क्रमांक:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="423" y="10" width="47" height="19" uuid="adf2a89c-d6d0-4fc4-911f-924e11f8502f"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[दिनांक :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="40" y="10" width="170" height="20" uuid="9e939f63-f5e9-4b3b-9f7f-efdc8edd5bf2"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rti_application_ref_id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="176" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="80" height="18" uuid="678bfaea-83fa-4067-bbe8-9072fa9f2aa5"/>
+				<textElement>
+					<font fontName="SansSerif" size="14"/>
+				</textElement>
+				<text><![CDATA[प्रति,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="50" width="64" height="19" uuid="c5042eb4-ebd1-4bd4-a421-2320eb5e8d1b"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[श्री./श्रीमती:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="70" width="45" height="19" uuid="ac39a39c-5372-4043-8851-3d43a5fa6253"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[ मो. नं.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="108" width="241" height="20" uuid="9980a8e7-b8ac-450a-aed3-f71a07eab8e4"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[विषय :- ना देय प्रमाणपत्र मिळण्याबाबत.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="129" width="55" height="20" uuid="8c6cb6af-751a-4c2b-86c9-7ff155a4c80d"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[युपीन क्र.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="150" width="55" height="26" uuid="308494fc-5e7d-43ba-9e8b-bc60a5d23f32"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[इंडेक्स क्र.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="473" y="-34" width="80" height="20" uuid="83ecc513-cf15-43f8-b965-7cbcbd83f3c2"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MM-yyyy").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="50" width="388" height="19" uuid="f0134c00-b8a4-4000-9ef1-c493a5e20a19"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{property_holder_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="71" width="184" height="18" uuid="4a9f6bd3-0347-4817-af44-fe0644ab9ca7"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tax_mobile_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="129" width="112" height="20" uuid="ca65ce3f-9da1-4021-87e5-8061b0c446f3"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{upin_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="81" y="151" width="100" height="20" uuid="1540d38a-26e0-4f16-9922-f0c5f5efbedb"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{index_no}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="190" splitType="Stretch">
+			<staticText>
+				<reportElement x="24" y="0" width="126" height="20" uuid="1f1e61f1-9334-45fc-b5c9-cd5d5d2c80e4"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[संदर्भ :-  आपले अर्ज दि. ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="151" y="1" width="73" height="22" uuid="3178067d-bef1-4876-8ac2-da25f67d0c36"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MM-yyyy").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="227" y="1" width="100" height="18" uuid="ca1d8135-f338-415d-aed1-f0cf502151a4"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[अन्वये.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="40" width="465" height="18" uuid="28066213-191a-4b44-a411-ad9873ab591e"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[उपरोक्त संदर्भाकिंत विषयाच्या अनुषंगाने खालील नमूद मालमत्ता नागपूर महानगरपालिका कर]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="59" width="156" height="20" uuid="a4bf62f8-af84-4333-9069-788ee28b05fa"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[नोंदणी पुस्तिकेप्रमाणे वार्ड क्र.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="182" y="60" width="29" height="19" uuid="8f55cb3c-6fcd-45a4-b2b7-f3826f5abb44"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ward_number}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="214" y="60" width="38" height="20" uuid="9d68ad2c-94b8-4ae4-af66-483abd2644a2"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[घर क्र.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="253" y="60" width="220" height="20" uuid="dcacdb36-1ba8-420f-916d-555bbdd2c932"/>
+				<textElement>
+					<font fontName="SansSerif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{zone_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="24" y="81" width="76" height="20" uuid="08d1ed29-7c64-4698-a296-631c6de10c4b"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[मालमत्ताधारक:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="101" y="81" width="454" height="20" uuid="16b7265f-cd08-4e67-862c-55d23a60d494"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{property_holder_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="24" y="103" width="216" height="22" uuid="f9e2e4a2-e411-4005-aff6-c05910ab0adb"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[यांच्या नावाने दर्ज असून त्याचा युपीन क्र.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="324" y="103" width="121" height="22" uuid="e6e3cb9e-31ec-4828-a405-ca5db2a2f294"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[आहे.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="239" y="103" width="82" height="19" uuid="81418208-0ce8-465a-bd08-2442dcf0f815"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{upin_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="90" y="148" width="465" height="20" uuid="0fbccd74-ca10-4b56-a6a1-a889ba59341c"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[उपरोक्त नमूद मालमत्तेकरीता GEOCIVIC प्रणाली नुसार मालमत्तेवरील मालमत्ता कराची देय]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="168" width="53" height="20" uuid="a1559d89-3ab2-4ca4-8cfe-73439264ab47"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[रक्कम सन ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="83" y="168" width="39" height="18" uuid="c79f1e4f-ebd9-4283-bc05-debcd037df8f"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="124" y="169" width="332" height="18" uuid="b1fc666c-e542-4c8f-95cb-fb1da905b0c8"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[पर्यंत नागपूर महानगरपालिका निधीत जमा झालेली आहे.]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="201" splitType="Stretch">
+			<staticText>
+				<reportElement x="418" y="155" width="100" height="20" uuid="ec65ddfb-54f6-4133-a4f2-7933b4275da1"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[उपायुक्त (महसूल)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="176" width="165" height="24" uuid="162f2b29-784b-4409-b482-16ee0033ec42"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[नागपूर महानगरपालिका, नागपूर]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="38" splitType="Stretch"/>
+	</summary>
+</jasperReport>

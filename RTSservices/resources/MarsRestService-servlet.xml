@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+	<context:component-scan
+		base-package="com.mars.rti.ws.controller" use-default-filters="false">
+		<context:include-filter
+			expression="org.springframework.stereotype.Controller"
+			type="annotation" />
+	</context:component-scan>
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="httpMessageConverter" />
+				<ref bean="jsonMessageConverter" />
+				<ref bean="StringHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="jsonMessageConverter"
+		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+	</bean>
+
+	<bean id="amcJsonView"
+		class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+		<property name="prefixJson" value="true" />
+	</bean>
+
+	<bean id="httpMessageConverter"
+		class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+		<constructor-arg ref="jaxbMarshaller" />
+	</bean>
+
+	<bean id="marsRestView"
+		class="org.springframework.web.servlet.view.xml.MarshallingView">
+		<constructor-arg ref="jaxbMarshaller" />
+	</bean>
+
+	<!-- JAXB2 marshaller. Automagically turns beans into xml -->
+	<bean id="jaxbMarshaller"
+		class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<list>
+				<value>com.mars.rti.ws.model.BaseRestDTO</value>
+				<value>com.mars.rti.ws.controller.BirthCertificateRestController
+				</value>
+
+				<!-- <value>com.rti.noc.ws.model.CityRestDTO</value> <value>com.rti.noc.ws.model.DepartmentRestDTO</value> -->
+
+
+				<value>com.mars.rti.ws.model.BirthCertificateRestDTO</value>
+				<value>com.mars.rti.ws.model.BirthCertificateRestJsonDTO</value>
+				<value>com.mars.rti.ws.model.DogLicenseRestDTO</value>
+				<value>com.mars.rti.ws.model.DogDetailsRestDTO</value>
+				<value>com.mars.rti.ws.model.MandapPermissionCertficateRestDTO
+				</value>
+				<value>com.mars.rti.ws.model.PartMapRestDTO</value>
+				<value>com.mars.rti.ws.model.NOCOfTradeCertificateRestDTO</value>
+				<value>com.mars.rti.ws.model.OccupancyCertificateRestDTO</value>
+				<value>com.mars.rti.ws.model.CitezenZoneDTO</value>
+				<value>com.mars.rti.ws.model.WaterConnectionTypeChangeCertificateRestDTO
+				</value>
+				<value>com.mars.rti.ws.model.ChangeInOwnershipTypeRestDTO</value>
+				<value>com.mars.rti.ws.model.NewWaterConnectionRestDTO</value>
+				<value>com.mars.rti.ws.model.CitizenHospitalRestDTO</value>
+				<value>com.mars.rti.ws.model.DeathCertificateRestDTO</value>
+				<value>com.mars.rti.ws.model.MarriageCertificateRestDTO</value>
+				<value>com.mars.rti.ws.model.GetApplicationRestDTO</value>
+				<value>com.mars.rti.ws.model.TradeLicenseCancellationRestDTO</value>
+				<value>com.mars.rti.ws.model.PaymentRestDTO</value>
+				<value>com.mars.rti.ws.model.WaterDisconnectionRestDTO</value>
+				<value>com.mars.rti.ws.model.FeesMasterRestDTO</value>
+				<value>com.mars.rti.ws.model.OccupancyCertificateRestDTO</value>
+				<value>com.mars.rti.ws.model.NOCOfTradeRestDTO</value>
+				<value>com.mars.rti.ws.model.TradeLicenseNameChangeRestDTO</value>
+				<value>com.mars.rti.ws.model.TradeLicensePartnerCountUpdateRestDTO
+				</value>
+				<value>com.mars.rti.ws.model.NewWaterReconnectionRestDTO</value>
+				<value>com.mars.rti.ws.model.WaterQualityComplaintRestDTO</value>
+				<value>com.mars.rti.ws.model.IllegalWaterConnectionRestDTO</value>
+				<value>com.mars.rti.ws.model.TradeLicenceRenewalRestDTO</value>
+				<value>com.mars.rti.ws.model.DogMasterDataRestDTO</value>
+				<value>com.mars.rti.ws.model.TradeLicesnseOutadedRenewalRestDTO
+				</value>
+				<value>com.mars.rti.ws.model.LicenseTransferRestDTO</value>
+				<value>com.mars.rti.ws.model.TitleRestDTO</value>
+				<value>com.mars.rti.ws.model.GenderDTO</value>
+				<value>com.mars.rti.ws.model.CountryDTO</value>
+				<value>com.mars.rti.ws.model.BloodRelationRestDTO</value>
+				<value>com.mars.rti.ws.model.BloodGroupRestDTO</value>
+				<value>com.mars.rti.ws.model.GenderOfCrematiousDTO</value>
+				<value>com.mars.rti.ws.model.SpaceDTO</value>
+				<value>com.mars.rti.ws.model.FireRecommendationLatterRestDTO</value>
+				<value>com.mars.rti.ws.model.ZoneCrematiousDTO</value>
+				<value>com.mars.rti.ws.model.MauzaDTO</value>
+				<value>com.mars.rti.ws.model.DogLicenseRenewalRestDTO</value>
+				<value>com.mars.rti.ws.model.FireCompilancecertifcateRestDTO</value>
+				<value>com.mars.rti.ws.model.WaterConnectionForceCertificateRestDTO
+				</value>
+				<value>com.mars.rti.ws.model.WaterConnectionUsageRestDTO</value>
+				<value>com.mars.rti.ws.model.ZoneCertificateRestDTO</value>
+				<value>com.mars.rti.ws.model.TypeOfTreeRestDTO</value>
+				<value>com.mars.rti.ws.model.TreeCuttingReasonRestDTO</value>
+				<value>com.mars.rti.ws.model.TreeTrimmingReasonRestDTO</value>
+				<value> com.mars.rti.ws.model.RemondationofnocRestDTO</value>
+				<value> com.mars.rti.ws.model.FirecompliancenocrestDTO</value>
+				<value> com.mars.rti.ws.model.NOCFirerecommendationDTO</value>
+				<value>com.mars.rti.ws.model.RequestDTO</value>
+				<value>com.mars.rti.ws.model.PDFRestDTO</value>
+				<value>com.mars.rti.ws.model.CertificateRestDto</value>
+				<value>com.mars.rti.ws.model.DigitalSignResponseDTO</value>
+				<value>com.mars.rti.ws.model.DocumentMasterRestDTO</value>
+				<value>com.mars.rti.ws.model.ChangeInNoOfBedsDTO</value>
+				<value>com.mars.rti.ws.model.NursingHomeRestDTO</value>
+				<value>com.mars.rti.ws.model.NursingHomeRenewalRestDTO</value>
+				<value> com.mars.rti.ws.model.MTPRegistrationRestDTO</value>
+				<value> com.mars.rti.ws.model.PropertyWardRestDTO</value>
+
+
+
+			</list>
+
+		</property>
+	</bean>
+	<bean id="StringHttpMessageConverter"
+		class="org.springframework.http.converter.StringHttpMessageConverter">
+
+		<property name="supportedMediaTypes">
+
+			<list>
+				<value>application/x-www-form-urlencoded;charset=UTF-8</value>
+			</list>
+
+		</property>
+
+
+	</bean>
+	<bean
+		class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

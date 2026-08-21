@@ -1,0 +1,2040 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:directive.include file="/pages/common/include.jsp" />
+<jsp:directive.page import="com.mars.common.utils.Constants" />
+<jsp:directive.page import="com.mars.common.utils.CommonUtils" />
+
+
+
+<head>
+<title>Nagpur Municipal Corporation</title>
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="csrf-token"
+	content="L1tBXJBCG7Qg3zc8hd8zkv3US8Yq8R7ihDGuzHIc" />
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+	integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+	crossorigin="anonymous"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	crossorigin="anonymous"></script>
+<!-- CSS only -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+	crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="jquery-3.6.1.min.js"></script>
+<!-- JavaScript Bundle with Popper -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script type="text/javascript"
+	src="<c:out value=" ${contextRoot}" />/scripts/jquery/jquery.ajaxfileupload.js">
+        </script>
+<link rel="stylesheet"
+	href="<c:out value='${contextRoot}'/>/pages/core-pages/nmc_user/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="<c:out value='${contextRoot}'/>/pages/core-pages/nmc_user/css/style2.css" />
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+	
+    <link rel="stylesheet" type="text/css"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<%
+pageContext.setAttribute("DATE_FORMAT", Constants.DATE_FORMAT);
+pageContext.setAttribute("SESSION_TOKEN_KEY", Constants.SESSION_TOKEN_KEY);
+pageContext.setAttribute("STATUS_NO_LABEL", Constants.STATUS_NO_LABEL);
+pageContext.setAttribute("STATUS_YES_LABEL", Constants.STATUS_YES_LABEL);
+pageContext.setAttribute("STATUS_NO", Constants.STATUS_NO);
+pageContext.setAttribute("STATUS_YES", Constants.STATUS_YES); ///pageContext.setAttribute("statusList", CommonUtils.getStatus());
+%>
+<style>
+    .table-hover thead tr.tr-header th {
+background-color: #e5effa;
+}
+
+.table-hover tbody tr:nth-child(odd) {
+background-color: #fadbf1;
+}
+
+.table-hover tbody tr:nth-child(even) {
+background-color: #f4d2e7;
+}
+
+a {
+  display: inline-block;
+  padding: 1px 5px;
+  background-color: rgb(181, 249, 233); /* Button color */
+  color: #fff; /* Text color */
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #afe6fa;
+}
+
+/* Hover effect */
+a:hover {
+  background-color: #afe6fa; /* Button color on hover */
+}
+
+/* Active effect */
+a:active {
+  background-color: rgb(248, 127, 234), 0, 113); 
+}
+label {
+	font-weight: 600;
+}
+
+h3 {
+	font-weight: 500;
+}
+
+@page {
+	size: legal landscape; /* Landscape orientation for Legal size */
+}
+#tb22
+{
+	display : none;
+}
+@media print {
+	body {
+		transform: scale(0.9); /* Adjust the scale factor as needed */
+		transform-origin: center center;
+	}
+}
+
+@page {
+	size: auto;
+}
+
+.card {
+      background-color: rgb(247, 251, 251); 
+      border-color: #f3fbfc; 
+	  border-radius: 5%;
+    }
+	.form-label{
+		font-size: 15px;
+	}
+	
+	.form-label-checkBox{
+		font-size: 12px;
+	}
+	
+
+    .card-body {
+      color: #495057; 
+    }
+
+    .form-control {
+      border-color: #ced4da; 
+    }
+
+    .form-control:focus {
+      border-color: #175ba3; 
+      box-shadow: 0 0 0 0.2rem rgba(103, 138, 175, 0.25); 
+    }
+
+   
+</style>
+
+</head>
+
+<body >
+
+	<br>
+
+
+	
+
+
+			<form name="Fire Recommendation Letter " action=""
+				id="Fire Recommendation Letter">
+				<div class="container-fluid mt-2" style="width: 170vh">
+					
+					<h6 style="background-color: #dce2e8; padding: 10px;margin-left: -10px;"
+						class="  rounded-2">
+						<strong> Applicant details for Building Construction </strong>
+					</h6>
+					
+
+
+					
+                    <div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
+
+    <div style="width: 33%;">
+        <label class="form-label">Title&nbsp(शीर्षक)</label>
+        <select class="form-control" name="title"  style="background-image: none;" required>
+            <option value="">-Select-</option>
+            <option value="1" ${fireApplicationId.title == '1' ? 'selected' : ''}>Mr</option>
+            <option value="2" ${fireApplicationId.title == '2' ? 'selected' : ''}>Mrs</option>
+            <option value="3" ${fireApplicationId.title == '3' ? 'selected' : ''}>Ms</option>
+        </select>
+    </div>
+
+    <!-- First Name -->
+    <div style="width: 33%;">
+        <label class="form-label">First Name&nbsp(पहिले नाव)</label>
+        <input type="text" class="form-control"  id="first_name"  style="background-image: none;" name="firstName" value="${fireApplicationId.firstName}" required />
+    </div>
+
+    <!-- Middle Name -->
+    <div style="width: 33%;">
+        <label class="form-label">Middle Name&nbsp(मधले नाव)</label>
+        <input type="text" class="form-control"  id="middle_name" style="background-image: none;" name="middleName" value="${fireApplicationId.middleName}" />
+    </div>
+</div>
+
+<div class="row">
+    <!-- Last Name -->
+    <div style="width: 33%;">
+        <label class="form-label">Last Name&nbsp(आडनाव)</label>
+        <input type="text" class="form-control"  id="last_name" style="background-image: none;" name="lastName" value="${fireApplicationId.lastName}" required />
+    </div>
+
+    <!-- Full Name -->
+    <div style="width: 33%;">
+        <label class="form-label">Full Name&nbsp(पूर्ण नाव)</label>
+        <input type="text" class="form-control"  id="full_name" style="background-image: none;" name="fullName" value="${fireApplicationId.fullName}" readonly />
+    </div>
+    <script>
+                            function Display(id) {
+                                $('#full_name').val($('#first_name').val() + " " + $('#middle_name').val() + " " + $('#last_name').val())
+                            }
+                        </script>
+
+    <!-- Plot/Flat No -->
+    <div style="width: 33%;">
+        <label class="form-label">Plot/Flat No&nbsp(प्लॉट/फ्लॅट क्र.)</label>
+        <input type="text" class="form-control"  style="background-image: none;" name="plotNumber" value="${fireApplicationId.plotNumber}" />
+    </div>
+</div>
+
+<div class="row">
+    <!-- City Survey No -->
+    <div style="width: 33%;">
+        <label class="form-label">City Survey No&nbsp(सिटी सर्व्हे क्र.)</label>
+        <input type="text" class="form-control"  style="background-image: none;" name="surveyNo" value="${fireApplicationId.surveyNo}" />
+    </div>
+
+    <!-- Sheet No -->
+    <div style="width: 33%;">
+        <label class="form-label">Sheet No&nbsp(शिट क्रमांक)</label>
+        <input type="text" class="form-control"  style="background-image: none;" name="sheetNo" value="${fireApplicationId.sheetNo}" />
+    </div>
+
+    <!-- Khasara No -->
+    <div style="width: 33%;">
+        <label class="form-label">Khasara No&nbsp(खसरा क्रमांक)</label>
+        <input type="text" class="form-control"  style="background-image: none;" name="khasaraNo" value="${fireApplicationId.khasaraNo}" />
+    </div>
+</div>
+
+<div class="row">
+    <!-- Street Name -->
+    <div style="width: 33%;">
+        <label class="form-label">Name of the Street&nbsp(रस्त्याचे नाव)</label>
+        <input type="text" class="form-control"  style="background-image: none;" name="streetName" value="${fireApplicationId.streetName}" required />
+    </div>
+
+    <!-- House Mouza No -->
+    <div style="width: 33%;">
+        <label class="form-label">House Mouza No&nbsp(घर मौजा क्र.)</label>
+        <input type="text" class="form-control"  style="background-image: none;" name="houseNo" value="${fireApplicationId.houseNo}" />
+    </div>
+
+    <!-- Pin Code -->
+    <div style="width: 33%;">
+        <label class="form-label">Pin Code&nbsp(पिन कोड)</label>
+        <input type="text" class="form-control"  style="background-image: none;" name="pinCode" value="${fireApplicationId.pinCode}" maxlength="6" required />
+    </div>
+</div>
+
+<div class="row">
+    <!-- Landmark -->
+    <div style="width: 33%;">
+        <label class="form-label">Landmark&nbsp(लँडमार्क)</label>
+        <input type="text" class="form-control"  style="background-image: none;" name="landmark" value="${fireApplicationId.landmark}" />
+    </div>
+
+    <!-- Mobile No -->
+    <div style="width: 33%;">
+        <label class="form-label">Mobile No&nbsp(मोबाईल क्र.)</label>
+        <input type="text" class="form-control"  style="background-image: none;" name="mobileNo" value="${fireApplicationId.mobileNo}" pattern="[6-9]{1}[0-9]{9}" maxlength="10" required />
+    </div>
+
+    <!-- Email Id -->
+    <div style="width: 33%;">
+        <label class="form-label">Email Id&nbsp(ई - मेल आयडी)</label>
+        <input type="email" class="form-control"  style="background-image: none;" name="appEmail" value="${fireApplicationId.appEmail}" required />
+    </div>
+</div>
+
+<div class="row">
+    <!-- Address of Owner -->
+    <label class="form-label">Address of Owner</label>
+    <textarea class="form-control"  style="background-image: none;" name="addressOfPowerAttorney" rows="2">${fireApplicationId.addressOfPowerAttorney}</textarea>
+</div>
+
+
+
+
+
+
+					<h6 style="background-color: #dce2e8; padding: 10px;margin-left: -5px;"
+						class="  rounded-2">
+						<strong> Architecture Details for Building Constructions </strong>
+					</h6>
+					
+
+                  <div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
+    <div style="width: 33%;">
+        <label for="" class="form-label">Title&nbsp(शीर्षक)<span class="text-danger" style="color: red;">*</span></label>
+        <select class="form-control" style="background-image: none;" name="titleArchitecture" required>
+            <option value="">-Select-</option>
+            <option value="1" ${fireApplicationId.titleArchitecture == '1' ? 'selected' : ''}>Mr</option>
+            <option value="2" ${fireApplicationId.titleArchitecture == '2' ? 'selected' : ''}>Mrs</option>
+            <option value="3" ${fireApplicationId.titleArchitecture == '3' ? 'selected' : ''}>Ms</option>
+        </select>
+        <div class="invalid-feedback">Please Select Title..</div>
+    </div>
+
+    <div style="width: 33%;">
+        <label for="" class="form-label">First Name&nbsp(पहिले नाव)<span class="text-danger">*</span></label>
+        <input type="text" class="form-control" style="background-image: none;" id="first_name_architecture"
+            placeholder="" name="firstNameArchitecture" value="${fireApplicationId.firstNameArchitecture}" pattern="[A-Za-z]+" onchange="DisplayArch(this.id)" required>
+        <div class="invalid-feedback">Please Enter Valid First Name.</div>
+    </div>
+
+    <div style="width: 33%;">
+        <label for="" class="form-label">Middle Name&nbsp(मधले नाव)</label>
+        <input type="text" class="form-control" style="background-image: none;" id="middle_name_architecture"
+            placeholder="" name="middleNameArchitecture" value="${fireApplicationId.middleNameArchitecture}" pattern="[A-Za-z]+" onchange="DisplayArch(this.id)">
+    </div>
+</div>
+
+<div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
+    <div style="width: 33%;">
+        <label for="" class="form-label">Last Name&nbsp(आडनाव)<span class="text-danger" style="color: red;">*</span></label>
+        <input type="text" class="form-control" style="background-image: none;" name="lastNameArchitecture"
+            id="last_name_architecture" value="${fireApplicationId.lastNameArchitecture}" pattern="[A-Za-z]+" onchange="DisplayArch(this.id)" required>
+        <div class="invalid-feedback">Please Enter Valid Last Name.</div>
+    </div>
+
+    <div style="width: 33%;">
+        <label for="" class="form-label">Full Name&nbsp(पूर्ण नाव)</label>
+        <input type="text" class="form-control" style="background-image: none;" id="full_name_architecture"
+            placeholder="" name="fullNameArchitecture" value="${fireApplicationId.fullNameArchitecture}" readonly>
+    </div>
+<script>
+                            function DisplayArch(id) {
+                                $('#full_name_architecture').val($('#first_name_architecture').val() + " " + $('#middle_name_architecture').val() + " " + $('#last_name_architecture').val())
+                            }
+                        </script>
+    <div style="width: 33%;">
+        <label for="" class="form-label">Mobile No&nbsp(मोबाईल क्र.)<span class="text-danger" style="color: red;">*</span></label>
+        <input type="text" class="form-control" style="background-image: none;" id="mobileNoArchitecturee"
+            placeholder="" name="mobileNoArchitecture" value="${fireApplicationId.mobileNoArchitecture}" pattern="[6-9]{1}[0-9]{9}" maxlength="10" required>
+        <div class="invalid-feedback">Please Enter Valid Mobile No.</div>
+    </div>
+</div>
+
+<div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
+    <div style="width: 33%;">
+        <label for="" class="form-label">Email Id&nbsp(ई - मेल आयडी)<span class="text-danger" style="color: red;">*</span></label>
+        <input type="email" class="form-control" style="background-image: none;" id="appEmailArchitecturee"
+            placeholder="" name="appEmailArchitecture" value="${fireApplicationId.appEmailArchitecture}" required>
+        <div class="invalid-feedback">Please Enter Valid Email Id.</div>
+    </div>
+
+    <div style="width: 33%;">
+        <label for="" class="form-label">Architect Licence Number&nbsp(वास्तुकार परवानगी क्रमांक)<span class="text-danger" style="color: red;">*</span></label>
+        <input type="text" class="form-control" style="background-image: none;" id="architectLicenceNumber"
+            placeholder="" name="architectLicenceNumber" value="${fireApplicationId.architectLicenceNumber}" required>
+        <div class="invalid-feedback">Please Enter Valid Architect Licence Number.</div>
+    </div>
+</div>
+
+							
+						
+							
+							
+							
+					
+<br>
+
+					
+						<h6 style="background-color: #dce2e8; padding: 10px;margin-left: -5px;"
+							class="  rounded-2">
+							<strong> Application Form Details</strong>
+						</h6>
+						
+                        <div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
+
+                            <div style="width: 50%;">
+								<label for="" class="form-label">Name of Building Owner&nbsp(इमारत मालकाचे नाव) <span class="text-danger" style="color: red;">*</span>
+								</label> <input type="text" class="form-control"
+									style="background-image: none;" id="nameofBuildingOwner"
+									placeholder="" name="nameofBuildingOwner" value="${fireApplicationId.nameofBuildingOwner}" required>
+								<div class="invalid-feedback">Please Enter Valid Name of Building Owner.
+								</div>
+							</div>
+                            <div style="width: 49%;">
+								<label for="" class="form-label">Address of Building
+								</label>
+								<textarea class="form-control" style="background-image: none;"
+									id="addressofbuilding" value="${fireApplicationId.addressofbuilding}" placeholder=""
+									name="addressofbuilding" rows="1" ></textarea>
+								<div class="invalid-feedback">Please Enter Valid Address
+									of Power of Building.</div>
+							</div>
+							
+							
+							
+							
+							
+		
+               </div>
+						
+                        <div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
+
+							
+							
+							 <div style="width: 33%;">
+        <label for="" class="form-label">Type Of Building&nbsp(इमारतीचा प्रकार)<span class="text-danger" style="color: red;">*</span></label>
+        <select id="typeOfBuilding" class="form-control" style="height: 35px; background-image: none;" onclick="feesCalculate();forSubType();showTypeBUilding()" name="typeOfBuilding" required>
+            <option value="" disabled>--- Select---</option>
+            <c:forEach var="fireRecommendationTypeOfBuilding" items="${requestScope.fireRecommendationTypeOfBuilding}">
+                <option value="${fireRecommendationTypeOfBuilding.fireTypeOfBuildingId}" ${fireRecommendationTypeOfBuilding.fireTypeOfBuildingId == fireApplicationId.typeOfBuilding ? 'selected' : ''}>
+                    <c:out value="${fireRecommendationTypeOfBuilding.firetypeofbuildingnames}" />
+                </option>
+            </c:forEach>
+        </select>
+        <div class="invalid-feedback">Please Enter Valid Type Of Building.</div>
+    </div>
+						
+						
+						
+						
+						
+                      <div style="width: 33%;">
+        <label for="" class="form-label">Sub Type Of Building&nbsp(इमारतीचा प्रकार)<span class="text-danger" style="color: red;">*</span></label>
+        <select id="subTypeOfBuilding" class="form-control" style="height: 35px; background-image: none;" name="subTypeOfBuilding" required>
+            <option value="" disabled>--- Select---</option>
+            <c:forEach var="subTypeOfbuilding" items="${requestScope.subTypeOfbuilding}">
+                <option value="${subTypeOfbuilding.subTypeOfBuildingId}" ${subTypeOfbuilding.subTypeOfBuildingId == fireApplicationId.subTypeOfBuilding ? 'selected' : ''}>
+                    <c:out value="${subTypeOfbuilding.subTypeOfBuildingName}" />
+                </option>
+            </c:forEach>
+        </select>
+        <div class="invalid-feedback">Please Enter Valid Sub Type Of Building.</div>
+    </div>
+
+    <div style="width: 33%;">
+        <label for="" class="form-label">Height Of Building&nbsp(इमारतीचा उप प्रकार)<span class="text-danger" style="color: red;">*</span></label>
+        <select id="typeOfHeight" class="form-control" style="height: 35px; background-image: none;" name="typeOfHeight" onclick="feesCalculate();showHeight()" required>
+            <option value="" disabled>--- Select---</option>
+            <c:forEach var="fireBuildingHeight" items="${requestScope.fireBuildingHeight}">
+                <option value="${fireBuildingHeight.fireBuildingHeightId}" ${fireBuildingHeight.fireBuildingHeightId == fireApplicationId.typeOfHeight ? 'selected' : ''}>
+                    <c:out value="${fireBuildingHeight.fireBuildingType}" />
+                </option>
+            </c:forEach>
+        </select>
+        <div class="invalid-feedback">Please Enter Valid Type Of Building Height.</div>
+    </div>
+</div>
+
+<div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
+    <div style="width: 33%;">
+        <label for="subType1" class="form-label" lang="en">Type of Construction&nbsp(बांधकामाचा प्रकार)<span class="text-danger" style="color: red;">*</span></label>
+        <select class="form-control" style="background-image: none;" name="typeOfConstruction" id="typeOfConstruction" onclick="feesCalculate()" required>
+            <option value="" disabled>--- Select---</option>
+            <c:forEach var="fireTypeOfConstruction" items="${requestScope.fireTypeOfConstruction}">
+                <option value="${fireTypeOfConstruction.fireBuildingconstructionTypeId}" ${fireTypeOfConstruction.fireBuildingconstructionTypeId == fireApplicationId.typeOfConstruction ? 'selected' : ''}>
+                    <c:out value="${fireTypeOfConstruction.fireBuildingConstructionTypeName}" />
+                </option>
+            </c:forEach>
+        </select>
+        <div class="invalid-feedback">Please Enter a Valid Type Of Construction Building.</div>
+    </div>
+
+                        <div style="width: 33%;">
+								<label for="" class="form-label">Zone No&nbsp(झोन
+									क्र.)<span class="text-danger" style="color: red;">*</span>
+								</label> <select class="form-select "
+									style="height: 35px; background-image: none;"
+									id="main-dropdown" name="zoneNO" required>
+									<option value="" selected="">-Select Zone-</option>
+									<option value="1">Zone No.1 - Laxmi Nagar (लक्ष्मी
+										नगर)</option>
+									<option value="2">Zone No.2 - Dharmpeth (धरमपेठ)</option>
+									<option value="3">Zone No.3 - Hanuman Nagar (हनुमान
+										नगर)</option>
+									<option value="4">Zone No.4 - Dhantoli (धंतोली)</option>
+									<option value="5">Zone No.5 - Nehru Nagar (नेहरू नगर)</option>
+									<option value="6">Zone No.6 - Gandhibag (गांधीबाग)</option>
+									<option value="7">Zone No.7 - Satranjipura
+										(सतरंजीपुरा)</option>
+									<option value="8">Zone No.8 - Lakadganj (लकडगंज)</option>
+									<option value="9">Zone No.9 - Aashi Nagar (आशी नगर)</option>
+									<option value="10">Zone No.10 - Mangalwari (मंगळवारी)</option>
+								</select>
+
+
+								<div class="invalid-feedback">Please Enter Valid Zone No.</div>
+							</div>
+					
+
+
+                            <div style="width: 33%;">
+								<label for="" class="form-label"> Ward No&nbsp(प्रभाग क्र.)
+									<span class="text-danger" style="color: red;">*</span>
+								</label> <select class="form-select"
+									style="height: 35px; background-image: none;"
+									id="dependent-dropdown" name="wardNo" required disabled>
+
+									<option value="" selected>-Select Ward-</option>
+									<option value="Ward No. 16">Ward No. 16</option>
+									<option value="Ward No. 36">Ward No. 36</option>
+									<option value="Ward No. 37">Ward No. 37</option>
+									<option value="Ward No. 38">Ward No. 38</option>
+
+
+									<option value="Ward No. 12">Ward No. 12</option>
+									<option value="Ward No. 13">Ward No. 13</option>
+									<option value="Ward No. 14">Ward No. 14</option>
+									<option value="Ward No. 15">Ward No. 15</option>
+
+
+									<option value="Ward No. 29">Ward No. 29</option>
+									<option value="Ward No. 31">Ward No. 31</option>
+									<option value="Ward No. 32">Ward No. 32</option>
+									<option value="Ward No. 34">Ward No. 34</option>
+
+
+									<option value="Ward No. 17">Ward No. 17</option>
+									<option value="Ward No. 33">Ward No. 33</option>
+									<option value="Ward No. 35">Ward No. 35</option>
+
+									<option value="Ward No. 26">Ward No. 26</option>
+									<option value="Ward No. 27">Ward No. 27</option>
+									<option value="Ward No. 28">Ward No. 28</option>
+									<option value="Ward No. 30">Ward No. 30</option>
+
+
+									<option value="Ward No. 8">Ward No. 8</option>
+									<option value="Ward No. 18">Ward No. 18</option>
+									<option value="Ward No. 19">Ward No. 19</option>
+									<option value="Ward No. 22">Ward No. 22</option>
+
+
+									<option value="Ward No. 5">Ward No. 5</option>
+									<option value="Ward No. 20">Ward No. 20</option>
+									<option value="Ward No. 21">Ward No. 21</option>
+
+									<option value="Ward No. 4">Ward No. 4</option>
+									<option value="Ward No. 23">Ward No. 23</option>
+									<option value="Ward No. 24">Ward No. 24</option>
+									<option value="Ward No. 25">Ward No. 25</option>
+
+
+									<option value="Ward No. 2">Ward No. 2</option>
+									<option value="Ward No. 3">Ward No. 3</option>
+									<option value="Ward No. 6">Ward No. 6</option>
+									<option value="Ward No. 7">Ward No. 7</option>
+
+
+									<option value="Ward No. 1">Ward No. 1</option>
+									<option value="Ward No. 9">Ward No. 9</option>
+									<option value="Ward No. 10">Ward No. 10</option>
+									<option value="Ward No. 11">Ward No. 11</option>
+
+
+								</select>
+								<div class="invalid-feedback">Please Enter Valid Ward No.</div>
+							</div>
+</div>
+						
+						<script>
+                            $('#main-dropdown').on('change', function () {
+                                document.getElementById("dependent-dropdown").removeAttribute('disabled');
+
+                                var selectedValue = $('#main-dropdown').val();
+
+                                var options = [];
+
+                                if (selectedValue === '1') {
+                                    options = ['-Select Ward-', 'Ward No. 16', 'Ward No. 36', 'Ward No. 37', 'Ward No. 38'];
+                                } else if (selectedValue === '2') {
+                                    options = ['-Select Ward-', 'Ward No. 12', 'Ward No. 13', 'Ward No. 14', 'Ward No. 15'];
+                                } else if (selectedValue === '3') {
+                                    options = ['-Select Ward-', 'Ward No. 29', 'Ward No. 31', 'Ward No. 32', 'Ward No. 34'];
+                                } else if (selectedValue === '4') {
+                                    options = ['-Select Ward-', 'Ward No. 17', 'Ward No. 33', 'Ward No. 35'];
+                                } else if (selectedValue === '5') {
+                                    options = ['-Select Ward-', 'Ward No. 26', 'Ward No. 27', 'Ward No. 28', 'Ward No. 30'];
+                                } else if (selectedValue === '6') {
+                                    options = ['-Select Ward-', 'Ward No. 8', 'Ward No. 18', 'Ward No. 19', 'Ward No. 22'];
+                                } else if (selectedValue === '7') {
+                                    options = ['-Select Ward-', 'Ward No. 5', 'Ward No. 20', 'Ward No. 21'];
+                                } else if (selectedValue === '8') {
+                                    options = ['-Select Ward-', 'Ward No. 4', 'Ward No. 23', 'Ward No. 24', 'Ward No. 25'];
+                                } else if (selectedValue === '9') {
+                                    options = ['-Select Ward-', 'Ward No. 2', 'Ward No. 3', 'Ward No. 6', 'Ward No. 7'];
+                                } else if (selectedValue === '10') {
+                                    options = ['-Select Ward-', 'Ward No. 1', 'Ward No. 9', 'Ward No. 10', 'Ward No. 11'];
+                                } else if (selectedValue === 'select-zone') {
+                                    options = ['select-ward'];
+                                }
+                                $('#dependent-dropdown').empty();
+                                for (var i = 0; i < options.length; i++) {
+                                    $('#dependent-dropdown').append('<option value="' + (options[i] === '-Select Ward-' ? '' : options[i]) + '">' + options[i] + '</option>');
+                                }
+                            });
+                        </script>
+
+
+<div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
+
+   <div style="width: 33%;">
+    <label class="form-label">Height of Building&nbsp(इमारतीची उंची-mtr)<span class="text-danger">*</span></label>
+    <input type="text" step="any" class="form-control" id="hightOfBuilding" name="hightOfBuilding" value="${fireApplicationId.hightOfBuilding}"  style="background-image: none;" required>
+    <div class="invalid-feedback">Please Enter Valid Height of Building.</div>
+</div>
+
+<div style="width: 33%;">
+    <label class="form-label">Floors&nbsp(मजले) <span class="text-danger">*</span></label>
+    <input class="form-control" id="floors" name="floors" value="${fireApplicationId.floors}"  style="background-image: none;" required>
+    <div class="invalid-feedback">Please Enter Valid Floors.</div>
+</div>
+
+<div style="width: 33%;">
+    <label class="form-label">Total Plot Area&nbsp(एकूण भूखंड क्षेत्र-sq.mtr)<span class="text-danger">*</span></label>
+    <input type="Number" step="any" class="form-control" id="totalPlotArea" name="totalPlotArea" value="${fireApplicationId.totalPlotArea}"  style="background-image: none;" required>
+    <div class="invalid-feedback">Please Enter Valid Total Plot Area.</div>
+</div>
+
+<div style="width: 33%;">
+    <label class="form-label">Built Up Area&nbsp(बिल्ट अप एरिया-sqmtr) <span class="text-danger">*</span></label>
+    <input type="number" step="any" class="form-control" id="buildUpArea" name="buildUpArea" value="${fireApplicationId.buildUpArea}"  style="background-image: none;" required>
+    <div class="invalid-feedback">Please Enter Valid Built Up Area.</div>
+</div>
+
+<div style="width: 33%;">
+    <label class="form-label">Super Built Up Area&nbsp(सुपर बिल्ट अप एरिया-sqmtr) <span class="text-danger">*</span></label>
+    <input type="number" step="any" class="form-control" id="superBuildarea" name="superBuildarea" value="${fireApplicationId.superBuildarea}"  style="background-image: none;" required>
+    <div class="invalid-feedback">Please Enter Valid Super Built Up Area.</div>
+</div>
+
+<div style="width: 33%;">
+    <label class="form-label">Number of Buildings&nbsp(इमारतींची संख्या)<span class="text-danger">*</span></label>
+    <input type="number" class="form-control" id="numberOfBuilding" name="numberOfBuilding" value="${fireApplicationId.numberOfBuilding}"  style="background-image: none;" required>
+    <div class="invalid-feedback">Please Enter Valid Number of Buildings.</div>
+</div>
+
+<div style="width: 33%;">
+    <label class="form-label">Number of Wings&nbsp(विंग्स ची संख्या)<span class="text-danger">*</span></label>
+    <input type="Number" class="form-control" id="numOfWings" name="numOfWings" value="${fireApplicationId.numOfWings}"  style="background-image: none;" required>
+    <div class="invalid-feedback">Please Enter Valid Number of Wings.</div>
+</div>
+
+<div style="width: 33%;">
+    <label class="form-label">Present Position of Building(इमारतीची वर्तमान स्थिती) <span class="text-danger">*</span></label>
+    <select id="presentPosition" class="form-select" name="presentPosition"  style="background-image: none;" required>
+        <option value="" disabled selected>-Select-</option>
+        <option value="1" ${fireApplicationId.presentPosition == '1' ? 'selected' : ''}>Proposed</option>
+        <option value="2" ${fireApplicationId.presentPosition == '2' ? 'selected' : ''}>Existing</option>
+    </select>
+    <div class="invalid-feedback">Please Select Valid Present Position.</div>
+</div>
+
+<div style="width: 33%;">
+    <label class="form-label">Front Margin Width&nbsp(समोरच्या समासाची रुंदी-mtr)<span class="text-danger">*</span></label>
+    <input type="Number" step="any" class="form-control" id="frontMarginWidth" name="frontMarginWidth" value="${fireApplicationId.frontMarginWidth}"  style="background-image: none;" required>
+</div>
+
+<div style="width: 33%;">
+    <label class="form-label">Rear Margin&nbsp(मागील समास)<span class="text-danger">*</span></label>
+    <input type="text" step="any" class="form-control" id="realMargin" name="realMargin" value="${fireApplicationId.realMargin}"  style="background-image: none;" required>
+</div>
+
+<div style="width: 33%;">
+    <label class="form-label">Side Margin1&nbsp(बाजूची कडा1)<span class="text-danger">*</span></label>
+    <input type="text" class="form-control" id="sideMargine" name="sideMargine" value="${fireApplicationId.sideMargine}"  style="background-image: none;" required>
+</div>
+
+<div style="width: 33%;">
+    <label class="form-label">Side Margin2&nbsp(बाजूची कडा2)<span class="text-danger">*</span></label>
+    <input type="text" class="form-control" id="sideMargineTwo" name="sideMargineTwo" value="${fireApplicationId.sideMargineTwo}"  style="background-image: none;" required>
+</div>
+
+<div style="width: 33%;">
+    <label class="form-label">Width of Entrance&nbsp(प्रवेशद्वाराची रुंदी - mtr)<span class="text-danger">*</span></label>
+    <input type="Number" step="any" class="form-control" id="widthOfEntrance" name="widthOfEntrance" value="${fireApplicationId.widthOfEntrance}" style="background-image: none;" required>
+</div>
+
+<div style="width: 33%;">
+    <label class="form-label">Area of Basement&nbsp(तळघराचे क्षेत्रफळ - sqmtr)<span class="text-danger">*</span></label>
+    <input type="Number" step="any" class="form-control" id="areaOfBasement" name="areaOfBasement" value="${fireApplicationId.areaOfBasement}" style="background-image: none;" required>
+</div>
+
+<div style="width: 33%;">
+    <label class="form-label">Capacity of Underground Tank&nbsp(भूमिगत टाकीची क्षमता-ltr)<span class="text-danger">*</span></label>
+    <input type="Number" step="any" class="form-control" id="capacityOfUnderGroundTank" name="capacityOfUnderGroundTank" value="${fireApplicationId.capacityOfUnderGroundTank}" style="background-image: none;" required>
+</div>
+
+<div style="width: 33%;">
+    <label class="form-label">Capacity of Overhead Tank&nbsp(ओव्हरहेड टाकीची क्षमता-ltr)<span class="text-danger">*</span></label>
+    <input type="Number" step="any" class="form-control" id="capacityOFOverHeadTank" name="capacityOFOverHeadTank" value="${fireApplicationId.capacityOFOverHeadTank}" style="background-image: none;" required>
+</div>
+
+<div style="width: 33%;">
+    <label class="form-label">Location of Transformer Room&nbsp(ट्रान्सफॉर्मर रूमचे स्थान)<span class="text-danger">*</span></label>
+    <input type="text" class="form-control" id="locationOfTransferRoom" name="locationOfTransferRoom" value="${fireApplicationId.locationOfTransferRoom}" style="background-image: none;" required>
+</div>
+
+<div style="width: 33%;">
+    <label class="form-label">Proposed site of A.C Plant&nbsp(A.C प्लांटची प्रस्तावित जागा)<span class="text-danger">*</span></label>
+    <input type="text" class="form-control" name="acPlant" value="${fireApplicationId.acPlant}" style="background-image: none;" required>
+</div>
+
+
+                  
+              <div style="background-color: white; !important" >            
+	
+        <label style="display: flex; width: 100%;margin-top: 20px;margin-left: -10px; margin-bottom: 0.1rem; height: 30px;" for="" class="form-label">FireFighting System as per N.B.C&nbsp(N.B.C नुसार अग्निशमन यंत्रणा)</label>
+        <div class="row"  style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 20px;">
+            <div style="width: 22%;">
+                <input type="checkbox" class="form-label" id="fireExtinguisher" name="fireFightingSystemNBC" value="Fire Extinguisher">
+                <label class="form-label-checkBox" for="fireExtinguisher">Fire Extinguisher</label>
+            </div>
+            <div style="width: 22%;">
+                <input type="checkbox" id="riserCheckbox" name="fireFightingSystemNBC" value="Wet riser/ down comer">
+                <label class="form-label-checkBox" for="riserCheckbox">Wet riser/ down comer</label>
+            </div>
+            <div style="width: 30%;">
+                <input type="checkbox" id="automaticFireAlarmDetectionSystem" name="fireFightingSystemNBC" value="Automatic Fire Alarm & Detection System">
+                <label class="form-label-checkBox" for="automaticFireAlarmDetectionSystemCheckbox">Automatic Fire Alarm & Detection System</label>
+            </div>
+            <div style="width: 10%;">
+                <input type="checkbox" id="hoseReelCheckbox" name="fireFightingSystemNBC" value="Hose reel">
+                <label class="form-label-checkBox" for="hoseReelCheckbox">Hose reel</label>
+            </div>
+           
+        </div>
+        <div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 30px;">
+
+            <div style="width: 22%;">
+                <input type="checkbox" id="yardHydrantCheckbox" name="fireFightingSystemNBC" value="Yard Hydrant">
+                <label class="form-label-checkBox" for="yardHydrantCheckbox">Yard hydrant</label>
+            </div>
+            <div style="width: 22%;">
+                <input type="checkbox" id="manualFireAlarmSystemCheckbox" name="fireFightingSystemNBC" value="Manual Fire Alarm System">
+                <label class="form-label-checkBox" for="manualFireAlarmSystemCheckbox">Manual Fire Alarm System</label>
+            </div>
+            <div style="width: 22%;">
+                <input type="checkbox" id="sprinklerCheckbox" name="fireFightingSystemNBC" value="Sprinkle">
+                <label class="form-label-checkBox" for="sprinklerCheckbox">Sprinkle</label>
+            </div>
+          
+           
+        </div>
+
+     
+            <div style="margin-left: -10;margin-top: 10px;">
+                <label for="" class="form-label">Number of Exposure Hazard [As per sanctioned plan] </label><span class="text-danger" style="color: red;">*</span>
+            </div>
+        
+        
+<div class="container mt-4" style="margin-left: -10px;">
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <td class="align-middle">East</td>
+                <td>
+                    <input type="text" class="form-control" name="east" 
+                           value="${fireApplicationId.east}" style="background-image: none;" required>
+                </td>
+            </tr>
+            <tr>
+                <td class="align-middle">West</td>
+                <td>
+                    <input type="text" class="form-control" name="west" 
+                           value="${fireApplicationId.west}" style="background-image: none;" required>
+                </td>
+            </tr>
+            <tr>
+                <td class="align-middle">North</td>
+                <td>
+                    <input type="text" class="form-control" name="north" 
+                           value="${fireApplicationId.north}" style="background-image: none;" required>
+                </td>
+            </tr>
+            <tr>
+                <td class="align-middle">South</td>
+                <td>
+                    <input type="text" class="form-control" name="south" 
+                           value="${fireApplicationId.south}" style="background-image: none;" required>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+					
+					
+				
+						<div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
+
+    <div style="width: 50%;">
+        <label for="" class="form-label">Electric Pump&nbsp(इलेक्ट्रिक पंप) <span class="text-danger" style="color: red;">*</span></label>
+
+        <div class="d-flex mt-2 border rounded p-2">
+            <div class="form-check ms-3">
+                <input type="radio" class="form-check-input" id="radio3" name="electricPump" value="1" 
+                       ${fireApplicationId.electricPump == 1 ? 'checked' : ''} required>Yes 
+                <label class="form-check-label" for="radio3"></label>
+            </div>
+
+            <div class="form-check ms-3">
+                <input type="radio" class="form-check-input" id="radio4" name="electricPump" value="2" 
+                       ${fireApplicationId.electricPump == 2 ? 'checked' : ''} required>No 
+                <label class="form-check-label" for="radio4"></label>
+            </div>
+        </div>
+        <label id="pob-error" class="error" for="pob"></label>
+    </div>
+
+    <div style="width: 50%;" id="electricPumpDp">
+        <label for="" style="margin-top: 4px;" class="form-label">Electric Pump Capacity&nbsp(विद्युत पंप क्षमता)
+            <span class="text-danger" style="color: red;">*</span>
+        </label>                                    
+        <select class="form-control" style="background-image: none;" name="electricPumpCapacity" id="electricPumpCapacity">
+            <option value="" ${fireApplicationId.electricPumpCapacity == null ? 'selected' : ''}>-- Select --</option>
+            <option value="450" ${fireApplicationId.electricPumpCapacity == 450 ? 'selected' : ''}>450 lpm</option>
+            <option value="900" ${fireApplicationId.electricPumpCapacity == 900 ? 'selected' : ''}>900 lpm</option>
+            <option value="1620" ${fireApplicationId.electricPumpCapacity == 1620 ? 'selected' : ''}>1620 lpm</option>
+            <option value="2280" ${fireApplicationId.electricPumpCapacity == 2280 ? 'selected' : ''}>2280 lpm</option>
+            <option value="2850" ${fireApplicationId.electricPumpCapacity == 2850 ? 'selected' : ''}>2850 lpm</option>
+        </select>
+    </div>
+
+</div>
+
+
+
+<div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
+
+    <div style="width: 50%;">
+        <label for="" class="form-label">Diesel Pump&nbsp(डिझेल पंप)<span class="text-danger" style="color: red;">*</span></label>
+
+        <div class="d-flex mt-2 border rounded p-2">
+            <div class="form-check ms-3">
+                <input type="radio" class="form-check-input" id="radio5" name="dieselPump" value="1"
+                       ${fireApplicationId.dieselPump == 1 ? 'checked' : ''} required>Yes 
+                <label class="form-check-label" for="radio5"></label>
+            </div>
+
+            <div class="form-check ms-3">
+                <input type="radio" class="form-check-input" id="radio6" name="dieselPump" value="2"
+                       ${fireApplicationId.dieselPump == 2 ? 'checked' : ''} required>No 
+                <label class="form-check-label" for="radio6"></label>
+            </div>
+        </div>
+        <label id="pob-error" class="error" for="pob"></label>
+    </div>
+
+    <div style="width: 50%;" id="dieselPumpDp">
+        <label for="" style="margin-top: 4px;" class="form-label">Diesel Pump Capacity&nbsp(डिझेल पंप क्षमता)
+            <span class="text-danger" style="color: red;">*</span>
+        </label>
+        <select class="form-control" style="background-image: none;" name="dieselPumpCapacity" id="dieselPumpCapacity">
+            <option value="" ${fireApplicationId.dieselPumpCapacity == null ? 'selected' : ''}>-- Select --</option>
+            <option value="450" ${fireApplicationId.dieselPumpCapacity == 450 ? 'selected' : ''}>450 lpm</option>
+            <option value="900" ${fireApplicationId.dieselPumpCapacity == 900 ? 'selected' : ''}>900 lpm</option>
+            <option value="1620" ${fireApplicationId.dieselPumpCapacity == 1620 ? 'selected' : ''}>1620 lpm</option>
+            <option value="2280" ${fireApplicationId.dieselPumpCapacity == 2280 ? 'selected' : ''}>2280 lpm</option>
+            <option value="2850" ${fireApplicationId.dieselPumpCapacity == 2850 ? 'selected' : ''}>2850 lpm</option>
+        </select>
+    </div>
+
+</div>
+
+
+                      <div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
+
+    <div style="width: 50%;">
+        <label for="" class="form-label">Jocky Pump&nbsp(जॉकी पंप)<span class="text-danger" style="color: red;">*</span></label>
+
+        <div class="d-flex mt-2 border rounded p-2">
+            <div class="form-check ms-3">
+                <input type="radio" class="form-check-input" id="radio7" name="jockyPump" value="1"
+                       ${fireApplicationId.jockyPump == 1 ? 'checked' : ''} required>Yes 
+                <label class="form-check-label" for="radio7"></label>
+            </div>
+
+            <div class="form-check ms-3">
+                <input type="radio" class="form-check-input" id="radio8" name="jockyPump" value="2"
+                       ${fireApplicationId.jockyPump == 2 ? 'checked' : ''} required>No 
+                <label class="form-check-label" for="radio8"></label>
+            </div>
+        </div>
+        <label id="pob-error" class="error" for="pob"></label>
+    </div>
+
+    <div style="width: 50%;" id="jockyPumpDp">
+        <label for="" style="margin-top: 4px;" class="form-label">Jocky Pump Capacity&nbsp(जॉकी पंप क्षमता)
+            <span class="text-danger" style="color: red;">*</span>
+        </label>
+        <select class="form-control" style="background-image: none;" name="jockyPumpCapacity" id="jockyPumpCapacity">
+            <option value="" ${fireApplicationId.jockyPumpCapacity == null ? 'selected' : ''}>-- Select --</option>
+            <option value="180" ${fireApplicationId.jockyPumpCapacity == 180 ? 'selected' : ''}>180 lpm</option>
+            <option value="450" ${fireApplicationId.jockyPumpCapacity == 450 ? 'selected' : ''}>450 lpm</option>
+            <option value="900" ${fireApplicationId.jockyPumpCapacity == 900 ? 'selected' : ''}>900 lpm</option>
+            <option value="1620" ${fireApplicationId.jockyPumpCapacity == 1620 ? 'selected' : ''}>1620 lpm</option>
+            <option value="2280" ${fireApplicationId.jockyPumpCapacity == 2280 ? 'selected' : ''}>2280 lpm</option>
+            <option value="2850" ${fireApplicationId.jockyPumpCapacity == 2850 ? 'selected' : ''}>2850 lpm</option>
+        </select>
+    </div>
+
+</div>
+
+					
+
+
+				<div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
+
+    <div style="width: 50%;">
+        <label for="" class="form-label">Booster Pump&nbsp(बुस्टर पंप)<span class="text-danger" style="color: red;">*</span></label>
+
+        <div class="d-flex mt-2 border rounded p-2">
+            <div class="form-check ms-3">
+                <input type="radio" class="form-check-input" id="radio9" name="boosterPump" value="1" 
+                       ${fireApplicationId.boosterPump == 1 ? 'checked' : ''} required>Yes 
+                <label class="form-check-label" for="radio9"></label>
+            </div>
+
+            <div class="form-check ms-3">
+                <input type="radio" class="form-check-input" id="radio10" name="boosterPump" value="2" 
+                       ${fireApplicationId.boosterPump == 2 ? 'checked' : ''} required>No 
+                <label class="form-check-label" for="radio10"></label>
+            </div>
+        </div>
+        <label id="pob-error" class="error" for="pob"></label>
+    </div>
+
+    <div style="width: 50%;" id="boosterPumpDp">
+        <label for="" style="margin-top: 4px;" class="form-label">Booster Pump Capacity&nbsp(बूस्टर पंप क्षमता)<span class="text-danger" style="color: red;">*</span></label>
+        <select class="form-control" style="background-image: none;" name="boosterPumpCapacity" id="boosterPumpCapacity">
+            <option value="" ${fireApplicationId.boosterPumpCapacity == null ? 'selected' : ''}>-- Select --</option>
+            <option value="450" ${fireApplicationId.boosterPumpCapacity == 450 ? 'selected' : ''}>450 lpm</option>
+            <option value="900" ${fireApplicationId.boosterPumpCapacity == 900 ? 'selected' : ''}>900 lpm</option>
+            <option value="1620" ${fireApplicationId.boosterPumpCapacity == 1620 ? 'selected' : ''}>1620 lpm</option>
+            <option value="2280" ${fireApplicationId.boosterPumpCapacity == 2280 ? 'selected' : ''}>2280 lpm</option>
+            <option value="2850" ${fireApplicationId.boosterPumpCapacity == 2850 ? 'selected' : ''}>2850 lpm</option>
+        </select>
+    </div>
+
+</div>
+
+
+				
+			
+
+				<script>
+                                            
+					 	function showTypeBUilding()
+					{
+							
+					 		var selectedValue = document.getElementsByName("typeOfBuilding")[0].value;
+					 		var selectedText = document.getElementsByName("typeOfBuilding")[0].options[document.getElementsByName("typeOfBuilding")[0].selectedIndex].text;
+					 		$('#selectedBuildingType').val(selectedText);
+
+	} 
+						
+	function forSubType()
+	{
+		
+		var typeOfBuilding = $("#typeOfBuilding").val();
+        
+
+		$.ajax({
+	        type: "POST",
+	        url: "${pageContext.request.contextPath}/rtiapplication/subType.do",
+	        data: {
+	            typeOfBuilding: typeOfBuilding 
+	        },
+	        dataType: "json",
+	        success: function(data) {
+	            var options = '<option value="" selected disabled>--- Select ---</option>';
+	            $.each(data.subTypeOfbuilding, function(index, subType) {
+	                options += '<option value="' + subType.subTypeOfBuildingId + '">' + subType.subTypeOfBuildingName + '</option>';
+	            });
+	            $("#subTypeOfBuilding").html(options);
+	        },
+	        error: function() {
+	        }
+	    });
+	}
+	
+						function showHeight()
+						{
+						
+					         var selectedValue = document.getElementsByName("typeOfHeight")[0].value;
+						 		var selectedText = document.getElementsByName("typeOfHeight")[0].options[document.getElementsByName("typeOfHeight")[0].selectedIndex].text;
+						 		$('#selectedBuildingHeight').val(selectedText);
+						}
+						</script>
+
+					
+
+					
+						
+					
+
+
+					<script>
+                        $(document).ready(function () {
+                            $("input[name='electricPump']").change(function () {
+                                if ($(this).val() === '1') {
+                                    $("#electricPumpDp").show();
+                                    document.getElementById("electricPumpCapacity").setAttribute("required", "required");
+
+                                } else {
+                                    $("#electricPumpDp").hide();
+                                    document.getElementById("electricPumpCapacity").removeAttribute("required");
+
+                                }
+                            });
+
+                            $("input[name='dieselPump']").change(function () {
+                                if ($(this).val() === '1') {
+                                    $("#dieselPumpDp").show();
+                                    document.getElementById("dieselPumpCapacity").setAttribute("required", "required");
+
+                                } else {
+                                    $("#dieselPumpDp").hide();
+                                    document.getElementById("dieselPumpCapacity").removeAttribute("required");
+
+                                }
+                            });
+
+                            $("input[name='jockyPump']").change(function () {
+                                if ($(this).val() === '1') {
+                                    $("#jockyPumpDp").show();
+                                    document.getElementById("jockyPumpCapacity").setAttribute("required", "required");
+                                } else {
+                                    $("#jockyPumpDp").hide();
+                                    document.getElementById("jockyPumpCapacity").removeAttribute("required");
+
+                                }
+                            });
+
+                            $("input[name='boosterPump']").change(function () {
+                                if ($(this).val() === '1') {
+                                    $("#boosterPumpDp").show();
+                                    document.getElementById("boosterPumpCapacity").setAttribute("required", "required");
+                                } else {
+                                    $("#boosterPumpDp").hide();
+                                    document.getElementById("boosterPumpCapacity").removeAttribute("required");
+
+                                }
+                            });
+                        });
+                    </script>
+
+					<script>
+                        $(document).ready(function () {
+                            var internalStaircaseValues = []; // Variable to store the values      
+
+                            $("#numInternalStaircaseProvided").on("input", function () {
+                                var num = $(this).val();
+                                var table = '<table class="table"><thead><tr><th scope="col">Internal Staircase Number</th><th scope="col">Width of Internal Staircase(अंतर्गत पायऱ्याची रुंदी-mtr)</th><th scope="col">From (पासून)</th></tr></thead><tbody>';
+                                for (var i = 1; i <= num; i++) {
+                                    table += '<tr><td>Internal Staircase' + i + '</td><td><input type="text" class="form-control staircase-input" style="background-image: none;"  name="widthInternalStaircaseProvided" placeholder="" required></td><td><input type="text" class="form-control staircase-input" style="background-image: none;"  name="fromInternalStaricase" placeholder="" required></td></tr>';
+                                }
+                                table += '</tbody></table>';
+                                $(".dynamic-stairs").html(table);
+
+                                // Clear the array and add new values when the number changes
+                                internalStaircaseValues = [];
+                                $(".staircase-input").on("input", function () {
+                                    internalStaircaseValues = $(".staircase-input").map(function () {
+                                        return $(this).val();
+                                    }).get();
+                                    console.log(internalStaircaseValues.join(","));
+                                });
+                            });
+                        });
+                    </script>
+                    
+                    
+                    
+                    	
+					
+                   <div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
+
+    <div style="width: 50%;">
+        <label for="numInternalStaircaseProvided" class="form-label">
+            Number of Internal Staircase Provided&nbsp(प्रदान केलेल्या अंतर्गत पायऱ्यांची संख्या)
+            <span class="text-danger" style="color: red;">*</span>
+        </label>
+        <input type="number" class="form-control" style="background-image: none;"
+               id="numInternalStaircaseProvided" name="numInternalStaircaseProvided"
+               value="${fireApplicationId.numInternalStaircaseProvided}" required>
+        <div class="invalid-feedback">
+            Please Select Valid Number of Internal Staircase Provided.
+        </div>
+    </div>
+
+    <div style="width: 50%;">
+        <label for="numberOfExternal" class="form-label">
+            Number of External/Emergency Staircase Provided&nbsp(प्रदान केलेल्या बाह्य/आणीबाणीच्या पायऱ्यांची संख्या)
+            <span class="text-danger" style="color: red;">*</span>
+        </label>
+        <input type="number" class="form-control" style="background-image: none;"
+               id="numberOfExternal" name="numberOfExternal"
+               value="${fireApplicationId.numberOfExternal}" required>
+        <div class="invalid-feedback">
+            Please Select Valid Number of External/Emergency Staircase Provided.
+        </div>
+    </div>
+</div>
+
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="mb-3 mt-3">
+								<div class="dynamic-stairs"></div>
+
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="mb-3 mt-3">
+								<div class="dynamic-external-stairs"></div>
+
+							</div>
+						</div>
+					</div>
+
+					<script>
+                        $(document).ready(function () {
+                            var externalStaircaseValues = [];
+
+                            $("#numberOfExternal").on("input", function () {
+                                var num = $(this).val();
+                                var table = '<table class="table"><thead><tr><th scope="col">External Staircase Number</th><th scope="col">Width of External Staircase (बाह्य पायऱ्याची रुंदी-mtr)</th><th scope="col">From (पासून)</th></tr></thead><tbody>';
+                                for (var i = 1; i <= num; i++) {
+                                    table += '<tr><td>External Staircase ' + i + '</td><td><input type="text" class="form-control external-staircase-input" style="background-image: none;" name="widthOfExternal" placeholder="" required></td><td><input type="text" class="form-control external-staircase-input" style="background-image: none;" name="fromExternalStaricase" placeholder="" required></td></tr>';
+                                }
+                                table += '</tbody></table>';
+                                $(".dynamic-external-stairs").html(table);
+
+                                // Clear the array and add new values when the number changes
+                                externalStaircaseValues = [];
+                                $(".external-staircase-input").on("input", function () {
+                                    externalStaircaseValues = $(".external-staircase-input").map(function () {
+                                        return $(this).val();
+                                    }).get();
+                                    console.log(externalStaircaseValues.join(","));
+                                });
+                            });
+                        });
+                    </script>
+					<div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
+    <div style="width: 50%;">
+        <label for="noLift" class="form-label">Number of Lifts Provided&nbsp(प्रदान केलेल्या लिफ्टची संख्या)</label>
+        <input type="text" class="form-control" style="background-image: none;" id="noLift" placeholder="" name="noLift" value="${fireApplicationId.noLift}">
+    </div>
+</div>
+					
+					
+
+<script>
+    $(document).ready(function () {
+        var externalStaircaseValues = [];
+
+        $("#noLift").on("input", function () {
+            var num = $(this).val();
+            var table = '<table class="table"><thead><tr><th scope="col">SrNo</th><th scope="col">Type Of Lift</th></tr></thead><tbody>';  //<th scope="col">No of Lift</th><th scope="col">Capacity</th>
+            for (var i = 1; i <= num; i++) {
+                table += '<tr><td>'+i+'</td><td><select style="background-image: none;" class="form-control type-lift-select" name="noLift"><option value="" selected>--Select--</option><option value="Passenger Lift">Passenger Lift</option><option value="Fire Lift">Fire Lift</option><option value="Stretcher Lift">Stretcher Lift</option><option value="Service Lift">Service Lift</option></select></td></tr>';  
+            }
+            table += '</tbody></table>';
+            $(".dynamic-type-lift").html(table);
+
+            // Clear the array and add new values when the number changes
+            externalStaircaseValues = [];
+            $(".external-staircase-input").on("input", function () {
+                externalStaircaseValues = $(".external-staircase-input").map(function () {
+                    return $(this).val();
+                }).get();
+                console.log(externalStaircaseValues.join(","));
+            });
+        });
+    });
+</script>
+
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="mb-3 mt-3">
+								<div class="dynamic-type-lift"></div>
+
+							</div>
+						</div>
+					</div>
+
+
+                    <div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
+                        <div style="width: 25%;">
+        <label for="" class="form-label">Selected Type Of Building</label>
+        <input type="text" id="selectedBuildingType" class="form-control" value="${fireApplicationId.subTypeOfBuilding}" readonly>
+    </div>
+
+    <div style="width: 25%;">
+        <label for="" class="form-label">Selected Building height</label>
+        <input type="text" id="selectedBuildingHeight" class="form-control" value="${fireApplicationId.typeOfHeight}" readonly>
+    </div>
+  
+        
+
+  <div style="width: 25%;">
+    <label for="fireDepartmentWiseLogin" class="form-label">Fire Stations<span class="text-danger">*</span></label>
+    <select style="background-image: none;" class="form-control" name="fireDepartmentWiseLogin" id="fireDepartmentWiseLogin" required>
+        <option value="" selected disabled>--- Select ---</option>
+        
+        <!-- Loop through fireDepartmentWiseLogin items from the backend -->
+        <c:forEach var="fireDepartmentWiseLogin" items="${requestScope.fireDepartmentWiseLogin}">
+            <option value="${fireDepartmentWiseLogin.fireDepartmentWiseLoginId}" 
+                ${fireDepartmentWiseLogin.fireDepartmentWiseLoginId == fireApplicationId.fireDepartmentWiseLogin ? 'selected="selected"' : ''}>
+                <c:out value="${fireDepartmentWiseLogin.fireDepartmentWiseLoginName}" />
+            </option>
+        </c:forEach>
+    </select>
+</div>
+
+                
+                
+                
+
+            
+              <div style="width: 25%;">
+    <label for="fireSubDepartmentWiseLogin" class="form-label">Category<span class="text-danger">*</span></label>
+    <select style="background-image: none;" class="form-control" name="fireSubDepartmentWiseLogin" id="fireSubDepartmentWiseLogin" required>
+        <option value="" selected disabled>--- Select ---</option>
+        <c:forEach var="fireSubDepartmentWiseLogin" items="${requestScope.fireSubDepartmentWiseLogin}">
+            <option value="${fireSubDepartmentWiseLogin.fireSubDepartmentWiseLoginId}" 
+                ${fireSubDepartmentWiseLogin.fireSubDepartmentWiseLoginId == fireApplicationId.fireSubDepartmentWiseLogin ? 'selected="selected"' : ''}>
+                <c:out value="${fireSubDepartmentWiseLogin.fireSubDepartmentWiseLoginName}" />
+            </option>
+        </c:forEach>
+    </select>
+</div>
+
+       
+    </div>
+   
+   
+                                        
+  
+
+<table class="custom-table" style="width: 1100px;">
+    <thead>
+        <tr>
+                        <th>Categories</th>
+            <th>Type of Floor</th>
+            <th>Residential)</th>
+                        <th>Institutional</th>
+            
+                        <th>Commercial</th>
+            
+            <th>Industrial</th>
+            <th>Total Fees(₹)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach var="fireDetail" items="${requestScope.fireDetails}">
+<tr>
+<td>
+<c:choose>
+    <c:when test="${fireDetail.floorName == 1}">Total Parking Area</c:when>
+    <c:when test="${fireDetail.floorName == 2}">Basement Built-up Area</c:when>
+    <c:when test="${fireDetail.floorName == 3}">Floor-wise Built-up Area</c:when>
+    <c:otherwise></c:otherwise>
+</c:choose>
+</td>    
+<td>
+<c:choose>
+    <c:when test="${fireDetail.fireFloorTypes == 1}">Basement</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 2}">Stilt level</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 3}">Basement 1</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 4}">Basement 2</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 5}">Basement 3</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 6}">Ground Floor</c:when>
+
+    <c:when test="${fireDetail.fireFloorTypes == 7}">1st Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 8}">2nd Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 9}">3rd Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 10}">4th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 11}">5th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 12}">6th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 13}">7th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 14}">8th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 15}">9th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 16}">10th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 17}">11th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 18}">12th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 19}">13th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 20}">14th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 21}">15th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 22}">16th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 23}">17th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 24}">18th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 25}">19th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 26}">20th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 27}">21st Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 28}">22nd Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 29}">23rd Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 30}">24th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 31}">25th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 32}">26th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 33}">27th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 34}">28th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 35}">29th Floor</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 36}">30th Floor</c:when>
+
+    <c:when test="${fireDetail.fireFloorTypes == 37}">Basement</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 38}">Stilt level</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 39}">Basement 1</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 40}">Basement 2</c:when>
+    <c:when test="${fireDetail.fireFloorTypes == 41}">Basement 3</c:when>
+
+    <c:otherwise></c:otherwise>
+</c:choose>
+</td>
+    <td>${fireDetail.residArea}</td>
+    <td>${fireDetail.primumAr}</td>
+    <td>${fireDetail.commArea}</td>
+    <td>${fireDetail.otherUse}</td>
+    <td>${fireDetail.rowWiseTotal}</td>
+</tr>
+        </c:forEach>
+    </tbody>
+</table>
+<br>
+<table class="custom-table" style="width: 800px;">
+   	<thead>
+   		<tr>
+   			 <th>Fees Name</th>
+   			 <th>Amount</th>
+   		</tr>
+   	</thead>
+   	<tbody>
+   	
+   		<tr>
+   			<td>Total Fees</td>
+   			<td>${fireApplicationId.totalFeess}</td>
+   		</tr>
+   		<tr>
+   			<td>2% Scrutiny Fees on Above Total:</td>
+   			<td>${fireApplicationId.scrutinyFeesOnAboveTotal}</td>
+   		</tr>
+   	</tbody>
+   </table>
+   
+   
+
+
+
+
+
+
+
+
+
+  
+			
+                       <!--  <table class="table table-hover small-text ms-1" style="margin-top: 70px;">
+                            <thead>
+								<tr class="tr-header">
+									
+									<th rowspan="2">Categories</th>
+									<th colspan="7">Construction Area&nbsp(Sq.mt)</th>
+								</tr>
+
+								<tr class="tr-header">
+									<th>Type of Floor</th>
+									<th>Residential</th>
+									<th>Institutional</th>
+									<th>Commercial</th>
+									<th>Industrial</th>
+									<th>Total Fees(₹)</th>
+                                    <th><a href="javascript:void(0);" id="addMoree"><span class="glyphicon glyphicon-plus"></span></a></th>
+								</tr>
+							</thead>
+                          <tbody id="tb11">
+    <c:forEach var="floorData" items="${requestScope.fireFloorData}">
+        <tr>
+            <td>
+                <select onclick="feesCalculate();typeFloor()"
+                        style="width: 150px; height: 30px;" 
+                        name="floorName" id="floorName_${floorData.id}" required>
+                    <option value="" selected disabled>--- Select---</option>
+                    <c:forEach var="fireFloorName" items="${requestScope.fireFloorTypes}">
+                        <option value="${fireFloorName.fireFloorTypesId}"
+                                <c:if test="${fireFloorName.fireFloorTypesId == floorData.floorName}">selected</c:if>>
+                            <c:out value="${fireFloorName.fireFloorTypesName}" />
+                        </option>
+                    </c:forEach>
+                </select>
+            </td>
+            <td>
+                <select id="fireFloorTypes_${floorData.id}" class="form-control"
+                        style="width: 150px; height: 30px; background-image: none;"
+                        name="fireFloorTypes" required>
+                    <option value="" selected disabled>--- Select---</option>
+                    <c:forEach var="fireFloorName" items="${requestScope.fireFloorName}">
+                        <option value="${fireFloorName.fireFloorNameId}"
+                                <c:if test="${fireFloorName.fireFloorNameId == floorData.fireFloorType}">selected</c:if>>
+                            <c:out value="${fireFloorName.fireFloorNames}" />
+                        </option>
+                    </c:forEach>
+                </select>
+            </td>
+            <td valign="middle">
+                <input style="width: 150px; height: 30px;" type="number" class="txtCal" 
+                       onchange="feesCalculate()" step="any" placeholder="Sq.mt"
+                       id="residArea_${floorData.id}" name="residArea" value="${floorData.residArea}">
+            </td>
+            <td valign="middle">
+                <input style="width: 150px; height: 30px;" type="number" class="txtCal" 
+                       onchange="feesCalculate()" step="any" placeholder="Sq.mt"
+                       id="primumar_${floorData.id}" name="primumAr" value="${floorData.primumAr}">
+            </td>
+            <td valign="middle">
+                <input style="width: 150px; height: 30px;" type="number" class="txtCal" 
+                       onchange="feesCalculate();" step="any" placeholder="Sq.mt"
+                       id="commArea_${floorData.id}" name="commArea" value="${floorData.commArea}">
+            </td>
+            <td valign="middle">
+                <input style="width: 150px; height: 30px;" type="number" class="txtCal" 
+                       onchange="feesCalculate()" step="any" placeholder="Sq.mt"
+                       id="otherUse_${floorData.id}" name="otherUse" value="${floorData.otherUse}">
+            </td>
+            <td valign="middle">
+                <input style="width: 150px; height: 30px;" type="number" class="txtCal" 
+                       id="totalTabl_${floorData.id}" step="any" placeholder="Sq.mt"
+                       name="totalTabl[]" value="${floorData.totalTabl}" readonly>
+            </td>
+            <td>
+                <a href="javascript:void(0);" class="removeLastt" onclick="feesCalculate()">Remove</a>
+            </td>
+        </tr>
+    </c:forEach>
+</tbody>
+
+                            <tfoot>
+                            	<tr>
+                            	<td></td>
+                            	<td></td>
+                            	<td></td>
+                            	<td></td>
+                            	<td></td>
+                            	
+                            	<td>Grand Total</td>
+                            	
+                            		<td>
+                            			<p id="grandTotal"></p>
+                            		</td>
+                            	</tr>
+                            	<tr>
+                            	<td></td>
+                            	<td></td>
+                            	<td></td>
+                            	<td></td>
+                            	<td></td>
+                            	
+                            	<td>Scrutiny Fees</td>
+                            	
+                            		<td>
+                            			<p id="scrutinyFees"></p>
+                            		</td>
+                            	</tr>
+                            </tfoot>
+                        </table>
+                        
+                       
+                        
+                     <table class="table table-hover small-text ms-2">
+    <tbody id="tb22">
+        <tr>
+            
+            <td valign="middle">
+                <select style="width: 150px; height: 30px;"  name="floorNamee[]" class="floorNamere" required>
+                    <option value="" selected disabled>--- Select---</option>
+                    <c:forEach var="fireFloorName" items="${requestScope.fireFloorTypes}">
+                        <option value="${fireFloorName.fireFloorTypesId}">
+                            <c:out value="${fireFloorName.fireFloorTypesName}" />
+                        </option>
+                    </c:forEach>
+                </select>
+            </td>
+            <td>
+                <select class="form-control fireFloorTypess"  style="width: 150px; height: 30px; background-image: none;" name="fireFloorTypess" required>
+                    <option value="" selected disabled>--- Select---</option>
+                    <c:forEach var="fireFloorName" items="${requestScope.fireFloorName}">
+                        <option value="${fireFloorName.fireFloorNameId}">
+                            <c:out value="${fireFloorName.fireFloorNames}" />
+                        </option>
+                    </c:forEach>
+                </select>
+            </td>
+         
+            <td valign="middle"><input style="width: 150px; height: 30px;" type="number" class="txtCal residAreaa"  placeholder="Sq.mt" name="residAreaa[]"></td>
+            <td valign="middle"><input style="width: 150px; height: 30px;" type="number" class="txtCal primumArr"  placeholder="Sq.mt" name="primumArr[]"></td>
+            <td valign="middle"><input style="width: 150px; height: 30px;" type="number" class="txtCal commArea"  placeholder="Sq.mt" name="commAreaa[]"></td>
+            <td valign="middle"><input style="width: 150px; height: 30px;" type="number" class="txtCal otherUsee"  placeholder="Sq.mt" name="otherUsee[]"></td>
+            <td valign="middle"><input style="width: 150px; height: 30px;" type="number" class="txtCal totalFees" placeholder="Sq.mt" name="rowWiseTotalFees[]" readonly></td>
+            <td><a href="javascript:void(0);" class="removeLastt">Remove</a></td>
+        </tr>
+    </tbody>
+</table>
+
+                
+                       
+                        
+
+
+
+						<div id="totalConstructionArea" name="superBuildUpArea"></div>
+						<br>
+						<div id="totalFees"></div>
+						<br>
+						<div id="scrutinyFees"></div>
+				-->
+
+<br>
+					<div class="col-md-12"><p>(<strong>Note :</strong>- As per Maharashtra fire prevention and life safety measures Amendment Act 2023, schedule-II
+clause no 2(2) :- For the purpose of assessment of fee, the built-up area shall be gross built-up area,
+which includes area of basement, easements, stilts, podium, staircase, lifts, lobbies, passages, balconies,
+cantilever portions, service floors, refuge areas, etc., as shown in the building plan certified by the
+Architect and submitted to the Authority along with the application for permission for construction of a
+building. The built-up area to be calculated for this purpose will have no relation with the floor space index
+or the built-up area calculated in any other manner.)</p></div>
+
+				<!-- 	<div class="col-md-12 text-start mb-5">
+						<div class="text-center">
+							<button type="button" onclick="feesCalculate()">Check Fees</button>
+
+						</div>
+					</div> -->
+
+
+
+					<div>
+
+						<input type="hidden" class="form-control"
+							style="background-image: none;" id="superBuildUpArea"
+							placeholder="" name="superBuildUpArea" value="" readonly
+							required> 
+	<input type="hidden" name="forwardWorkflow">
+	<input type="hidden" name="filesPath" id="filesPath" /> 
+	<input type="hidden" class="form-control" style="background-image: none;" id="noStandby" placeholder="" name="noStandby"  value="${fireApplicationId.noStandby}"> 
+	<input type="hidden" name="totalFeess"  value="${fireApplicationId.totalFeess}"> 
+	<input type="hidden" name="scrutinyFeesOnAboveTotal"  value="${fireApplicationId.scrutinyFeesOnAboveTotal}">
+
+
+
+
+<input type="hidden" name="rti_ref_id" value="${fireApplicationId.rti_ref_id}">
+<input type="hidden" name="fireRecommendationId" value="${fireApplicationId.fireRecommendationId}">
+
+                            <div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
+ 
+        
+						<h6 class="mt-3">
+							<strong style="font-size: 20px;">
+							 List of Documents (Attachment) </strong>
+						</h6>
+
+						 <div style="margin-left: -10;margin-top: 10px;background-color: blanchedalmond;">
+                <label for="" class="form-label">
+<small> <h7 style="font-size: 15px;"><strong>Note: </strong> Upload Below Files only
+								pdf, etc.. (File Size Max upto 5MB)</h7> </small>
+			</label><span class="text-danger" style="color: red;">*</span>
+            </div>
+
+                        </div>
+
+
+
+                        <div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
+                            <div style="width: 33%;">
+        <label for="" class="form-label">Form P Certificate 
+            <span class="text-danger" style="color: red;">*</span>
+            <a   onclick="downloadFile()">Download</a>
+        </label>
+        <input type="file" class="form-control" style="background-image: none;" id="doc1" placeholder="" name="filesPath" required>
+        <div class="invalid-feedback">File selected is either greater than 5Mb or not of type .pdf.</div>
+    </div>
+
+
+
+
+						
+							 <div style="width: 33%;">
+								<label for="" class="form-label">NMC Tax Receipt Current
+									Year <span class="text-danger" style="color: red;">*</span>
+								</label> <input type="file" class="form-control"
+									style="background-image: none;" id="doc2" placeholder=""
+									name="filesPath" required>
+								<div class="invalid-feedback">File selected is either
+									greater than 5Mb or not of type .pdf.</div>
+							</div>
+					
+
+
+
+						
+
+                            <div style="width: 33%;">
+								<label for="" class="form-label">Covering Letter of Sanctioning Authority<span
+									class="text-danger" style="color: red;">*</span>
+								</label> <input type="file" class="form-control"
+									style="background-image: none;" id="doc4" placeholder=""
+									name="filesPath" required>
+								<div class="invalid-feedback">File selected is either
+									greater than 5Mb or not of type .pdf.</div>
+							</div>
+        </div>
+                            <div class="row" style="display: flex; width: 100%; margin-bottom: 0.1rem; height: 80px;">
+
+                            <div style="width: 33%;">
+								<label for="" class="form-label">Tentative Approval Fire Designing Proposed/Existing Building Plan<span
+									class="text-danger" style="color: red;">*</span>
+								</label> <input type="file" class="form-control"
+									style="background-image: none;" id="doc3" placeholder=""
+									name="filesPath" multiple required>
+								<div class="invalid-feedback">File selected is either
+									greater than 5Mb or not of type .pdf.</div>
+							</div>
+
+
+
+				</div>
+					<div class="col-md-12">
+						<div class="mb-5 mt-4 ">
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" id="check11"
+									name="declaration" value="something" required> <label
+									class="form-check-label ms-3 lbleng" style="margin-top: 0px;font-size: small;">
+									<strong style="font-size: small;" >Declaration <span class="text-danger"
+										style="color: red;">*</span>:-
+								</strong >I hereby declare that, all the information provided by me in the
+									above application is true.If it found wrong or not related, I
+									permit to reject the application.
+								</label>
+								<div class="invalid-feedback">Please check the
+									declaration.</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 text-start mb-5">
+						<div class="text-center">
+							<button type="button" class="btn btn-danger btn_sm printMe">
+								View and Print</button>
+							<button class="btn btn-success btn_sm" type="submit" id="submit">
+								Submit</button>
+
+						</div>
+					</div>
+				</div>
+</div>	
+
+
+	</form>
+</body>
+
+
+</html>
+<script>
+    function typeFloor() {
+    
+        var floorName = document.getElementById("floorName").value;
+        $.ajax({
+            type: "POST",
+            url: "${pageContext.request.contextPath}/rtiapplication/floorType.do",
+            data: {
+                floorName: floorName
+            },
+            dataType: "json",
+            success: function (data) {
+                $('#fireFloorTypes').empty();
+                $.each(data.subTypeOfbuilding, function(index, item) {
+                    $('#fireFloorTypes').append('<option value="' + item.subTypeOfBuildingId + '">' + item.subTypeOfBuildingName + '</option>');
+                });
+            },
+            error: function () {
+              //  alert("Error occurred while calculating.");
+            }
+        });
+    </script>       
+<script>
+                        
+                        function feesCalculate() {
+                            var superBuildUpArea = $("#superBuildUpArea").val();
+                          //  var typeOfBuilding = $("#typeOfBuilding").val();
+                            var typeOfConstruction = $("#typeOfConstruction").val();
+                            var typeOfHeight = $("#typeOfHeight").val();
+                            
+                            var floorNamee = $('select[name="floorNamee[]"]').map(function() {
+                                return $(this).val();
+                            }).get();
+                            
+                            var commAreaValues = $('input[name="commAreaa[]"]').map(function() {
+                                return $(this).val();
+                            }).get();
+
+                            var residAreaa = $('input[name="residAreaa[]"]').map(function() {
+                                return $(this).val();
+                            }).get();
+                            
+                            var primumArr = $('input[name="primumArr[]"]').map(function() {
+                                return $(this).val();
+                            }).get();
+
+                            var otherUsee = $('input[name="otherUsee[]"]').map(function() {
+                                return $(this).val();
+                            }).get();
+
+                            $.ajax({
+                                type: "POST",
+                                url: "${pageContext.request.contextPath}/rtiapplication/calculate.do",
+                                data: {
+                                    superBuildUpArea: superBuildUpArea,
+                                    typeOfConstruction: typeOfConstruction,
+                                    typeOfHeight: typeOfHeight,
+                                    commAreaa: commAreaValues,
+                                    residAreaa: residAreaa,
+                                    otherUsee : otherUsee,
+                                    primumArr : primumArr,
+                                    floorNamee : floorNamee
+                                },
+                                dataType: "json",
+                                success: function (data) {
+                                	var rowWiseTotalFeesToBeShown = data.rowWiseTotalFeesToBeShown;
+                                	for (var i = 0; i < rowWiseTotalFeesToBeShown.length; i++) {
+                                	    $('[name="totalTabl[]"]').eq(i).val(rowWiseTotalFeesToBeShown[i]);
+                                	}
+                                	$('#grandTotal').text(data.grandTotal);
+                                	$('#scrutinyFees').text(data.scrutinyFees);
+           
+                                },
+                                error: function () {
+                                  //  alert("Error occurred while calculating.");
+                                }
+                            });
+                        }
+
+
+                            $(function () {
+                                var maxRows = 30;
+                                var j = 1;
+                            
+                                $('#addMoree').on('click', function () {
+                                    if (j < maxRows) {
+                                        var data1 = $("#tb11 tr:eq(0)").clone(true).appendTo("#tb11");
+                                        var data2 = $("#tb22 tr:eq(0)").clone(true).appendTo("#tb22");
+                            
+                                        data1.find("input").val('');
+                                        data2.find("input").val('');
+                                        
+                                        // Copy the name attributes from the first row of tb22
+                                        var nameAttributes = [];
+                                        $("#tb22 tr:eq(0) td input").each(function() {
+                                            nameAttributes.push($(this).attr("name"));
+                                        });
+                                        data2.find("input").each(function(index) {
+                                            $(this).attr("name", nameAttributes[index]);
+                                        });
+                                        
+                                        j++;
+                                        updateSerialNumbers();
+                                    } else {
+                                        alert("You have reached the maximum number of rows allowed.");
+                                        $('#addMoree').prop('disabled', true); // Disable the button
+                                    }
+                                });
+                            
+                                $('#tb11').on('click', '.removeLastt', function () {
+                                    var rowCount = $('#tb11 tr').length;
+                                    if (rowCount > 1) {
+                                        var index = $(this).closest('tr').index();
+                                        $('#tb11 tr:eq(' + index + '), #tb22 tr:eq(' + index + ')').remove();
+                                        updateSerialNumbers();
+                                        j--;
+                                        $('#addMoree').prop('disabled', false); // Enable the add button
+                                    } else {
+                                        alert("Sorry!! Can't remove the first row!");
+                                    }
+                                });
+                            
+                                // Input event to synchronize values between corresponding cells
+                                $('#tb11').on('input', 'input[type="text"], input[type="number"], select', function () {
+                                    var rowIndex = $(this).closest('tr').index();
+                                    var columnIndex = $(this).closest('td').index();
+                                    var value = $(this).val();
+                                    $('#tb22 tr:eq(' + rowIndex + ') td:eq(' + columnIndex + ')').find('input, select').val(value);
+                                });
+                              
+                            });
+                            </script>
+             
+<script type="text/javascript">
+
+$(document).ready(function () {
+    
+	
+	
+
+
+	
+	var isUploadInProgress = false;
+
+    $("#submit").click(function (event) {
+        $("form:first").addClass("needs-validation");
+        $("form:first").attr("novalidate", "");
+
+        const forms = document.querySelectorAll('.needs-validation');
+
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                var isFormValid = true;
+
+                form.querySelectorAll('input[type="file"]').forEach(fileInput => {
+                    if (fileInput.files.length > 0) {
+                        var name = fileInput.files[0].name;
+                        if (!(name.endsWith('.pdf'))) {
+                            isFormValid = false;
+                            fileInput.classList.remove('is-valid');
+                            fileInput.classList.add('is-invalid');
+                        } else if (fileInput.files[0].size >= 2000000) {
+                            isFormValid = false;
+                            fileInput.classList.remove('is-valid');
+                            fileInput.classList.add('is-invalid');
+                        } else {
+                            fileInput.classList.remove('is-invalid');
+                            fileInput.classList.add('is-valid');
+                        }
+                    }
+                });
+
+                if (!form.checkValidity() || !isFormValid) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    if (isUploadInProgress) {
+                        return false;
+                    }
+                    $("#submit").attr("disabled", true);
+                    isUploadInProgress = true;
+                    upload(function(status) {
+                        if (status === true || status === 'true') {
+                            onPageSubmit('<c:out value="${contextRoot}"/>/rtsapplication/updateFireRecommendationLatter.do');
+                        } else {
+                            $("#submit").attr("disabled", false);
+                            alert("Something Went Wrong!!");
+                        }
+                        isUploadInProgress = false; // Reset the flag
+                    });
+                }
+
+                form.classList.add('was-validated');
+            }, false);
+        });
+    });
+
+    function upload(callback) {
+        var url = window.location.href;
+        var basePath = url.split('${contextRoot}')[0] + '${contextRoot}/';
+        var filesPath = "";
+        var data = new FormData();
+
+        data.append('idProof1', $("#doc1").get(0).files[0]);
+        data.append('idProof2', $("#doc2").get(0).files[0]);
+        data.append('idProof3', $("#doc3").get(0).files[0]);
+        data.append('idProof4', $("#doc4").get(0).files[0]);
+
+        var isFileSelected = false;
+        const id = Math.floor(Math.random() * 9000) + 1000;
+        var file = $('input[type="file"]');
+        for (var i = 0; i < file.length; i++) {
+            var array_element = file[i];
+            var element = array_element.value.split("\\");
+            var a = element[element.length-1];
+            const splitName = a.split(".pdf")[0].replaceAll(/[^a-zA-Z0-9]/g, ""); 
+            const value = splitName + ".pdf";
+            if (a === '' || a === undefined) {
+                filesPath += "null" + ",";
+                isFileSelected = false;
+            } else {
+                filesPath = filesPath + basePath + "FireRecommendationLatter/" + id + value + ",";
+                isFileSelected = true;
+            }
+        }
+        $.ajax({
+            url: "<c:out value='${contextRoot}'/>/rtiapplication/uploadFireRecommendation.do?id="+id,
+            type: 'POST',
+            data: data,
+            cache: false,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            async: false, 
+            success: function(data) {
+                var status = data.status;
+                if (callback && typeof callback === 'function') {
+                    callback(status);
+                }
+            }
+        });
+
+        var a = filesPath.substring(0, filesPath.lastIndexOf(","));
+        filesPath = filesPath.replace(/\s/g, "");
+        $("#filesPath").val(filesPath);
+    }
+});
+</script>
+<!-- Code injected by live-server -->
+<script>
+  
+        if ('WebSocket' in window) {
+            (function () {
+                function refreshCSS() {
+                    var sheets = [].slice.call(document.getElementsByTagName("link"));
+                    var head = document.getElementsByTagName("head")[0];
+                    for (var i = 0; i < sheets.length; ++i) {
+                        var elem = sheets[i];
+                        var parent = elem.parentElement || head;
+                        parent.removeChild(elem);
+                        var rel = elem.rel;
+                        if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                            var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                            elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                        }
+                        parent.appendChild(elem);
+                    }
+                }
+                var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+                var address = protocol + window.location.host + window.location.pathname + '/ws';
+                var socket = new WebSocket(address);
+                socket.onmessage = function (msg) {
+                    if (msg.data == 'reload') window.location.reload();
+                    else if (msg.data == 'refreshcss') refreshCSS();
+                };
+                if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+                    console.log('Live reload enabled.');
+                    sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+                }
+            })();
+        }
+        else {
+            console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+        }
+
+    </script>
+
+<!-- Code injected by live-server -->
+<script>
+  
+        if ('WebSocket' in window) {
+            (function () {
+                function refreshCSS() {
+                    var sheets = [].slice.call(document.getElementsByTagName("link"));
+                    var head = document.getElementsByTagName("head")[0];
+                    for (var i = 0; i < sheets.length; ++i) {
+                        var elem = sheets[i];
+                        var parent = elem.parentElement || head;
+                        parent.removeChild(elem);
+                        var rel = elem.rel;
+                        if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                            var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                            elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                        }
+                        parent.appendChild(elem);
+                    }
+                }
+                var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+                var address = protocol + window.location.host + window.location.pathname + '/ws';
+                var socket = new WebSocket(address);
+                socket.onmessage = function (msg) {
+                    if (msg.data == 'reload') window.location.reload();
+                    else if (msg.data == 'refreshcss') refreshCSS();
+                };
+                if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+                    console.log('Live reload enabled.');
+                    sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+                }
+            })();
+        }
+        else {
+            console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+        }
+
+    </script>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    
+<script src="https://code.jquery.com/jquery-3.6.1.js">
+   
+    </script>
+
+<script type="text/javascript">
+$('.printMe').on('click', function () {
+
+    window.print();
+});
+</script>
+<script type="text/javascript">     
+       
+
+        function downloadFile() {
+            var contextRoot = "<c:out value='${contextRoot}'/>";
+            var fileUrl = contextRoot + "/pages/citizendocument/FormP.pdf";
+            var fileName = "Form4.pdf";
+
+            var downloadLink = document.createElement("a");
+            downloadLink.href = fileUrl;
+            downloadLink.download = fileName;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+
+
+
+    </script>

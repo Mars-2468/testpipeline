@@ -1,0 +1,37 @@
+<process xmlns="http://jbpm.org/4.4/jpdl" name="Tree_Cutting_Workflow">
+<start name="start">
+<transition to="L1 Verification"/>
+</start>
+<!--   Level 1 - Tree Inspector   -->
+<task name="L1 Verification" assignee="#{TREE_INSPECTOR}">
+<transition name="L1Approve" to="L2 Verification"/>
+<transition name="Send-For-Approval" to="L4 Approval"/>
+<transition name="Reject" to="end"/>
+</task>
+<!--   Level 2 - Section Officer (verification)   -->
+<task name="L2 Verification" assignee="#{SECTION_OFFICER}">
+<transition name="L2Approve" to="L3 Verification"/>
+<transition name="Reject" to="end"/>
+</task>
+<!--   Level 3 - Tree Officer   -->
+<task name="L3 Verification" assignee="#{TREE_OFFICER}">
+<transition name="Verified" to="L2 Final Process"/>
+<transition name="Reject" to="end"/>
+
+</task>
+<!--   Level 4 - Tree Authority   -->
+<task name="L4 Approval" assignee="#{TREE_AUTHORITY}">
+<transition name="Approve" to="L2 Final Process"/>
+<transition name="Reject" to="end"/>
+</task>
+<task name="L2 Final Process" assignee="#{SECTION_OFFICER_FINAL}">
+<transition name="send-demand" to="L2 Final Process Close"/>
+<transition name="Reject" to="end"/>
+</task>
+<!--   Level 2 - Section Officer (final processing / closure)   -->
+<task name="L2 Final Process Close" assignee="#{SECTION_OFFICER_CLOSE}">
+<transition name="Close-Application" to="end"/>
+<transition name="Reject" to="end"/>
+</task>
+<end name="end"/>
+</process>

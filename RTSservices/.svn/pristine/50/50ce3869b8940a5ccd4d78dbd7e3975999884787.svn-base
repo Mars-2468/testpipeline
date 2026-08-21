@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+	default-autowire="byName">
+
+	<!-- Workflow Controller -->
+	<!-- <bean id="workflowController" class="com.mars.workflow.controller.WorkflowController"> 
+		<property name="workflowService"> <ref bean="workflowService" /> </property> 
+		<property name="workflowProcessDetailsService"> <ref bean="workflowProcessDetailsService" 
+		/> </property> </bean> -->
+
+	<!-- Bean for storing entity id and other values -->
+	<!-- <bean id="workflowProcessDetailsService" parent="txProxyTemplate"> 
+		<property name="target"> <ref local="workflowProcessDetailsServiceTarget" 
+		/> </property> </bean> -->
+
+	<!-- <bean id="workflowProcessDetailsServiceTarget" class="com.mars.workflow.service.impl.WorkflowProcessDetailsServiceImpl"> 
+		<property name="workflowProcessDetailsDAO"> <ref local="workflowProcessDetailsDAO" 
+		/> </property> </bean> <bean id="workflowProcessDetailsDAO" class="com.mars.workflow.dao.impl.WorkflowProcessDetailsDAOImpl"> 
+		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property> 
+		</bean> -->
+
+	<bean id="springHelper"
+		class="org.jbpm.pvm.internal.processengine.SpringHelper">
+		<property name="jbpmCfg">
+			<value>jbpm.cfg.xml</value>
+		</property>
+	</bean>
+
+	<bean id="processEngine" factory-bean="springHelper"
+		factory-method="createProcessEngine" />
+
+	<bean id="repositoryService" factory-bean="processEngine"
+		factory-method="getRepositoryService" />
+
+	<bean id="executionService" factory-bean="processEngine"
+		factory-method="getExecutionService" />
+
+	<bean id="taskService" factory-bean="processEngine"
+		factory-method="getTaskService" />
+
+	<bean id="historyService" factory-bean="processEngine"
+		factory-method="getHistoryService" />
+
+	<bean id="managementService" factory-bean="processEngine"
+		factory-method="getManagementService" />
+
+	<bean id="identityService" factory-bean="processEngine"
+		factory-method="getIdentityService" />
+
+	<bean id="workflowService" parent="txProxyTemplate">
+		<property name="target">
+			<ref local="workflowServiceTarget" />
+		</property>
+	</bean>
+
+	<bean id="workflowServiceTarget"
+		class="com.mars.workflow.service.impl.WorkflowServiceImpl">
+		<property name="processDefinitions">
+			<list>
+
+				<value>/workflow/birthApplication.jpdl.xml</value>
+				<value>/workflow/mandapPermission.jpdl.xml</value>
+				<value>/workflow/marriageApplication.jpdl.xml</value>
+				<value>/workflow/dogLicense.jpdl.xml</value>
+				<value>/workflow/water.jpdl.xml</value>
+				<value>/workflow/fire.jpdl.xml</value>
+				<value>/workflow/marketDepartment.jpdl.xml</value>
+				<value>/workflow/propertytax.jpdl.xml</value>
+				<value>/workflow/garden.jpdl.xml</value>
+				<value>/workflow/ganeshMandapPermission.jpdl.xml</value>
+				<value>/workflow/nursingregistration.jpdl.xml</value>
+				<value>/workflow/garden.jpdl.xml</value>
+				<value>/workflow/townPlanning.jpdl.xml</value>
+				<value>/workflow/mtpRegistrationCertificate.jpdl.xml</value>
+				<value>/workflow/bioMedicalApplication.jpdl.xml</value>
+								<value>/workflow/fireCrackerLicense.jpdl.xml</value>
+				
+
+
+			</list>
+		</property>
+		<property name="repositoryService">
+			<ref local="repositoryService" />
+		</property>
+		<property name="executionService">
+			<ref local="executionService" />
+		</property>
+		<property name="taskService">
+			<ref local="taskService" />
+		</property>
+		<property name="managementService">
+			<ref local="managementService" />
+		</property>
+		<property name="historyService">
+			<ref local="historyService" />
+		</property>
+		<property name="identityService">
+			<ref local="identityService" />
+		</property>
+		<!-- <property name="workflowProcessDetailsService"> <ref local="workflowProcessDetailsService" 
+			/> </property> -->
+		<property name="velocityEngine">
+			<ref bean="velocityEngine" />
+		</property>
+	</bean>
+
+	<!-- Setting Services WorkflowTemplate -->
+	<!-- <bean id="workflowTemplateService" parent="txProxyTemplate"> <property 
+		name="target"><ref local="workflowTemplateServiceTarget"/></property> </bean> 
+		<bean id="workflowTemplateServiceTarget" class="com.mars.workflow.service.impl.WorkflowTemplateServiceImpl"> 
+		<property name="workflowTemplateDAO"><ref local="workflowTemplateDAO"/></property> 
+		</bean> <bean id="workflowTemplateDAO" class="com.mars.workflow.dao.impl.WorkflowTemplateDAOImpl"> 
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property> </bean> 
+		Setting Services WorkflowTemplateTask <bean id="workflowTemplateTaskService" 
+		parent="txProxyTemplate"> <property name="target"><ref local="workflowTemplateTaskServiceTarget"/></property> 
+		</bean> <bean id="workflowTemplateTaskServiceTarget" class="com.mars.workflow.service.impl.WorkflowTemplateTaskServiceImpl"> 
+		<property name="workflowTemplateTaskDAO"><ref local="workflowTemplateTaskDAO"/></property> 
+		</bean> <bean id="workflowTemplateTaskDAO" class="com.mars.workflow.dao.impl.WorkflowTemplateTaskDAOImpl"> 
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property> </bean> 
+		Setting Services WorkflowTemplateUserMapping <bean id="workflowTemplateUserMappingService" 
+		parent="txProxyTemplate"> <property name="target"><ref local="workflowTemplateUserMappingServiceTarget"/></property> 
+		</bean> <bean id="workflowTemplateUserMappingServiceTarget" class="com.mars.workflow.service.impl.WorkflowTemplateUserMappingServiceImpl"> 
+		<property name="workflowTemplateUserMappingDAO"><ref local="workflowTemplateUserMappingDAO"/></property> 
+		</bean> <bean id="workflowTemplateUserMappingDAO" class="com.mars.workflow.dao.impl.WorkflowTemplateUserMappingDAOImpl"> 
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property> </bean> 
+		Setting Services WorkflowTemplateUserMappingDetails <bean id="workflowTemplateUserMappingDetailsService" 
+		parent="txProxyTemplate"> <property name="target"><ref local="workflowTemplateUserMappingDetailsServiceTarget"/></property> 
+		</bean> <bean id="workflowTemplateUserMappingDetailsServiceTarget" class="com.mars.workflow.service.impl.WorkflowTemplateUserMappingDetailsServiceImpl"> 
+		<property name="workflowTemplateUserMappingDetailsDAO"><ref local="workflowTemplateUserMappingDetailsDAO"/></property> 
+		</bean> <bean id="workflowTemplateUserMappingDetailsDAO" class="com.mars.workflow.dao.impl.WorkflowTemplateUserMappingDetailsDAOImpl"> 
+		<property name="sessionFactory"><ref bean="sessionFactory"/></property> </bean> 
+		WorkflowTemplateController <bean id="workflowTemplateController" class="com.mars.workflow.controller.WorkflowTemplateController"> 
+		<property name="workflowTemplateService"><ref bean="workflowTemplateService"/></property> 
+		</bean> WorkflowTemplateUserMappingController <bean id="workflowTemplateUserMappingController" 
+		class="com.mars.workflow.controller.WorkflowTemplateUserMappingController"> 
+		<property name="workflowTemplateUserMappingService"><ref bean="workflowTemplateUserMappingService"/></property> 
+		<property name="areaService"><ref bean="areaService"/></property> <property 
+		name="workflowTemplateService"><ref bean="workflowTemplateService"/></property> 
+		</bean> -->
+
+
+</beans>

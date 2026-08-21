@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2025-10-14T19:39:42 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TMSZoneWiseSummary" pageWidth="1400" pageHeight="595" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="1300" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b1314ea3-9cac-4e56-afd1-abc915d5eec6">
+	<parameter name="FROM_DATE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+    z.zone_name AS zone_name,
+    TO_CHAR(TO_DATE($P{FROM_DATE}, 'DD/MM/YYYY'), 'DD/MM/YYYY') AS cleaning_date,
+    s.shift_name AS shift,
+    COALESCE(unit_counts.total_units, 0) AS total_units,
+    COALESCE(block_counts.total_blocks, 0) AS total_blocks,
+    COALESCE(SUM(CASE WHEN tc.toilet_condition = 'Clean' THEN 1 ELSE 0 END), 0) AS cleaned,
+    COALESCE(SUM(CASE WHEN tc.toilet_condition = 'Damage' THEN 1 ELSE 0 END), 0) AS damage,
+    COALESCE(SUM(CASE WHEN tc.toilet_condition = 'Blocked' THEN 1 ELSE 0 END), 0) AS blocked,
+    COALESCE(SUM(CASE WHEN tc.toilet_condition = 'Locked' THEN 1 ELSE 0 END), 0) AS locked,
+    COALESCE(block_counts.total_blocks, 0)
+      - COALESCE(SUM(CASE WHEN tc.toilet_condition IN ('Clean', 'Damage', 'Blocked', 'Locked') THEN 1 ELSE 0 END), 0) AS skipped,
+    COALESCE(SUM(CASE WHEN tc.toilet_condition = 'Clean' AND tc.workflowstatus = 5 THEN 1 ELSE 0 END), 0) AS rejected,
+    COALESCE(SUM(CASE WHEN tc.toilet_condition = 'Clean' AND tc.workflowstatus = 1 THEN 1 ELSE 0 END), 0) AS approved,
+    COALESCE(SUM(CASE WHEN tc.toilet_condition = 'Clean' AND tc.workflowstatus = 1 THEN 32.13 ELSE 0 END), 0) AS cost
+FROM
+    egovrti.toiletcleaning_zones z
+CROSS JOIN (
+    SELECT 'Morning' AS shift_name
+    UNION ALL
+    SELECT 'Afternoon'
+    UNION ALL
+    SELECT 'Night'
+) s
+LEFT JOIN egovrti.toilet_cleaning tc
+    ON tc.zoneid = z.zone_id
+    AND tc.shift = s.shift_name
+    AND (
+        tc.currentdate = TO_CHAR(TO_DATE($P{FROM_DATE}, 'DD/MM/YYYY'), 'YYYY-MM-DD')
+     OR tc.currentdate = TO_CHAR(TO_DATE($P{FROM_DATE}, 'DD/MM/YYYY'), 'DD/MM/YYYY')
+     OR tc.currentdate = TO_CHAR(TO_DATE($P{FROM_DATE}, 'DD/MM/YYYY'), 'DD-MM-YYYY')
+     OR tc.currentdate = TO_CHAR(TO_DATE($P{FROM_DATE}, 'DD/MM/YYYY'), 'YYYY/MM/DD')
+    )
+    AND (tc.is_draft IS NULL OR tc.is_draft <> '1')
+LEFT JOIN (
+    SELECT bu.zone AS zone_id, COUNT(*) AS total_units
+    FROM egovrti.toiletcleaning_blockunits bu
+    GROUP BY bu.zone
+) unit_counts ON unit_counts.zone_id = z.zone_id
+LEFT JOIN (
+    SELECT u.zone_id, COUNT(*) AS total_blocks
+    FROM egovrti.toiletcleaning_unitnumbers u
+    GROUP BY u.zone_id
+) block_counts ON block_counts.zone_id = z.zone_id
+GROUP BY
+    z.zone_id, z.zone_name, s.shift_name, unit_counts.total_units, block_counts.total_blocks
+ORDER BY
+    z.zone_id, s.shift_name]]>
+	</queryString>
+	<field name="zone_name" class="java.lang.String"/>
+	<field name="cleaning_date" class="java.lang.String"/>
+	<field name="shift" class="java.lang.String"/>
+	<field name="total_units" class="java.lang.Long"/>
+	<field name="total_blocks" class="java.lang.Long"/>
+	<field name="cleaned" class="java.lang.Long"/>
+	<field name="damage" class="java.lang.Long"/>
+	<field name="blocked" class="java.lang.Long"/>
+	<field name="locked" class="java.lang.Long"/>
+	<field name="skipped" class="java.lang.Long"/>
+	<field name="rejected" class="java.lang.Long"/>
+	<field name="approved" class="java.lang.Long"/>
+	<field name="cost" class="java.math.BigDecimal"/>
+	<variable name="srNo" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$V{srNo}]]></variableExpression>
+	</variable>
+	<variable name="total_blocks_sum" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_blocks}]]></variableExpression>
+	</variable>
+	<variable name="total_clean" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{cleaned}]]></variableExpression>
+	</variable>
+	<variable name="total_damage" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{damage}]]></variableExpression>
+	</variable>
+	<variable name="total_skipped" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{skipped}]]></variableExpression>
+	</variable>
+	<variable name="total_cost" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{cost}]]></variableExpression>
+	</variable>
+	<variable name="total_locked" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{locked}]]></variableExpression>
+	</variable>
+	<variable name="total_blocked" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{blocked}]]></variableExpression>
+	</variable>
+	<variable name="total_reject" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{rejected}]]></variableExpression>
+	</variable>
+	<variable name="total_approved" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{approved}]]></variableExpression>
+	</variable>
+	<variable name="total_units" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_units}]]></variableExpression>
+	</variable>
+	<variable name="total_blocks" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_blocks}]]></variableExpression>
+	</variable>
+	<title>
+		<band height="70">
+			<staticText>
+				<reportElement x="0" y="0" width="1300" height="30" uuid="caadf9fa-9bfd-4fe6-9996-534648d436b1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="17" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TMS new change's]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="30">
+			<staticText>
+				<reportElement x="0" y="0" width="40" height="30" uuid="55d64288-a380-4ed9-8cc2-be7aa22f344f"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Sr No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="0" width="80" height="30" uuid="1d8066f9-9d9c-474e-81b7-8c59b50734bc"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="0" width="100" height="30" uuid="4a2427ff-ebaf-4345-9ab7-a04484c2a6dd"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Zone]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="0" width="110" height="30" uuid="e38e4c89-ecc7-4577-8232-35d3c5c31e14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Shift]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="0" width="90" height="30" uuid="cc408659-3f13-486b-88c5-e00756a34a2b"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Total Units]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="0" width="90" height="30" uuid="6398f22f-f68d-4aec-beef-8fb289f3293b"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Total Blocks]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="510" y="0" width="85" height="30" uuid="6ac7681b-db71-44fd-a999-4b64060bd812"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Cleaned]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="595" y="0" width="80" height="30" uuid="8297a3de-1b4a-4698-840a-ba5722bcdeb8"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Damage]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="675" y="0" width="80" height="30" uuid="a16b27ea-5eaa-4101-adaf-a66306332ea8"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Blocked]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="755" y="0" width="80" height="30" uuid="eb52f408-1e27-4824-9e40-a8eba5257222"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Locked]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="835" y="0" width="80" height="30" uuid="e5f93fa3-5ba9-4bec-b6a3-d146227f843f"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Skipped]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="915" y="0" width="85" height="30" uuid="403f3719-97a5-4bb6-910e-c542a8c5ad7a"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Clean Rejected]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1000" y="0" width="105" height="30" uuid="16650c37-acc6-4595-9378-322adb954465"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Clean Approved]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1105" y="0" width="80" height="30" uuid="2e3f9e91-f64a-4b0d-817a-d6b7db4dacff"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Cost]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28">
+			<textField>
+				<reportElement x="0" y="0" width="40" height="28" uuid="0fcd78a9-c38d-451b-9133-0b4f9ae9d0a3"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="0" width="80" height="28" uuid="1bb086d1-038b-4e84-a189-f121a5fed43e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{cleaning_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="0" width="100" height="28" uuid="dd7671a7-2ed7-4885-9ee3-01e6626c44ca"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{zone_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="0" width="110" height="28" uuid="800838e3-b8e0-4214-a19f-589a6f6b5785"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{shift}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="0" width="90" height="28" uuid="25103f6c-9ca8-430d-8ec8-a6a6523c50b1"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{total_units}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="420" y="0" width="90" height="28" uuid="dd9e2da7-4c6f-47ad-aa1d-dbb988dd2043"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{total_blocks}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="510" y="0" width="85" height="28" uuid="7f16bb94-67f7-483f-b236-fbf9f6d7b535"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{cleaned}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="595" y="0" width="80" height="28" uuid="cb213190-7e4e-45db-b58f-02c8a8c57146"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{damage}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="675" y="0" width="80" height="28" uuid="a210233d-cd33-44e1-ae83-432bdcaa0e79"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{blocked}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="755" y="0" width="80" height="28" uuid="12b2d56a-caa7-460a-8094-74db2b7808e3"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{locked}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="835" y="0" width="80" height="28" uuid="b5881bdf-aa89-4c8f-b03c-fad920a2431a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{skipped}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="915" y="0" width="85" height="28" uuid="b9001bae-e182-4e64-aede-4b5503fafa67"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{rejected}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1000" y="0" width="105" height="28" uuid="b2fc0f56-1842-48cd-ba68-0c3d76b0937e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{approved}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1105" y="0" width="80" height="28" uuid="91eb7262-3eea-4f9b-9b88-1af52da8c1d9"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{cost}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="29" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="0" y="0" width="340" height="29" uuid="cc2e5f96-a2c3-40a4-abbc-9044d2201718"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="540" y="0" width="100" height="29" backcolor="#FFFFFF" uuid="b8f3a712-579d-4b9a-aec2-8dfb4137d115"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.valueOf($V{total_clean})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="640" y="0" width="100" height="29" backcolor="#FFFFFF" uuid="b3bca606-a567-439f-9659-cc0505813afc"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.valueOf($V{total_damage})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="740" y="0" width="100" height="29" backcolor="#FFFFFF" uuid="b16e2c9b-8e11-4116-99d9-197a69fce6ce"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.valueOf($V{total_blocked})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="840" y="0" width="100" height="29" backcolor="#FFFFFF" uuid="0a2a645e-8780-4b89-a589-d8332436a235"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.valueOf($V{total_locked})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="940" y="0" width="100" height="29" uuid="06a4cc45-c28c-4fe9-960a-903fcb830f92"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.valueOf($V{total_skipped})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1040" y="0" width="105" height="29" uuid="94103e1e-2e85-4b4f-8f09-d4d18b3d1a04"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.valueOf($V{total_reject})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1145" y="0" width="105" height="29" uuid="5112194e-f500-4523-ad00-86723d2c88aa"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.valueOf($V{total_approved})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1250" y="0" width="110" height="29" uuid="8e6277f2-d70a-428b-9f27-7aa648adf62b"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.valueOf($V{total_cost})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="0" width="100" height="29" uuid="d809e0c7-5961-4b9c-ba09-72f7d39c7b02">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.valueOf($V{total_units})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="0" width="100" height="29" uuid="a341915b-0f49-47af-8b3d-bd0381445029">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.valueOf($V{total_blocks})]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+	<noData>
+		<band height="40">
+			<staticText>
+				<reportElement x="0" y="0" width="1270" height="40" uuid="c1fadde1-d18c-4b89-bd45-6c9225a87a29"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No records found .]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

@@ -1,0 +1,15 @@
+package com.mars.rti.dao;
+
+import com.mars.rti.model.MarriageCertificate;
+
+public interface MarriageCertificateDAO {
+	
+    public void saveMarriageCertificate(MarriageCertificate marriageCertificate);
+	public long marriageCertificateSave(MarriageCertificate marriageCertificate);
+	public MarriageCertificate get(long id);
+	public MarriageCertificate merge(MarriageCertificate marriageCertificate);
+	public MarriageCertificate getDetails(long rtiApplicationId);
+	public MarriageCertificate saveOrUpdate(MarriageCertificate entity);
+
+
+}

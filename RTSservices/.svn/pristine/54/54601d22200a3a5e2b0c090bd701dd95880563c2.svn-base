@@ -1,0 +1,102 @@
+package com.mars.rti.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="tree_cuting_details")
+public class TreesType {
+
+	
+	@Id
+	@SequenceGenerator(name="tree_cuting_details_tree_type_id_seq",sequenceName = "tree_cuting_details_tree_type_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "tree_cuting_details_tree_type_id_seq")
+	@Column(name="tree_type_id")
+	private long treeTypeId;
+	
+	@Column(name="name_of_tree")
+	private String nameOfTree;
+	
+	@Column(name="type_of_tree")
+	private String typeOfTree;
+	
+	@Column(name="age_of_tree")
+	private String  ageOfTree;
+
+	@Column(name="girth_of_tree")
+	private String girthOfTree;
+	
+	@Column(name="remarks")
+	private String remarks;
+	
+	@ManyToOne
+	@JoinColumn(name="tree_cuting_id")
+	private TreeCuting treeCutting;
+
+	public long getTreeTypeId() {
+		return treeTypeId;
+	}
+
+	public void setTreeTypeId(long treeTypeId) {
+		this.treeTypeId = treeTypeId;
+	}
+	
+	public String getNameOfTree() {
+		return nameOfTree;
+	}
+
+	public void setNameOfTree(String nameOfTree) {
+		this.nameOfTree = nameOfTree;
+	}
+
+	public String getTypeOfTree() {
+		return typeOfTree;
+	}
+
+	public void setTypeOfTree(String typeOfTree) {
+		this.typeOfTree = typeOfTree;
+	}
+
+	public String getAgeOfTree() {
+		return ageOfTree;
+	}
+
+	public void setAgeOfTree(String ageOfTree) {
+		this.ageOfTree = ageOfTree;
+	}
+
+	public String getGirthOfTree() {
+		return girthOfTree;
+	}
+
+	public void setGirthOfTree(String girthOfTree) {
+		this.girthOfTree = girthOfTree;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public TreeCuting getTreeCutting() {
+		return treeCutting;
+	}
+
+	public void setTreeCutting(TreeCuting treeCutting) {
+		this.treeCutting = treeCutting;
+	}
+	
+	
+	
+}
+	

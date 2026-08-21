@@ -1,0 +1,748 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:directive.include file="/pages/common/include.jsp" />
+<jsp:directive.include file="/pages/core-pages/nmc_user/dashboard/header.jsp" />
+<jsp:directive.page import="com.mars.common.utils.Constants" />
+<jsp:directive.page import="com.mars.common.utils.CommonUtils" />
+		<jsp:directive.page import="com.mars.rti.utils.CoreConstants" />
+
+
+
+
+<head>
+<title>Nagpur Municipal Corporation</title>
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="csrf-token"
+	content="L1tBXJBCG7Qg3zc8hd8zkv3US8Yq8R7ihDGuzHIc" />
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+	integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+	crossorigin="anonymous"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	crossorigin="anonymous"></script>
+<!-- CSS only -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+	crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="jquery-3.6.1.min.js"></script>
+<!-- JavaScript Bundle with Popper -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	crossorigin="anonymous"></script>
+<script src="Vjdog.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script type="text/javascript"
+	src="<c:out value=" ${contextRoot}" />/scripts/jquery/jquery.ajaxfileupload.js"></script>
+<link rel="stylesheet"
+	href="<c:out value='${contextRoot}'/>/pages/core-pages/nmc_user/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="<c:out value='${contextRoot}'/>/pages/core-pages/nmc_user/css/style2.css" />
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+<%
+pageContext.setAttribute("DATE_FORMAT", Constants.DATE_FORMAT);
+pageContext.setAttribute("SESSION_TOKEN_KEY", Constants.SESSION_TOKEN_KEY);
+pageContext.setAttribute("STATUS_NO_LABEL", Constants.STATUS_NO_LABEL);
+pageContext.setAttribute("STATUS_YES_LABEL", Constants.STATUS_YES_LABEL);
+pageContext.setAttribute("STATUS_NO", Constants.STATUS_NO);
+pageContext.setAttribute("STATUS_YES", Constants.STATUS_YES);
+pageContext.setAttribute("UPLOAD_PATH", CoreConstants.UPLOAD_PATH);
+
+///pageContext.setAttribute("statusList", CommonUtils.getStatus());
+%>
+<style>
+label {
+	font-weight: 600;
+}
+
+h3 {
+	font-weight: 500;
+}
+@page {
+  size: legal landscape; /* Landscape orientation for Legal size */
+}
+@media print {
+  body {
+    transform: scale(0.9); /* Adjust the scale factor as needed */
+    transform-origin: center center;
+  }
+
+}
+
+ @page {
+     size: auto ;
+     }
+</style>
+<style>
+  .pay-now-button {
+   background-color: lightblue;
+    color: darkblue;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 8px 13px;
+    border: 2px solid #349b;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+    .pay-now-button:hover {
+      background-color: #3498db; /* Blue background on hover */
+      color: #fff; /* White text on hover */
+    }
+  </style>
+<style>
+ input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+      }
+      .custom-hr {
+  border-color: #420101;
+  border-width: 2px;
+  margin: 10px 0;
+}
+</style>
+
+
+
+
+
+</head>
+<body>
+
+	<form class="needs-validation" novalidate>
+		<div class="container-fluid mt-4" style="width: 180vh">
+			<div class="printable">
+				<h3 class="text-center">
+											Property Tax Utara (मालमत्ता कर उतारा देणे)
+				</h3>
+			</div>
+<hr class="custom-hr">
+
+			<!-- <h6 style="background-color: #dce2e8; padding: 10px; height:40px;"
+				class="  rounded-2">
+			</h6>-->
+			<div class="row">
+				<input type="hidden" name="_token" value="xyz">
+			<input type="hidden" name="serviceId" value="<c:out value='${serviceId}'/>">
+			<input type="hidden" name="fields" value="<c:out value='${fields_aps}'/>">
+			<input type="hidden" name="distric" value="<c:out value='${distric}'/>">
+			<input type="hidden" name="trackid" value="<c:out value='${trackid}'/>">
+			<input type="hidden" name="user" value="<c:out value='${user}'/>">
+			<input type="hidden" name="mobile" value="<c:out value='${mobile}'/>">
+			<input type="hidden" name="name" value="<c:out value='${name}'/>">
+
+				<div class="col-md-3">
+    <div class="mb-3 mt-3">
+        <label for="upinNo" class="form-label lbleng">UPIN No. (UPIN क्र.)<span class="text-danger upin" style="color: red;">*</span></label>
+        <input type="text" class="form-control" style="background-image: none;" id="upinNo" placeholder="" name="upinNo" value="" maxlength="14" required>
+        <div class="invalid-feedback">Please Enter Valid UPIN No.</div>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="mb-3 mt-3">
+        <label for="indexNo" class="form-label lbleng">Index No. (निर्देशांक क्र.)<span class="text-danger indexNo" style="color: red;">*</span></label>
+        <input type="text" class="form-control" style="background-image: none;" id="indexNo" placeholder="" name="indexNo" value="" maxlength="14" required>
+        <div class="invalid-feedback">Please Enter Valid Index No.</div>
+    </div>
+</div>
+				<div class="col-md-3">
+					<div class="mb-3 mt-3">
+						<label for="" class="form-label lbleng">Applicant's Name (अर्जदाराचे नाव)<span class="text-danger">*</span>
+						</label> <input type="text" class="form-control"
+							style="background-image: none;" id="first_name" placeholder=""
+							name="firstName" value="" maxlength="40" pattern="^[A-Za-z ]+$"
+							  required>
+						<div class="invalid-feedback">Please Enter Valid Name.
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="mb-3 mt-3">
+
+						<label for="email" class="form-label lbleng">Applicant's Mail ID (अर्जदाराचा मेल आयडी)<span class="text-danger">*</span>
+						</label> <input type="email" class="form-control"
+							style="background-image: none;" name="email" value="" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"  required>
+						<div class="invalid-feedback">Please Enter Valid Email Id.</div>
+					</div>
+				</div>
+
+
+				<div class="col-md-3">
+					<div class="mb-3" style="margin-top:30px;">
+						<label for="" class="form-label">Applicant's Mobile No.(अर्जदाराचा मोबाईल क्र)<span
+							class="text-danger" style="color: red;">*</span>
+						</label> <input type="text" class="form-control"
+							style="background-image: none;" id="txtMobileNumber"
+							placeholder="" name="mobileNo" value=""
+							pattern="[6-9]{1}[0-9]{9}" maxlength="10"  required>
+						<div class="invalid-feedback">Please Enter Valid Mobile No.
+						</div>
+					</div>
+				</div>
+
+
+			
+			
+			
+
+
+				<div class="col-md-3">
+					<div class="mb-3 mt-4">
+
+						<label for="" class="form-label lbleng">Name of Property
+							Holders/Occupants (मालमत्ताधारक/ भोगवटादारांचे नाव)
+						</label> <input type="text" class="form-control"
+				  		style="background-image: none;" id ="propertyHolderName" name="holdersName" value=""
+						 maxlength="255" pattern="^[A-Za-z ]+$" readonly />
+						<div class="invalid-feedback">Please Enter Valid Name of
+							Holders.</div>
+					</div>
+				</div>
+				
+				
+														
+<div class="col-md-3">
+    <div class="mb-3 mt-5">
+        <label for="upinNo" class="form-label lbleng">Arrears in Rs.(थकबाकी रु.)<span class="text-danger" style="color: red;">*</span></label>
+        <input type="number" class="form-control" style="background-image: none;" id="areasPending" placeholder="" name="areasPending" value="" maxlength="10" required readonly>
+        <div class="invalid-feedback">Please Enter Valid Arrears.</div>
+    </div>
+</div>
+
+
+<div class="col-md-3">
+    <div class="mb-3 mt-5">
+        <label for="upinNo" class="form-label lbleng">Arrears Status (थकबाकी स्थिती)<span class="text-danger" style="color: red;">*</span></label>
+        <input type="text" class="form-control" style="background-image: none;" id="areasPendingStatus" placeholder="" name="areasPendingStatus" value="" maxlength="10" required readonly>
+        <div class="invalid-feedback">Please Enter Valid Arrears Status.</div>
+    </div>
+</div>
+
+
+<div class="col-md-3">
+    <div class="mb-3" style="margin-top: 23px;">
+        <label for="upinNo" class="form-label lbleng">Pending Dues (प्रलंबित थकबाकी)<span class="text-danger" style="color: red;">*</span></label>
+        <input type="text" class="form-control" style="background-image: none;" id="dues" placeholder="" name="duesAmt" value="" maxlength="10" required readonly>
+        <div class="invalid-feedback">Please Enter Valid Total Demand.</div>
+    </div>
+</div>
+
+<div class="col-md-3" id="payTaxButton">
+    <div class="mb-3" style="margin-top: 50px;">
+        <a href="https://geocivicnmcapp.nmcptax.com/CitizenServices/CitizenTax/index.html" class="pay-now-button" target="_blank">Pay Your Tax</a>
+    </div>
+</div>
+
+				<!-- <div class="col-md-3">
+					<div class="mb-3" style="margin-top: 40px;">
+						<label for="" class="form-label lbleng">Zone No. (झोन
+							क्र.)<span class="text-danger" style="color: red;">*</span>
+						</label> <select class="form-select " style="background-image: none;"
+							id="main-dropdown" name="zoneNo" required>
+							<option value="" selected="">-Select Zone-</option>
+							<option value="1">Zone No.1 - Laxmi Nagar (लक्ष्मी नगर)</option>
+							<option value="2">Zone No.2 - Dharmpeth (धरमपेठ)</option>
+							<option value="3">Zone No.3 - Hanuman Nagar (हनुमान नगर)</option>
+							<option value="4">Zone No.4 - Dhantoli (धंतोली)</option>
+							<option value="5">Zone No.5 - Nehru Nagar (नेहरू नगर)</option>
+							<option value="6">Zone No.6 - Gandhibag (गांधीबाग)</option>
+							<option value="7">Zone No.7 - Satranjipura (सतरंजीपुरा)</option>
+							<option value="8">Zone No.8 - Lakadganj (लकडगंज)</option>
+							<option value="9">Zone No.9 - Aashi Nagar (आशी नगर)</option>
+							<option value="10">Zone No.10 - Mangalwari (मंगळवारी)</option>
+						</select>
+
+
+						<div class="invalid-feedback">Please Enter Valid Zone No.</div>
+					</div>
+				</div>
+
+
+				<div class="col-md-3 hospital_row" id="hos">
+					<div class="mb-3" style="margin-top: 40px;">
+						<label for="" class="form-label"> Ward No. (प्रभाग क्र.) <span
+							class="text-danger" style="color: red;">*</span></label> <select
+							class="form-select " style="background-image: none;"
+							id="dependent-dropdown" name="wardNo" disabled required>
+
+							<option value="" selected>-Select Ward-</option>
+							<option value="Ward No. 16">Ward No. 16</option>
+							<option value="Ward No. 36">Ward No. 36</option>
+							<option value="Ward No. 37">Ward No. 37</option>
+							<option value="Ward No. 38">Ward No. 38</option>
+
+
+							<option value="Ward No. 12">Ward No. 12</option>
+							<option value="Ward No. 13">Ward No. 13</option>
+							<option value="Ward No. 14">Ward No. 14</option>
+							<option value="Ward No. 15">Ward No. 15</option>
+
+
+							<option value="Ward No. 29">Ward No. 29</option>
+							<option value="Ward No. 31">Ward No. 31</option>
+							<option value="Ward No. 32">Ward No. 32</option>
+							<option value="Ward No. 34">Ward No. 34</option>
+
+
+							<option value="Ward No. 17">Ward No. 17</option>
+							<option value="Ward No. 33">Ward No. 33</option>
+							<option value="Ward No. 35">Ward No. 35</option>
+
+							<option value="Ward No. 26">Ward No. 26</option>
+							<option value="Ward No. 27">Ward No. 27</option>
+							<option value="Ward No. 28">Ward No. 28</option>
+							<option value="Ward No. 30">Ward No. 30</option>
+
+
+							<option value="Ward No. 8">Ward No. 8</option>
+							<option value="Ward No. 18">Ward No. 18</option>
+							<option value="Ward No. 19">Ward No. 19</option>
+							<option value="Ward No. 22">Ward No. 22</option>
+
+
+							<option value="Ward No. 5">Ward No. 5</option>
+							<option value="Ward No. 20">Ward No. 20</option>
+							<option value="Ward No. 21">Ward No. 21</option>
+
+							<option value="Ward No. 4">Ward No. 4</option>
+							<option value="Ward No. 23">Ward No. 23</option>
+							<option value="Ward No. 24">Ward No. 24</option>
+							<option value="Ward No. 25">Ward No. 25</option>
+
+
+							<option value="Ward No. 2">Ward No. 2</option>
+							<option value="Ward No. 3">Ward No. 3</option>
+							<option value="Ward No. 6">Ward No. 6</option>
+							<option value="Ward No. 7">Ward No. 7</option>
+
+
+							<option value="Ward No. 1">Ward No. 1</option>
+							<option value="Ward No. 9">Ward No. 9</option>
+							<option value="Ward No. 10">Ward No. 10</option>
+							<option value="Ward No. 11">Ward No. 11</option>
+
+
+						</select>
+						<div class="invalid-feedback">Please Enter Valid Ward No.</div>
+					</div>
+
+				</div>-->
+								
+				
+				
+				
+			<!-- 	<div class="col-md-3">
+					<div class="mb-3" style="margin-top: 40px;">
+						<label for="" class="form-label lbleng">Index No.
+							(निर्देशांक क्र.)</label> 
+							<input type="text" class="form-control"
+						 	style="background-image: none;" id="" placeholder=""
+							name="indexNo" value=""  maxlength="10">
+						<div class="invalid-feedback">Please Enter Valid Index No.</div>
+					</div>
+				</div>
+-->
+
+
+
+<!-- <script>
+    function validateInput(inputId, minLength, maxLength) {
+        var input = document.getElementById(inputId);
+        var inputValue = input.value.trim(); // Trim the input to remove leading/trailing whitespace.
+
+        var alphanumericRegex = /^[A-Za-z0-9]+$/;
+
+        if (inputValue === '' || (alphanumericRegex.test(inputValue) && inputValue.length === 10)) {
+            input.setCustomValidity(''); // Reset the custom validity.
+            input.classList.remove("is-invalid");
+        } else {
+            input.setCustomValidity('Please enter a valid value.'); // Set a custom validation message.
+            input.classList.add("is-invalid");
+        }
+    }
+
+    var upinNoInput = document.getElementById("upinNo");
+    var indexNoInput = document.getElementById("indexNo");
+
+    upinNoInput.addEventListener("input", function() {
+        validateInput("upinNo", 10, 10);
+    });
+
+    indexNoInput.addEventListener("input", function() {
+        validateInput("indexNo", 10, 10);
+    });
+
+    // Prevent form submission if there are validation errors.
+    var form = document.querySelector("form");
+    form.addEventListener("submit", function (event) {
+        if (!form.checkValidity()) {
+            event.preventDefault(); // Prevent form submission if there are errors.
+        }
+    });
+</script> -->
+				
+
+		</div>
+			<br>
+	
+
+				<!-- 
+						<hr class="custom-hr">
+			
+			<div class="row">
+				<h6 style="background-color: white; padding: 5px;"
+					class="mt-1 rounded-2">
+					<strong> List of Documents (with attachment) (दस्तऐवजांची
+						यादी (सह संलग्नक)) </strong>
+				</h6>-->
+				
+				<!-- <div class="">
+											<br>
+				
+					<strong style="color: red;">Note (नोंद): </strong> Upload below file
+						only .pdf(Max upto 2 MB) (खाली फक्त .pdf फाइल अपलोड करा (कमाल २ MB
+						पर्यंत))
+				</div>
+				<input type="hidden" name="filesPath" id="filesPath" />
+
+				<div class="col-md-4">
+					<div class="mb-3" style="margin-top:20px">
+						<label for="" class="form-label">Self Attested Applicant's Id Proof (स्वत: प्रमाणित अर्जदाराचा आयडी पुरावा)<span class="text-danger"
+							style="color: red;">*</span>
+						</label> <input type="file" class="form-control"
+							style="background-image: none;" accept=".pdf" name="applicantIdproof" id="doc1"
+							required>
+						<div class="invalid-feedback">File selected is either
+							greater than 2Mb or not of type .pdf.</div>
+
+					</div>
+				</div> -->
+						<hr class="custom-hr">
+			
+				<div class="col-md-12">
+					<div class="mb-5 mt-4 ">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="check11"
+								name="declaration" value="something" required> <label
+								class="form-check-label ms-3 lbleng" style="margin-top: 0px;">
+								<strong>Declaration (घोषणा)<span class="text-danger"
+									style="color: red;">*</span>:-
+							</strong>The above mentioned information is true to the best of my
+								knowledge and belief (वर नमूद केलेली माहिती माझ्या माहितीनुसार
+								आणि विश्वासानुसार खरी आहे).
+							</label>
+							<div class="invalid-feedback">Please check the declaration.
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 text-start mb-5">
+					<div class="text-center">
+						<button type="button" class="btn btn-danger btn_sm printMe">
+							View and Print</button>
+						<button class="btn btn-success btn_sm" type="submit" id="submit"
+							>Submit</button>
+					</div>
+				</div>
+			</div>
+	</form>
+</body>
+<script type="text/javascript">
+$('.printMe').on('click', function () {
+
+    window.print();
+});
+</script>
+
+<script type="text/javascript">
+       function AvoidSpace() { 
+           if (event.keyCode == 32) { 
+                   event.returnValue = false; 
+                   return false; 
+           } 
+   }
+
+</script>
+
+		<script type="text/javascript">
+
+		$(document).ready(function () {
+		    var isUploadInProgress = false;
+
+		    $("#submit").click(function (event) {
+
+		        $("form:first").addClass("needs-validation");
+		        $("form:first").attr("novalidate", "");
+
+		        const forms = document.querySelectorAll('.needs-validation');
+
+		        Array.from(forms).forEach(form => {
+		            form.addEventListener('submit', event => {
+		                var isFormValid = true;
+
+		                form.querySelectorAll('input[type="file"]').forEach(fileInput => {
+		                    if (fileInput.files.length > 0) {
+		                        var name = fileInput.files[0].name;
+		                        if (!(name.endsWith('.pdf'))) {
+		                            isFormValid = false;
+		                            fileInput.classList.remove('is-valid');
+		                            fileInput.classList.add('is-invalid');
+		                        } else if (fileInput.files[0].size >= 5000000) {
+		                            isFormValid = false;
+		                            fileInput.classList.remove('is-valid');
+		                            fileInput.classList.add('is-invalid');
+		                        } else {
+		                            fileInput.classList.remove('is-invalid');
+		                            fileInput.classList.add('is-valid');
+		                        }
+		                    }
+		                });
+
+		                if (!form.checkValidity() || !isFormValid) {
+		                    event.preventDefault();
+		                    event.stopPropagation();
+		                } else {
+		                    if (isUploadInProgress) {
+		                        return false;
+		                    }
+		                    $("#submit").attr("disabled", true);
+		                    isUploadInProgress = true;
+		                    onPageSubmit('<c:out value="${contextRoot}"/>/rtsapplication/savePropertyTaxUtaraCertificates.do');
+		                    isUploadInProgress = false; // Reset the flag
+		                }
+		                form.classList.add('was-validated');
+		            }, false);
+		        });
+		    });
+
+		    $('input[type="file"],input,select,textarea').on('focusout', function () {
+		        var isFileAllowed = true;
+		        if (this.getAttribute("type") === 'file') {
+		            var name = this.files[0].name;
+
+		            if ((this.files[0].size < 5000000) && !(name.endsWith('.pdf'))) {
+		                isFileAllowed = false;
+		            }
+		        }
+
+		        if (this.checkValidity() && isFileAllowed) {
+		            this.classList.remove('is-invalid');
+		            this.classList.add('is-valid');
+		        } else {
+		            this.classList.remove('is-valid');
+		            this.classList.add('is-invalid');
+		        }
+		    });
+		});
+
+	
+        function upload(callback) {
+            console.log("@@upoading@@");
+            var url = window.location.href;
+            var basePath = '${pageContext.getAttribute("UPLOAD_PATH")}';
+            var filesPath = "";
+            var data = new FormData();
+
+    data.append('idProof1', $("#doc1").get(0).files[0]);
+
+            var isFileSelected = false
+            const id = Math.floor(Math.random() * 9000) + 1000;
+            var array_element = "";
+            var file = $('input[type="file"]');
+            for (var i = 0; i < file.length; i++) {
+       			var array_element = file[i];
+       			var element = array_element.value.split("\\");
+       			var a = element[element.length-1];
+       			const splitName = a.split(".pdf")[0].replaceAll(/[^a-zA-Z0-9]/g, ""); 
+       			const value = splitName + ".pdf";
+       			 if(a==='' || a===undefined){
+       		        filesPath += "null" + ",";
+       	             isFileSelected = false;
+                } else {
+                    filesPath = filesPath + basePath + "propertyTaxUtara/" + id + value + ","
+                    isFileSelected = true;
+                }
+            }
+            $.ajax({
+                url: "<c:out value='${contextRoot}'/>/rtiapplication/uploadDocumentPropertyTaxUtara.do?id="+id,
+                type: 'POST',
+                data: data,
+                cache: false,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                async: false, 
+                success: function(data) {
+                    var status = data.status;
+                    if (callback && typeof callback === 'function') {
+                        var a = filesPath.substring(0, filesPath.lastIndexOf(","));
+                        filesPath = filesPath.replace(/\s/g, "");
+                        $("#filesPath").val(filesPath);
+                        console.log(filesPath);
+                        callback(status);
+                    }
+                }
+            });
+
+       
+
+        }
+        
+    </script>
+
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+	integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+	crossorigin="anonymous"></script>
+<script>
+        $('#main-dropdown').on('change', function () {
+            document.getElementById("dependent-dropdown").removeAttribute('disabled');
+
+            var selectedValue = $('#main-dropdown').val();
+
+            var options = [];
+
+            if (selectedValue === '1') {
+                options = ['-Select Ward-', 'Ward No. 16', 'Ward No. 36', 'Ward No. 37', 'Ward No. 38'];
+            } else if (selectedValue === '2') {
+                options = ['-Select Ward-', 'Ward No. 12', 'Ward No. 13', 'Ward No. 14', 'Ward No. 15'];
+            } else if (selectedValue === '3') {
+                options = ['-Select Ward-', 'Ward No. 29', 'Ward No. 31', 'Ward No. 32', 'Ward No. 34'];
+            } else if (selectedValue === '4') {
+                options = ['-Select Ward-', 'Ward No. 17', 'Ward No. 33', 'Ward No. 35'];
+            } else if (selectedValue === '5') {
+                options = ['-Select Ward-', 'Ward No. 26', 'Ward No. 27', 'Ward No. 28', 'Ward No. 30'];
+            } else if (selectedValue === '6') {
+                options = ['-Select Ward-', 'Ward No. 8', 'Ward No. 18', 'Ward No. 19', 'Ward No. 22'];
+            } else if (selectedValue === '7') {
+                options = ['-Select Ward-', 'Ward No. 5', 'Ward No. 20', 'Ward No. 21'];
+            } else if (selectedValue === '8') {
+                options = ['-Select Ward-', 'Ward No. 4', 'Ward No. 23', 'Ward No. 24', 'Ward No. 25'];
+            } else if (selectedValue === '9') {
+                options = ['-Select Ward-', 'Ward No. 2', 'Ward No. 3', 'Ward No. 6', 'Ward No. 7'];
+            } else if (selectedValue === '10') {
+                options = ['-Select Ward-', 'Ward No. 1', 'Ward No. 9', 'Ward No. 10', 'Ward No. 11'];
+            } else if (selectedValue === 'select-zone') {
+                options = ['select-ward'];
+            }
+            $('#dependent-dropdown').empty();
+            for (var i = 0; i < options.length; i++) {
+                $('#dependent-dropdown').append('<option value="' + (options[i] === '-Select Ward-' ? '' : options[i]) + '">' + options[i] + '</option>');
+            }
+        });
+        
+        
+        $(document).ready(function () {
+         	
+            function validateFields() {
+                var upinNoValue = $("#upinNo").val().trim();
+                var indexNoValue = $("#indexNo").val().trim();
+                
+                var isUpinNoEmpty = (upinNoValue === "");
+                var isIndexNoEmpty = (indexNoValue === "");
+                
+                if (isIndexNoEmpty) {
+                    $("#upinNo").prop("required", true);
+                    $(".upin").show();
+                } else {
+                    $("#upinNo").prop("required", false);
+                    $(".upin").hide();
+                }
+                
+                if (isUpinNoEmpty) {
+                    $("#indexNo").prop("required", true);
+                    $(".indexNo").show();
+                } else {
+                    $("#indexNo").prop("required", false);
+                    $(".indexNo").hide();
+                }
+                
+                if(isUpinNoEmpty || isIndexNoEmpty)
+                $("#upinNo, #indexNo").toggleClass('is-valid', isUpinNoEmpty && isIndexNoEmpty)
+                                       .toggleClass('is-invalid', !isUpinNoEmpty && !isIndexNoEmpty);
+            }
+
+            $("#upinNo, #indexNo").on("keyup input change", function () {
+                validateFields();
+            });
+        });
+        
+        
+        
+        $(function () {
+            $("#upinNo, #indexNo").on('change', function (event) {
+            	var ptnValue = this.value;
+                var appType;
+
+                if (event.target.id === "upinNo") {
+                    appType = 1;
+                } else if (event.target.id === "indexNo") {
+                    appType = 2;
+                }
+                
+                   $.ajax({
+                       type: "POST",
+                       url: "${pageContext.request.contextPath}/rtsapplication/getPropertyCollectionDetails.do?ptnNo=" + ptnValue+"&apptype="+appType,
+                       dataType: "json",
+                       success: function (data) {
+                           var status = data.status;
+                           if (status === true || status === 'true') {
+                               $("#upinNo").val(data.ptn);
+                               $("#indexNo").val(data.indexNo);
+                               $("#propertyHolderName").val(data.occupierName);
+                               $("#areasPending").val(data.arreaspending);
+                            	$("#areasPendingStatus").val(data.areaspaymentstatus);
+                            	$("#dues").val(data.DueAmount);
+                            	chkdues(data.DueAmount,data.arreaspending);
+                           } else {
+                               alert("Record Not Found! Please Enter Valid UPIN/Index No.");
+                               $("#upinNo").val("");
+                               $("#indexNo").val("");
+                               $("#propertyHolderName").val("");
+                               $("#areasPending").val("");
+                           	$("#areasPendingStatus").val("");
+                           	$("#dues").val("");
+
+                           }
+                       },
+                       error: function(jqXHR, textStatus, errorThrown) {
+                           alert("Something went wrong!!");
+                           $("#upinNo").val("");
+                           $("#indexNo").val("");
+                           $("#propertyHolderName").val("");
+                           $("#areasPending").val("");
+                          	$("#areasPendingStatus").val("");
+                          	$("#dues").val("");
+                       }
+                   });
+                
+           });
+       });
+
+          </script>
+                 <script>
+$("#payTaxButton").hide();
+
+function chkdues(dues, arreas) {
+    if (parseInt(dues) > 0 || parseInt(arreas) > 0) {
+        $("#payTaxButton").show();
+    } else {
+        $("#payTaxButton").hide();
+    }
+}
+</script>

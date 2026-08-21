@@ -1,0 +1,117 @@
+CREATE TABLE DICTIONARY_A_TO_D(
+	CHECK (UPPER(SUBSTRING(key,1,1)) IN ('A','B','C','D'))
+)INHERITS(DICTIONARY);
+
+CREATE INDEX DICTIONARY_A_TO_D_IDX ON DICTIONARY_A_TO_D(UPPER(key));
+
+CREATE TABLE DICTIONARY_E_TO_H(
+	CHECK (UPPER(SUBSTRING(key,1,1)) IN ('E','F','G','H'))
+)INHERITS(DICTIONARY);
+
+CREATE INDEX DICTIONARY_E_TO_H_IDX ON DICTIONARY_E_TO_H(UPPER(key))
+
+CREATE TABLE DICTIONARY_I_TO_N(
+	CHECK (UPPER(SUBSTRING(key,1,1)) IN ('I','J','K','L','M','N'))
+)INHERITS(DICTIONARY);
+
+CREATE INDEX DICTIONARY_I_TO_N_IDX ON DICTIONARY_I_TO_N(UPPER(key));
+
+CREATE TABLE DICTIONARY_O_TO_T(
+	CHECK (UPPER(SUBSTRING(key,1,1)) IN ('O','P','Q','R','S','T'))
+)INHERITS(DICTIONARY);
+
+CREATE INDEX DICTIONARY_O_TO_T_IDX ON DICTIONARY_O_TO_T(UPPER(key));
+
+CREATE TABLE DICTIONARY_U_TO_Z(
+	CHECK (UPPER(SUBSTRING(key,1,1)) IN ('U','V','W','X','Y','Z'))
+)INHERITS(DICTIONARY);
+
+CREATE INDEX DICTIONARY_U_TO_Z_IDX ON DICTIONARY_U_TO_Z(UPPER(key));
+
+------------------------- Insertion Rule ----------------------------------
+
+CREATE OR REPLACE RULE DICTIONARY_A_TO_D_INSERT_RULE AS 
+	ON INSERT TO DICTIONARY
+	WHERE (upper(substring(key,1,1)) IN ('A','B','C','D')) 
+DO INSTEAD 
+	INSERT INTO DICTIONARY_A_TO_D value(new.*);
+
+CREATE OR REPLACE RULE DICTIONARY_E_TO_H_INSERT_RULE AS 
+	ON INSERT TO DICTIONARY
+	WHERE (upper(substring(key,1,1)) IN ('E','F','G','H')) 
+DO INSTEAD 
+	INSERT INTO DICTIONARY_E_TO_H value(new.*);
+
+CREATE OR REPLACE RULE DICTIONARY_I_TO_N_INSERT_RULE AS 
+	ON INSERT TO DICTIONARY
+	WHERE (upper(substring(key,1,1)) IN ('I','J','K','L','M','N')) 
+DO INSTEAD 
+	INSERT INTO DICTIONARY_I_TO_N value(new.*);
+	
+CREATE OR REPLACE RULE DICTIONARY_O_TO_T_INSERT_RULE AS 
+	ON INSERT TO DICTIONARY
+	WHERE (upper(substring(key,1,1)) IN ('O','P','Q','R','S','T')) 
+DO INSTEAD 
+	INSERT INTO DICTIONARY_O_TO_T value(new.*);
+
+CREATE OR REPLACE RULE DICTIONARY_U_TO_Z_INSERT_RULE AS 
+	ON INSERT TO DICTIONARY
+	WHERE (upper(substring(key,1,1)) IN ('U','V','W','X','Y','Z')) 
+DO INSTEAD 
+	INSERT INTO DICTIONARY_U_TO_Z value(new.*);
+	
+	
+--------------------- Update Rule ----------------------------------------
+
+CREATE OR REPLACE RULE DICTIONARY_A_TO_D_UPDATE_RULE AS 
+	ON UPDATE TO DICTIONARY
+	WHERE (upper(substring(new.key,1,1)) IN ('A','B','C','D'))
+DO INSTEAD 
+	UPDATE DICTIONARY_A_TO_D 
+	SET 
+		key = new.key,
+		value = new.value
+WHERE dictionary_id = old.dictionary_id;
+
+
+CREATE OR REPLACE RULE DICTIONARY_E_TO_H_UPDATE_RULE AS 
+	ON UPDATE TO DICTIONARY
+	WHERE (upper(substring(new.key,1,1)) IN ('E','F','G','H'))
+DO INSTEAD 
+	UPDATE DICTIONARY_E_TO_H 
+	SET 
+		key = new.key,
+		value = new.value
+WHERE dictionary_id = old.dictionary_id;
+
+
+CREATE OR REPLACE RULE DICTIONARY_I_TO_N_UPDATE_RULE AS 
+	ON UPDATE TO DICTIONARY
+	WHERE (upper(substring(new.key,1,1)) IN ('I','J','K','L','M','N'))
+DO INSTEAD 
+	UPDATE DICTIONARY_I_TO_N 
+	SET 
+		key = new.key,
+		value = new.value
+WHERE dictionary_id = old.dictionary_id;
+
+
+CREATE OR REPLACE RULE DICTIONARY_O_TO_T_UPDATE_RULE AS 
+	ON UPDATE TO DICTIONARY
+	WHERE (upper(substring(new.key,1,1)) IN ('O','P','Q','R','S','T'))
+DO INSTEAD 
+	UPDATE DICTIONARY_O_TO_T 
+	SET 
+		key = new.key,
+		value = new.value
+WHERE dictionary_id = old.dictionary_id;
+
+CREATE OR REPLACE RULE DICTIONARY_U_TO_Z_UPDATE_RULE AS 
+	ON UPDATE TO DICTIONARY
+	WHERE (upper(substring(new.key,1,1)) IN ('U','V','W','X','Y','Z'))
+DO INSTEAD 
+	UPDATE DICTIONARY_U_TO_Z
+	SET 
+		key = new.key,
+		value = new.value
+WHERE dictionary_id = old.dictionary_id;

@@ -1,0 +1,1942 @@
+
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+    <jsp:directive.include file="/pages/common/include.jsp" />
+    <jsp:directive.include file="/pages/core-pages/nmc_user/dashboard/header.jsp" />
+    <jsp:directive.page import="com.mars.common.utils.Constants" />
+    <jsp:directive.page import="com.mars.common.utils.CommonUtils" />
+		<jsp:directive.page import="com.mars.rti.utils.CoreConstants" />
+
+
+
+    <head>
+        <title>Nagpur Municipal Corporation</title>
+        <meta charset="utf-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="L1tBXJBCG7Qg3zc8hd8zkv3US8Yq8R7ihDGuzHIc" />
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+            integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="jquery-3.6.1.min.js"></script>
+        <!-- JavaScript Bundle with Popper -->
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+        <script src="Vjdog.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+        <script type="text/javascript" src="<c:out value=" ${contextRoot}" />/scripts/jquery/jquery.ajaxfileupload.js">
+        </script>
+        <link rel="stylesheet" href="<c:out value='${contextRoot}'/>/pages/core-pages/nmc_user/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="<c:out value='${contextRoot}'/>/pages/core-pages/nmc_user/css/style2.css" />
+        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+
+
+        <% pageContext.setAttribute("DATE_FORMAT", Constants.DATE_FORMAT); pageContext.setAttribute("SESSION_TOKEN_KEY",
+            Constants.SESSION_TOKEN_KEY); pageContext.setAttribute("STATUS_NO_LABEL", Constants.STATUS_NO_LABEL);
+            pageContext.setAttribute("STATUS_YES_LABEL", Constants.STATUS_YES_LABEL);
+            pageContext.setAttribute("STATUS_NO", Constants.STATUS_NO); pageContext.setAttribute("STATUS_YES",
+            Constants.STATUS_YES);
+    		pageContext.setAttribute("UPLOAD_PATH", CoreConstants.UPLOAD_PATH);
+///pageContext.setAttribute("statusList", CommonUtils.getStatus()); %>
+   
+           <style>
+label {
+	font-weight: 600;
+}
+
+h3 {
+	font-weight: 500;
+}
+@page {
+  size: legal landscape; /* Landscape orientation for Legal size */
+}
+@media print {
+  body {
+    transform: scale(0.9); /* Adjust the scale factor as needed */
+    transform-origin: center center;
+  }
+
+}
+
+ @page {
+     size: auto ;
+     }
+</style>
+<script>
+$(window).on('load', function(){
+    
+    
+    $('#myModal').modal('show');
+    
+    $('#myModal .modal-footer .btn').on('click', function(e) {
+        console.log('button pressed');              
+        // just as an example...
+        $('#myModal').modal('hide');                
+        // dismiss the dialog
+    });
+})
+
+</script>
+<body>
+<div id="myModal" class="modal fade">
+
+	<div class="modal-dialog">
+
+		<div class="modal-content">
+
+			<div class="modal-header">
+
+				<h6>
+					<strong>Note(नोंद): </strong> Upload below files in .pdf,.jpeg,.jpg...Max upto
+					2 MB(खालील फाइल .pdf,.jpeg,.jpg मध्ये अपलोड करा..कमाल २ MB पर्यंत)
+				</h6>
+
+			</div>
+
+			<!-- dialog body -->
+
+			<div class="modal-body" style="color: green">
+
+
+
+				<p style="color: red">
+
+					<strong>List of document to be attached :</strong>
+
+				</p>
+
+				<ul style="color: rgb(3, 125, 76)">
+
+
+
+					<li>1.Dog Owner's ID Proof (श्वानच्या मालकाचा आयडी पुरावा)<span class="text-danger" style="color: red;">*</span></li>
+					<li>2.Dog Owner's Address Proof (श्वानच्या मालकाचा पत्ता पुरावा)<span
+						class="text-danger" style="color: red;">*</span>
+					</li>
+					<li>3.NOC from Neighbour's (In case of Keeping the More than Three Breed Dogs )(शेजाऱ्यांकडून एनओसी (तीनपेक्षा जास्त जाती श्वाने ठेवण्याच्या बाबतीत )) <span
+						class="text-danger" style="color: red;">*</span>
+					</li>
+					
+					<li>4.Available Place details(उपलब्ध जागेचा तपशील))<span class="text-danger" style="color: red;">*</span></li>
+				
+
+				</ul>
+
+			</div>
+
+			<!-- dialog buttons -->
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary">OK</button>
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+        <form>
+            <div class="container-fluid mt-2" style="width: 200vh;">
+                <h3 class="text-center"><strong> Application Form For Dog Licence (श्वान परवान्यासाठी अर्ज)
+                    </strong></h6>
+
+                    <input type="hidden" name="_token" value="L1tBXJBCG7Qg3zc8hd8zkv3US8Yq8R7ihDGuzHIc">
+                    <h6 style="background-color:#dce2e8;color: rgb(46, 43, 43); padding:10px;" class="rounded-2">
+                        <strong> Applicant Details (अर्जदाराचे तपशील)</strong>
+                    </h6>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="mb-3 mt-3">
+                                <label for="" style="background-image: none;" class="form-label ">Title (शीर्षक)
+                                    <span class="text-danger">*</span> </label>
+                                <select style=" height: 35px; background-image: none;" class=" form-select" name="title"
+                                    required>
+                                    <option value="">-Select-</option>
+                                    <option value="Mr">Mr</option>
+                                    <option value="Mrs">Mrs</option>
+                                    <option value="Ms">Ms</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please Select Title.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="mb-3 mt-3">
+                                <label for="" class="form-label lbleng">Name (नाव)<span
+                                        class="text-danger">*</span></label>
+
+                                <input type="text" class="form-control" style="background-image: none;" id="first_name"
+                                    placeholder="" name="firstName" value="" pattern="[A-Za-z]+"
+                                    onchange="Display(this.id)" maxlength="40" required>
+                                <div class="invalid-feedback">
+                                    Please Enter Valid First Name.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="mb-3 mt-3">
+                                <label for="" class="form-label lbleng">Father's Name (वडिलांचे नाव)</label>
+                                <input type="text" class="form-control" style="background-image: none;" id="middle_name"
+                                    placeholder="" maxlength="40" name="middleName" value="" pattern="[A-Za-z]+"
+                                    onchange="Display(this.id)">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="mb-3 mt-3">
+                                <label for="" class="form-label lbleng">Surname (आडनाव)<span class="text-danger"
+                                        style="color: red;">*</span></label>
+                                <input type="text" class="form-control" style="background-image: none;" name="lastName"
+                                    id="last_name" maxlength="80" value="" pattern="[A-Za-z]+"
+                                    onchange="Display(this.id)" required>
+                                <div class="invalid-feedback">
+                                    Please Enter Valid Last Name.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="mb-3 mt-3">
+                                <label for="" class="form-label">Full Name (पूर्ण नाव)</label>
+                                <input type="text" class="form-control" maxlength="200" style="background-image: none;"
+                                    id="full_name" placeholder="" name="name" value="" readonly>
+                            </div>
+                        </div>
+
+
+
+                        <script>
+                            function Display(id) {
+                                $('#full_name').val($('#first_name').val() + " " + $('#middle_name').val() + " " + $('#last_name').val())
+                            }
+                        </script>
+
+
+                        <div class="col-md-3">
+                            <div class="mb-3 mt-3">
+                                <label for="" class="form-label ">Plot/ Flat No.(प्लॉट/फ्लॅट क्र.)<span
+                                        class="text-danger">*</span></label>
+                                <input type="text" pattern="^\s*\S.*$" class="form-control"
+                                    style="background-image: none;" id="plot_no" placeholder="" name="plotNo" value=""
+                                    maxlength="255" required>
+                                <div class="invalid-feedback">
+                                    Please Enter Valid Plot No.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="mb-3 mt-3">
+                                <label for="" class="form-label ">Name of the Building (इमारतीचे नाव)</label>
+                                <input type="text" class="form-control" pattern="^\s*\S.*$"
+                                    style="background-image: none;" id="buildingName" placeholder="" maxlength="255"
+                                    name="buildingName" value="">
+                                <div class="invalid-feedback">
+                                    Please Enter Valid Name of Building.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="mb-3 mt-3">
+                                <label for="" class="form-label ">Name of the Street (रस्त्याचे नाव)<span
+                                        class="mand_error" style="color: red;">*</span></label>
+                                        <input type="text" pattern="^\s*\S.*$" class="form-control"
+                                        style="background-image: none;" id="street_name" placeholder="" maxlength="255"
+                                        name="streetName" value="" required>
+                                        <div class="invalid-feedback">
+                                            Please Enter Valid Name of Street.
+                                        </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="mb-3 mt-3">
+                                <label for="" class="form-label ">Name of the Area (क्षेत्राचे नाव)<span
+                                        class="mand_error" style="color: red;">*</span></label>
+                                       <input type="text" pattern="^\s*\S.*$" class="form-control"
+                                        style="background-image: none;" id="" placeholder="" name="areaName"
+                                        maxlength="255" value="" required>
+
+                                        <div class="invalid-feedback">
+                                            Please Enter Valid Name of the Area.
+                                        </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="mb-3 mt-3">
+                                <label for="" class="form-label lbleng">Pin Code (पिन कोड)<span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" style="background-image: none;"
+                                    pattern="[0-9]{6}" name="pinCode" value="" maxlength="6" required>
+                                <div class="invalid-feedback">
+                                    Please Enter Valid Pin Code.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="mb-3 mt-3">
+                                <label for="" class="form-label ">Near by Landmark (जवळील लँडमार्क)</label>
+                                <input type="text" class="form-control" style="background-image: none;" id="landmark"
+                                    placeholder="" maxlength="255" pattern="^\s*\S.*$" name="nearbyLandmark" value="">
+                                <div class="invalid-feedback">
+                                    Please Enter Valid Near By Landmark.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="mb-3 mt-3">
+                                <label for="" class="form-label"> Mobile No.(मोबाईल क्र.)<span class="text-danger"
+                                        style="color: red;">*</span>
+                                </label>
+                                <input type="text" class="form-control" style="background-image: none;"
+                                    id="txtMobileNumber" placeholder="" name="mobileNumber" value=""
+                                    pattern="[6-9]{1}[0-9]{9}" maxlength="10" required>
+                                <div class="invalid-feedback">
+                                    Please Enter Valid Mobile No.
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="mb-3 mt-3">
+                                <label for="email" class="form-label lbleng"> Email Id (ई - मेल आयडी)<span
+                                        class="text-danger">*</span> </label>
+                                <input type="email" class="form-control " style="background-image: none;" name="emailId"
+                                    value="" required>
+                                <div class="invalid-feedback">
+                                    Please Enter Valid Email Id.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="mb-3 mt-3">
+                                <label for="" class="form-label ">Name of Colony (कॉलनीचे नाव)<span class="mand_error"
+                                        style="color: red;">*</span></label>
+                                    <input type="text" class="form-control" style="background-image: none;"
+                                        id="colony_name" placeholder="" maxlength="255" name="colonyName" value=""
+                                        pattern="^\s*\S.*$" required>
+                                        <div class="invalid-feedback">
+                                            Please Enter Valid Name of Colony.
+                                        </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="mb-3 mt-3">
+                                <label for="" class="form-label ">Address For Correspondence (पत्रव्यवहारासाठी
+                                    पत्ता)<span class="mand_error" style="color: red;">*</span></label>
+                                <textarea oninput=" validateTextarea()" type="text" maxlength="80"
+                                        class="form-control" style="background-image: none;" id="myTextarea"
+                                        placeholder="" name="correspondenceAddress"  rows="2"
+                                        required></textarea>
+                                        <div class="invalid-feedback" id="errorFeedback">
+                                            Please Enter Valid Address.
+                                        </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            function validateTextarea() {
+                                const textarea = document.getElementById('myTextarea');
+                                const errorFeedback = document.getElementById('errorFeedback');
+                                const text = textarea.value;
+
+                                // Regular expression to check for leading spaces before the first letter
+                                const regex = /^\s*(\S)/;
+
+                                if (regex.test(text)) {
+                                    textarea.classList.remove('is-invalid');
+                                    errorFeedback.style.display = 'none';
+                                } else {
+                                    textarea.classList.add('is-invalid');
+                                    errorFeedback.style.display = 'block';
+                                }
+                            }
+                        </script>
+
+
+                    </div>
+                    <h6 style="background-color:#dce2e8;color: rgb(46, 43, 43); padding:10px;" class="rounded-2">
+                        <strong>Application Form Details (अर्जाचा तपशील)</strong>
+                    </h6>
+                    <div class="row">
+                        <div class="row mx-1" id="table">
+                          <div class="col-md-3">
+					<div class="mb-3 mt-4">
+						<label for="" class="form-label lbleng">Zone No. (झोन
+							क्र.)<span class="text-danger" style="color: red;">*</span>
+						</label> <select class="form-select" style="background-image: none;"
+							id="main-dropdown" name="zoneNo" required>
+							<option value="" selected="">-Select Zone-</option>
+							<option value="1">Zone No.1 - Laxmi Nagar (लक्ष्मी नगर)</option>
+							<option value="2">Zone No.2 - Dharmpeth (धरमपेठ)</option>
+							<option value="3">Zone No.3 - Hanuman Nagar (हनुमान नगर)</option>
+							<option value="4">Zone No.4 - Dhantoli (धंतोली)</option>
+							<option value="5">Zone No.5 - Nehru Nagar (नेहरू नगर)</option>
+							<option value="6">Zone No.6 - Gandhibag (गांधीबाग)</option>
+							<option value="7">Zone No.7 - Satranjipura (सतरंजीपुरा)</option>
+							<option value="8">Zone No.8 - Lakadganj (लकडगंज)</option>
+							<option value="9">Zone No.9 - Aashi Nagar (आशी नगर)</option>
+							<option value="10">Zone No.10 - Mangalwari (मंगळवारी)</option>
+						</select>
+						<div class="invalid-feedback">Please Enter Valid Zone No.</div>
+					</div>
+				</div>
+
+
+				<div class="col-md-3 hospital_row" id="hos">
+					<div class="mb-3 mt-4">
+						<label for="" class="form-label"> Ward No. (प्रभाग क्र.) <span
+							class="text-danger" style="color: red;">*</span></label> <select
+							class="form-select " style="background-image: none;"
+							id="dependent-dropdown" name="wardNo" disabled required>
+
+							<option value="" selected="">-Select Ward-</option>
+							<option value="Ward No. 16">Ward No. 16</option>
+							<option value="Ward No. 36">Ward No. 36</option>
+							<option value="Ward No. 37">Ward No. 37</option>
+							<option value="Ward No. 38">Ward No. 38</option>
+
+
+							<option value="Ward No. 12">Ward No. 12</option>
+							<option value="Ward No. 13">Ward No. 13</option>
+							<option value="Ward No. 14">Ward No. 14</option>
+							<option value="Ward No. 15">Ward No. 15</option>
+
+
+							<option value="Ward No. 29">Ward No. 29</option>
+							<option value="Ward No. 31">Ward No. 31</option>
+							<option value="Ward No. 32">Ward No. 32</option>
+							<option value="Ward No. 34">Ward No. 34</option>
+
+
+							<option value="Ward No. 17">Ward No. 17</option>
+							<option value="Ward No. 33">Ward No. 33</option>
+							<option value="Ward No. 35">Ward No. 35</option>
+
+							<option value="Ward No. 26">Ward No. 26</option>
+							<option value="Ward No. 27">Ward No. 27</option>
+							<option value="Ward No. 28">Ward No. 28</option>
+							<option value="Ward No. 30">Ward No. 30</option>
+
+
+							<option value="Ward No. 8">Ward No. 8</option>
+							<option value="Ward No. 18">Ward No. 18</option>
+							<option value="Ward No. 19">Ward No. 19</option>
+							<option value="Ward No. 22">Ward No. 22</option>
+
+
+							<option value="Ward No. 5">Ward No. 5</option>
+							<option value="Ward No. 20">Ward No. 20</option>
+							<option value="Ward No. 21">Ward No. 21</option>
+
+							<option value="Ward No. 4">Ward No. 4</option>
+							<option value="Ward No. 23">Ward No. 23</option>
+							<option value="Ward No. 24">Ward No. 24</option>
+							<option value="Ward No. 25">Ward No. 25</option>
+
+
+							<option value="Ward No. 2">Ward No. 2</option>
+							<option value="Ward No. 3">Ward No. 3</option>
+							<option value="Ward No. 6">Ward No. 6</option>
+							<option value="Ward No. 7">Ward No. 7</option>
+
+
+							<option value="Ward No. 1">Ward No. 1</option>
+							<option value="Ward No. 9">Ward No. 9</option>
+							<option value="Ward No. 10">Ward No. 10</option>
+							<option value="Ward No. 11">Ward No. 11</option>
+
+
+						</select>
+						<div class="invalid-feedback">Please Enter Valid Ward No.</div>
+					</div>
+
+				</div>
+
+<script>
+
+$('#main-dropdown').on('change', function () {
+    document.getElementById("dependent-dropdown").removeAttribute('disabled');
+
+    var selectedValue = $('#main-dropdown').val();
+
+    var options = [];
+
+    if (selectedValue === '1') {
+        options = ['-Select Ward-', 'Ward No. 16', 'Ward No. 36', 'Ward No. 37', 'Ward No. 38'];
+    } else if (selectedValue === '2') {
+        options = ['-Select Ward-', 'Ward No. 12', 'Ward No. 13', 'Ward No. 14', 'Ward No. 15'];
+    } else if (selectedValue === '3') {
+        options = ['-Select Ward-', 'Ward No. 29', 'Ward No. 31', 'Ward No. 32', 'Ward No. 34'];
+    } else if (selectedValue === '4') {
+        options = ['-Select Ward-', 'Ward No. 17', 'Ward No. 33', 'Ward No. 35'];
+    } else if (selectedValue === '5') {
+        options = ['-Select Ward-', 'Ward No. 26', 'Ward No. 27', 'Ward No. 28', 'Ward No. 30'];
+    } else if (selectedValue === '6') {
+        options = ['-Select Ward-', 'Ward No. 8', 'Ward No. 18', 'Ward No. 19', 'Ward No. 22'];
+    } else if (selectedValue === '7') {
+        options = ['-Select Ward-', 'Ward No. 5', 'Ward No. 20', 'Ward No. 21'];
+    } else if (selectedValue === '8') {
+        options = ['-Select Ward-', 'Ward No. 4', 'Ward No. 23', 'Ward No. 24', 'Ward No. 25'];
+    } else if (selectedValue === '9') {
+        options = ['-Select Ward-', 'Ward No. 2', 'Ward No. 3', 'Ward No. 6', 'Ward No. 7'];
+    } else if (selectedValue === '10') {
+        options = ['-Select Ward-', 'Ward No. 1', 'Ward No. 9', 'Ward No. 10', 'Ward No. 11'];
+    } else if (selectedValue === 'select-zone') {
+        options = ['select-ward'];
+    }
+    $('#dependent-dropdown').empty();
+    for (var i = 0; i < options.length; i++) {
+        $('#dependent-dropdown').append('<option value="' + (options[i] === '-Select Ward-' ? '' : options[i]) + '">' + options[i] + '</option>');
+    }
+});
+</script>
+                            <div class="col-md-3">
+                                <div class="mb-3" style="margin-top: 20px;">
+                                 <label for="" class="form-label ">No. Of Dogs(कुत्र्यांची संख्या)<span class="mand_error"
+                                        style="color: red;">*</span></label>
+                                    <input type="Number" pattern="[0-9]{10}" class="form-control"
+                                        style="background-image: none;" id="noOfDogs" name="noOfDog" placeholder=""
+                                        value="1" required >
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please Enter Valid No. of Dog.
+                                </div>
+                            </div>
+
+                            <p></p>
+</div>
+
+                            <Strong>Details Of Dog (श्वानचा तपशील)<span class="mand_error"
+                                    style="color: red;">*</span></Strong>
+                                    
+<div class="col-md-12 px-0">
+
+    <div class="w-100 d-flex justify-content-center">
+                                    
+<table class="table table-hover small-text mb-1">
+                                <thead>
+                                    <tr>
+                                        <th>Sr. No</th>
+                                        <th>Type of Dog<br>(श्वानचा प्रकार) <span class="mand_error"
+                                                style="color: red;">*</span></th>
+                                        <th>Sub Type<br>(उप प्रकार)<span class="mand_error" style="color: red;">*</span>
+                                        </th>
+                                        <th>Name of the Dog<br>(श्वानचे नाव)<span class="mand_error"
+                                                style="color: red;">*</span></th>
+                                        <th>Gender of Dog <br>(श्वानचे लिंग)<span class="mand_error"
+                                                style="color: red;">*</span></th>
+                                        <th>Age Of Dog(In Months) (श्वानचे वय (महिन्यांमध्ये))<span class="mand_error"
+                                                style="color: red;">*</span></th>
+                                        <th>Color Of Dog (श्वानचा रंग)<span class="mand_error"
+                                                style="color: red;">*</span></th>
+                                        <th>Height Of Dog(CM) (श्वानची उंची (CM))<span class="mand_error"
+                                                style="color: red;">*</span></th>
+                                        <th>Length Of Tail(CM) (शेपटीची लांबी (CM))<span class="mand_error"
+                                                style="color: red;">*</span></th>
+                                        <th>Operated<span class="mand_error" style="color: red;">*</span></th>
+                                        <th>Amount (रक्कम)<span class="mand_error" style="color: red;">*</span></th>
+                                        <th id="operatedl">Operated Certificate<span class="mand_error" style="color: red;">*</span>
+                                            <th>Dog Image<span class="mand_error" style="color: red;">*</span>
+
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tb">
+                                    <tr id="row">
+                                        <td>
+                                            <span id="srNo">1.</span>
+                                        </td>
+
+                                        <td>
+                                            <select id="dogType" name="dogType" class="form-control"
+                                                style="background-image: none; width: 80px;"
+                                                onchange="calculateAmount(this.id)" required>
+
+                                                <option value="" selected>-Select-</option>
+                                                <option value="IndianDog">Indian Dog</option>
+                                                <option value="BreedDog">Breed Dog</option>
+                                            </select>
+                                              <div class="invalid-feedback">
+                                                       Please select valid dog type.
+                                                    </div>
+
+                                        </td>
+
+                                        <td>
+                                            <select class="form-control" style="background-image: none; width: 100px;"
+                                                name="dogSubType" id="subType" required>
+
+                                            </select>
+                                              <div class="invalid-feedback">
+                                                        Please select valid dog sub type.
+                                                    </div>
+                                        </td>
+
+
+                                        <td>
+                                            <input class="form-control" style="background-image: none; width: 100px;"
+                                                type="text" name="dogName" pattern="^\s*\S.*$" maxlength="20" value="" required>
+                                                  <div class="invalid-feedback">
+													Please enter valid dog name. 
+												</div>
+                                        </td>
+                                        <td id="id3">
+                                            <div>
+                                                <select name="gender" class="form-control"
+                                                    style="background-image: none; width: 100px;height: 40px;" required>
+                                                    <option value="" selected>-Select-</option>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                </select>
+                                                  <div class="invalid-feedback">
+                                                       Please select valid gender.
+                                                    </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <input class="form-control" id="dogage"
+                                                style="background-image: none; width: 100px;height: 40px;" type="text"
+                                                name="dogAge" onchange="month(this.id)" class="" maxlength="3" required>
+                                                  <div class="invalid-feedback">
+                                                     Please enter valid dog age.
+                                                    </div>
+                                        </td>
+
+                                        <td>
+                                            <input class="form-control"
+                                                style="background-image: none; width: 80px;height: 40px;" type="text"
+                                                name="dogColor" maxlength="40" pattern="^\s*\S.*$" class="" required>
+                                                  <div class="invalid-feedback">
+                                                     Please enter valid dog color.
+                                                    </div>
+                                        </td>
+                                        <td>
+                                            <input class="form-control"
+                                                style="background-image: none; width: 80px;height: 40px;"
+                                                type="text" name="dogHeight"
+                                                pattern="^\s*\d+$" class="" required>
+                                                  <div class="invalid-feedback">
+                                                     Please enter valid dog height.
+                                                    </div>
+                                        </td>
+                                        <td>
+                                            <input class="form-control"
+                                                style="background-image: none; width: 80px;height: 40px;" type="text"
+                                                name="dogTailLength" pattern="^\s*\d+$" class="" required>
+                                                  <div class="invalid-feedback">
+                                                     Please enter valid dog tail length.
+                                                    </div>
+                                        </td>
+
+
+                                        <td>
+                                            <div>
+                                                <select name="operated" class="form-control"
+                                                    onchange="calculateAmount(this.id)"
+                                                    style="background-image: none; width: 100px;height: 40px;"
+                                                    id="operated" name="operated" required>
+
+                                                    <option value="Operated" selected>Operated</option>
+                                                    <option value="NonOperated">Non-Operated</option>
+                                                </select>
+                                                  <div class="invalid-feedback">
+                                                       Please select operated type.
+                                                    </div>
+                                            </div>
+
+                                        </td>
+                                        <td valign="middle">
+                                            <input class="form-control"
+                                                style="background-image: none; width: 80px;height: 40px;" id="amount"
+                                                name="amount" type="text" value="0" required readonly>
+                                        </td>
+
+                                        <td id="operatedfiles">
+                                            <div class="mb-1"  id="doc3">
+                                                <input class="form-control" style="background-image: none; width: 100px;height: 40px;font-size: 15px;" type="file" accept=".pdf" id="operatedfile"
+                                                    name="operatedfile" required>
+                                                      <div class="invalid-feedback">
+                                                        File selected is either greater than 2Mb or not of type .pdf.
+                                                    </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="mb-1" id="doc3">
+                                                <input class="form-control" type="file" style="background-image: none; width: 100px;height: 40px;font-size: 15px;" accept=".png, .jpeg, .jpg" id="dogImgFiles"
+                                                    name="dogImgFiles" required />
+                                                    <div class="invalid-feedback">
+                                                        File selected is either greater than 2Mb or not of type jpg,jpeg,png.
+                                                    </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="9"></td>
+                                        <td class="text-center"> <b>Total</b>
+                                        </td>
+                                        <td>
+                                            <input class="form-control"
+                                                style="background-image: none; width: 80px;height: 40px;"
+                                                id="totalamount" type="text" value="0" class="Disable" readonly
+                                                required />
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+
+</div>
+                        <div class="row mx-1 mt-3" id="table1">
+                            <label for="" class="form-label ms-1" style="margin-left: -10px;">Vaccination Details
+                                (As Per
+                                Vaccination Certificate)(लसीकरण तपशील (अनु
+                                लसीकरण प्रमाणपत्र))<span class="mand_error" style="color: red;">*</span></label>
+                            <table class="table table-hover small-text ms-2">
+                                <thead>
+                                    <tr>
+                                        <th>Sr. No</th>
+                                        <th>First Dose Date <br>(पहिल्या लसीकरण डोसची तारीख)<span class="mand_error"
+                                                style="color: red;">*</span></th>
+                                        <th>Current Vaccination Dose Date <br>(सध्याची लसीकरण डोस तारीख)<span class="mand_error"
+                                                style="color: red;">*</span></th>
+                                        <th> Batch No.<br>(बॅच क्र.)</th>
+                                        <th>Vaccine Name<br> (लसीचे नाव)<span class="mand_error"
+                                                style="color: red;">*</span></th>
+                                        <th>Surgeon Name <br>(सर्जनचे नाव)<span class="mand_error"
+                                                style="color: red;">*</span></th>
+                                        <th>Designation <span class="mand_error" style="color: red;">*</span></th>
+                                        <th>Vaccination Certificate For First Dose <br>(लसीकरण प्रमाणपत्र पहिल्या
+                                            डोससाठी)<span class="mand_error" style="color: red;">*</span></th>
+                                        <th id="seconddoeth">Vaccination Certificate For Current Dose <br>(सध्याच्या डोससाठी लसीकरण प्रमाणपत्र)<span class="mand_error" style="color: red;">*</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tb1">
+                                    <tr>
+                                        <td>
+                                            <div id="srNo11">1.</div>
+                                        </td>
+
+                                        <td>
+                                            <input class="form-control" style="background-image: none; width: 150px;"
+                                                onmouseover="setTodayMaxDate(this)" type="date" id="firstDoseDate"
+                                                placeholder="" name="firstDoseDate" required>
+                                                  <div class="invalid-feedback">
+                                                      Please enter valid first dose date.
+                                                    </div>
+
+                                        </td>
+
+                                        <td>
+
+                                            <input class="form-control" style="background-image: none; width: 150px;"
+                                                onmouseover="setTodayMaxDate(this)" onchange="vacinsecond(this.id)" type="date"
+                                                id="secondDoseDate" placeholder="" name="secondDoseDate" required>
+                                                 <div class="invalid-feedback">
+                                                      Please enter valid Current Vaccination Dose Date.
+                                                    </div>
+
+                                        </td>
+
+
+                                        <script>
+                                            function setTodayMaxDate(input) {
+                                                var today = new Date().toISOString().split('T')[0];
+                                                input.setAttribute('max', today);
+                                            }
+                                        </script>
+
+
+                                        <td>
+                                            <input class="form-control" style="background-image: none; width: 100px;"
+                                                pattern="^\s*\d+$" type="text" name="batchNo" value="" >
+                                                 <div class="invalid-feedback">
+                                                      Please enter valid batch no.
+                                                    </div>
+                                        </td>
+
+
+                                        <td>
+                                            <input class="form-control"
+                                                style="background-image: none; width: 100px;height: 40px;" type="text"
+                                                name="vaccineName" pattern="^\s*\S.*$" class="" required>
+                                                 <div class="invalid-feedback">
+                                                      Please enter valid vaccination name.
+                                                    </div>
+                                        </td>
+
+                                        <td>
+                                            <input class="form-control"
+                                                style="background-image: none; width: 100px;height: 40px;" type="text"
+                                                name="surgeonName" class="" pattern="^\s*\S.*$" required>
+                                                 <div class="invalid-feedback">
+                                                      Please enter valid surgeon name.
+                                                    </div>
+                                        </td>
+
+                                        <td>
+                                            <input class="form-control"
+                                                style="background-image: none; width: 100px;height: 40px;" type="text"
+                                                name="designation" pattern="^\s*\S.*$" class="" required>
+                                                 <div class="invalid-feedback">
+                                                      Please enter valid designation.
+                                                    </div>
+                                        </td>
+                                        <td>
+                                            <input type="file" class="form-control" accept=".pdf" id="vaccination"
+                                                style="background-image: none;" name="vaccination" required>
+                                                 <div class="invalid-feedback">
+                                                      File selected is either greater than 2Mb or not of type .pdf.
+                                                    </div>
+                                        </td>
+                                        <td>
+                                            <input type="file" class="form-control" accept=".pdf" id="vaccinationsecond" onchange=""
+                                                style="background-image: none;" name="vaccinationsec" required>
+                                                 <div class="invalid-feedback">
+                                                      File selected is either greater than 2Mb or not of type .pdf.
+                                                    </div>
+                                        </td>
+                                    </tr>
+
+                                    <script>
+                                        function vacinsecond(id) {
+
+                                            var secondose = $('#secondDoseDate').val();
+                                            var row = parseInt(id.slice(id.length - 1));
+
+
+                                            if (!isNaN(row)) {
+                                            	secondDoseDate = $("#secondDoseDate" + row).val();
+                                                
+
+                                            }
+                                            
+                                            if (secondose === '') {
+                                                if (row >= 0) {
+                                                    $('#vaccinationsecond' + row).hide();
+                                                    $('#seconddoeth' + row).hide();
+                                                } else {
+                                                    $('#vaccinationsecond').hide();
+                                                    $('#seconddoeth').hide();
+                                                }
+                                            } else {
+                                                if (row >= 0) {
+                                                    $('#vaccinationsecond' + row).show();
+                                                    $('#seconddoeth' + row).show();
+                                                } else {
+                                                    $('#vaccinationsecond').show();
+                                                    $('#seconddoeth').show();
+                                                }
+                                            }
+
+                                        }  
+                                        
+
+
+
+                                    </script>
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <div class="row">
+                            <h6 class="mt-3"><strong> List of Documents (with attachment) For New Dog Licence (नवीन
+                                    श्वान परवान्यासाठी कागदपत्रांची यादी (संलग्नकांसह))</strong></h6>
+                            <input type="hidden" name="filesPath" id="filesPath" />
+                            <input type="hidden" name="dogFiles" id="dogFiles" />
+                            <input type="hidden" name="dogOpertedFiles" id="dogOpertedFiles" />
+                            <input type="hidden" name="vaccinationsecond" id="vaccinationseconds" />
+                            <input type="hidden" name="dogImagefiles" id="dogImagefiles" />
+
+                            <div class="alert alert-info mb-2 p-2 mx-4">
+                                <small><strong>Note: </strong>Upload below files only
+							.pdf(Max upto 2 MB) (खाली फक्त .pdf फाइल अपलोड करा (कमाल २ MB
+						पर्यंत))</small>
+                            </div>
+
+
+
+                            <div class="col-md-3">
+                                <div class="mb-3 mt-4">
+                                    <label for="" class="form-label"> Dog Owner's ID Proof (श्वानच्या मालकाचा
+                                        आयडी पुरावा)<span class="text-danger" style="color: red;">*</span>
+                                    </label>
+                                    <input type="file" class="form-control" style="background-image: none;"
+                                        id="dogIdProof" name="dogIdProof" accept=".pdf" required>
+                                    <div class="invalid-feedback">
+                                        File selected is either greater than 2Mb or not of type .pdf.
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="mb-3 mt-4">
+                                    <label for="" class="form-label"> Dog Owner's Address Proof (श्वानच्या
+                                        मालकाचा पत्ता पुरावा)<span class="text-danger" style="color: red;">*</span>
+                                    </label>
+                                    <input type="file" class="form-control" accept=".pdf" style="background-image: none;"
+                                        id="dogOwnerProof" name="dogOwnerProof" required>
+                                    <div class="invalid-feedback">
+                                        File selected is either greater than 2Mb or not of type .pdf.
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            
+
+                                <div class="col-md-3" id="doc2">
+                                    <div class="mb-3 mt-4">
+                                        <label for="" class="form-label"> NOC from Neighbour's (In case of Keeping the
+                                            More than Three Breed
+                                            Dogs )(शेजाऱ्यांकडून एनओसी (तीनपेक्षा जास्त जाती श्वाने ठेवण्याच्या बाबतीत
+                                            ))<span class="text-danger" style="color: red;">*</span>
+                                        </label>
+                                        <input type="file" class="form-control" accept=".pdf" style="background-image: none;"
+                                            id="nocNeighbour" name="nocNeighbour">
+                                        <div class="invalid-feedback">
+                                            File selected is either greater than 2Mb or not of type .pdf.
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                             
+                                
+                                  <div class="col-md-3" id="doc4">
+                                    <div class="mb-3 mt-4">
+                                        <label for="" class="form-label"> Available Place details(उपलब्ध जागेचा तपशील)<span class="text-danger"
+                                                style="color: red;">*</span>
+                                        </label>
+                                        <input type="file" class="form-control" accept=".pdf" style="background-image: none;"
+                                            id="placeDetail" name="placeDetail">
+                                        <div class="invalid-feedback">
+                                            File selected is either greater than 2Mb or not of type .pdf.
+                                        </div>
+
+                                    </div>
+                                </div> 
+
+
+
+                            
+                                
+                            <div class="col-md-12">
+                                <div class="mb-5 mt-4 ">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="check11" name="declaration"
+                                            value="something" required>
+
+                                        <label class="form-check-label ms-3 lbleng" style="margin-top: -1px;">
+                                            <strong>Declaration (घोषणा)<span class="text-danger"
+                                                    style="color: red;">*</span>:- The
+                                                above mentioned information is true to the best of my knowledge and
+                                                belief(
+                                                वर नमूद केलेली माहिती माझ्या माहितीनुसार आणि विश्वासानुसार खरी
+                                                आहे).</strong>
+                                        </label>
+                                        <div class="invalid-feedback">
+                                            Please check the declaration.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 text-start mb-5">
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-danger btn_sm printMe">
+                                        View and Print
+                                    </button>
+                                    <button class="btn btn-success btn_sm" type="submit" id="submit"
+                                        >
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </form>
+
+    </body>
+
+<script type="text/javascript">
+$('.printMe').on('click', function () {
+
+    window.print();
+});
+</script>
+    <script>
+        function month(id) {
+            // console.log(id)
+            var age = $("#" + id).val();
+            // console.log(age)
+            var mont = 0;
+            var years = 0;
+            for (var k = 1; k <= age; k++) {
+                mont++;
+                if (mont == 12) {
+                    years++;
+                    mont = 0;
+                }
+            }
+            if (mont == 12)
+                $("#" + id).val(years + "Y" + " & " + mont + "M")
+            else
+                $("#" + id).val(years + "Y" + " & " + mont + "M")
+
+            month2(id);
+        }
+        function month2(id) {
+            var myString = $('#' + id).val();
+            var charArray = [...myString];
+            var cyear = 0;
+            var cmonth = 0;
+            for (var i = 0; i < charArray.length; i++) {
+                if (charArray[i] == 'Y') {
+                    var checkyear = charArray[i - 2] + charArray[i - 1];
+                }
+                if (checkyear == '50' || checkyear == '10' || checkyear == '20' || checkyear == '30' || checkyear == '40') {
+                }
+                else {
+                    if (charArray[i] == 'Y' && charArray[i - 1] == '0') {
+                        cyear = 1;
+                    }
+                    if (charArray[i] == 'M' && charArray[i - 1] <= '3') {
+                        if (charArray[i - 2] != '1') {
+                            console.log(charArray[i - 2])
+                            cmonth = 1;
+                        }
+                    }
+                    if (cyear == '1' && cmonth == '1') {
+                        alert("Please Enter More Than 3 Months")
+                        $('#' + id).val('')
+                    }
+                }
+            }
+        }
+    </script>
+
+
+
+
+    <script>
+
+
+        $(document).ready(function () {
+            $('#vaccinationsecond').hide();
+            $('#seconddoeth').hide();
+            $("#dogWithType").hide();
+            var totalRows = 0;
+            $('#noOfDogs').change(function () {
+
+                var noOfDogs = $('#noOfDogs').val();
+
+                if (noOfDogs > 3) {
+                    $("#dogWithType").show();
+                    $('#doc4').show();
+                    $("#doc2").show();
+                    document.getElementById("placeDetail").setAttribute("required", "required");
+
+                } else {
+                    $("#dogWithType").hide();
+                    $('#doc4').hide();
+                    $("#doc2").hide();                                    
+                    document.getElementById("placeDetail").removeAttribute("required");
+
+                }
+
+                
+                var rowCount = $('#tb tr').length;
+                for (var i = 0; i < $('#tb tr').length - 1;) {
+                    $("#tb tr:eq(" + (i + 1) + ")").remove();
+                    $("#tb1 tr:eq(" + (i + 1) + ")").remove();
+
+                }
+
+
+                                     for (var i = 0; i < noOfDogs - 1; i++) {
+                                        var data = $("#tb tr:eq(0)").clone(true).appendTo("#tb");
+                                        var data1 = $("#tb1 tr:eq(0)").clone(true).appendTo("#tb1");
+                
+                                        
+                                     
+                                        
+                                        
+                                        
+                                        data.find("#amount").attr('id', 'amount' + i)
+                
+                                        data.find("#dogage").attr('onchange', 'month(this.id)')
+                                        data.find("#dogage").attr('id', 'dogage' +i)
+                
+                                        data.find("#operated").attr('id', 'operated' +i)
+                                       
+                                       data.find("#operatedfile").attr('id', 'operatedfile' +i)
+                                       data.find("#dogImgFiles").attr('id', 'dogImgFiles' +i)
+
+                                       data.find("#doc3").attr('id', 'doc3' +i)
+                                    
+                                     
+                                        // var chexkbox=$('#operated'+i);
+                                        // console.log(chexkbox)
+                                        // // $('#operated'+i).val('value','newvalue');
+                                        //  $('input#operated'+i+'.larger').attr('value', 'newvalue'+i);
+                                        // // input#operated0.larger
+                
+                
+                
+                                        data.find("input").val('');
+                
+                                        data.find("#dogType").attr('id', 'dogType' + i)
+                
+                                        data.find("#subType").attr('id', 'subType' + i)
+                
+                                        data.find("#srNo").text(i + 2 + ".");
+                                        data1.find("#srNo11").text(i + 2 + ".");
+                                        // data.find("#vaccination").attr('id', 'vaccination' +i)
+                                        data1.find('#vaccination').attr('id','vaccination'+i)
+                                        data1.find('#secondDoseDate').attr('id','secondDoseDate'+i)
+                                        data1.find('#vaccinationsecond').attr('id','vaccinationsecond'+i)
+
+                                        
+                                        
+                                    } 
+
+                totalRows = $('#tb tr').length;
+
+            });
+
+
+
+            $("#amount" + (totalRows - 2)).change(function () {
+                // console.log("hi")
+
+
+            });
+
+
+
+            $("#doc1").hide();
+            $("#doc2").hide();
+            $("#doc4").hide();
+
+
+
+            $("#indiandog").hide();
+            $("#breeddog").hide();
+
+            
+
+
+        });
+
+
+
+
+        function calculateAmount(id) {
+
+
+            var amountId = "#amount"
+            var subTypeId = "#subType"
+            var operatedFile = "#operatedfile"
+            var operatedFiles ="#operatedfiles"
+
+            var row = parseInt(id.slice(id.length - 1));
+
+
+
+            var Operated1 = $("#operated").val();
+
+
+            var dogType = $('#dogType').val();
+
+
+            if (!isNaN(row)) {
+                Operated1 = $("#operated" + row).val();
+                dogType = $("#dogType" + row).val();
+                amountId = amountId + row;
+                subTypeId = subTypeId + row;
+                operatedFile = operatedFile + row;
+
+            }
+
+
+            changeSubtype(subTypeId, dogType);
+
+
+            if (Operated1 === "Operated") {
+                $(operatedFile).show()
+                $(operatedl).show();
+                $(operatedFiles).show()
+
+                
+                $(operatedFile).attr('required', true); 
+
+
+            }
+            else {
+                $(operatedFile).hide();
+                $(operatedl).hide();
+                $(operatedFiles).hide()
+
+                $(operatedFile).val('');
+                $(operatedFile).removeAttr('required'); 
+
+            }
+
+
+
+            if (dogType === "IndianDog" && Operated1 === "Operated") {
+                console.log("k")
+                $(amountId).val("0")
+            } else if (dogType === "IndianDog" && Operated1 === "NonOperated") {
+                console.log("j")
+                $(amountId).val("200")
+            } else if (dogType === "BreedDog" && Operated1 === 'Operated') {
+                console.log("k")
+                $(amountId).val("200")
+            } else if (dogType === "BreedDog" && Operated1 === "NonOperated") {
+                console.log("j")
+                $(amountId).val("500")
+
+            }
+            calculateTotalAmount();
+        }
+
+        function changeSubtype(subTypeId, dogType) {
+
+            let subtypeMap2 = new Map();
+
+            subtypeMap2.set("---select---", "");
+            subtypeMap2.set("affenpinscher", "affenpinscher");
+            subtypeMap2.set("American water spaniel", "American water spaniel");
+            subtypeMap2.set("Australian cattle dog", "Australian cattle dog");
+            subtypeMap2.set("bloodhound", "bloodhound");
+            subtypeMap2.set("boxer", "boxer");
+            subtypeMap2.set("bulldog", "bulldog");
+            subtypeMap2.set("Chinese crested", "Chinese crested");
+            subtypeMap2.set("Doberman pinscher", "Doberman pinscher");
+            subtypeMap2.set("English setter", "English setter");
+            subtypeMap2.set("fox terrier", "fox terrier");
+            subtypeMap2.set("German shepherd", "German shepherd");
+            subtypeMap2.set("German shorthaired pointer", "German shorthaired pointer");
+            subtypeMap2.set("German wirehaired pointer", "German wirehaired pointer");
+            subtypeMap2.set("golden retriever", "golden retriever");
+            subtypeMap2.set("Gull Terrier", "Gull Terrier");
+            subtypeMap2.set("Gull Dong", "Gull Dong");
+            subtypeMap2.set("Gordon setter", "Gordon setter");
+            subtypeMap2.set("greyhound", "greyhound");
+            subtypeMap2.set("komondor", "komondor");
+            subtypeMap2.set("Kumaon Mastiff", "Kumaon Mastiff");
+            subtypeMap2.set("Kombai", "Kombai");
+            subtypeMap2.set("Kaikadi", "Kaikadi");
+            subtypeMap2.set("Labrador retriever", "Labrador retriever");
+            subtypeMap2.set("Lakeland terrier", "Lakeland terrier");
+            subtypeMap2.set("Lhasa apso", "Lhasa apso");
+            subtypeMap2.set("papillon", "papillon");
+            subtypeMap2.set("Pomeranian", "Pomeranian");
+            subtypeMap2.set("poodle", "poodle");
+            subtypeMap2.set("Rhodesian ridgeback", "Rhodesian ridgeback");
+            subtypeMap2.set("Rottweiler", "Rottweiler");
+            subtypeMap2.set("saluki", "saluki");
+            subtypeMap2.set("schipperke", "schipperke");
+            subtypeMap2.set("Shetland sheepdog", "Shetland sheepdog");
+            subtypeMap2.set("shih tzu", "shih tzu");
+            subtypeMap2.set("Siberian husky", "Siberian husky");
+            subtypeMap2.set("silky terrier", "silky terrier");
+            subtypeMap2.set("Skye terrier", "Skye terrier");
+            subtypeMap2.set("spitz", "spitz");
+            subtypeMap2.set("vizsla", "vizsla");
+            subtypeMap2.set("Welsh terrier", "Welsh terrier");
+            subtypeMap2.set("Others", "Others");
+            $(subTypeId).empty();
+
+            switch (dogType) {
+                case "BreedDog":
+                    subtypeMap2.forEach((values, keys) => {
+                        $(subTypeId).append(
+                            $("<option></option>").attr("value", values).text(keys)
+                        );
+                    });
+                    break;
+                case "IndianDog":
+                    $(subTypeId).append(
+                        $("<option></option>").attr("value", "Indian Dog").text("Indian Dog")
+                    );
+                    break;
+                default:
+                    $(subTypeId).append(
+                        $("<option></option>").attr("value", "").text("---select---")
+                    );
+            }
+
+        }
+
+
+
+        function calculateTotalAmount() {
+            var indian = 0;
+            var breed = 0;
+            var totalAmount = 0;
+            var rowCount = $('#tb tr').length;
+            for (var i = 0; i < rowCount; i++) {
+                var initialDogtype = $("#dogType").val();
+                var nextDogType = $("#dogType" + i).val();
+                var intialAmount = $("#amount").val();
+                var nextamount = $("#amount" + i).val();
+
+
+
+
+                if (i === 0) {
+                    totalAmount = totalAmount + parseInt(intialAmount);
+                    if (initialDogtype === 'IndianDog') {
+                        indian++;
+
+                    } else if (initialDogtype === 'BreedDog') {
+                        breed++;
+
+                    }
+                }
+
+                if (nextamount !== undefined) {
+                    totalAmount = totalAmount + parseInt(nextamount);
+                }
+
+                if (nextDogType === 'IndianDog') {
+                    indian++;
+                } else if (nextDogType === 'BreedDog') {
+
+                    breed++;
+                }
+
+            }
+
+            var total = indian + breed;
+/* 
+            if (total > 3) {
+                $("#doc2").show();
+            }
+            else {
+                $("#doc2").hide();
+            }
+            if (indian > 3) {
+
+                $("#doc2").show();
+            } */
+            // } else {
+            //     $("#doc2").hide();
+            // }
+
+         /*    if (breed > 3) {
+                if (breed > 3) {
+                    $("#doc1").show();
+                    $("#doc2").show();
+                } else {
+
+                    $("#doc1").hide();
+                    $("#doc2").hide();
+                }
+            }
+            else if (breed <= 3) {
+                $("#doc1").hide();
+            } */
+
+            $("#totalamount").val(totalAmount);
+
+
+        }
+
+
+
+
+    </script>
+   <script>
+
+    $(document).on('change', '#others', function () {
+        if (this.value == 44) {
+            $(this).replaceWith($('<input/>', {
+                'class': 'form-control',
+                'type': 'text'
+            }));
+        }
+    });
+
+</script>
+
+    <script>
+  
+
+    $(document).ready(function () {
+    	 var isUploadInProgress = false;
+       $("#submit").click(function (event) {
+
+           $("form:first").addClass("needs-validation");
+           $("form:first").attr("novalidate", "");
+           
+           const forms = document.querySelectorAll('.needs-validation');
+           
+           Array.from(forms).forEach(form => {
+               form.addEventListener('submit', event => {
+                   var isFormValid = true;
+                   
+                   form.querySelectorAll('input[type="file"]').forEach(fileInput => {
+    if (fileInput.name === "dogImgFiles") {
+        if (fileInput.files.length > 0) {
+            var name = fileInput.files[0].name;
+            var validExtensions = ['.png', '.jpeg', '.jpg'];
+            if (!validExtensions.some(ext => name.endsWith(ext))) {
+                isFormValid = false;
+                fileInput.classList.remove('is-valid');
+                fileInput.classList.add('is-invalid');
+            } else if (fileInput.files[0].size >= 2000000) {
+                isFormValid = false;
+                fileInput.classList.remove('is-valid');
+                fileInput.classList.add('is-invalid');
+            } else {
+                fileInput.classList.remove('is-invalid');
+                fileInput.classList.add('is-valid');
+            }
+        }
+    } else {
+        if (fileInput.files.length > 0) {
+            var name = fileInput.files[0].name;
+            if (!name.endsWith('.pdf')) {
+                isFormValid = false;
+                fileInput.classList.remove('is-valid');
+                fileInput.classList.add('is-invalid');
+            } else if (fileInput.files[0].size >= 2000000) {
+                isFormValid = false;
+                fileInput.classList.remove('is-valid');
+                fileInput.classList.add('is-invalid');
+            } else {
+                fileInput.classList.remove('is-invalid');
+                fileInput.classList.add('is-valid');
+            }
+        }
+    }
+});
+
+                   
+                   if (!form.checkValidity() || !isFormValid) {
+                       event.preventDefault();
+                       event.stopPropagation();
+                   } else {
+                  	if (isUploadInProgress) {
+      	             return false;
+      	              }
+                  	isUploadInProgress = true;
+                  	upload(function(status) {
+                  	
+                  	    if (status === true || status === 'true') {
+                  	        $("#submit").attr("disabled", true);
+                           onPageSubmit('<c:out value="${contextRoot}"/>/rtiapplication/saveDogLicenceCertificate.do');
+                  	    } 
+                  		
+                  	    isUploadInProgress = false; 
+                  	});
+                      
+                   }
+                   
+                   form.classList.add('was-validated');
+               }, false);
+           });
+       });
+       
+       $('input[type="file"], input, select, textarea').on('focusout', function() {
+    var isFileAllowed = true;
+
+    if (this.getAttribute("type") === 'file') {
+        if (this.files.length > 0 && this.files[0].size >= 2000000) {
+            isFileAllowed = false;
+        }
+
+        if (this.name === 'dogImgFiles') {
+            var validExtensions = ['.png', '.jpeg', '.jpg'];
+            if (this.files.length > 0 && !validExtensions.some(ext => this.files[0].name.endsWith(ext))) {
+                isFileAllowed = false;
+            }
+        }
+    }
+
+    if (this.checkValidity() && isFileAllowed) {
+        this.classList.remove('is-invalid');
+        this.classList.add('is-valid');
+    } else {
+        this.classList.remove('is-valid');
+        this.classList.add('is-invalid');
+    }
+});
+
+   });
+
+   function upload(callback) {
+        var url = window.location.href;
+        var basePath = '${pageContext.getAttribute("UPLOAD_PATH")}';
+        var filesPath = "";
+        var data = new FormData();
+
+        data.append('idProof1', $("#dogIdProof").get(0).files[0]);
+        data.append('idProof2', $("#dogOwnerProof").get(0).files[0]);
+        data.append('idProof3', $("#nocNeighbour").get(0).files[0]);
+        data.append('idProof4', $("#placeDetail").get(0).files[0]);
+
+
+        var isFileSelected = false;
+        const id = Math.floor(Math.random() * 9000) + 1000;
+        var array_element = "";
+        var file = $('input[name="dogIdProof"], input[name="dogOwnerProof"],input[name="nocNeighbour"],input[name="placeDetail"]');
+        for (var i = 0; i < file.length; i++) {
+            var array_element = file[i];
+            var element = array_element.value.split("\\");
+            var a = element[element.length-1];
+            const splitName = a.split(".pdf")[0].replaceAll(/[^a-zA-Z0-9]/g, ""); 
+            const value = splitName + ".pdf";
+
+            if (a === '' || a === undefined) {
+                filesPath += "null" + ",";
+                isFileSelected = false;
+            } else {
+                filesPath = filesPath + basePath + "dogLicence/" + id + value + ",";
+                isFileSelected = true;
+            }
+        }
+
+        $.ajax({
+            url: "<c:out value='${contextRoot}'/>/rtiapplication/uploadDogLicence.do?id=" + id,
+            type: 'POST',
+            data: data,
+            cache: false,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            async: false, // Set to synchronous
+            success: function(data) {
+                var status = data.status;
+                if (status == true) {
+                    // Call the next function in the chain (dogCertificate) with a callback
+                    dogCertificate(function(dogCertificateStatus) {
+                        if (dogCertificateStatus == true) {
+                           
+                                   dogoperatedfile(callback);
+                                   dogCertificateSecond(callback);
+                        } else {
+                            alert("Something Went Wrong!!");
+                            if (callback && typeof callback === 'function') {
+                                callback(false);
+                            }
+                        }
+                    });
+                } else {
+                    alert("Something Went Wrong !!");
+                    if (callback && typeof callback === 'function') {
+                        callback(false);
+                    }
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error("AJAX Error:", textStatus, errorThrown);
+                if (callback && typeof callback === 'function') {
+                    callback(false);
+                }
+            }
+        });
+
+        var a = filesPath.substring(0, filesPath.lastIndexOf(","));
+        filesPath = filesPath.replace(/\s/g, "");
+        $("#filesPath").val(filesPath);
+        console.log(filesPath);
+    }
+
+    function dogCertificateSecond(callback) {
+        var noOfDogs = $('#noOfDogs').val();
+        var url = window.location.href;
+        var basePath = '${pageContext.getAttribute("UPLOAD_PATH")}';
+        var filesPath = "";
+        var data = new FormData();
+
+        data.append('vaccinationsecond', $("#vaccinationsecond").get(0).files[0]);
+
+        
+     for (var i = 0; i < noOfDogs - 1; i++) {
+        	data.append('vaccinationsecond'+i, $("#vaccinationsecond"+i).get(0).files[0]);
+        } 
+        var isFileSelected = false
+        const id = Math.floor(Math.random() * 9000) + 1000;
+        var array_element = "";
+        var file = $('input[name="vaccinationsec"]');
+
+        for (var i = 0; i < file.length; i++) {
+            var array_element = file[i];
+            var element = array_element.value.split("\\");
+            var a = element[element.length-1];
+            const splitName = a.split(".pdf")[0].replaceAll(/[^a-zA-Z0-9]/g, ""); 
+            const value = splitName + ".pdf";
+
+            if (a === '' || a === undefined) {
+                filesPath += "null" + ",";
+                isFileSelected = false;
+            } else {
+                filesPath = filesPath + basePath + "dogDetails/" + id + value + ",";
+                isFileSelected = true;
+            }
+        }
+
+        $.ajax({
+            url: "<c:out value='${contextRoot}'/>/rtiapplication/uploadDogDetails.do?id=" + id,
+            type: 'POST',
+            data: data,
+            cache: false,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            async: false, // Set to synchronous
+            success: function(data) {
+                var status = data.status;
+                if (status == true) {
+                    if (callback && typeof callback === 'function') {
+                        callback(status);
+                    }
+                } else {
+                    alert("Something Went Wrong!!");
+                    if (callback && typeof callback === 'function') {
+                        callback(false);
+                    }
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error("AJAX Error:", textStatus, errorThrown);
+                if (callback && typeof callback === 'function') {
+                    callback(false);
+                }
+            }
+        });
+
+        var a = filesPath.substring(0, filesPath.lastIndexOf(","));
+        filesPath = filesPath.replace(/\s/g, "");
+        $("#vaccinationseconds").val(filesPath);
+        console.log(filesPath);
+        
+        
+    }
+
+    function dogImage(callback) {
+        var noOfDogs = $('#noOfDogs').val();
+        var url = window.location.href;
+        var basePath = '${pageContext.getAttribute("UPLOAD_PATH")}';
+        var filesPath = "";
+        var data = new FormData();
+        data.append('idProof6', $("#dogImgFiles").get(0).files[0]);
+         for (var i = 0; i < noOfDogs - 1; i++) {
+          	data.append('dogImgFiles'+i, $("#dogImgFiles"+i).get(0).files[0]);
+          } 
+        var isFileSelected = false
+        const id = Math.floor(Math.random() * 9000) + 1000;
+        var array_element = "";
+        var file = $('input[name="dogImgFiles"]');
+        var extension="";
+        var filename="";
+        for (var i = 0; i < file.length; i++) {
+            var array_element = file[i];
+            var element = array_element.value.split("\\");
+             filename=element[element.length-1];
+            var lastDotIndex = filename.lastIndexOf('.');
+            if (lastDotIndex >= 0) {
+                 extension = filename.substring(lastDotIndex + 1);
+                filename = filename.substring(0, lastDotIndex);
+            }
+            
+
+            if (filename === '' || filename === undefined) {
+                filesPath += "null" + ",";
+                isFileSelected = false;
+                const splitName='';
+                const value='';
+            } else {
+                if (extension === 'jpg') {
+                	  splitName = filename.replaceAll(/[^a-zA-Z0-9]/g, ""); 
+                      value = splitName + ".jpg";
+               } else if(extension === 'jpeg'){
+            	    splitName = filename.replaceAll(/[^a-zA-Z0-9]/g, ""); 
+                    value = splitName + ".jpeg";
+               }else if(extension === 'png'){
+            	    splitName = filename.replaceAll(/[^a-zA-Z0-9]/g, ""); 
+                    value = splitName + ".png";
+               }
+                filesPath = filesPath + basePath + "dogDetails/" + id + value + ",";
+                isFileSelected = true;
+            }
+            
+        }
+
+        $.ajax({
+            url: "<c:out value='${contextRoot}'/>/rtiapplication/dogImgFiles.do?id=" + id,
+            type: 'POST',
+            data: data,
+            cache: false,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            async: false, // Set to synchronous
+            success: function(data) {
+                var status = data.status;
+                if (callback && typeof callback === 'function') {
+                    callback(status);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error("AJAX Error:", textStatus, errorThrown);
+                if (callback && typeof callback === 'function') {
+                    callback(false);
+                }
+            }
+        });
+
+        var a = filesPath.substring(0, filesPath.lastIndexOf(","));
+        filesPath = filesPath.replace(/\s/g, "");
+        $("#dogImagefiles").val(filesPath);
+        console.log(filesPath);
+    }
+
+    function dogCertificate(callback) {
+        var noOfDogs = $('#noOfDogs').val();
+        var url = window.location.href;
+        var basePath = '${pageContext.getAttribute("UPLOAD_PATH")}';
+        var filesPath = "";
+        var data = new FormData();
+
+        data.append('vaccination', $("#vaccination").get(0).files[0]);
+
+        
+     for (var i = 0; i < noOfDogs - 1; i++) {
+        	data.append('vaccination'+i, $("#vaccination"+i).get(0).files[0]);
+        } 
+        var isFileSelected = false
+        const id = Math.floor(Math.random() * 9000) + 1000;
+        var array_element = "";
+        var file = $('input[name="vaccination"]');
+
+        for (var i = 0; i < file.length; i++) {
+            var array_element = file[i];
+            var element = array_element.value.split("\\");
+            var a = element[element.length-1];
+            const splitName = a.split(".pdf")[0].replaceAll(/[^a-zA-Z0-9]/g, ""); 
+            const value = splitName + ".pdf";
+
+            if (a === '' || a === undefined) {
+                filesPath += "null" + ",";
+                isFileSelected = false;
+            } else {
+                filesPath = filesPath + basePath + "dogDetails/" + id + value + ",";
+                isFileSelected = true;
+            }
+        }
+
+        $.ajax({
+            url: "<c:out value='${contextRoot}'/>/rtiapplication/uploadDogDetails.do?id=" + id,
+            type: 'POST',
+            data: data,
+            cache: false,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            async: false, // Set to synchronous
+            success: function(data) {
+                var status = data.status;
+                if (status == true) {
+                	dogImage(function(status) {
+                           if (status == true) {
+                              dogImage(callback);
+                           } else {
+                               alert("Something Went Wrong!!");
+                               if (callback && typeof callback === 'function') {
+                                   callback(false);
+                               }
+                           }
+                       });
+                } else {
+                    alert("Something Went Wrong!!");
+                    if (callback && typeof callback === 'function') {
+                        callback(false);
+                    }
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error("AJAX Error:", textStatus, errorThrown);
+                if (callback && typeof callback === 'function') {
+                    callback(false);
+                }
+            }
+        });
+
+        var a = filesPath.substring(0, filesPath.lastIndexOf(","));
+        filesPath = filesPath.replace(/\s/g, "");
+        $("#dogFiles").val(filesPath);
+        console.log(filesPath);
+        
+        
+    }
+    
+    function dogCertificateSecond(callback) {
+        var noOfDogs = $('#noOfDogs').val();
+        var url = window.location.href;
+        var basePath = '${pageContext.getAttribute("UPLOAD_PATH")}';
+        var filesPath = "";
+        var data = new FormData();
+
+        data.append('vaccinationsecond', $("#vaccinationsecond").get(0).files[0]);
+
+        
+     for (var i = 0; i < noOfDogs - 1; i++) {
+        	data.append('vaccinationsecond'+i, $("#vaccinationsecond"+i).get(0).files[0]);
+        } 
+        var isFileSelected = false
+        const id = Math.floor(Math.random() * 9000) + 1000;
+        var array_element = "";
+        var file = $('input[name="vaccinationsec"]');
+
+        for (var i = 0; i < file.length; i++) {
+            var array_element = file[i];
+            var element = array_element.value.split("\\");
+            var a = element[element.length-1];
+            const splitName = a.split(".pdf")[0].replaceAll(/[^a-zA-Z0-9]/g, ""); 
+            const value = splitName + ".pdf";
+
+            if (a === '' || a === undefined) {
+                filesPath += "null" + ",";
+                isFileSelected = false;
+            } else {
+                filesPath = filesPath + basePath + "dogDetails/" + id + value + ",";
+                isFileSelected = true;
+            }
+        }
+
+        $.ajax({
+            url: "<c:out value='${contextRoot}'/>/rtiapplication/uploadDogDetails.do?id=" + id,
+            type: 'POST',
+            data: data,
+            cache: false,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            async: false, // Set to synchronous
+            success: function(data) {
+                var status = data.status;
+                if (status == true) {
+                    if (callback && typeof callback === 'function') {
+                        callback(status);
+                    }
+                } else {
+                    alert("Something Went Wrong!!");
+                    if (callback && typeof callback === 'function') {
+                        callback(false);
+                    }
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error("AJAX Error:", textStatus, errorThrown);
+                if (callback && typeof callback === 'function') {
+                    callback(false);
+                }
+            }
+        });
+
+        var a = filesPath.substring(0, filesPath.lastIndexOf(","));
+        filesPath = filesPath.replace(/\s/g, "");
+        $("#vaccinationseconds").val(filesPath);
+        console.log(filesPath);
+        
+        
+    }
+
+    function dogoperatedfile(callback) {
+        var noOfDogs = $('#noOfDogs').val();
+        var url = window.location.href;
+        var basePath = '${pageContext.getAttribute("UPLOAD_PATH")}';
+        var filesPath = "";
+        var data = new FormData();
+        data.append('idProof6', $("#operatedfile").get(0).files[0]);
+         for (var i = 0; i < noOfDogs - 1; i++) {
+          	data.append('operatedfile'+i, $("#operatedfile"+i).get(0).files[0]);
+          } 
+        var isFileSelected = false
+        const id = Math.floor(Math.random() * 9000) + 1000;
+        var array_element = "";
+        var file = $('input[name="operatedfile"]');
+
+        for (var i = 0; i < file.length; i++) {
+            var array_element = file[i];
+            var element = array_element.value.split("\\");
+            var a = element[element.length-1];
+            const splitName = a.split(".pdf")[0].replaceAll(/[^a-zA-Z0-9]/g, ""); 
+            const value = splitName + ".pdf";
+
+            if (a === '' || a === undefined) {
+                filesPath += "null" + ",";
+                isFileSelected = false;
+            } else {
+                filesPath = filesPath + basePath + "dogDetailsOperated/" + id + value + ",";
+                isFileSelected = true;
+            }
+        }
+
+        $.ajax({
+            url: "<c:out value='${contextRoot}'/>/rtiapplication/uploadDogOperated.do?id=" + id,
+            type: 'POST',
+            data: data,
+            cache: false,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            async: false, // Set to synchronous
+            success: function(data) {
+                var status = data.status;
+                if (callback && typeof callback === 'function') {
+                    callback(status);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error("AJAX Error:", textStatus, errorThrown);
+                if (callback && typeof callback === 'function') {
+                    callback(false);
+                }
+            }
+        });
+
+        var a = filesPath.substring(0, filesPath.lastIndexOf(","));
+        filesPath = filesPath.replace(/\s/g, "");
+        $("#dogOpertedFiles").val(filesPath);
+        console.log(filesPath);
+    }
+
+
+    </script>

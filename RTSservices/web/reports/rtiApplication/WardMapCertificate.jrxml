@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2023-12-08T15:04:25 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ZoneCertificate" pageWidth="595" pageHeight="1400" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" isIgnorePagination="true" uuid="604a6bc3-ae55-4fb3-995f-76c562a21e2b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="net.sf.jasperreports.print.create.bookmarks" value="false"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="EGOV_NMC_UAT"/>
+	<parameter name="rtiapplrefid" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from egovrti.part_map pm, egovrti.rti_application ra where pm.rti_ref_id = ra.rti_application_id and pm.rti_ref_id=$P{rtiapplrefid}]]>
+	</queryString>
+	<field name="part_map_id" class="java.lang.Long"/>
+	<field name="title" class="java.lang.String"/>
+	<field name="first_name" class="java.lang.String"/>
+	<field name="middle_name" class="java.lang.String"/>
+	<field name="last_name" class="java.lang.String"/>
+	<field name="pincode" class="java.lang.Long"/>
+	<field name="aadhar_no" class="java.lang.String"/>
+	<field name="email_id" class="java.lang.String"/>
+	<field name="mobile_no" class="java.lang.String"/>
+	<field name="full_address" class="java.lang.String"/>
+	<field name="khasara_no" class="java.lang.String"/>
+	<field name="city_survey_no" class="java.lang.String"/>
+	<field name="mouje" class="java.lang.String"/>
+	<field name="survey" class="java.lang.String"/>
+	<field name="survey_map" class="java.lang.String"/>
+	<field name="khasara_map" class="java.lang.String"/>
+	<field name="rti_application_ref_id" class="java.lang.String"/>
+	<field name="rti_ref_id" class="java.lang.Integer"/>
+	<field name="full_name" class="java.lang.String"/>
+	<field name="zone_no" class="java.lang.String"/>
+	<field name="mouza_zone" class="java.lang.String"/>
+	<field name="rti_application_id" class="java.lang.Long"/>
+	<field name="rti_application_number" class="java.lang.String"/>
+	<field name="inward_number" class="java.lang.String"/>
+	<field name="registration_date" class="java.lang.String"/>
+	<field name="received_date" class="java.lang.String"/>
+	<field name="closed_date" class="java.lang.String"/>
+	<field name="subject" class="java.lang.String"/>
+	<field name="information_required" class="java.lang.String"/>
+	<field name="number_of_copies" class="java.lang.Integer"/>
+	<field name="amount_per_copy" class="java.lang.Double"/>
+	<field name="application_cost" class="java.lang.Double"/>
+	<field name="workflow_status" class="java.lang.Integer"/>
+	<field name="final_status" class="java.lang.String"/>
+	<field name="final_status_when_parked" class="java.lang.String"/>
+	<field name="is_application_parked" class="java.lang.Integer"/>
+	<field name="created_date" class="java.lang.String"/>
+	<field name="is_feepaid" class="java.lang.Integer"/>
+	<field name="applicant_name" class="java.lang.String"/>
+	<field name="gender" class="java.lang.Integer"/>
+	<field name="state" class="java.lang.String"/>
+	<field name="phone_number" class="java.lang.String"/>
+	<field name="mobile_number" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="COLUMN_45" class="java.lang.Integer"/>
+	<field name="bpl" class="java.lang.Integer"/>
+	<field name="bpl_card_number" class="java.lang.String"/>
+	<field name="address_line1" class="java.lang.String"/>
+	<field name="address_line2" class="java.lang.String"/>
+	<field name="district" class="java.lang.String"/>
+	<field name="postal_charges" class="java.lang.Double"/>
+	<field name="rti_application_ref_number" class="java.lang.String"/>
+	<field name="COLUMN_53" class="java.lang.Long"/>
+	<field name="is_rti_appeal_application" class="java.lang.Integer"/>
+	<field name="has_assigned_user" class="java.lang.Integer"/>
+	<field name="rti_service_id" class="java.lang.Integer"/>
+	<field name="received_mode_id" class="java.lang.Long"/>
+	<field name="fee_master_id" class="java.lang.Long"/>
+	<field name="created_user_id" class="java.lang.Long"/>
+	<field name="assigned_section_id" class="java.lang.Long"/>
+	<field name="assigned_department_id" class="java.lang.Long"/>
+	<field name="application_department_id" class="java.lang.Long"/>
+	<field name="assignee_user_id" class="java.lang.Long"/>
+	<field name="tenancyid" class="java.lang.Long"/>
+	<field name="pdf_files_saved_path" class="java.lang.String"/>
+	<field name="pdf_upload_from_portal" class="java.lang.String"/>
+	<field name="remarks" class="java.lang.String"/>
+	<field name="ward_name" class="java.lang.String"/>
+	<field name="zone" class="java.lang.String"/>
+	<field name="department" class="java.lang.String"/>
+	<field name="template_name" class="java.lang.String"/>
+	<field name="user_mobile_no" class="java.lang.String"/>
+	<field name="mobile_app_user_number" class="java.lang.String"/>
+	<field name="police_noc" class="java.lang.String"/>
+	<field name="fire_noc" class="java.lang.String"/>
+	<field name="traffic_noc" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="880">
+			<line>
+				<reportElement x="0" y="490" width="545" height="1" uuid="b171c979-48e3-4541-bd2d-837055c1539f"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="491" width="1" height="90" uuid="97094a8c-3330-4085-b660-1564413f92ff"/>
+			</line>
+			<staticText>
+				<reportElement x="70" y="491" width="100" height="30" uuid="f5bacec5-522c-41fc-a132-1729e58d6cc3"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[शहर सर्वेक्षण क्र.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="520" width="545" height="2" uuid="a524d1db-0cea-497a-bec9-606f2f127434"/>
+			</line>
+			<staticText>
+				<reportElement x="70" y="520" width="58" height="30" uuid="e6b54964-594d-4d0c-8670-6f92ac1daa51"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[खसरा क्र.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="550" width="545" height="1" uuid="0885595f-d1aa-47f2-8bd7-7b311edf519a"/>
+			</line>
+			<staticText>
+				<reportElement x="70" y="550" width="100" height="30" uuid="c80a6f15-f14e-4869-b780-363f6e93d353"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[मौजे/मोहल्ला]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="581" width="546" height="1" uuid="96dd5861-bd67-4b7a-b194-96cb8ba548ac"/>
+			</line>
+			<line>
+				<reportElement x="544" y="490" width="1" height="90" uuid="bcd0b384-4c9b-480d-8056-f6d0cef010cf"/>
+			</line>
+			<staticText>
+				<reportElement x="40" y="840" width="119" height="30" uuid="6d0c55c4-e5d3-425a-9ea7-56593ba82231"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="16"/>
+				</textElement>
+				<text><![CDATA[नगररचनाविभाग]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="354" y="843" width="184" height="29" uuid="ae0bfa2b-c8fd-4736-be22-0b69bc324918"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="16"/>
+				</textElement>
+				<text><![CDATA[कनिष्ठ अभियंता/शाखा अभियंता]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="307" y="490" width="194" height="30" uuid="ca190b04-94cd-44db-82be-0188fd237715"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{city_survey_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="307" y="520" width="194" height="30" uuid="9271bfab-b6a4-4dc9-89e1-b44af626b4eb"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{khasara_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="307" y="551" width="194" height="30" uuid="ca20aac9-e548-4fa0-9f10-09cc82628ec1"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mouje}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="590" width="544" height="40" uuid="2533e8eb-62a8-4a81-9c42-4900c34db02d"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[उपरोक्त वापर मंजूर केलेल्या विकास योजना आराखड्यानुसार दर्शविलेले असून सदर वापरासाठी विकास आराखडा अंतिम राहील. तथापि, झोन दाखला खालील बाबीस आधीन राहून देण्यात येत आहे.
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="260" y="491" width="1" height="90" uuid="9569f439-786e-44ae-bc9e-f98668f252ef"/>
+			</line>
+			<image>
+				<reportElement x="247" y="0" width="60" height="58" uuid="0739ac20-c0c2-4f6e-b3d0-868b9f8c2fe2"/>
+				<imageExpression><![CDATA["../../images/amclogodash.jpeg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="147" y="60" width="260" height="30" uuid="778da9c2-aa50-414c-b038-e6dafa0e4dc1"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[नागपूर महानगरपालिका, नागपूर]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="88" y="90" width="379" height="30" uuid="69292e06-243d-4ea7-8299-bc7060ad1208"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NAGPUR MUNICIPAL CORPORATION ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="219" y="120" width="116" height="30" uuid="ff9a799c-12a6-4600-bc88-4f4e9ad26a83"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[नगररचना विभाग]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="128" y="153" width="287" height="30" uuid="3b1743ef-b619-4f4f-ba80-e39df564c169"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Town Planning Department]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="230" width="30" height="20" uuid="a06b5680-56d8-448a-95e8-1bc092bd33f9"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[प्रति,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="250" width="60" height="20" uuid="f2eecbee-7b36-4cc9-b32b-7d4a8bfb6f5a"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[श्री/श्रीमती ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="400" width="487" height="20" uuid="c4618b11-1e16-4f38-aa43-427b5e67c947"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["1) आपला अर्ज दिनांक  : "+$F{registration_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="47" y="183" width="473" height="30" uuid="56a44dd8-033a-4f55-a8ad-5c185d161333"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="16"/>
+				</textElement>
+				<text><![CDATA[प्रभाग नकाशा प्रमाणपत्र (Ward Map Certificate)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="408" y="219" width="43" height="20" uuid="e9a6ff60-7c45-44e3-b290-2cea534960c4"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[दिनांक : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="445" y="219" width="86" height="20" uuid="8f042a7b-132d-4fed-b728-a927a0714050"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="90" y="270" width="20" height="19" uuid="8ca244a0-78c7-45e0-a72b-e559232c6a35"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[:-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="310" width="86" height="19" uuid="7e30d0de-213d-42ca-9ce3-a45c4927e121"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[विषय ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="289" width="270" height="20" uuid="54612f80-48d9-4229-852c-90c5ee88e00b">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mobile_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="270" width="86" height="20" uuid="9cabf114-9313-4648-943d-eaedf96310de"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[पत्ता]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="290" width="86" height="20" uuid="1ab80a01-b0bf-4b6c-834f-5476df41c437">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[मोबाईल क्रमांक ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="289" width="20" height="22" uuid="927d94e8-bfc9-4583-b15c-19864ce5f534"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[:-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="250" width="20" height="19" uuid="8d9feb0f-ddcd-47d5-b016-43dc6a1dc07a"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[:-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="310" width="20" height="19" uuid="d4aa2c71-7071-4a7b-bd7d-73ba1125dc44"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[:-]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="310" width="411" height="70" uuid="d80462c1-0a49-4b93-8b69-179e1dc3f666"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" सर्वे क्रमांक :  "+($F{survey}==null ? " "  :  $F{survey})+ "  नगरभूमापन क्रमांक :  "+($F{city_survey_no}==null ? " " : $F{city_survey_no})+"  मौजे/मोहल्ला  :  "+($F{mouje}==null ? " " :  $F{mouje})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="380" width="40" height="20" uuid="49ba7e54-1184-440c-855b-c1a7450a7a3f"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[संदर्भ ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="420" width="240" height="20" uuid="cc489daf-dfea-4a81-af8c-876af2859f70"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["2)  झोन दाखला शुल्क भरणा दिनांक  : "]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="440" width="531" height="39" uuid="83aabc9f-8eeb-4c31-8b67-1471607e1803"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[उपरोक्त विषयी संदर्भिय पत्रानुसारआपणास कळविण्यात येते की,शासन निर्णयानुसार विकास योजना अंमलात आलेली आहे. विषयांकित गटांमध्ये खालील प्रमाणे वापरदर्शविण्यात आले आहे.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="630" width="485" height="60" uuid="3b1bcdbc-f52b-4a67-9d68-353a2af109c3"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[१) विषयांकीत जमिंनीवर आखणी/मोजणी झाल्यानंतर झोन व आरक्षण  कायमहोईल.
+२) हे प्रमाणपत्र झोन दाखला व्यतिरिक्त कुठल्याही कार्यासाठी ग्राह्य ठरणार नाही.
+३) सदर प्रमाणपत्र मालकी हक्क म्हणून ग्राह्य ठरणार नाही.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="248" width="411" height="21" uuid="0c24303d-23d2-4159-99e9-5d4d0bbfa2f2"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{first_name}+" "+$F{middle_name}+" " +$F{last_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="123" y="269" width="411" height="21" uuid="c9ce2cad-776d-4b66-b3ce-9b41d6118e85"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{full_address}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

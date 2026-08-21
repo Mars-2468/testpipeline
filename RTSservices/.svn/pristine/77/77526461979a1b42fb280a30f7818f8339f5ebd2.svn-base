@@ -1,0 +1,48 @@
+package com.mars.rti.service.impl;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.mars.rti.dao.DogLicenceCertificateDAO;
+import com.mars.rti.model.DogDetails;
+import com.mars.rti.model.DogLicenseCertificate;
+import com.mars.rti.service.DogLicenceCertificateService;
+
+@Service("dogLicenceCertificateService")
+public class DogLicenceCertificateServiceImpl implements DogLicenceCertificateService {
+
+	
+	@Autowired
+	DogLicenceCertificateDAO dogLicenceCertificateDAO;
+	
+	private static Log log = LogFactory.getLog(DogLicenceCertificateServiceImpl.class);
+
+	@Override
+	public long saveDogLicenceCertificate(DogLicenseCertificate dogLicenceCertificate) {
+		
+		return  dogLicenceCertificateDAO.saveDogCertificateLicence(dogLicenceCertificate);
+		
+	}
+
+	@Override
+	public DogLicenseCertificate get(long rtiApplicationRefId) {
+		
+		return dogLicenceCertificateDAO.get(rtiApplicationRefId);
+	}
+
+	@Override
+	public DogDetails merge(DogDetails entity) {
+		
+		return dogLicenceCertificateDAO.merge(entity);
+	}
+	@Override
+	public DogLicenseCertificate getDetails(long rtiApplicationId) {
+		// TODO Auto-generated method stub
+		return dogLicenceCertificateDAO.getDetails(rtiApplicationId);
+	}
+
+	
+	
+}

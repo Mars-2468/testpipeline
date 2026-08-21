@@ -1,0 +1,57 @@
+package com.mars.rti.payment;
+
+public class PaymentConstants {
+	
+	
+	//Production
+//	public static final String BOM_TEST_SALT ="Q0CPWZUTJG";
+//	
+//	public static final String BOM_TEST_KEY ="31RJVREUF3";
+//	
+//	public static final String BOM_TEST_URL ="https://pay.easebuzz.in/";
+//	
+//	public static final String BOM_TEST_ENV ="prod";
+//	
+	//Test
+
+	public static final String BOM_TEST_SALT ="DAH88E3UWQ";
+////	
+	public static final String BOM_TEST_KEY ="2PBP7IABZ2";
+////	
+	public static final String BOM_TEST_URL ="https://testpay.easebuzz.in/";
+////	
+	public static final String BOM_TEST_ENV ="test";
+//	
+	public static final String BOM_TEST_SUBMERCHANT_ID= "S95338UQEC";
+	public static final String BOM_TEST_SUBMERCHANT_NAME ="NAGPUR MUNICIPAL CORPORATION RTS MODULE";
+	
+	public static final String REQUEST_HASHSEQUENCE = "key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10";
+	
+	public static final String RESPONSE_HASHSEQUENCE = "salt|status|udf10|udf9|udf8|udf7|udf6|udf5|udf4|udf3|udf2|udf1|email|firstname|productinfo|amount|txnid";
+
+	//fire service pg test kit 
+	public static final String BOM_FIRE_TEST_SALT ="ABEDY5ZGI";
+	
+	public static final String BOM_FIRE_TEST_KEY ="6WKLSD7H7";
+	public static final String Submerchant1= "S953383NPH";
+	public static final String Submerchant2 ="S953383NPH";
+	public static final String Submerchant_name ="Nagpur Municipal Corporation Fire Module";
+
+	
+	//fire service pg prod kit 
+
+	
+//	
+//	public static final String BOM_FIRE_TEST_SALT ="Q0CPWZUTJG";
+//	
+//	public static final String BOM_FIRE_TEST_KEY ="31RJVREUF3";
+//	public static final String Submerchant1= "S953382IQT";
+//	public static final String Submerchant2 ="S953382IQT";
+//	public static final String Submerchant_name ="Nagpur Municipal Corporation Fire Module";
+
+	
+
+
+//	
+
+}

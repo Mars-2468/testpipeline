@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2024-01-13T00:36:18 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ZoneCertificate" pageWidth="595" pageHeight="1400" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" isIgnorePagination="true" uuid="604a6bc3-ae55-4fb3-995f-76c562a21e2b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="net.sf.jasperreports.print.create.bookmarks" value="false"/>
+	<parameter name="rtiapplrefid" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from egovrti.trade_license_transfer not1 , egovrti.rti_application ra where not1.rti_ref_id = ra.rti_application_id and not1.rti_ref_id=$P{rtiapplrefid}]]>
+	</queryString>
+	<field name="trade_license_transfer_id" class="java.lang.Long"/>
+	<field name="title" class="java.lang.String"/>
+	<field name="first_name" class="java.lang.String"/>
+	<field name="middle_name" class="java.lang.String"/>
+	<field name="last_name" class="java.lang.String"/>
+	<field name="full_name" class="java.lang.String"/>
+	<field name="pincode" class="java.lang.String"/>
+	<field name="aadhaar_no" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="mobile_no" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="zone_no" class="java.lang.String"/>
+	<field name="ward_no" class="java.lang.String"/>
+	<field name="area_name" class="java.lang.String"/>
+	<field name="trade_license_no" class="java.lang.String"/>
+	<field name="updated_trade_name" class="java.lang.String"/>
+	<field name="updated_trade_type" class="java.lang.String"/>
+	<field name="updated_owner_name" class="java.lang.String"/>
+	<field name="updated_partner_count" class="java.lang.String"/>
+	<field name="noc_for_related_dept" class="java.lang.String"/>
+	<field name="copy_of_former_license" class="java.lang.String"/>
+	<field name="property_tax_no_due" class="java.lang.String"/>
+	<field name="building_auth_document" class="java.lang.Object"/>
+	<field name="rti_application_ref_id" class="java.lang.String"/>
+	<field name="rti_ref_id" class="java.lang.Long"/>
+	<field name="fees_applicable" class="java.lang.Long"/>
+	<field name="rti_application_id" class="java.lang.Long"/>
+	<field name="rti_application_number" class="java.lang.String"/>
+	<field name="inward_number" class="java.lang.String"/>
+	<field name="registration_date" class="java.lang.String"/>
+	<field name="received_date" class="java.lang.String"/>
+	<field name="closed_date" class="java.lang.String"/>
+	<field name="subject" class="java.lang.String"/>
+	<field name="information_required" class="java.lang.String"/>
+	<field name="number_of_copies" class="java.lang.Integer"/>
+	<field name="amount_per_copy" class="java.lang.Double"/>
+	<field name="application_cost" class="java.lang.Double"/>
+	<field name="workflow_status" class="java.lang.Integer"/>
+	<field name="final_status" class="java.lang.String"/>
+	<field name="final_status_when_parked" class="java.lang.String"/>
+	<field name="is_application_parked" class="java.lang.Integer"/>
+	<field name="created_date" class="java.lang.String"/>
+	<field name="is_feepaid" class="java.lang.Integer"/>
+	<field name="applicant_name" class="java.lang.String"/>
+	<field name="gender" class="java.lang.Integer"/>
+	<field name="state" class="java.lang.String"/>
+	<field name="phone_number" class="java.lang.String"/>
+	<field name="mobile_number" class="java.lang.String"/>
+	<field name="bpl" class="java.lang.Integer"/>
+	<field name="bpl_card_number" class="java.lang.String"/>
+	<field name="address_line1" class="java.lang.String"/>
+	<field name="address_line2" class="java.lang.String"/>
+	<field name="district" class="java.lang.String"/>
+	<field name="postal_charges" class="java.lang.Double"/>
+	<field name="rti_application_ref_number" class="java.lang.String"/>
+	<field name="is_rti_appeal_application" class="java.lang.Integer"/>
+	<field name="has_assigned_user" class="java.lang.Integer"/>
+	<field name="rti_service_id" class="java.lang.Integer"/>
+	<field name="received_mode_id" class="java.lang.Long"/>
+	<field name="fee_master_id" class="java.lang.Long"/>
+	<field name="created_user_id" class="java.lang.Long"/>
+	<field name="assigned_section_id" class="java.lang.Long"/>
+	<field name="assigned_department_id" class="java.lang.Long"/>
+	<field name="application_department_id" class="java.lang.Long"/>
+	<field name="assignee_user_id" class="java.lang.Long"/>
+	<field name="tenancyid" class="java.lang.Long"/>
+	<field name="pdf_files_saved_path" class="java.lang.String"/>
+	<field name="pdf_upload_from_portal" class="java.lang.String"/>
+	<field name="remarks" class="java.lang.String"/>
+	<field name="ward_name" class="java.lang.String"/>
+	<field name="zone" class="java.lang.String"/>
+	<field name="department" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="993">
+			<staticText>
+				<reportElement x="350" y="939" width="196" height="50" uuid="1880726a-c9c1-4a8f-8749-cf39bb9bd7c3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="13"/>
+				</textElement>
+				<text><![CDATA[परवाना देणाऱ्या/नुतनीकरण करणाऱ्या सक्षम प्राधिकाऱ्यांची सही, पदनाम व शिक्का]]></text>
+			</staticText>
+			<image>
+				<reportElement x="256" y="8" width="50" height="50" uuid="73cb2301-34a5-4326-b8bf-67ad570cec30"/>
+				<imageExpression><![CDATA["../../images/amclogodash.jpeg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="2" y="109" width="550" height="23" uuid="efb7961b-f8cf-4547-9e38-bcd535f44d85"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="16"/>
+				</textElement>
+				<text><![CDATA[व्यापार अनुज्ञान स्थानांतर प्रमाणपत्र]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="156" width="550" height="20" uuid="87c1858d-8cc0-4bbb-ac2b-c7241e7b5182"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(नवीन व्यापार/विद्यमान व्यापार परवान्याच्या नूतनीकरणासाठी)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="179" width="550" height="20" uuid="ed234c4d-036c-421e-96b4-bc3712d59e25"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(नागपूर महानगरपालिका अधिनियम १९४९ मधील कलम ३७६ प्रमाणे विनिर्दिष्ट प्रयोजनासाठी )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="202" width="528" height="20" uuid="092aa381-2003-4ae4-a4fe-ea668a60b5a5"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[महाराष्ट्र महानगरपालिका अधिनियम, १९४९ चे कलम ३७६ पोट कलम (१) कंडिका (ज) व कलम ३८६ (१) तरतुदीनुसार.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="132" width="550" height="23" uuid="e3ea613c-60a7-4d4f-9783-67d3ee90b2f4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[TRADE LICENSE TRANSFER CERTIFICATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="61" width="550" height="25" uuid="3e273d35-b973-4a48-bde4-6895109ad649">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="18"/>
+				</textElement>
+				<text><![CDATA[नागपूर महानगरपालिका ,नागपूर]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="86" width="550" height="23" uuid="b8821063-e8d1-41f2-ae89-619e0ea18d9d">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Nagpur Municipal Corporation]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="24" y="228" width="306" height="20" uuid="535ffbe3-a477-4c27-9611-b3ecedb70173"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["व्यवसाय नोंदणी क्र. :- "+$F{rti_application_number}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="415" y="228" width="50" height="20" uuid="bd366864-2c19-42e4-a18f-a466807fe8ce"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[दिनांक : ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="465" y="228" width="85" height="20" uuid="a8aa811e-65fd-4bc8-803b-dc4b51b0fa32"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="24" y="281" width="526" height="20" uuid="90ce638a-5a56-472f-9932-073792591b8a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["जारी केल्याच्या तारखेपासून. हे प्रमाणपत्र ३१-मार्च  "+(new SimpleDateFormat("yyyy")).format(new Date())+" पर्यंतच्या कालावधीसाठी वैध आहे."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="301" width="400" height="20" uuid="687cd619-5824-4282-b504-62b4a57e422f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{full_name}+"  यांना व्यापार परवाना जारी केला जातो."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="381" width="400" height="20" uuid="4737ccf5-8e88-4ca4-8edd-3e319dedbffd"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fees_applicable} +" व्यापार परवान्याच्या नूतनीकरणासाठी"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="321" width="400" height="20" uuid="68755422-f4f0-4e61-990b-d1dc670fe4da"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{trade_license_transfer_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="341" width="400" height="20" uuid="8f56ae95-07c4-49c8-ad0d-07ccd62e075a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ward_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="130" y="301" width="20" height="20" uuid="7b228f8d-e414-4ec4-b0f4-a17e9f2b8aa9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[:-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="321" width="20" height="20" uuid="d01603a1-943b-4231-8273-40c94e189bcb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[:-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="341" width="20" height="20" uuid="bf3c4b6f-5a35-4cbd-a27c-800abd75eead"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[:-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="381" width="20" height="20" uuid="77467710-9ca3-46e5-90ae-55203c510a02"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[:-]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="150" y="361" width="400" height="20" uuid="40ee812a-8a00-418d-a5a3-c7a4be627a9f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{received_date}+" Upto "+$F{closed_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="130" y="361" width="20" height="20" uuid="3f12e4b0-ceda-45ff-accc-90b82976d08c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[:-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="301" width="106" height="20" uuid="a59bb2f4-532a-439d-b1c8-620d283faa99">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[श्री/श्रीमती]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="321" width="106" height="20" uuid="0a0bb45d-5c77-4450-8086-435d4a365bfd">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[परवानगी क्रमांक]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="361" width="106" height="20" uuid="791cc6b3-640e-4700-8669-4902b94d6033">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[वर्षासाठी]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="341" width="106" height="20" uuid="499d580b-68ea-4137-a4bc-c428da3c13f5">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[प्रभाग]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="381" width="106" height="20" uuid="1c8db731-3b90-4d1c-a714-b9599805f722">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[परवाना शुल्क रु]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="255" width="486" height="20" uuid="757c17fd-0853-4304-9541-e8e2630b9079"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="14"/>
+				</textElement>
+				<text><![CDATA[विषय :-  तुमचा व्यापार परवाना हस्तांतरित करणे]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="239" y="408" width="70" height="20" uuid="86fb852a-715a-4c84-b70e-3a648c96448f"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[अटी व शर्ती]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="504" width="24" height="35" uuid="9b217977-4b85-48f0-990d-6d5dd030399c">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(3)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="504" width="518" height="35" uuid="fd00b281-1c1b-4e79-8674-eeb29abf1384">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[नागरिकांचे, त्यांच्या मिळकतीचे संरक्षण करण्याचे उद्देशाने व नागरिकांना उपद्रव होऊ नये यासाठी परवान्यातील अटी व शर्तींचे काटेकोरपणे पालन करावे लागेल.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="540" width="24" height="34" uuid="5db2155d-fbbd-4f6f-9676-4cf383d86b2d">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(४)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="540" width="518" height="34" uuid="89356f95-4066-470f-9172-1d735c8c831a"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[यदा कदाचित आगीचा प्रार्दुभाव झाल्यास अग्निशमन दलाच्या अधिकाऱ्याने दिलेल्या सुचनांचे पालन करून परवानाधारकांस ती आग इतरत्र पसरू न देण्यासाठी आवश्यक ती उपाययोजना तात्काळ करावी लागेल.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="576" width="518" height="18" uuid="21956164-cf2f-461e-9d3b-40424a2e7b24">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[परवाना दिलेल्या जागेचा उपयोग मानवी वस्तीसाठी वा जनावरे किंवा पक्षी ठेवण्यासाठी करता येणार नाही.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="576" width="24" height="18" uuid="6a2602fb-81b4-4a82-813c-3da271741f11">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(५)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="596" width="518" height="18" uuid="bca6d133-c341-4706-a17a-6a512957ff00">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[आग पेटविणे वा ज्यामुळे सार्वजनिक सुरक्षेला धोका निर्माण होईल अशी कोणतीही कृती परवानाधारक परवाना दिलेल्या जागी करणार नाही.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="596" width="24" height="18" uuid="77c7cf1b-fdd1-4523-812d-7db2a7d4bbe0"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(६) ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="616" width="518" height="18" uuid="9ca4f965-120d-40f2-a78d-81b939108d88"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[परवाना दिलेल्या जागेच्या बाहेर ठळक जागी खालील तपशील फलक लावणे परवानाधारकावर बंधनकारक राहील. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="616" width="24" height="18" uuid="690750f6-4259-40ea-9252-ab3f9cec44ef">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(७)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="636" width="518" height="34" uuid="4eb7a0cb-2fe2-4f53-ac1c-12233c285b67">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(अ) परवानाधारकाचे नाव व पत्ता,  (ब) परवान्याचा क्रमांक व त्याची मुदत,  (क) परवानाधारकाच्या गैरहजेरीत नियंत्रण ठेवणाऱ्या व्यक्तीचे नाव व पत्ता]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="672" width="518" height="34" uuid="b2043547-919e-43cd-96ce-d5bebd356a5f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[ महानगरपालिकेच्या अधिकऱ्यांनी भेट दिल्यावर परवानाधारकाला द्यावयाच्या सुचनांसाठी "भेटी / सूचना रजिस्टर" परवानाधारकाला ठेवावे लागेल.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="636" width="24" height="34" uuid="9818b036-2cbb-4fe8-adf7-685e584db4e4">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(८)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="708" width="518" height="50" uuid="9d5b7d73-b98f-4db6-9dea-234ff1bc7249"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[नागपूर महानगरपालिका अधिनियम, १९४९ च्या कलम ३७६ च्या तरतूदीनुसार दिलेल्या या परवान्याव्यतिरिक्त अन्य कायदेशीर तरतुदीच्या अनुषंगाने कोणत्याही अधिनियमाखाली घ्यावे लागणारे परवाने देण्याची जबाबदारी परवानाधारकांवर असेल. त्यानंतरच सदर परवाना लागू राहील.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="672" width="24" height="34" uuid="ee390885-0d8d-43f3-a88a-23d6573cc9ec">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(९) ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="432" width="24" height="30" uuid="0b3c802d-5e44-4b5e-a7a3-bd6e92186171"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(१)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="432" width="518" height="50" uuid="bbfcea6d-9439-47c2-8b7b-c117ac99f546">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[या परवान्याचा मुदत ३१ डिसेंबर रोजी संपणाऱ्या कॅलेंडर वर्षापर्यंत असेल. वर्षाच्या कुठल्याही महिन्यात परवाना प्राप्त झाल्यानंतर त्या वर्षाच्या ३१ डिसेंबर पर्यंत परवाना वैध राहील. परवानाधारकाला "नागपूर महानगरपालिका (विनिर्दिष्ट प्रयोजनासाठी / व्यवसायासाठी जागा वापरण्याचे) स्थायी आदेश, २०२० च्या तरतूदीचे पालन करावे लागेल. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="484" width="518" height="18" uuid="56a182b7-9a3b-4707-be8b-7342fff3857c"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[ परवान्यात नमूद केलेल्या व्यवसाया व्यतिरिक्त इतर कोणताही व्यवसाय परवाना दिलेल्या जागेत करता येणार नाही.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="484" width="24" height="18" uuid="61a8d63e-4996-47e0-8905-43fcf42271b3">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(२)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="708" width="24" height="50" uuid="03f1d0b8-2a8a-4a05-bbaa-ae3764bc9063">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="12"/>
+				</textElement>
+				<text><![CDATA[(१०) ]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

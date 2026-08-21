@@ -1,0 +1,405 @@
+package com.mars.workflow.dao.impl;
+
+import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
+
+import com.mars.common.utils.Constants;
+import com.mars.workflow.dao.WorkflowProcessDetailsDAO;
+import com.mars.workflow.model.WorkflowProcessDetails;
+
+/**
+ * 
+ * <p>
+ * Title: WorkflowProcessDetailsDaoImpl.java
+ * </p>
+ * 
+ * @see com.egov.common.model.WorkflowProcessDetails
+ *      <p>
+ *      Description: This class is used for hibernate operations for
+ *      WorkflowProcessDetails module
+ *      </p>
+ * 
+ * Copyright (c) 2014 for eGovernance Rajasthan
+ * 
+ * @version: 1.0
+ * 
+ * 
+ */
+@Repository("workflowProcessDetailsDAO")
+public class WorkflowProcessDetailsDAOImpl extends HibernateDaoSupport implements WorkflowProcessDetailsDAO {
+
+	private static final Log log = LogFactory.getLog(WorkflowProcessDetailsDAOImpl.class);
+	
+	@Autowired
+	public void init(SessionFactory factory) {
+		setSessionFactory(factory);
+	}
+	/**
+	 * This method returns WorkflowProcessDetails object for a given Id
+	 * 
+	 * @param id
+	 *            as long
+	 * @return WorkflowProcessDetails as model object
+	 */
+	public WorkflowProcessDetails get(long id) {
+		try {
+			if (log.isDebugEnabled()) {
+				log.debug("get Method is called " + id);
+			}
+			return (WorkflowProcessDetails) getHibernateTemplate().get(WorkflowProcessDetails.class, new Long(id));
+		} catch (NullPointerException nullpointerexception) {
+			log.error(nullpointerexception.getStackTrace());
+			throw new NullPointerException();
+		} catch (HibernateException hibernateException) {
+			log.error(hibernateException.getStackTrace());
+			throw new HibernateException(hibernateException.getMessage());
+		} catch (Exception exception) {
+			log.error(exception.getStackTrace());
+			throw new RuntimeException(exception.getCause());
+		}
+	}
+
+	/**
+	 * This method save/updates the WorkflowProcessDetails information to the
+	 * database.
+	 * 
+	 * @param WorkflowProcessDetails
+	 *            object
+	 * 
+	 */
+	public void save(WorkflowProcessDetails entity) {
+		try {
+			if (log.isDebugEnabled()) {
+				log.debug("save Method is called ");
+			}
+			getHibernateTemplate().saveOrUpdate(entity);
+		} catch (NullPointerException nullpointerexception) {
+			log.error(nullpointerexception.getStackTrace());
+			throw new NullPointerException();
+		} catch (HibernateException hibernateException) {
+			hibernateException.printStackTrace();
+			log.error(hibernateException.getStackTrace());
+			throw new HibernateException(hibernateException.getMessage());
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			log.error(exception.getStackTrace());
+			throw new RuntimeException(exception.getCause());
+		}
+	}
+
+	/**
+	 * This method is used to delete a record from the database using hibernate.
+	 * 
+	 * @param id
+	 *            as long
+	 */
+	public void delete(long id) {
+		try {
+			if (log.isDebugEnabled()) {
+				log.debug("deleting WorkflowProcessDetails instance");
+			}
+			WorkflowProcessDetails entity = (WorkflowProcessDetails) getHibernateTemplate().load(WorkflowProcessDetails.class, new Long(id));
+			getHibernateTemplate().delete(entity);
+			log.debug("delete successful");
+		} catch (NullPointerException nullpointerexception) {
+			log.error(nullpointerexception.getStackTrace());
+			throw new NullPointerException();
+		} catch (HibernateException hibernateException) {
+			log.error(hibernateException.getStackTrace());
+			throw new HibernateException(hibernateException.getMessage());
+		} catch (Exception exception) {
+			log.error(exception.getStackTrace());
+			throw new RuntimeException(exception.getCause());
+		}
+	}
+
+	/**
+	 * This method will return a list of all WorkflowProcessDetails from the
+	 * database
+	 * 
+	 * @return List of WorkflowProcessDetails
+	 */
+	public List<WorkflowProcessDetails> getAll() {
+		try {
+
+			if (log.isDebugEnabled()) {
+				log.debug("get all Method is called for WorkflowProcessDetails");
+			}
+			return getHibernateTemplate().loadAll(WorkflowProcessDetails.class);
+		} catch (NullPointerException nullpointerexception) {
+			log.error(nullpointerexception.getStackTrace());
+			throw new NullPointerException();
+		} catch (HibernateException hibernateException) {
+			log.error(hibernateException.getStackTrace());
+			throw new HibernateException(hibernateException.getMessage());
+		} catch (Exception exception) {
+			log.error(exception.getStackTrace());
+			throw new RuntimeException(exception.getCause());
+		}
+	}
+
+	/**
+	 * This method is used to delete a list of Module records from the database.
+	 * 
+	 * @param listWorkflowProcessDetails
+	 *            as List
+	 */
+	public void deleteAll(List<WorkflowProcessDetails> listWorkflowProcessDetails) {
+		try {
+			if (log.isDebugEnabled()) {
+				log.debug("deleteAll Method is called for WorkflowProcessDetails");
+			}
+			getHibernateTemplate().deleteAll(listWorkflowProcessDetails);
+			log.debug("deleted successfuly a list of WorkflowProcessDetails records from database");
+		} catch (NullPointerException nullpointerexception) {
+			log.error(nullpointerexception.getStackTrace());
+			throw new NullPointerException();
+		} catch (HibernateException hibernateException) {
+			log.error(hibernateException.getStackTrace());
+			throw new HibernateException(hibernateException.getMessage());
+		} catch (Exception exception) {
+			log.error(exception.getStackTrace());
+			throw new RuntimeException(exception.getCause());
+		}
+	}
+
+	/**
+	 * This method save/updates a list of WorkflowProcessDetails information to
+	 * the database.
+	 * 
+	 * @param listWorkflowProcessDetails
+	 *            as List
+	 * 
+	 */
+	public void saveAll(List<WorkflowProcessDetails> listWorkflowProcessDetails) {
+		try {
+			if (log.isDebugEnabled()) {
+				log.debug("saveAll Method is called ");
+			}
+			getHibernateTemplate().saveOrUpdateAll(listWorkflowProcessDetails);
+		} catch (NullPointerException nullpointerexception) {
+			log.error(nullpointerexception.getStackTrace());
+			throw new NullPointerException();
+		} catch (HibernateException hibernateException) {
+			hibernateException.printStackTrace();
+			log.error(hibernateException.getStackTrace());
+			throw new HibernateException(hibernateException.getMessage());
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			log.error(exception.getStackTrace());
+			throw new RuntimeException(exception.getCause());
+		}
+	}
+
+	/**
+	 * This method returns list of the WorkflowProcessDetails objects available
+	 * based page number.
+	 * 
+	 * @param long
+	 *            PageNumber
+	 * @param String
+	 *            orderBy
+	 * @param String
+	 *            sortBy
+	 * @return List
+	 * @exception Exception
+	 */
+	public List<WorkflowProcessDetails> getWorkflowProcessDetailsList(long pageNumber, String orderBy, String sortBy) {
+
+		try {
+			String fromClause = "select workflowProcessDetails from WorkflowProcessDetails workflowProcessDetails";
+			fromClause = fromClause + " order by " + orderBy + " " + sortBy;
+			Query query = getSession().createQuery(fromClause);
+
+			if (pageNumber != Constants.DEFAULT_PAGINATION_ALL_ROWS) {
+				if (pageNumber > 1) {
+					query.setFirstResult((int) ((pageNumber - 1) * Constants.DEFAULT_ROWS_PER_PAGE));
+					query.setMaxResults((int) Constants.DEFAULT_ROWS_PER_PAGE);
+				} else {
+					query.setFirstResult(0);
+					query.setMaxResults((int) Constants.DEFAULT_ROWS_PER_PAGE);
+				}
+			}
+
+			List<WorkflowProcessDetails> list = query.list();
+
+			if (list != null && list.size() > 0) {
+				return list;
+			}
+			return null;
+		} catch (NullPointerException nullpointerexception) {
+			log.error(nullpointerexception.getStackTrace());
+			throw new NullPointerException();
+		} catch (HibernateException hibernateException) {
+			log.error(hibernateException.getStackTrace());
+			throw new HibernateException(hibernateException.getMessage());
+		} catch (Exception exception) {
+			log.error(exception.getStackTrace());
+			throw new RuntimeException(exception.getCause());
+		}
+
+	}
+
+	/**
+	 * This method returns count of the WorkflowProcessDetails objects available
+	 * based on search criteria.
+	 * 
+	 * @return long
+	 * @exception Exception
+	 */
+	public long getWorkflowProcessDetailsCount() {
+		try {
+			String fromClause = "select count(*) from WorkflowProcessDetails workflowProcessDetails";
+			Query query = getSession().createQuery(fromClause);
+			List list = query.list();
+
+			if (list != null && list.size() > 0) {
+				return Long.parseLong(list.get(0).toString());
+			}
+			return 0;
+		} catch (NullPointerException nullpointerexception) {
+			log.error(nullpointerexception.getStackTrace());
+			throw new NullPointerException();
+		} catch (HibernateException hibernateException) {
+			log.error(hibernateException.getStackTrace());
+			throw new HibernateException(hibernateException.getMessage());
+		} catch (Exception exception) {
+			log.error(exception.getStackTrace());
+			throw new RuntimeException(exception.getCause());
+		}
+	}
+
+	/**
+	 * This method returns WorkflowProcessDetails objects from the database by
+	 * process Id
+	 * 
+	 * @param processId
+	 * @return WorkflowProcessDetails
+	 * @exception Exception
+	 */
+	public WorkflowProcessDetails getWorkflowProcessDetailsByProcessId(String processId) {
+		try {
+			String fromClause = "select workflowProcessDetails from WorkflowProcessDetails workflowProcessDetails where workflowProcessDetails.processId=:processId";
+			
+			Query query = getSession().createQuery(fromClause);
+			query.setString("processId",processId);
+			List list = query.list();
+
+			if (list != null && list.size() > 0) {
+				return (WorkflowProcessDetails) list.get(0);
+			}
+			return null;
+		} catch (NullPointerException nullpointerexception) {
+			log.error(nullpointerexception.getStackTrace());
+			throw new NullPointerException();
+		} catch (HibernateException hibernateException) {
+			log.error(hibernateException.getStackTrace());
+			throw new HibernateException(hibernateException.getMessage());
+		} catch (Exception exception) {
+			log.error(exception.getStackTrace());
+			throw new RuntimeException(exception.getCause());
+		}
+	}
+
+	/**
+	 * This method returns WorkflowProcessDetails objects from the database by
+	 * entity Id and entity Name
+	 * 
+	 * @param entityId
+	 * @param entityName
+	 * @return WorkflowProcessDetails
+	 * @exception Exception
+	 */
+	@Override
+	public WorkflowProcessDetails getWorkflowProcessDetailsByEntityDetails(long entityId, String entityName) {
+		try {
+			String fromClause = "select workflowProcessDetails from WorkflowProcessDetails workflowProcessDetails where workflowProcessDetails.entityId="+entityId+" and workflowProcessDetails.entityName='"+entityName+"' and workflowProcessDetails.workflowStatus!=2";
+			Query query = getSession().createQuery(fromClause);
+//			query.setLong("entityId",entityId);
+//			query.setString("entityName",entityName);
+//			query.setLong("workflowStatus",WorkflowConstants.WORKFLOW_STATUS_ABORTED);
+			
+			List list = query.list();
+			System.out.printf("list",list);
+        	log.debug("list");
+
+
+			if (list != null && list.size() > 0) {
+				return (WorkflowProcessDetails) list.get(0);
+				
+			}
+			return null;
+			
+		} catch (NullPointerException nullpointerexception) {
+			log.error(nullpointerexception.getStackTrace());
+			throw new NullPointerException();
+		} catch (HibernateException hibernateException) {
+			log.error(hibernateException.getStackTrace());
+			throw new HibernateException(hibernateException.getMessage());
+		} catch (Exception exception) {
+			log.error(exception.getStackTrace());
+			throw new RuntimeException(exception.getCause());
+		}
+	}
+
+	/**
+	 * This method returns WorkflowProcessDetails objects from the database by
+	 * entity Id and entity Name
+	 * 
+	 * @param entityId
+	 * @param entityName
+	 * @return List of WorkflowProcessDetails
+	 * @exception Exception
+	 */
+	public List<WorkflowProcessDetails> getAllWorkflowProcessDetailsByEntityDetails(long entityId, String entityName) {
+		try {
+			String fromClause = "select workflowProcessDetails from WorkflowProcessDetails workflowProcessDetails where workflowProcessDetails.entityId=:entityId"
+					+ " and workflowProcessDetails.entityName=:entityName order by workflowProcessDetails.workflowProcessDetailsId desc";
+			Query query = getSession().createQuery(fromClause);
+			query.setLong("entityId",entityId);
+			query.setString("entityName",entityName);
+			
+			List list = query.list();
+			return list;
+		} catch (NullPointerException nullpointerexception) {
+			log.error(nullpointerexception.getStackTrace());
+			throw new NullPointerException();
+		} catch (HibernateException hibernateException) {
+			log.error(hibernateException.getStackTrace());
+			throw new HibernateException(hibernateException.getMessage());
+		} catch (Exception exception) {
+			log.error(exception.getStackTrace());
+			throw new RuntimeException(exception.getCause());
+		}
+	}
+
+	public List<WorkflowProcessDetails> getAllWorkflowProcessDetailsByEntityId(long entityId) {
+		try {
+			String fromClause = "select workflowProcessDetails from WorkflowProcessDetails workflowProcessDetails where workflowProcessDetails.entityId=:entityId"
+					+ "  order by workflowProcessDetails.workflowProcessDetailsId desc";
+			Query query = getSession().createQuery(fromClause);
+			query.setLong("entityId",entityId);
+			//query.setString("entityName",entityName);
+			
+			List list = query.list();
+			return list;
+		} catch (NullPointerException nullpointerexception) {
+			log.error(nullpointerexception.getStackTrace());
+			throw new NullPointerException();
+		} catch (HibernateException hibernateException) {
+			log.error(hibernateException.getStackTrace());
+			throw new HibernateException(hibernateException.getMessage());
+		} catch (Exception exception) {
+			log.error(exception.getStackTrace());
+			throw new RuntimeException(exception.getCause());
+		}
+	}
+}

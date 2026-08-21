@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2024-10-15T14:55:02 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MTP" pageWidth="935" pageHeight="1000" columnWidth="845" leftMargin="45" rightMargin="45" topMargin="45" bottomMargin="0" uuid="b6b795d4-a222-402b-835e-49680999b8ba">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="rtiapplrefid" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{rtiapplrefid}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from egovrti.mtp_registration_certificate mp, egovrti.rti_application ra 
+where mp.rti_ref_id = ra.rti_application_id and mp.rti_ref_id=$P{rtiapplrefid};]]>
+	</queryString>
+	<field name="mtpid" class="java.lang.Integer"/>
+	<field name="rti_appl_ref_no" class="java.lang.String"/>
+	<field name="rti_ref_id" class="java.lang.Integer"/>
+	<field name="full_name" class="java.lang.String"/>
+	<field name="current_address" class="java.lang.String"/>
+	<field name="phone_number" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="pregnancy_termination" class="java.lang.String"/>
+	<field name="name_of_place" class="java.lang.String"/>
+	<field name="institute_type" class="java.lang.String"/>
+	<field name="other_institute_type" class="java.lang.String"/>
+	<field name="zone_no" class="java.lang.String"/>
+	<field name="gynaecological" class="java.lang.String"/>
+	<field name="resuscitation" class="java.lang.String"/>
+	<field name="sterilization" class="java.lang.String"/>
+	<field name="emergency" class="java.lang.String"/>
+	<field name="transportation" class="java.lang.String"/>
+	<field name="gynaecologicalsurgery" class="java.lang.String"/>
+	<field name="drugsparental" class="java.lang.String"/>
+	<field name="resuscitationequipment" class="java.lang.String"/>
+	<field name="ownername" class="java.lang.String"/>
+	<field name="place_full_adrresss" class="java.lang.String"/>
+	<field name="place_email_id" class="java.lang.String"/>
+	<field name="place_phonee" class="java.lang.String"/>
+	<field name="name_place" class="java.lang.String"/>
+	<field name="nmcregnumber" class="java.lang.String"/>
+	<field name="total_no_beds" class="java.lang.String"/>
+	<field name="obscticals" class="java.lang.String"/>
+	<field name="gyn_case" class="java.lang.String"/>
+	<field name="no_of_deliveries" class="java.lang.String"/>
+	<field name="dilatation" class="java.lang.String"/>
+	<field name="abdominal" class="java.lang.String"/>
+	<field name="operation_tableandinstruments" class="java.lang.String"/>
+	<field name="drugsand_paracetamol" class="java.lang.String"/>
+	<field name="anesthetic_equipments" class="java.lang.String"/>
+	<field name="oxygen_cylinder" class="java.lang.String"/>
+	<field name="acknowledge" class="java.lang.String"/>
+	<field name="uploaded_demand" class="java.lang.String"/>
+	<field name="cell_remark" class="java.lang.String"/>
+	<field name="mho_remark" class="java.lang.String"/>
+	<field name="pdf_files_saved_path" class="java.lang.String"/>
+	<field name="hq_remark" class="java.lang.String"/>
+	<field name="hq_doc" class="java.lang.String"/>
+	<field name="zmo_doc" class="java.lang.String"/>
+	<field name="inspectionstatus" class="java.lang.Integer"/>
+	<field name="nodaltocellremark" class="java.lang.String"/>
+	<field name="rti_application_id" class="java.lang.Long"/>
+	<field name="rti_application_number" class="java.lang.String"/>
+	<field name="inward_number" class="java.lang.String"/>
+	<field name="registration_date" class="java.lang.String"/>
+	<field name="received_date" class="java.lang.String"/>
+	<field name="closed_date" class="java.lang.String"/>
+	<field name="subject" class="java.lang.String"/>
+	<field name="information_required" class="java.lang.String"/>
+	<field name="number_of_copies" class="java.lang.Integer"/>
+	<field name="amount_per_copy" class="java.lang.Double"/>
+	<field name="application_cost" class="java.lang.Double"/>
+	<field name="workflow_status" class="java.lang.Integer"/>
+	<field name="final_status" class="java.lang.String"/>
+	<field name="final_status_when_parked" class="java.lang.String"/>
+	<field name="is_application_parked" class="java.lang.Integer"/>
+	<field name="created_date" class="java.lang.String"/>
+	<field name="is_feepaid" class="java.lang.Integer"/>
+	<field name="applicant_name" class="java.lang.String"/>
+	<field name="gender" class="java.lang.Integer"/>
+	<field name="state" class="java.lang.String"/>
+	<field name="COLUMN_67" class="java.lang.String"/>
+	<field name="mobile_number" class="java.lang.String"/>
+	<field name="COLUMN_69" class="java.lang.String"/>
+	<field name="pincode" class="java.lang.Integer"/>
+	<field name="bpl" class="java.lang.Integer"/>
+	<field name="bpl_card_number" class="java.lang.String"/>
+	<field name="address_line1" class="java.lang.String"/>
+	<field name="address_line2" class="java.lang.String"/>
+	<field name="district" class="java.lang.String"/>
+	<field name="postal_charges" class="java.lang.Double"/>
+	<field name="rti_application_ref_number" class="java.lang.String"/>
+	<field name="rti_application_ref_id" class="java.lang.Long"/>
+	<field name="is_rti_appeal_application" class="java.lang.Integer"/>
+	<field name="has_assigned_user" class="java.lang.Integer"/>
+	<field name="rti_service_id" class="java.lang.Integer"/>
+	<field name="received_mode_id" class="java.lang.Long"/>
+	<field name="fee_master_id" class="java.lang.Long"/>
+	<field name="created_user_id" class="java.lang.Long"/>
+	<field name="assigned_section_id" class="java.lang.Long"/>
+	<field name="assigned_department_id" class="java.lang.Long"/>
+	<field name="application_department_id" class="java.lang.Long"/>
+	<field name="assignee_user_id" class="java.lang.Long"/>
+	<field name="tenancyid" class="java.lang.Long"/>
+	<field name="COLUMN_90" class="java.lang.String"/>
+	<field name="pdf_upload_from_portal" class="java.lang.String"/>
+	<field name="remarks" class="java.lang.String"/>
+	<field name="ward_name" class="java.lang.String"/>
+	<field name="zone" class="java.lang.String"/>
+	<field name="department" class="java.lang.String"/>
+	<field name="template_name" class="java.lang.String"/>
+	<field name="user_mobile_no" class="java.lang.String"/>
+	<field name="mobile_app_user_number" class="java.lang.String"/>
+	<field name="police_noc" class="java.lang.String"/>
+	<field name="fire_noc" class="java.lang.String"/>
+	<field name="traffic_noc" class="java.lang.String"/>
+	<field name="workflow_level_time" class="java.lang.String"/>
+	<field name="workflow_level" class="java.lang.String"/>
+	<field name="zone_map" class="java.lang.String"/>
+	<field name="property_payment_receipt" class="java.lang.String"/>
+	<field name="workflow_comments" class="java.lang.String"/>
+	<field name="rejectionletter" class="java.lang.String"/>
+	<field name="demandletter" class="java.lang.String"/>
+	<field name="noc" class="java.lang.String"/>
+	<field name="citizennoc" class="java.lang.String"/>
+	<field name="first_payment_fees" class="java.lang.String"/>
+	<field name="plantationletter" class="java.lang.String"/>
+	<field name="property_tax_certificate" class="java.lang.String"/>
+	<field name="tax_other_citizen_document_upload" class="java.lang.String"/>
+	<field name="aaplesarkar_user_mobile_no" class="java.lang.String"/>
+	<field name="year" class="java.lang.String"/>
+	<field name="kiosk_mobile_number" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="258" splitType="Stretch">
+			<staticText>
+				<reportElement x="342" y="47" width="210" height="37" uuid="5434ebe9-9ea8-45b5-9c38-e3c3ba9d62b7"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[महाराष्ट्र शासन ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="297" y="85" width="300" height="40" uuid="4a17e671-d98d-4f5c-ae12-9402347acfcf"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[सार्वजनिक आरोग्य विभाग]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="235" y="125" width="420" height="32" uuid="39629c6f-096a-47e9-bc4e-187193af49cd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="22" isBold="false"/>
+				</textElement>
+				<text><![CDATA[नागपूर महानगरपालिका आरोग्य विभाग, नागपूर]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="189" width="805" height="35" uuid="bcdbaa8c-2966-4700-9236-5dd0924b92d1"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[(वैद्यकिय गर्भावस्था समाप्त करण्यासंबंधी नियम २००३ च्या नियम ५ मधील उपनियम ६ अन्वये वितरीत केलेले)
+
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-34" y="-19" width="910" height="1" uuid="8b6f6ffa-9978-40d9-b6b8-939dbc9648aa"/>
+			</line>
+			<line>
+				<reportElement x="-34" y="-19" width="1" height="277" uuid="3e07a8db-ee77-4724-bb9c-02dfa1b830b5"/>
+			</line>
+			<line>
+				<reportElement x="876" y="-19" width="1" height="229" uuid="cd28bd25-30f8-40a6-94ad-4cd0791d4a4e"/>
+			</line>
+			<line>
+				<reportElement x="1250" y="742" width="100" height="-484" uuid="b1b33648-7dc9-46bc-a607-1645e135e1f5"/>
+			</line>
+			<line>
+				<reportElement x="-34" y="172" width="910" height="1" uuid="08cec10d-c01d-4df6-95ff-af13b77b8b99"/>
+			</line>
+			<image>
+				<reportElement x="43" y="55" width="110" height="97" uuid="06d3b0ad-9a04-4e2a-938a-7dc38b5914d2"/>
+				<imageExpression><![CDATA["../../images/AMC_Logo.jpeg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="205" splitType="Stretch">
+			<staticText>
+				<reportElement x="322" y="-23" width="230" height="37" uuid="97247c9c-a025-49c5-b548-5d88907cd1ec"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[मान्यतेचे प्रमाणपत्र]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="139" width="110" height="40" uuid="5d730d9a-a873-44dc-90ae-9bed6eb4ec9e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[अनुसूची]]></text>
+			</staticText>
+			<line>
+				<reportElement x="337" y="7" width="197" height="1" uuid="452cc639-0670-4c91-a8f1-2f5b8212fc9a"/>
+			</line>
+			<line>
+				<reportElement x="-34" y="0" width="1" height="205" uuid="32004834-ca02-41e1-9d07-4eb192546f8b"/>
+			</line>
+			<line>
+				<reportElement x="876" y="-48" width="1" height="237" uuid="f28ffaa9-3a5e-4b29-b3e1-363a7a918095"/>
+			</line>
+			<textField>
+				<reportElement x="40" y="33" width="805" height="107" uuid="87e34297-e217-40fd-ba95-aa28798e67b7"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA["खालील अनुसूचित वर्णन करण्यात आलेल्या जागेस वैद्यकीय रित्या गर्भावस्थेची समाप्ती करण्यासंबंधित अधिनियम १९७१ (सन १९७१ च्या अधिनियम ३४) याच्या प्रयोजनार्थ याद्वारे " 
++ ($F{pregnancy_termination}.equals("upTo12Weeks") ? "12" : $F{pregnancy_termination}.equals("upTo24Weeks") ? "20" : "") 
++ " आठवड्यांपर्यंत वैद्यकीय गर्भपात करण्यासाठी मान्यता देण्यात येत आहे."]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="34" splitType="Stretch">
+			<line>
+				<reportElement x="-34" y="0" width="1" height="34" uuid="c93fca90-0868-486a-b509-9d4b4ba828e7"/>
+			</line>
+			<textField>
+				<reportElement x="230" y="1" width="614" height="33" uuid="0d90f134-7781-4557-8a5b-5d93532ccd0e"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="18" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name_place}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="331" splitType="Stretch">
+			<line>
+				<reportElement x="876" y="-50" width="1" height="150" uuid="f3f23123-a26a-41bd-9b34-493bc69a1102"/>
+			</line>
+			<line>
+				<reportElement x="-34" y="0" width="1" height="100" uuid="a4c08771-d71f-4e37-b665-434c5b089d74"/>
+			</line>
+			<line>
+				<reportElement x="-34" y="97" width="1" height="140" uuid="872737b0-d789-42ec-a95e-994d987c1970"/>
+			</line>
+			<staticText>
+				<reportElement x="40" y="267" width="121" height="30" uuid="970965f8-8760-445c-8e37-9a993a37944c"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[नागपूर.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="100" width="190" height="30" uuid="d7415e7b-8a60-46f1-8756-c7734a9b0d47"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[स्त्रीरोग व प्रसुती शास्त्रज्ञ :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="-33" width="170" height="34" uuid="60aca2f6-04e6-4fa3-af92-6c52145a3655"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[जागेचे नांव ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="0" width="170" height="31" uuid="f2a7cd9b-2a62-4ebc-b7d7-ba47ab88ec3a"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[पत्ता आणि इतर वर्णने ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="30" width="170" height="32" uuid="5a5def23-feb2-4402-b993-d409ac3d016f"/>
+				<textElement>
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[मालकाचे नांव ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="631" y="267" width="200" height="33" uuid="7c454be4-ebcc-4668-b566-0f824f840bb3"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[वैद्यकीय आरोग्य अधिकारी ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="590" y="298" width="255" height="33" uuid="ca1c55e7-423a-4654-b297-e248fb9a6d30"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[नागपूर महानगरपालिका, नागपूर]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="230" y="1" width="614" height="30" uuid="2efaa9a2-bcf0-4c39-a5b1-1cc3d0ad0af1"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="18" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{place_full_adrresss}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="32" width="615" height="30" uuid="e8949e11-c30c-4a23-8d72-72734a625a7f"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Unicode MS" size="18" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ownername}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement isPrintRepeatedValues="false" x="230" y="100" width="615" height="31" uuid="3019e500-cc38-4a56-a28c-bac119ccd3c3">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="rtiapplrefid">
+					<subreportParameterExpression><![CDATA[$P{rtiapplrefid}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["MTPSubrReport.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="510" y="-490" width="334" height="38" uuid="33f7d70c-cfdb-43b7-b72b-48274d1669e5"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Arial Unicode MS" size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["क्रमांक : "+$F{rti_appl_ref_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="297" width="320" height="33" uuid="2b7b466f-74cc-4d66-b3d0-a1c6406a7234"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA["दिनांक: "+new SimpleDateFormat("dd-MM-yyyy").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="210" y="-33" width="10" height="33" uuid="2d079e50-9b3d-44aa-a186-6a1d8711e7d3"/>
+				<textElement>
+					<font fontName="SansSerif" size="20"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="31" width="10" height="33" uuid="5e51ff1e-3032-414f-8127-20693c2c4db4"/>
+				<textElement>
+					<font fontName="SansSerif" size="20"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="-1" width="10" height="33" uuid="9166c0ee-b74a-4f46-8c22-06afcae2dc6a"/>
+				<textElement>
+					<font fontName="SansSerif" size="20"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="876" y="97" width="1" height="103" uuid="208718a6-b8a4-4591-8be5-2c3991a22fd3"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="51" splitType="Stretch">
+			<line>
+				<reportElement x="876" y="-219" width="1" height="221" uuid="d0142e94-2c01-42b1-8535-147a29d93dff"/>
+			</line>
+			<line>
+				<reportElement x="-34" y="1" width="911" height="1" uuid="f2f947cb-99f9-4699-936a-42a85b175d5c"/>
+			</line>
+			<staticText>
+				<reportElement x="195" y="13" width="450" height="30" uuid="fdec7652-1d2d-4cde-9921-e988da11751f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Unicode MS" size="20"/>
+				</textElement>
+				<text><![CDATA[हे प्रमाणपत्र दर्शनिय भागात ठळक पणे प्रदर्शीत करावे.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-34" y="-250" width="1" height="251" uuid="99bcfb88-f100-4a27-9979-08d3a33ad6ef"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</summary>
+</jasperReport>

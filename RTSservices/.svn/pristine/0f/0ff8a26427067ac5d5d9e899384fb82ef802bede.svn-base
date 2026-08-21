@@ -1,0 +1,311 @@
+package com.mars.workflow.filter;
+
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.mars.common.model.User;
+import com.mars.common.service.UserService;
+import com.mars.common.utils.CommonUtils;
+import com.mars.common.utils.SessionUser;
+import com.mars.workflow.model.WorkflowProcessDetails;
+import com.mars.workflow.service.WorkflowProcessDetailsService;
+import com.mars.workflow.service.WorkflowService;
+import com.mars.workflow.service.WorkflowUsersService;
+import com.mars.workflow.utils.WorkflowConstants;
+
+public class WorkflowServletFilter extends OncePerRequestFilter {
+
+	private static Log log = LogFactory.getLog(WorkflowServletFilter.class);
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+	
+		ApplicationContext applicationContext = this.getContext(super.getFilterConfig());
+		HttpSession httpSession = request.getSession();
+		SessionUser sessionUser = (SessionUser) httpSession.getAttribute("SessionUser");
+		/*try{*/
+		/*response.setHeader("Strict-Transport-Security","max-age=31536000 ; includeSubDomains");
+		response.setHeader("Cache-Control", "no-cache, no-store, max-age=0, must-revalidate");
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("X-Content-Type-Options", "nosniff");*/
+       // response.setHeader("X-Frame-Options", "SAMEORIGIN");
+    //    response.setHeader("X-XSS-Protection", "1; mode=block");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+		/*response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "X-PINGOTHER,Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization");
+		response.addHeader("Access-Control-Expose-Headers", "xsrf-token");
+        response.setHeader("Content-Security-Policy", "default-src 'self'; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'; img-src * data: 'unsafe-inline'; font-src * 'unsafe-inline'; connect-src * 'unsafe-inline'; frame-src *");*/
+        Cookie[] cookies = request.getCookies();
+        if(cookies!=null && cookies.length>0){
+        for(Cookie cookie:cookies){
+			if(cookie.getName().equalsIgnoreCase("DWRSESSIONID")){
+				String sessionid=cookie.getValue();
+				cookie.setMaxAge(0);
+			response.setHeader("SET-COOKIE", "DWRSESSIONID=" + sessionid + "; Path=" + request.getContextPath() + "; HttpOnly; Secure");
+			}
+		}
+		}
+        
+		if (applicationContext != null && sessionUser != null) {
+			WorkflowService workflowService = (WorkflowService) applicationContext.getBean("workflowService");
+			WorkflowProcessDetailsService workflowProcessDetailsService = (WorkflowProcessDetailsService) applicationContext.getBean("workflowProcessDetailsService");
+			WorkflowUsersService workflowUsersService = (WorkflowUsersService) applicationContext.getBean("workflowUsersService");
+			// Read all parameters from Request
+			String strWorkflowAction = request.getParameter(WorkflowConstants.WORKFLOW_ACTION);
+			String workflow_id = request.getParameter(WorkflowConstants.WORKFLOW_JOB_ID);
+			String task_id = request.getParameter(WorkflowConstants.WORKFLOW_TASK_ID);
+			String workflow_name = request.getParameter(WorkflowConstants.WORKFLOW_NAME);
+			String workflow_assign = request.getParameter(WorkflowConstants.WORKFLOW_REASSIGN_USER);
+			String worfklow_tranistion = request.getParameter(WorkflowConstants.WORKFLOW_TRANSISTION);
+
+			String worfklow_entityname = request.getParameter(WorkflowConstants.WORKFLOW_ENTITYNAME);
+			String worfklow_entityid = request.getParameter(WorkflowConstants.WORKFLOW_ENTITYID);
+			String workflow_comments = request.getParameter(WorkflowConstants.WORKFLOW_COMMENTS);
+
+			String workflow_priority = request.getParameter(WorkflowConstants.WORKFLOW_PRIORITY);
+			String workflow_due_date = request.getParameter(WorkflowConstants.WORKFLOW_DUE_DATE);
+
+			int priority = 0;
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);
+			Date dueDate = calendar.getTime();
+			if (StringUtils.isNotEmpty(workflow_priority)) {
+				priority = Integer.parseInt(workflow_priority);
+			}
+			if (StringUtils.isNotEmpty(workflow_due_date)) {
+				dueDate = CommonUtils.getFormattedDate(workflow_due_date);
+			}
+
+			if (StringUtils.isNotEmpty(strWorkflowAction)) {
+				if (strWorkflowAction.equalsIgnoreCase(WorkflowConstants.WORKFLOW_ACTION_DEPLOY_PROCESSES)) {
+					workflowService.createProcessDefinitions();
+				} else if (strWorkflowAction.equalsIgnoreCase(WorkflowConstants.WORKFLOW_ACTION_CREATE_USERS)) {
+					UserService userService = (UserService) applicationContext.getBean("userService");
+					List<User> listUser = userService.getAll();
+					for (User user : listUser) {
+						log.info("Creating users" + user.getUserName());
+						if (!workflowService.checkUserExists(user.getUserName())) {
+							//TODO, Oct 20
+							//workflowService.saveOrUpdateUser(user.getUserName(), user.getEmployee().getFirstName(), user.getEmployee().getLastName(), user.getEmployee().getEmail());
+							workflowService.saveOrUpdateUser(user.getUserName(), user.getFirstName(), user.getLastName(), user.getEmail());
+						}
+					}
+				} else if (strWorkflowAction.equalsIgnoreCase(WorkflowConstants.WORKFLOW_ACTION_CREATE_PROCESS)) {
+
+					if (StringUtils.isNotEmpty(workflow_name)) {
+						HashMap<String, Object> workflowMap = new HashMap<String, Object>();
+						workflowMap.put(WorkflowConstants.WORKFLOW_NAME, workflow_name);
+						workflowMap.put(WorkflowConstants.WORKFLOW_USER_NAME, sessionUser.getUserName());
+						if (StringUtils.isNotEmpty(worfklow_entityname))
+							workflowMap.put(WorkflowConstants.WORKFLOW_ENTITYNAME, worfklow_entityname);
+						if (StringUtils.isNotEmpty(worfklow_entityid))
+							workflowMap.put(WorkflowConstants.WORKFLOW_ENTITYID, worfklow_entityid);
+						WorkflowProcessDetails processDetails = workflowProcessDetailsService.getWorkflowProcessDetailsByEntityDetails(Long.parseLong(worfklow_entityid), worfklow_entityname);
+						if (processDetails == null) {
+							workflowUsersService.getWorkflowUsers(workflowMap);
+							try {
+								if (StringUtils.isEmpty(workflow_comments)) {
+									workflow_comments = "Worklow started by " + sessionUser.getUserName();
+								}
+								workflowMap.put(WorkflowConstants.WORKFLOW_COMMENTS, workflow_comments);
+								String strProcessId = workflowService.createWorkflow(workflow_name, workflowMap);
+								log.info("The Workflow Process created" + strProcessId + " for " + worfklow_entityname);
+							} catch (Exception exception) {
+								request.setAttribute(WorkflowConstants.WORKFLOW_ERROR_MESSAGE, WorkflowConstants.WORKFLOW_CREATE_ERROR);
+								exception.printStackTrace();
+							}
+						}
+					}
+				} else if (strWorkflowAction.equalsIgnoreCase(WorkflowConstants.WORKFLOW_ACTION_TAKE_TASK)) {
+					if (StringUtils.isNotEmpty(workflow_id) && StringUtils.isNotEmpty(task_id)) {
+						workflowService.takeTask(task_id, sessionUser.getUserName());
+					}
+				} else if (strWorkflowAction.equalsIgnoreCase(WorkflowConstants.WORKFLOW_ACTION_COMPLETE_TASK)) {
+					if (StringUtils.isNotEmpty(worfklow_tranistion) && StringUtils.isNotEmpty(task_id)) {
+
+						workflowService.completeTask(task_id, worfklow_tranistion, workflow_comments, priority, dueDate);
+						if (worfklow_tranistion.equalsIgnoreCase("end")) {
+							WorkflowProcessDetails processDetails = workflowProcessDetailsService.getWorkflowProcessDetailsByEntityDetails(Long.parseLong(worfklow_entityid), worfklow_entityname);
+							if (processDetails != null) {
+								processDetails.setWorkflowStatus(WorkflowConstants.WORKFLOW_STATUS_STOPPED_APPROVED);
+								workflowProcessDetailsService.save(processDetails);
+							}
+						}
+					}
+				} else if (strWorkflowAction.equalsIgnoreCase(WorkflowConstants.WORKFLOW_ACTION_ASSIGN_TASK)) {
+					if (StringUtils.isNotEmpty(workflow_id) && StringUtils.isNotEmpty(task_id)) {
+						workflowService.reassignTask(task_id, workflow_assign);
+					}
+				} else if (strWorkflowAction.equalsIgnoreCase(WorkflowConstants.WORKFLOW_ACTION_BACK_TO_GROUP)) {
+					if (StringUtils.isNotEmpty(workflow_id) && StringUtils.isNotEmpty(task_id)) {
+						workflowService.saveToGroup(task_id);
+					}
+				} else if (strWorkflowAction.equalsIgnoreCase(WorkflowConstants.WORKFLOW_ACTION_KILL_JOB)) {
+					if (StringUtils.isNotEmpty(workflow_id) && StringUtils.isNotEmpty(task_id)) {
+						if(StringUtils.isEmpty(workflow_comments)) {
+							workflow_comments ="Workflow discarded by "+sessionUser.getUserName();
+						}
+						workflowService.endProcess(workflow_id, workflow_comments);
+						WorkflowProcessDetails processDetails = workflowProcessDetailsService.getWorkflowProcessDetailsByEntityDetails(Long.parseLong(worfklow_entityid), worfklow_entityname);
+						if (processDetails != null) {
+							processDetails.setWorkflowStatus(WorkflowConstants.WORKFLOW_STATUS_ABORTED);
+							workflowProcessDetailsService.save(processDetails);
+						}
+					}
+				}
+			} else {
+				if (StringUtils.isNotEmpty(workflow_id) && StringUtils.isNotEmpty(task_id)) {
+					request.setAttribute("WORKFLOW_TRANSISTIONS", workflowService.getTaskTransitions(task_id));
+					request.setAttribute(WorkflowConstants.WORKFLOW_JOB_ID, workflow_id);
+					request.setAttribute(WorkflowConstants.WORKFLOW_TASK_ID, task_id);
+				}
+			}
+		}
+		
+	/*	boolean gatewayValue = true;
+	
+				if(request.getMethod().matches("GET") || request.getMethod().matches("POST")){
+					
+					if( request.getParameter("txnid")!=null &&  request.getParameter("txnid").length()>0 ||
+									request.getParameter("i")!=null && request.getParameter("i").length()>0 || 
+									request.getParameter("trnParams")!=null && request.getParameter("trnParams").length()>0 ||
+									request.getParameter("applicationNumber")!=null && request.getParameter("applicationNumber").length()>0){
+									request.setAttribute("gatewayURL", true);
+									gatewayValue = false;
+					}else{
+								request.setAttribute("gatewayURL", null);
+					}
+					 if(gatewayValue){
+						 String query=request.getQueryString();
+						 if(query!=null && !request.getServletPath().contains("/ws")){
+								if(request.getServletPath().contains("/fileupload/showFile.do") && request.getParameterMap().size()==1 
+				 						&& request.getParameterMap().containsKey("uuid") && request.getMethod().matches("GET")){
+				 			filterChain.doFilter(request, response);
+				 	}	else{
+						response.sendError(HttpServletResponse.SC_NOT_FOUND);
+				 	}
+							}	
+						 
+							if(!request.getServletPath().contains("login.do")){
+								if( !request.getServletPath().contains("/ws")){
+									if((request.getHeader("referer")== null) || (request.getHeader("referer")!=null) && 
+											 ((request.getHeader("referer").indexOf(request.getServerName()) == -1) && ((!request.getHeader("referer").equals("https://sso.rajasthan.gov.in/apps")) &&
+													 (!request.getHeader("referer").equals("http://swcs.rajasthan.gov.in/AllServices.aspx"))&&
+													 (!request.getHeader("referer").equals("https://smartrajapp.urban.rajasthan.gov.in")) &&
+													 (!request.getHeader("referer").equals("https://smartraj.urban.rajasthan.gov.in")) && 
+													 (!request.getHeader("referer").equals("http://sso.rajasthan.gov.in/dashboard"))
+													 && (!request.getHeader("referer").contains("/Citizen"))))){
+									if(!request.getServletPath().contains("/exception.jsp")){
+										response.sendRedirect(CommonUtils.getSendRedirectUrlPath(request)+"/pages/common/exception.jsp");
+									}
+									else{
+										filterChain.doFilter(request, response);	
+									}
+								}
+								
+									else if(request.getServletPath().contains("/dmsdocumentchecklist/manageFileUpload.do")){
+										if(!(request.getHeader("referer").contains("/tradeandstorage/editTradeAndStorage.do")||
+												request.getHeader("referer").contains("/tradeandstorage/saveTradeAndStorage.do")||
+												request.getHeader("referer").contains("/renewlicense/editRenewLicense.do")||
+												request.getHeader("referer").contains("/renewlicense/saveRenewLicense.do")||
+												request.getHeader("referer").contains("/muttonshop/saveMuttonShop.do")||
+												request.getHeader("referer").contains("/muttonshop/editMuttonShop.do") ||
+												request.getHeader("referer").contains("/businessname/editBusinessName.do")||
+												request.getHeader("referer").contains("/filecreation/editFileCreation.do")||
+												request.getHeader("referer").contains("/filecreation/saveFileCreation.do")||
+												request.getHeader("referer").contains("/filecreationVerification/editFileCreationAction.do")||
+												request.getHeader("referer").contains("/filecreationVerification/saveFileCreationAction.do")||
+												request.getHeader("referer").contains("/filecreationVerification/assignForApproval.do"))){	
+									        response.sendRedirect(CommonUtils.getSendRedirectUrlPath(request)+"/pages/common/exception.jsp");
+															     
+										                            }  else{
+											                                if(CommonTokenUtils.allowFileUpload(request))
+											                                        filterChain.doFilter(request, response);
+											                                else
+											                                        response.sendRedirect(CommonUtils.getSendRedirectUrlPath(request)+"/pages/common/exception.jsp");
+										                        }
+									}
+								      else if(request.getServletPath().contains("logout.do")&&!request.getMethod().matches("POST")&& request.getParameter("j_username")!=null &&request.getParameter("j_password")!=null){
+										request.setAttribute("j_username", "");
+										request.setAttribute("j_password", "");
+										response.sendRedirect(CommonUtils.getSendRedirectUrlPath(request)+"/pages/common/exception.jsp");
+										
+									}
+									else if(request.getMethod().matches("GET") && request.getRequestURI().contains(".dwr")){
+										response.sendRedirect(CommonUtils.getSendRedirectUrlPath(request)+"/pages/common/exception.jsp");
+									}else if(request.getParameterMap().containsKey("isPaginationClicked") || request.getParameterMap().containsKey("currentPage")){
+										if(!(request.getParameter("isPaginationClicked").equalsIgnoreCase(Constants.STATUS_NO_LABEL) || request.getParameter("isPaginationClicked").equalsIgnoreCase(Constants.STATUS_YES_LABEL))){
+											response.sendRedirect(CommonUtils.getSendRedirectUrlPath(request)+"/pages/common/exception.jsp");
+										}else if(request.getParameterMap().containsKey("currentPage")&&CommonUtils.numericValidation(request.getParameter("currentPage"))){
+											response.sendRedirect(CommonUtils.getSendRedirectUrlPath(request)+"/pages/common/exception.jsp");
+										}else{
+											filterChain.doFilter(request, response);
+										}
+										
+									}
+									
+								else{
+										filterChain.doFilter(request, response);
+								}
+							}else{
+									filterChain.doFilter(request, response);
+							}
+						}	else if(request.getMethod().matches("GET") && request.getParameterMap().containsKey("j_username") && request.getParameterMap().containsKey("j_password")){
+							response.sendRedirect(CommonUtils.getSendRedirectUrlPath(request)+"/pages/common/exception.jsp");
+						}
+						else if(request.getMethod().matches("POST") && request.getHeader("referer")==null){
+							response.sendRedirect(CommonUtils.getSendRedirectUrlPath(request)+"/pages/common/exception.jsp");
+						}
+						
+						else{
+							if((request.getServletPath().contains("login.do")||request.getServletPath().contains("logout.do"))&&!request.getMethod().matches("POST") && request.getParameter("j_username")!=null &&  request.getParameter("j_password")!=null){
+								request.setAttribute("j_username", "");
+								request.setAttribute("j_password", "");
+								response.sendRedirect(CommonUtils.getSendRedirectUrlPath(request)+"/pages/common/exception.jsp");
+							}else{
+								filterChain.doFilter(request, response);
+								}
+							}	
+					 
+					}else{
+						 filterChain.doFilter(request, response);
+					 }
+					 	
+				}else{
+					response.sendRedirect(CommonUtils.getSendRedirectUrlPath(request)+"/pages/common/exception.jsp");
+				}		
+			
+		
+			}catch (Exception e) {
+				e.printStackTrace();
+				 PrintWriter pw = new PrintWriter(new FileOutputStream(new File("/root/Desktop/License/LicenseMainException.txt"),true)); 
+				 pw.println(new Date().toString());
+		         pw.println(e.getMessage());
+		         pw.println(org.apache.commons.lang.exception.ExceptionUtils.getStackTrace(e));
+		         pw.close();
+				response.sendRedirect(CommonUtils.getSendRedirectUrlPath(request)+"/pages/common/exception.jsp");
+			}
+	}*/
+		filterChain.doFilter(request, response);
+		}
+	protected ApplicationContext getContext(FilterConfig filterConfig) {
+		return WebApplicationContextUtils.getRequiredWebApplicationContext(filterConfig.getServletContext());
+	}
+}

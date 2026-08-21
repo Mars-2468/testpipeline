@@ -1,0 +1,24 @@
+package com.mars.rti.dao;
+
+import java.util.List;
+
+import com.mars.rti.model.FireDetails;
+import com.mars.rti.model.FireRecommendation;
+import com.mars.rti.model.RTIApplication;
+
+ public interface FireRecommendationDAO {
+
+	public FireRecommendation saveFireRecommendation(FireRecommendation fireRecommendation) ;
+	public long fireRecommendationSave(FireRecommendation fireRecommendation);
+	public FireRecommendation get(long id);
+	public List<RTIApplication> getnoc(long serviceId);
+	public FireRecommendation getnocDetails(long serviceId);
+	public List<FireDetails> getFireDetails(long fireRecommendationId);
+	public void delete(long id);
+	public FireRecommendation merge(FireRecommendation entity);
+	
+	public FireRecommendation getApplicationId(String  applicationId);
+
+}
+
+ 

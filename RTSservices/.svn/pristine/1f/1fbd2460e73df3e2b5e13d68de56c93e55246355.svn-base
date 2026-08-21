@@ -1,0 +1,23 @@
+# Set all hibernate properties here
+hibernate.connection.url=jdbc:postgresql://172.16.25.152:5444/egov_nmc
+
+hibernate.connection.driver_class=org.postgresql.Driver
+hibernate.connection.username=nmc_user
+hibernate.connection.password=ZqPkJPiLWLaasgGv
+hibernate.default_schema=egovrti	
+hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+hibernate.show_sql=true
+hibernate.cache.provider_class=org.hibernate.cache.EhCacheProvider
+hibernate.cache.query_cache_factory=org.hibernate.cache.StandardQueryCacheFactory
+hibernate.cache.use_query_cache=true
+hibernate.connections.initialSize=10
+hibernate.connections.maxActive=20
+hibernate.connection.release_mode=auto
+hibernate.autoReconnect=true
+#hibernate.hbm2ddl.auto=create
+hibernate.cache.use_second_level_cache=false
+
+#reports 
+hibernate.reports.reportsDirectory=
+
+

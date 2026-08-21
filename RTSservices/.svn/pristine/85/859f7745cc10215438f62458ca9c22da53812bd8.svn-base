@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Material Design for Bootstrap</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="css/mdb.min.css">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <!-- Start your project here-->
+    <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top border py-1">
+        <div class="container-fluid p-0">
+          <div class="col p-0 d-flex align-items-center">
+            <button class="navbar-toggler navbar-toggler show d-block border-0"><span class="material-icons-outlined">menu</span></button>
+            
+            <a class="navbar-brand" href="#"><img src="img/Omni-Logo.jpg" alt="logo"></a>
+          </div>
+
+          <div class="col d-flex flex-row-reverse align-items-center p-0">
+        	
+            <div class="more-btn dropleft text-white p-0">
+                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="user-icon">S</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="account-setting.html">Edit Profile</a>
+                        <a class="dropdown-item" href="ihcd-setting.html">iHCD Setting</a>
+                        <a class="dropdown-item" href="#">Log out</a>
+                      </div>
+                </div>
+          </div>
+                   
+        </div>
+      </nav>
+      <!-- Navbar -->    
+      
+      <div class="sidenav">
+      	<div id="top-section" class="py-2 px-3 mb-2 d-flex align-items-center border-bottom">
+                <p class="user-icon d-inline-block m-0 mr-2">S</p>
+                <span class="d-inline-block"><p class="h5 m-0">Siddharth Sharm..</p><p class="pb-0 m-0 font-small">Process BA</p></span>
+            </div>
+      	<div id="left-button" class="px-2">
+        	<ul class="sidenav-menu accordion" id="accordionExample">            	
+            	<li class="sidenav-item">
+                	<a class="sidenav-link">
+                    	<i class="material-icons-outlined mr-3">dashboard</i>
+                        <span>Dashboard</span>
+                        <!--<i class="material-icons-outlined rotate-icon">arrow_right</i>-->
+                    </a>
+                </li>
+                
+                <li class="sidenav-item">
+                	<a class="sidenav-link collapsed active" data-toggle="collapse" data-target="#collapseOne"
+          aria-expanded="true" aria-controls="collapseOne">
+                    	<i class="material-icons-outlined mr-3">auto_stories</i>
+                        <span>Learn Digital</span>
+                        <i class="material-icons-outlined rotate-icon">arrow_right</i>
+                    </a>
+                    
+                    <ul id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    	<li class="sidenav-item"><a class="sidenav-link active">My Courses</a></li>
+                        <li class="sidenav-item"><a class="sidenav-link">Badges</a></li>
+                    </ul>
+                </li>
+                
+            	<li class="sidenav-item">
+                	<a class="sidenav-link">
+                    	<i class="material-icons-outlined mr-3">library_books</i>
+                        <span>POC Library</span>
+                        <!--<i class="material-icons-outlined rotate-icon">arrow_right</i>-->
+                    </a>
+                </li>
+                
+                <li class="sidenav-item">
+                	<a class="sidenav-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+          aria-expanded="true" aria-controls="collapsetwo">
+                    	<i class="material-icons-outlined mr-3">laptop</i>
+                        <span>Sandbox</span>
+                        <i class="material-icons-outlined rotate-icon">arrow_right</i>
+                    </a>                    
+                    <ul id="collapseTwo" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    	<li class="sidenav-item"><a class="sidenav-link">My Machine</a></li>
+                        <li class="sidenav-item"><a class="sidenav-link">My Platform</a></li>
+                        <li class="sidenav-item"><a class="sidenav-link">My Activity Logs</a></li>
+                    </ul>
+                </li>
+                
+                <li class="sidenav-item">
+                	<a class="sidenav-link">
+                    	<i class="material-icons-outlined mr-3">contact_support</i>
+                        <span>Help Desk</span>
+                        <!--<i class="material-icons-outlined rotate-icon">arrow_right</i>-->
+                    </a>
+                </li>
+            </ul>
+        	
+        </div>
+        </div>
+        
+      <div class="main">
+      	<div class="container-fluid">
+        	<h1>My Courses</h1>
+        </div>
+      	
+      </div>
+
+    <!-- End your project here-->
+    <!-- jQuery -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>    
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    
+     <script type="text/javascript" src="js/main.js"></script>
+    
+  </body>
+</html>

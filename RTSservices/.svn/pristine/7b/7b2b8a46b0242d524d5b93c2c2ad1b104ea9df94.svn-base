@@ -1,0 +1,171 @@
+<html>
+<!--
+*********************************************************
+ * Title: maintanencePage.jsp 
+ * Description: 
+ * Copyright (c) 2007 Mettler Toledo 
+ * <Change History>
+ * @version: 1.0
+ * @author : Priya Biju
+*********************************************************
+-->
+<style>
+
+/* This is a predefined style of the body tag. It applies borders vertically and also sets a gradient image on the top right corner */
+BODY
+	{
+	background-color: White;
+	background-image: url(../../images/bg_body.jpg);	
+	background-repeat : no-repeat;		
+	background-position : top right;		
+	color: #003399;		
+	font-family: Arial, Helvetica, sans-serif;		
+	font-size: 11px;	
+	margin: 0px;		
+    overflow: auto;
+    padding:0 20px 0px 20px;
+	}
+	
+.ClsMTLogo
+	{	
+	background-image: url("../../images/mt_logo.gif");
+	background-repeat: no-repeat;
+	width: 148px;
+	height: 80px;
+	float: left;
+	}
+	
+/* Apply this style to place the eCDB logo */
+.ClseCDBLogo
+	{ 
+	background-image: url("../../images/ecdb_logo.gif");
+	background-repeat: no-repeat;
+	width: 155px;
+	height: 80px;
+	float: right;
+	}	
+	
+/* Apply this style for the Top navigation row. Please call this class in the TD tag */
+.ClsTopNavigation
+ 	{ 
+ 	background-color: #dbdfd7;
+ 	border-left: 1px solid black;
+ 	padding-top: 4px;
+   padding-bottom: 4px;
+   vertical-align: top;
+ 	}
+ 	
+/* Apply this style to display the page title */
+.ClsPageTitle
+	{
+	border-bottom: 1px solid #52B500;
+	color: #343d92;
+	display: block;
+	font-size: 14px;
+	font-weight: bold;
+	float: left;
+	margin-left: 0px;
+	padding: 10px 0px 2px 10px;
+	position: relative;
+} 		
+
+/* Apply this style inside the div tag to display the pop up window */
+.ClsPopUp
+	{
+	background-color: #32CD32;
+	border-right: inset 5px #346eae;
+	border-bottom: inset 5px #346eae;
+	padding: 20px 20px 20px 20px;
+	width:350px;
+	height:180px;
+	}
+	
+.ClsMaintenanceMsg
+	{
+	color: #343d92;
+	display: block;
+	font-size: 11px;
+	font-weight: bold;
+	margin-left: -10px;
+	padding: 15px 0px 2px 10px;
+}	
+
+.ClsMaintenanceTime
+	{
+	color: #343d92;
+	display: block;
+	font-size: 20px;
+	font-weight: bold;
+	margin-left: -10px;
+	padding: 15px 0px 2px 10px;
+}
+
+/* Apply this style For the Copyright Text */
+.ClsCopyright	
+	{
+	float: right;
+	color: #969c90;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	}
+</style>
+<body>
+<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
+	<tr>
+		<td valign="top"  height="80%">
+			<div class="ClsMTLogo">
+				<a href="#" title="Metler Toledo"></a>
+			</div>
+			<!-- ==============  Metler Toledo Logo Comes here ============ -->
+			<div class="ClseCDBLogo"></div>
+			<table cellpadding="0" cellspacing="0" border="0" width="100%" height="22">
+			     <tr>
+			     	<!-- Links to Home,News,Print,Password,Admin -->
+			         <td class="ClsTopNavigation"></td>
+			     </tr>
+			</table>
+			<table  cellpadding="0" cellspacing="0" border="0" class="ClsPageWidth">
+				<tr>
+					<td class="ClsPadding">
+					<!-- ====The fmt tag is used for reading the messages/labels from the messages property file. The following represents the page header==== -->
+					<div class="ClsPageTitle">NMC Maintenance Window</div></td>
+				</tr>
+			</table>
+			<table>
+			  <tr>
+			    <td><img src="../../images/Transpx.gif" height="60" width="10" alt=""/></td>
+			  </tr>
+			</table>
+			
+			<table cellpadding="0" cellspacing="0" border="0" align="center" class="ClsPopUp">
+				<tr>
+					<td align="center" class="ClsMaintenanceMsg" valign="top">
+						Due to system maintenance NMC services are<br/> currently not available.<br/>
+						We plan to get online again approximately at  
+					</td>
+				</tr>
+				<tr>
+					<td align="center" class="ClsMaintenanceTime" valign="top">
+						
+					</td>
+				</tr>		
+				<tr>
+					<td align="center" class="ClsMaintenanceMsg" valign="top">
+						For further questions please call :
+					</td>
+				</tr>	
+			</table>		
+		</td>
+	</tr>
+	<tr>
+		<td valign="bottom">
+			<div class="ClsCopyright">
+				<!--copyright label -->
+				2023 � NMC. All Rights reserved.
+			</div>		
+		</td>
+	</tr>
+</table>
+</body>
+</html>
+

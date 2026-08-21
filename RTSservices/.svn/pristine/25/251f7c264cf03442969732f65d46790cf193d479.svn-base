@@ -1,0 +1,65 @@
+package com.mars.rti.dao.impl;
+
+import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
+
+import com.mars.rti.dao.FireFloorNameDAO;
+import com.mars.rti.model.FireFloorName;
+import com.mars.rti.model.SubTypeOfbuilding;
+
+@Repository
+public class FireFloorNameDAOImpl extends HibernateDaoSupport implements FireFloorNameDAO {
+	private static final Log log = LogFactory.getLog(FireFloorNameDAOImpl.class);
+
+	@Autowired
+	public void init(SessionFactory factory) {
+		setSessionFactory(factory);
+	}
+	@Override
+	public List<FireFloorName> getFireFloorName() {
+	    try {
+	        if (log.isDebugEnabled()) {
+	            log.debug("getFireMainFees method called");
+	        }
+
+	        String strQuery = "SELECT fireFloorName\r\n"
+	        		+ "FROM FireFloorName fireFloorName\r\n"
+	        		+ "ORDER BY fireFloorName.fireFloorNameId\r\n"
+	        		+ "";
+
+	        Query query = getSession().createQuery(strQuery);
+			List<FireFloorName> fireFloorName = query.list();
+			if (fireFloorName != null && fireFloorName.size() > 0)
+				return fireFloorName;
+			} catch (Exception exception) {
+	        log.error(exception.getStackTrace(), exception);
+	        exception.printStackTrace();
+	    }
+	    return null;
+	}
+	
+	@Override
+	public List<FireFloorName> getList(long id) {
+		try {
+			if (log.isDebugEnabled()) {
+				log.debug("get Method with Market Name List called");
+			}
+			String strQuery = "select fireFloorName from FireFloorName fireFloorName where fireFloorNamefireFloorTypesId ="+id+" order by fireFloorName.fireFloorTypesId";
+			Query query = getSession().createQuery(strQuery);
+			List<FireFloorName> fireFloorName = query.list();
+			if (fireFloorName != null && fireFloorName.size() > 0)
+				return fireFloorName;
+		} catch (Exception exception) {
+			log.error(exception.getStackTrace(), exception);
+			exception.printStackTrace();
+		}
+		return null;
+	}
+}
